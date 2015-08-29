@@ -1,0 +1,6 @@
+baseurl: "http://www.felesatra.moe/"
+languageCode: "en-us"
+title: "Feles Atra"
+blackfriday:
+  extensions:
+    - definitionLists

@@ -1,0 +1,48 @@
+---
+title: Dantalian no Shoka OP (ダンタリアンの書架) - Cras numquam scire
+date: 2011-09-21
+---
+
+<dl>
+  <dt>Title</dt>
+  <dd>Cras numquam scire</dd>
+  <dt>Artist</dt>
+  <dd>Yucca</dd>
+  <dt>Series info</dt>
+  <dd>ダンタリアンの書架 OP</dd>
+  <dd>Dantalian no Shoka OP</dd>
+  <dt>Notes</dt>
+  <dd>TV, Melody+lyrics</dd>
+  <dt>Files</dt>
+  <dd><a href="/files/sheetmusic/cras_numquam_scire.pdf">Sheet music</a></dd>
+</dl>
+
+Sorry about the hiatus.  I'm starting college, and the transition makes
+finding an opportunity to transcribe, and I think my desire to get down
+every voice exactly is frustrating me.  Maybe I should just try piano
+reductions....
+
+Anyhow, Cras numquam scire.  It's a simple song, although partway
+through when a bunch of harmony lines started entering I gave up on the
+chords.  Matching up the Latin—I think it's Latin—lyrics to the notes
+was painful.  The lyrical feel of the song, the piano and violin
+harmony, and the Latin lyrics makes this song a really good theme for
+the anime, which explores knowledge and forbidden knowledge, using the
+metaphor of books, and lightly referencing a wide range of myths,
+legends and stories.
+
+I'd also like to remind my readers again that I'm just a newbie
+transcriber, and I welcome anyone with advice or looking for advice—
+maybe one of you would like to try transcribing, too.  The Internet is a
+great place for creating, and it's unfortunate that only a small portion
+of people on the Internet create and a large portion only consume.  Try
+something, make a blog, draw picture, compose songs.  The Internet is a
+(mostly) friendly place, and it's fun!
+
+<dl>
+  <dt>2014-10-11</dt>
+  <dd>
+    Yes, it is indeed Latin, now that I have studied it.  "Cras numquam
+    scire" roughly means "never to know tomorrow".
+  </dd>
+</dl>

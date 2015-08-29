@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>{{ .Title }}</title>
+    {{ partial "header.html" . }}
+  </head>
+
+  <body>
+
+    {{ partial "site-header.html" . }}
+
+    <h1>{{ .Title }}</h1>
+
+    {{ .Content }}
+
+    {{ partial "site-footer.html" . }}
+
+  </body>
+</html>

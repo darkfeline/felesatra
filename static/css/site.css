@@ -1,0 +1,19 @@
+#site-header {
+    display: flex;
+    border-bottom: 1px black solid;
+    align-items: center;
+}
+
+#site-title {
+    font-size: 200%;
+    margin: 5px;
+}
+
+span.site-nav-item {
+    margin: 5px;
+}
+
+#site-footer {
+    display: flex;
+    border-top: 1px black solid;
+}

@@ -1,0 +1,39 @@
+body {
+    width: 800px;
+    margin: auto;
+}
+
+/* Definition lists */
+dt {
+	  font-weight: bold;
+}
+
+dt:after {
+    content: ":";
+}
+
+dd {
+    margin-left: 15px;
+}
+
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    margin: 5px;
+    border-left: hidden;
+}
+
+tr {
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+}
+
+th, td {
+    padding: 4px;
+    text-align: center;
+}
+
+colgroup {
+    border-left: 1px black solid;
+}
