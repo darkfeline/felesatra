@@ -3,4 +3,21 @@ date = "2015-08-27T17:37:12-07:00"
 title = "About"
 +++
 
-This is a page.
+## About me
+
+
+
+## About this site
+
+This is my personal website, and thus it hosts content that I feel like hosting.
+For the most part, this is limited to my own blog posts and various pages and
+files that I have made, but if you have any content that you would like me to
+host, feel free to contact me; I will host it if I like it.
+
+## Contact
+
+You can contact me via email at [darkfeline@felesatra.moe][email].  I would
+prefer you use [my public key][key] when doing so.
+
+[email]: mailto:darkfeline@felesatra.moe
+[key]: https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74D
