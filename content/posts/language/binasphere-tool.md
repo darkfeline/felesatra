@@ -9,7 +9,7 @@ to [Github] in case anyone would ever need to play with some Hymmnos.  The rest
 of the text processing in my post was done with Vim macros, which I won't
 bother posting since the macros were done rather haphazardly.
 
-[quatrasphere]: {{< relref "hymmnos-quatrasphere.md" >}}
+[quatrasphere]: {{< ref "hymmnos-quatrasphere.md" >}}
 [Github]: https://github.com/darkfeline/binasphere
 
 Note that the tool itself is a little overkill, as clever use of UNIX standard

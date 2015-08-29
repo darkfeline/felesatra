@@ -5,7 +5,7 @@ date: 2015-02-02
 
 Continuing from [part 1].
 
-[part 1]: {{< relref "2015-winter-anime-impressions.md" >}}
+[part 1]: {{< ref "2015-winter-anime-impressions.md" >}}
 
 ## <i>Binan Koukou Chikyuu Bouei-bu Love!</i>
 

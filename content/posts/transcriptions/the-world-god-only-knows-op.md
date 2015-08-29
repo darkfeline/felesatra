@@ -6,7 +6,7 @@ date: 2010-10-23
 NOTE: This is no longer up to date. Chapter Three of the [full version][] of
 this song is essentially the same as the TV size version and is up to Date.
 
-[full version]: {{< relref "god-only-knows-op-full.md" >}}
+[full version]: {{< ref "god-only-knows-op-full.md" >}}
 
 There's a lot of good anime this season, aren't there?  I went
 looking for sheet music for The World God Only Knows's OP, and of

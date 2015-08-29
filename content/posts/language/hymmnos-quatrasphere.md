@@ -124,7 +124,7 @@ is singing about the same act with hatred.[^4]
 Here's an English example (if you actually want this feature in English, take a
 look at [Babel]):
 
-[Babel]: {{< relref "babel-metalanguage.md" >}}
+[Babel]: {{< ref "babel-metalanguage.md" >}}
 
     => BIx RDS THE YELLx OW SIx NG FLOx THEx WERS
     IR JOY SWx AY IN TO THE THE SKY WIND

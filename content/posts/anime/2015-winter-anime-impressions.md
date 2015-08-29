@@ -122,4 +122,4 @@ getting long, I'll go over some of the other shows at a later date.
 
 Continued in [part 2].
 
-[part 2]: {{< relref "2015-winter-anime-impressions-part-2.md" >}}
+[part 2]: {{< ref "2015-winter-anime-impressions-part-2.md" >}}
