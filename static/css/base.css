@@ -1,6 +1,11 @@
 body {
-    width: 800px;
+    max-width: 750px;
     margin: auto;
+    background-color: #FFFFEF;
+    color: #202020;
+}
+
+code {
 }
 
 /* Definition lists */
@@ -25,8 +30,8 @@ table {
 }
 
 tr {
-    border-top: 1px black solid;
-    border-bottom: 1px black solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
 }
 
 th, td {
@@ -35,5 +40,5 @@ th, td {
 }
 
 colgroup {
-    border-left: 1px black solid;
+    border-left: 1px solid;
 }

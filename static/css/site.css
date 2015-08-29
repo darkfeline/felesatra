@@ -1,7 +1,8 @@
 #site-header {
     display: flex;
-    border-bottom: 1px black solid;
     align-items: center;
+    border-bottom: 2px solid;
+    padding: 5px;
 }
 
 #site-title {
@@ -15,5 +16,13 @@ span.site-nav-item {
 
 #site-footer {
     display: flex;
-    border-top: 1px black solid;
+    border-top: 2px black solid;
+    padding: 5px;
+}
+
+body {
+    background-image: url("/img/bg.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-attachment: fixed;
 }
