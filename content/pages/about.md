@@ -5,7 +5,29 @@ title = "About"
 
 ## About me
 
+I like doing things the right way.  By extension, I like things that are
+interesting, such as a well-written story, or innovative, such as the
+advancement of science and technology
 
+I hate doing things the wrong way.  By extension, I hate bullshit, which
+includes things like legalized bribery (lobbying and campaign donations) and
+"unlimited" data plans with caps and throttling.
+
+My interests include:
+
+- single player video games
+- anime
+- music
+- scripting/programming
+- system administration/management
+- hacking ("MacGyvering")
+
+Some personal links:
+
+- [my projects]({{< ref "pages/projects.md" >}})
+- [my Github page][Github]
+
+[Github]: https://github.com/darkfeline
 
 ## About this site
 
