@@ -50,9 +50,9 @@ versatility.
 Allow me to illustrate using the classic ABCD diamond.
 
       A
-    /  \
+     / \
     B   C
-    \  /
+     \ /
       D
 
 Here we have the MRO's
