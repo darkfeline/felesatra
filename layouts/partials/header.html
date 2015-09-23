@@ -1,14 +1,39 @@
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="/css/site.css">
-<link rel="stylesheet" type="text/css" href="/css/base.css">
-<link rel="icon" type="image/png" href="/favicon.png">
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/site.css">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    {{ if .RSSlink }}
+    <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml"/>
+    {{ end }}
+    {{ partial "google-analytics.html" . }}
+    <title>{{ .Title }}</title>
+  </head>
 
-<script>
- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
- })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <body>
 
- ga('create', 'UA-58143202-1', 'auto');
- ga('send', 'pageview');
-</script>
+    <header>
+      <nav id="site-header">
+        <span id="site-title">
+          <a href="/">Feles Atra</a>
+        </span>
+
+        <span class="site-nav-item">
+          <a href="/pages/about">About</a>
+        </span>
+
+        <span class="site-nav-item">
+          <a href="/pages">All Pages</a>
+        </span>
+
+        <span class="site-nav-item">
+          <a href="/posts">All Posts</a>
+        </span>
+
+        <span class="site-nav-item">
+          <a href="/pages/site-index">Site Index</a>
+        </span>
+      </nav>
+    </header>

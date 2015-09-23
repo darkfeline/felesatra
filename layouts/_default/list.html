@@ -1,29 +1,18 @@
-{{ partial "doctype.html" . }}
-<html>
-  <head>
-    <title>{{ .Title }}</title>
-    {{ partial "header.html" . }}
-  </head>
-  <body>
+{{ partial "header.html" . }}
 
-    {{ partial "site-header.html" . }}
+<h1>{{ .Title }}</h1>
 
-    <h1>{{ .Title }}</h1>
+<ul>
+  {{ range .Data.Pages }}
+  <li>
+    <div>
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </div>
+    <div>
+      {{ .Date.Format "2006-01-02" }}
+    </div>
+  </li>
+  {{ end }}
+</ul>
 
-    <ul>
-      {{ range .Data.Pages }}
-      <li>
-        <div>
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-        </div>
-        <div>
-          {{ .Date.Format "2006-01-02" }}
-        </div>
-      </li>
-      {{ end }}
-    </ul>
-
-    {{ partial "site-footer.html" . }}
-
-  </body>
-</html>
+{{ partial "footer.html" . }}

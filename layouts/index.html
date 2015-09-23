@@ -1,27 +1,28 @@
-{{ partial "doctype.html" . }}
-<html>
-  <head>
-    <title>Feles Atra</title>
-    {{ partial "header.html" . }}
-  </head>
-  <body>
+{{ partial "header.html" . }}
 
-    {{ partial "site-header.html" . }}
+<section>
+  <p>This is my homepage.  There are many like it, but this one is mine.</p>
 
-    <p>This is my homepage.  There are many like it, but this one is mine.</p>
-
-    <p>Site is under construction (again).  Expect it to change over time.
+  <p>Site is under construction (again).  Expect it to change over time.
     However, it will stay simple, or "ugly" for those who value form over
     function.</p>
 
-    <p>Blog posts can be found under "All Posts" in the navigation above.</p>
+  <p>Blog posts can be found under "All Posts" in the navigation above.</p>
 
-    <p>Individual pages can likewise be found under "All Pages".</p>
+  <p>Individual pages can likewise be found under "All Pages".</p>
 
-    <p>The Keihan page can be found under "All Pages", or <a href="/pages/keihan">linked
+  <p>The Keihan page can be found under "All Pages", or <a href="/pages/keihan">linked
     here</a> for now.</p>
+</section>
 
-    {{ partial "site-footer.html" . }}
+<section>
+  <h1>Posts</h1>
+  {{ range first 10 .Data.Pages }}
+  <article>
+    <h2>{{ .Title }}</h2>
+    <p>{{ .Summary }}</p>
+  </article>
+  {{ end }}
+</section>
 
-  </body>
-</html>
+{{ partial "footer.html" . }}

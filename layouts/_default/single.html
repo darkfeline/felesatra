@@ -1,19 +1,7 @@
-{{ partial "doctype.html" . }}
-<html>
-  <head>
-    <title>{{ .Title }}</title>
-    {{ partial "header.html" . }}
-  </head>
+{{ partial "header.html" . }}
 
-  <body>
+<h1>{{ .Title }}</h1>
 
-    {{ partial "site-header.html" . }}
+{{ .Content }}
 
-    <h1>{{ .Title }}</h1>
-
-    {{ .Content }}
-
-    {{ partial "site-footer.html" . }}
-
-  </body>
-</html>
+{{ partial "footer.html" . }}
