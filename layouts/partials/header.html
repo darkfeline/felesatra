@@ -13,11 +13,11 @@
 
     {{ if .IsPage }}
     {{ if .NextInSection }}
-    <link href="{{ .NextInSection }}" rel="next"/>
+    <link href="{{ .NextInSection.Permalink }}" rel="next"/>
     {{ end }}
 
     {{ if .PrevInSection }}
-    <link href="{{ .PrevInSection }}" rel="prev"/>
+    <link href="{{ .PrevInSection.Permalink }}" rel="prev"/>
     {{ end }}
     {{ end }}
 
