@@ -1,6 +1,7 @@
 +++
 title = "Projects"
 date = "2015-08-28"
+publishdate = "2015-08-28"
 +++
 
 A list of my public projects for personal reference.  Most of these are
