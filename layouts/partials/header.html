@@ -21,6 +21,10 @@
     {{ end }}
     {{ end }}
 
+    {{ if and (isset .Params "tablesorter") (eq .Params.tablesorter true) }}
+    {{ partial "tablesorter.html" . }}
+    {{ end }}
+
     {{ partial "google-analytics.html" . }}
 
     <title>{{ .Title }}</title>

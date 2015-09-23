@@ -2,6 +2,7 @@
 title = "契絆想解詩"
 date = "2015-09-22"
 publishdate = "2015-08-28"
+tablesorter = true
 +++
 
 ## Introduction
@@ -142,24 +143,6 @@ These rules were determined experimentally from the official Keihan generator,
 so they might be incorrect or sub-optimal.
 
 (Table can be sorted with Javascript; try clicking on the the headers.)
-
-<div>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="/js/tablesorter.js"></script>
-<script>
- $(document).ready(function() {
-   $(".tablesorter").tablesorter();
- });
-</script>
-<style>
- th.headerSortUp::after {
-   content: "▲";
- }
- th.headerSortDown::after {
-   content: "▼";
- }
-</style>
-</div>
 
 <figure>
   <table class="tablesorter">
