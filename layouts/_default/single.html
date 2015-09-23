@@ -4,7 +4,8 @@
   <h1>{{ .Title }}</h1>
 
   <div class="datetime-advice">
-    {{ if isset . "PublishDate" }}
+    {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
+    {{ if not (eq (.PublishDate.Unix) -62135596800) }}
     <div class="datetime-item">Published: {{ .PublishDate.Format "2006-01-02" }}</div>
     {{ end }}
     <div class="datetime-item">Last updated: {{ .Date.Format "2006-01-02" }}</div>
