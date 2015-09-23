@@ -3,16 +3,20 @@
 <section>
   <p>This is my homepage.  There are many like it, but this one is mine.</p>
 
-  <p>Site is under construction (again).  Expect it to change over time.
-    However, it will stay simple, or "ugly" for those who value form over
-    function.</p>
+  <p>Site is under construction.  Expect it to change over time.  However, it
+    will stay simple, as I'm not fond of loading 10 MB of JavaScript and CSS for
+    a document that should by all rights be no more than 10 kB.</p>
 
-  <p>Blog posts can be found under "All Posts" in the navigation above.</p>
+  <p>In the meantime:</p>
 
-  <p>Individual pages can likewise be found under "All Pages".</p>
+  <ul>
+  <li>Blog posts can be found under "All Posts" in the navigation above.</li>
 
-  <p>The Keihan page can be found under "All Pages", or <a href="/pages/keihan">linked
-    here</a> for now.</p>
+  <li>Individual pages can likewise be found under "All Pages".</li>
+
+  <li>The Keihan page can be found under "All Pages", or <a href="/pages/keihan">linked
+    here</a> for now.</li>
+  </ul>
 </section>
 
 <section>
@@ -20,6 +24,7 @@
   {{ range first 5 (where .Data.Pages "Section" "posts") }}
   {{ .Render "summary" }}
   {{ end }}
+  <a class="block" href="/posts">All posts</a>
 </section>
 
 {{ partial "footer.html" . }}
