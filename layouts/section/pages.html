@@ -7,15 +7,7 @@
 
   <ul>
     {{ range .Data.Pages.ByTitle }}
-    <li>
-      <div>
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </div>
-      <dl class="attributes-inline">
-        <dt>Modified</dt>
-        <dd>{{ .Date.Format "2006-01-02" }}</dd>
-      </dl>
-    </li>
+    {{ .Render "li" }}
     {{ end }}
   </ul>
 </section>

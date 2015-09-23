@@ -1,0 +1,11 @@
+<article class="summary-article">
+  <section>
+    <h3>{{ .Title }}</h3>
+    <dl class="attributes-inline">
+      <dt>Date</dt>
+      <dd>{{ .Date.Format "2006-01-02" }}</dd>
+    </dl>
+    <p>{{ .Summary }}</p>
+    <div><a href="{{ .Permalink }}">Full post</a></div>
+  </section>
+</article>

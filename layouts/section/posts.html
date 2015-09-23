@@ -3,8 +3,10 @@
 <section>
   <h1>{{ .Title }}</h1>
 
+  <p>All posts in published order, most recent first:</p>
+
   <ul>
-    {{ range .Data.Pages }}
+    {{ range .Data.Pages.ByPublishDate }}
     {{ .Render "li" }}
     {{ end }}
   </ul>
