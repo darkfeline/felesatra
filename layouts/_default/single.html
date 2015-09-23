@@ -1,7 +1,16 @@
 {{ partial "header.html" . }}
 
-<h1>{{ .Title }}</h1>
+<section>
+  <h1>{{ .Title }}</h1>
 
-{{ .Content }}
+  <div class="datetime-advice">
+    {{ if isset . "PublishDate" }}
+    <div class="datetime-item">Published: {{ .PublishDate.Format "2006-01-02" }}</div>
+    {{ end }}
+    <div class="datetime-item">Last updated: {{ .Date.Format "2006-01-02" }}</div>
+  </div>
+
+  {{ .Content }}
+</section>
 
 {{ partial "footer.html" . }}

@@ -27,3 +27,11 @@ body {
     background-attachment: fixed;
     background-size: 50%;
 }
+
+div.datetime-advice {
+    font-size: 75%;
+    color: #808080;
+}
+
+div.datetime-item {
+}
