@@ -1,15 +1,19 @@
 {{ partial "header.html" . }}
 
 <section>
-  <h1>{{ .Title }}</h1>
+  <header>
+    <h1>{{ .Title }}</h1>
 
-  <div class="datetime-advice">
-    <div class="datetime-item">Last updated: {{ .Date.Format "2006-01-02" }}</div>
-    {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
-    {{ if not (eq (.PublishDate.Unix) -62135596800) }}
-    <div class="datetime-item">Published: {{ .PublishDate.Format "2006-01-02" }}</div>
-    {{ end }}
-  </div>
+    <dl class="attributes-inline">
+      <dt>Last updated</dt>
+      <dd>{{ .Date.Format "2006-01-02" }}</dd>
+      {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
+      {{ if not (eq (.PublishDate.Unix) -62135596800) }}
+      <dt>Published</dt>
+      <dd>{{ .Date.Format "2006-01-02" }}</dd>
+      {{ end }}
+    </dl>
+  </header>
 
   {{ .Content }}
 </section>

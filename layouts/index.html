@@ -16,11 +16,18 @@
 </section>
 
 <section>
-  <h1>Posts</h1>
-  {{ range first 10 .Data.Pages }}
+  <h2>Posts</h2>
+  {{ range first 5 (where .Data.Pages "Section" "posts") }}
   <article>
-    <h2>{{ .Title }}</h2>
-    <p>{{ .Summary }}</p>
+    <section>
+      <h3>{{ .Title }}</h3>
+      <dl class="attributes-inline">
+        <dt>Date</dt>
+        <dd>{{ .Date.Format "2006-01-02" }}</dd>
+      </dl>
+      <p>{{ .Summary }}</p>
+      <div><a href="{{ .Permalink }}">Full post</a></div>
+    </section>
   </article>
   {{ end }}
 </section>

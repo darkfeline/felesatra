@@ -11,11 +11,10 @@
       <div>
         <a href="{{ .Permalink }}">{{ .Title }}</a>
       </div>
-      <div class="datetime-advice">
-        <div class="datetime-item">
-        {{ .Date.Format "2006-01-02" }}
-        </div>
-      </div>
+      <dl class="attributes-inline">
+        <dt>Modified</dt>
+        <dd>{{ .Date.Format "2006-01-02" }}</dd>
+      </dl>
     </li>
     {{ end }}
   </ul>

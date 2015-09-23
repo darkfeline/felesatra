@@ -3,6 +3,7 @@
     align-items: center;
     border-bottom: 2px solid;
     padding: 5px;
+    margin-bottom: 10px;
 }
 
 #site-title {
@@ -18,6 +19,7 @@ span.site-nav-item {
     display: flex;
     border-top: 2px black solid;
     padding: 5px;
+    margin-top: 10px;
 }
 
 body {
@@ -28,10 +30,21 @@ body {
     background-size: 50%;
 }
 
-div.datetime-advice {
+dl.attributes, dl.attributes-inline {
     font-size: 75%;
     color: #808080;
 }
 
-div.datetime-item {
+dl.attributes-inline {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+dl.attributes-inline dt {
+    display: inline;
+}
+
+dl.attributes-inline dd {
+    display: inline-block;
+    margin-right: 15px;
 }
