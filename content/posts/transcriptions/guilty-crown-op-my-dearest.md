@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Guilty Crown (ギルティクラウン) OP - My Dearest
 date: 2012-01-19
 publishdate: 2012-01-19

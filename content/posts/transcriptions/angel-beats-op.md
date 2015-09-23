@@ -2,6 +2,8 @@
 title: Angel Beats! OP - My Soul, Your Beats!
 date: 2012-04-22
 publishdate: 2012-04-22
+contents:
+  - "transcription"
 ---
 
 <dl>

@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Ready Go - Ookami-san to Shichinin no Nakamatachi OP
 date: 2010-09-06
 publishdate: 2010-09-06

@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: AnoHana ED Full - secret base~Kimi ga Kureta Mono~(10 years after Ver.)
 date: 2011-05-16
 publishdate: 2011-05-16

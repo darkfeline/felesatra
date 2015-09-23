@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Denpa Onna to Seishun Otoko ED - Lulu
 date: 2011-05-03
 publishdate: 2011-05-03

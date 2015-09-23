@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Kamisama no Memochou (神様のメモ帳) OP - Kawaru Mirai (カワルミライ)
 date: 2012-01-15
 publishdate: 2012-01-15

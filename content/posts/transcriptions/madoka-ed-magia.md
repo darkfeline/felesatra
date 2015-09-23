@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Puella Magi Madoka Magica ED Magia
 date: 2011-03-19
 publishdate: 2011-03-19

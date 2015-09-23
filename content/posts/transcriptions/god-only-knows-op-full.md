@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: God only knows - 神のみ OP full ver. Incomplete v0.3
 date: 2011-02-06
 publishdate: 2011-02-06

@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Usagi Drop OP TV ver - Sweet Drops
 date: 2011-07-22
 publishdate: 2011-07-22

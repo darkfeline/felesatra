@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: The World God Only Knows ED - コイノシルシ
 date: 2011-01-14
 publishdate: 2011-01-14

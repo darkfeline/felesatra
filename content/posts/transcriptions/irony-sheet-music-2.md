@@ -1,4 +1,6 @@
 ---
+contents:
+  - "transcription"
 title: Irony Sheet Music
 date: 2010-11-23
 publishdate: 2010-11-23
