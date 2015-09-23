@@ -5,6 +5,8 @@ publishdate: "2015-08-28"
 tablesorter: true
 subjects:
   - "Surge Concerto"
+contents:
+  - "document"
 ---
 
 ## Introduction

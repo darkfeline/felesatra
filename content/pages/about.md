@@ -4,6 +4,8 @@ date: "2015-08-27T17:37:12-07:00"
 title: "About"
 subjects:
   - "meta"
+contents:
+  - "document"
 ---
 
 ## About me

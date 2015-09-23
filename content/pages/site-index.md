@@ -4,6 +4,8 @@ date: "2015-09-23"
 publishdate: "2015-08-28"
 subjects:
   - "meta"
+contents:
+  - "document"
 ---
 
 This is the site index, a comprehensive listing of every single page on this site.
