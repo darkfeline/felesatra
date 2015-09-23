@@ -1,6 +1,7 @@
 ---
 title: Binasphere tool
 date: 2015-01-12
+publishdate: 2015-01-12
 ---
 
 I wrote a quick Python script to help construct all of the examples in

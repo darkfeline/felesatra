@@ -1,6 +1,7 @@
 ---
 title: 2015 winter anime impressions part 2
 date: 2015-02-02
+publishdate: 2015-02-02
 ---
 
 Continuing from [part 1].

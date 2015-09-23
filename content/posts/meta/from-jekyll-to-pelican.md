@@ -1,6 +1,7 @@
 ---
 title: From Jekyll to Pelican
 date: 2014-12-07
+publishdate: 2014-12-07
 ---
 
 About a month or so ago I moved my blog from Jekyll to Pelican.  The motivation,

@@ -1,6 +1,7 @@
 ---
 title: Fall 2011 Picks
 date: 2011-11-18
+publishdate: 2011-11-18
 ---
 
 Another anime season; too many shows, not enough time?  Don't worry,

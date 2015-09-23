@@ -1,6 +1,7 @@
 ---
 title: Commenting systems
 date: 2014-10-19
+publishdate: 2014-10-19
 ---
 
 After migrating from Wordpress to Jekyll, the one feature that was

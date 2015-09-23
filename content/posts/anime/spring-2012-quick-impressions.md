@@ -1,6 +1,7 @@
 ---
 title: Spring 2012 Quick Impressions
 date: 2012-08-08
+publishdate: 2012-08-08
 ---
 
 Yo!  It's been a while since I've posted, and I haven't had time to

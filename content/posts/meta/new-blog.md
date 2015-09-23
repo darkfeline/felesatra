@@ -1,6 +1,7 @@
 ---
 title: New blog
 date: 2014-10-06
+publishdate: 2014-10-06
 ---
 
 Welcome to my new blog!

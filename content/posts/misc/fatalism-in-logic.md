@@ -1,6 +1,7 @@
 ---
 title: Fatalism in logic
 date: 2014-11-04
+publishdate: 2014-11-04
 ---
 
 One of the thorny areas of logic which, to the best of my knowledge, is

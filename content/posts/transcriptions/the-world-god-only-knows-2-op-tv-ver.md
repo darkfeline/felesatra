@@ -1,6 +1,7 @@
 ---
 title: The World God Only Knows II OP TV ver. - A Whole New World God Only Knows
 date: 2011-04-30
+publishdate: 2011-04-30
 ---
 
 <dl>

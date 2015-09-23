@@ -1,6 +1,7 @@
 ---
 title: Hymmnos Quatrasphere
 date: 2015-01-04
+publishdate: 2015-01-04
 ---
 
 [Hymmnos] is a language, or a set of dialects, created specifically for the Ar

@@ -1,6 +1,7 @@
 ---
 title: The Babel meta-language
 date: 2015-01-01
+publishdate: 2015-01-01
 ---
 
 Inspired by the passion of the creators behind the EXA_PICO universe[^1], I

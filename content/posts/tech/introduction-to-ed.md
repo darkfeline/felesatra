@@ -1,6 +1,7 @@
 ---
 title: Introduction to ed
 date: 2015-02-22
+publishdate: 2015-02-22
 ---
 
 ## What is ed?

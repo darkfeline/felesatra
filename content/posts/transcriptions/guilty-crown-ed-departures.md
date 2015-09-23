@@ -1,6 +1,7 @@
 ---
 title: Guilty Crown ED - Departures~Anata ni Okuru Ai no Uta~
 date: 2012-01-20
+publishdate: 2012-01-20
 ---
 
 <dl>

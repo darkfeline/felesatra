@@ -1,6 +1,7 @@
 ---
 title: The World God Only Knows OP
 date: 2010-10-23
+publishdate: 2010-10-23
 ---
 
 NOTE: This is no longer up to date. Chapter Three of the [full version][] of

@@ -1,6 +1,7 @@
 ---
 title: Guilty Crown (ギルティクラウン) Insert - Euterpe
 date: 2012-01-24
+publishdate: 2012-01-24
 ---
 
 <dl>

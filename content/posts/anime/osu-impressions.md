@@ -1,6 +1,7 @@
 ---
 title: osu! Impressions
 date: 2011-11-06
+publishdate: 2011-11-06
 ---
 
 I've heard about <i>osu!</i> for a while now.  While I love music

@@ -1,6 +1,7 @@
 ---
 title: 2015 winter anime impressions
 date: 2015-01-25
+publishdate: 2015-01-25
 ---
 
 It's that time again, roughly three weeks into the new 2015 winter season, so

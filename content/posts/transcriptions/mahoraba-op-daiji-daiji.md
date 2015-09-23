@@ -1,6 +1,7 @@
 ---
 title: Mahoraba (まほらば～heartful days) OP - 大事▽Da·I·Ji
 date: 2012-01-15
+publishdate: 2012-01-15
 ---
 
 <dl>

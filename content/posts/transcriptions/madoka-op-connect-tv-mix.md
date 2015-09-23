@@ -1,6 +1,7 @@
 ---
 title: Puella Magi Madoka Magica OP Connect -TV MIX-
 date: 2011-02-19
+publishdate: 2011-02-19
 ---
 
 <dl>

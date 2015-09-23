@@ -1,6 +1,7 @@
 ---
 title: Where did you go? 2
 date: 2012-09-22
+publishdate: 2012-09-22
 ---
 
 I haven't posted on this blog or <a

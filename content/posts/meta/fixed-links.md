@@ -1,6 +1,7 @@
 ---
 title: Fixed Links
 date: 2012-03-05
+publishdate: 2012-03-05
 ---
 
 Somehow ifile.it dropped all of my files.  Ever since the MegaUpload incident,

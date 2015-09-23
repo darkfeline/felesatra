@@ -1,6 +1,7 @@
 ---
 title: Dantalian no Shoka OP (ダンタリアンの書架) - Cras numquam scire
 date: 2011-09-21
+publishdate: 2011-09-21
 ---
 
 <dl>

@@ -1,6 +1,7 @@
 ---
 title: Emacs and Vim
 date: 2014-12-13
+publishdate: 2014-12-13
 ---
 
 If you're reading this, you're probably here because of the title, and if so,
