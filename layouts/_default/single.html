@@ -10,7 +10,7 @@
       {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
       {{ if not (eq (.PublishDate.Unix) -62135596800) }}
       <dt>Published</dt>
-      <dd>{{ .Date.Format "2006-01-02" }}</dd>
+      <dd>{{ .PublishDate.Format "2006-01-02" }}</dd>
       {{ end }}
     </dl>
   </header>
