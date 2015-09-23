@@ -6,15 +6,13 @@
   {{ $data := .Data }}
   {{ range $key, $value := .Data.Terms.Alphabetical }}
   <section>
-    {{ with $value }}
     <h2>
-      <a href="/{{ $data.Plural }}/{{ .Name | urlize }}">
-        {{ .Name }}
+      <a href="/{{ $data.Plural }}/{{ $value.Name | urlize }}">
+        {{ $value.Name }}
       </a>
     </h2>
 
-    {{ partial "taxonomy-list.html" . }}
-    {{ end }}
+    {{ partial "taxonomy-list.html" $value }}
   </section>
   {{ end }}
 </section>

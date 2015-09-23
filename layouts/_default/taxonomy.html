@@ -4,10 +4,8 @@
   <h1>{{ .Title }}</h1>
 
   <p>This page contains a comprehensive listing for all pages which contain the
-  {{ .Data.Singular }} term "{{ .Title | lower }}".
-    {{ with .Data }}
-    {{ partial "taxonomy-list.html" . }}
-    {{ end }}
+    {{ .Data.Singular }} term "{{ .Title | lower }}".</p>
+  {{ partial "taxonomy-list.html" .Data }}
 </section>
 
 {{ partial "footer.html" . }}
