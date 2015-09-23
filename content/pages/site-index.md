@@ -6,9 +6,13 @@ subjects:
   - "meta"
 ---
 
-This is the site index.  It is a comprehensive listing of every single page on the site.
+This is the site index, a comprehensive listing of every single page on this site.
 
-- [All static pages](/pages)
-- [All blog posts](/posts)
-- [Pages by subject](/subjects)
-- [Pages by content](/contents)
+<nav>
+  <ul>
+    <li><a href="/pages">All static pages</a></li>
+    <li><a href="/posts">All blog posts</a></li>
+    <li><a href="/subjects">All subject terms</a></li>
+    <li><a href="/contents">All content terms</a></li>
+  </ul>
+</nav>
