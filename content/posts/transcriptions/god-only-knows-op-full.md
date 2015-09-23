@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: God only knows - 神のみ OP full ver. Incomplete v0.3

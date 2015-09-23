@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: The World God Only Knows II OP TV ver. - A Whole New World God Only Knows

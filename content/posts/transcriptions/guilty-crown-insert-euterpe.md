@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Guilty Crown (ギルティクラウン) Insert - Euterpe

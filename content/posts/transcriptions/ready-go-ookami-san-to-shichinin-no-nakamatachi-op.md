@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Ready Go - Ookami-san to Shichinin no Nakamatachi OP

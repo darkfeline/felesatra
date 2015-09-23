@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Puella Magi Madoka Magica OP Connect -TV MIX-

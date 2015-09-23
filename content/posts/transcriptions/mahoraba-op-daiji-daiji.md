@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Mahoraba (まほらば～heartful days) OP - 大事▽Da·I·Ji

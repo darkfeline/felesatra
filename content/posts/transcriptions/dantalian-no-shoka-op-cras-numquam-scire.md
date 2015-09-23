@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Dantalian no Shoka OP (ダンタリアンの書架) - Cras numquam scire

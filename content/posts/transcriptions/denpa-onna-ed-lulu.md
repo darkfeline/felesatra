@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Denpa Onna to Seishun Otoko ED - Lulu

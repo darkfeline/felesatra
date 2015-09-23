@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: AnoHana ED Full - secret base~Kimi ga Kureta Mono~(10 years after Ver.)

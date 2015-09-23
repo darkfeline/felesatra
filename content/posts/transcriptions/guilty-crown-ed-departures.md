@@ -1,4 +1,6 @@
 ---
+subjects:
+  - "anime"
 contents:
   - "transcription"
 title: Guilty Crown ED - Departures~Anata ni Okuru Ai no Uta~
