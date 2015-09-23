@@ -1,0 +1,24 @@
+{{ partial "header.html" . }}
+
+<section>
+  <h1>{{ .Title }}</h1>
+
+  <p>All pages in alphabetical order:</p>
+
+  <ul>
+    {{ range .Data.Pages.ByTitle }}
+    <li>
+      <div>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </div>
+      <div class="datetime-advice">
+        <div class="datetime-item">
+        {{ .Date.Format "2006-01-02" }}
+        </div>
+      </div>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+
+{{ partial "footer.html" . }}
