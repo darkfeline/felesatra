@@ -143,9 +143,9 @@ so they might be incorrect or sub-optimal.
 
 (Table can be sorted with Javascript; try clicking on the the headers.)
 
-
+<div>
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="/js/tablesorter.js"></script>
+<script src="/js/tablesorter.js"></script>
 <script>
  $(document).ready(function() {
    $(".tablesorter").tablesorter();
@@ -159,6 +159,7 @@ so they might be incorrect or sub-optimal.
    content: "▼";
  }
 </style>
+</div>
 
 <figure>
   <table class="tablesorter">
