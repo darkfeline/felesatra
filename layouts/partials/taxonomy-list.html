@@ -16,7 +16,7 @@
   <h3>Posts</h3>
   <nav>
     <ul>
-      {{ range where .Pages.ByDate "Section" "posts" }}
+      {{ range where .Pages.ByPublishDate.Reverse "Section" "posts" }}
       {{ .Render "li" }}
       {{ end }}
     </ul>

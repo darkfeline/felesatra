@@ -6,7 +6,7 @@
   <p>All posts in published order, most recent first:</p>
 
   <ul>
-    {{ range .Data.Pages.ByPublishDate }}
+    {{ range .Data.Pages.ByPublishDate.Reverse }}
     {{ .Render "li" }}
     {{ end }}
   </ul>
