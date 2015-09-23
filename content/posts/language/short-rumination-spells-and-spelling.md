@@ -2,6 +2,11 @@
 title: "Short rumination: Spells and spelling"
 date: 2015-03-01
 publishdate: 2015-03-01
+subjects:
+  - "language"
+  - "philosophy"
+contents:
+  - "article"
 ---
 
 Take the word "spell": to write or say the letters that form a word or part of

@@ -2,6 +2,10 @@
 title: Python, super(), and multiple inheritance
 date: 2013-05-02
 publishdate: 2013-05-02
+subjects:
+  - "programming"
+contents:
+  - "article"
 ---
 
 ## The Situation

@@ -2,6 +2,10 @@
 title: Project Diva Extend
 date: 2012-01-15
 publishdate: 2012-01-15
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 <i>Hatsune Miku: Project Diva Extend</i> is the third game in the

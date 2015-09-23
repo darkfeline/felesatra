@@ -2,6 +2,10 @@
 title: Summer 2012 Quick Impressions
 date: 2012-08-08
 publishdate: 2012-08-08
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 Arcana Famiglia is a nice Italian- and Tarot-themed shounen piece.  It's

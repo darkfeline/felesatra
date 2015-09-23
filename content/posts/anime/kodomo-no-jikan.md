@@ -2,6 +2,10 @@
 title: Kodomo no Jikan
 date: 2011-08-04
 publishdate: 2011-08-04
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 This one's definitely different from all the other anime/manga out

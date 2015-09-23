@@ -2,6 +2,10 @@
 title: Sharing an umbrella
 date: 2014-10-24
 publishdate: 2014-10-24
+subjects:
+  - "philosophy"
+contents:
+  - "article"
 ---
 
 Sharing an umbrella is considered romantic in Japan.  This comes up

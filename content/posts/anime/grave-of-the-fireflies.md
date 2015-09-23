@@ -2,6 +2,10 @@
 title: Grave of the Fireflies
 date: 2011-08-01
 publishdate: 2011-08-01
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 <i>Grave of the Fireflies</i> is a very old animated movie set during World War

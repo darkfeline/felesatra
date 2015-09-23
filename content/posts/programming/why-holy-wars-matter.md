@@ -2,6 +2,11 @@
 title: Why holy wars matter
 date: 2015-03-11
 publishdate: 2015-03-11
+subjects:
+  - "programming"
+  - "philosophy"
+contents:
+  - "article"
 ---
 
 What are holy wars?  Even if you aren't familiar with the term, you are

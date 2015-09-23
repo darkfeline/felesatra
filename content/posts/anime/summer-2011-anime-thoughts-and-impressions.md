@@ -2,6 +2,10 @@
 title: Summer 2011 Anime Thoughts and Impressions
 date: 2011-11-03
 publishdate: 2011-11-03
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 I've decided to share my thoughts and impressions on the recent summer

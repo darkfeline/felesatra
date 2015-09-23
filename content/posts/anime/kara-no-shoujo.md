@@ -2,6 +2,10 @@
 title: Kara no Shoujo
 date: 2011-09-09
 publishdate: 2011-09-09
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 One genre of video games that the Western community is not well

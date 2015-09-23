@@ -2,6 +2,10 @@
 title: Introduction to ed
 date: 2015-02-22
 publishdate: 2015-02-22
+subjects:
+  - "programming"
+contents:
+  - "article"
 ---
 
 ## What is ed?

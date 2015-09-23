@@ -2,6 +2,10 @@
 title: Winter 2012 Picks - Preliminary
 date: 2012-01-15
 publishdate: 2012-01-15
+subjects:
+  - "anime"
+contents:
+  - "review"
 ---
 
 It's the beginning of a new anime season!  It's hard (and unfair) to
