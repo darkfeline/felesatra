@@ -1,0 +1,15 @@
+{{ partial "header.html" . }}
+
+<section>
+  <h1>{{ .Title }}</h1>
+
+  <p>All posts in published order, most recent first:</p>
+
+  <ul>
+    {{ range .Data.Pages.ByPublishDate }}
+    {{ .Render "li" }}
+    {{ end }}
+  </ul>
+</section>
+
+{{ partial "footer.html" . }}
