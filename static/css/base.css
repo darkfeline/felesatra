@@ -1,11 +1,23 @@
 body {
     max-width: 750px;
     margin: auto;
-    background-color: #FFFFEF;
+    background-color: #FFFFDF;
     color: #202020;
 }
 
 code {
+    background-color: #FFDFFF;
+}
+
+pre {
+    margin-left: 10px;
+    border-left: 3px solid;
+    padding-left: 5px;
+    background-color: #EFFFFF;
+}
+
+pre code {
+    background-color: inherit;
 }
 
 /* Definition lists */
