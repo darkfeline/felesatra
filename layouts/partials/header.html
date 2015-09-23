@@ -21,11 +21,8 @@
     {{ end }}
     {{ end }}
 
-    {{ if and (isset .Params "jquery") (eq .Params.jquery true) }}
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    {{ end }}
-
     {{ if and (isset .Params "tablesorter") (eq .Params.tablesorter true) }}
+    {{ partial "jquery.html" . }}
     {{ partial "tablesorter.html" . }}
     {{ end }}
 

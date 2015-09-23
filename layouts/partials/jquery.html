@@ -1,0 +1,4 @@
+{{ if not ($.Scratch.Get "jquery") }}
+{{ $.Scratch.Add "jquery" true }}
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+{{ end }}

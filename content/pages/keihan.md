@@ -3,7 +3,6 @@ title: "契絆想解詩"
 date: "2015-09-22"
 publishdate: "2015-08-28"
 tablesorter: true
-jquery: true
 subjects:
   - "Surge Concerto"
 ---
