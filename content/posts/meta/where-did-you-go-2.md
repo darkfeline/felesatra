@@ -4,6 +4,8 @@ date: 2012-09-22
 publishdate: 2012-09-22
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 I haven't posted on this blog or <a

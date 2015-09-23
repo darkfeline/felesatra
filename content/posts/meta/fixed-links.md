@@ -4,6 +4,8 @@ date: 2012-03-05
 publishdate: 2012-03-05
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 Somehow ifile.it dropped all of my files.  Ever since the MegaUpload incident,

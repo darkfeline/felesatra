@@ -4,6 +4,8 @@ date: 2012-12-25
 publishdate: 2012-12-25
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 I've gone from a single blog to splitting it up into multiple blogs for

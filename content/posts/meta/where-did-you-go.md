@@ -4,6 +4,8 @@ date: 2012-09-22
 publishdate: 2012-09-22
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 Basically, I haven't had the time to do transcribing (or blogging =P),

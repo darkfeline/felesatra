@@ -4,6 +4,8 @@ date: 2014-10-06
 publishdate: 2014-10-06
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 Welcome to my new blog!

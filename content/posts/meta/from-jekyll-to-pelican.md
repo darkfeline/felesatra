@@ -4,6 +4,8 @@ date: 2014-12-07
 publishdate: 2014-12-07
 subjects:
   - "meta"
+contents:
+  - "news"
 ---
 
 About a month or so ago I moved my blog from Jekyll to Pelican.  The motivation,
