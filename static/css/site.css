@@ -51,8 +51,8 @@ dl.attributes, dl.attributes-inline {
 }
 
 dl.attributes-inline {
-    margin-top: 1px;
-    margin-bottom: 1px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 dl.attributes-inline dt {
