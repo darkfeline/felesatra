@@ -1,11 +1,15 @@
 +++
-title = "契絆想解詩 (けいはんそうかいし)"
-date = "2015-08-28"
+title = "契絆想解詩"
+date = "2015-09-22"
+publishdate = "2015-08-28"
 +++
 
 ## Introduction
 
 <dl>
+  <dt>Hiragana</dt>
+  <dd>けいはんそうかいし</dd>
+
   <dt>Romanized</dt>
   <dd>Keihansoukaishi</dd>
 
