@@ -6,18 +6,16 @@
   <p>This page provides a comprehensive listing of all {{ .Data.Singular }}
     terms.</p>
 
-  {{ $data := .Data }}
-  {{ range $key, $value := .Data.Terms.Alphabetical }}
-  <section>
-    <h2>
+  <ul>
+    {{ $data := .Data }}
+    {{ range $key, $value := .Data.Terms.Alphabetical }}
+    <li>
       <a href="/{{ $data.Plural }}/{{ $value.Name | urlize }}">
         {{ $value.Name }}
       </a>
-    </h2>
-
-    {{ partial "taxonomy-list.html" $value }}
-  </section>
-  {{ end }}
+    </li>
+    {{ end }}
+  </ul>
 </section>
 
 {{ partial "footer.html" . }}
