@@ -3,11 +3,13 @@
 <section>
   <h1>{{ .Title }}</h1>
 
-  <ul>
-    {{ range .Data.Pages }}
-    {{ .Render "li" }}
-    {{ end }}
-  </ul>
+  <nav>
+    <ul>
+      {{ range .Data.Pages }}
+      {{ .Render "li" }}
+      {{ end }}
+    </ul>
+  </nav>
 </section>
 
 {{ partial "footer.html" . }}
