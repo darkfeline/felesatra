@@ -1,0 +1,21 @@
+{{ if (where .Pages "Section" "pages" | len | eq 0 | not) }}
+<section>
+  <h3>Pages</h3>
+  <ul>
+    {{ range where .Pages.ByTitle "Section" "pages" }}
+    {{ .Render "li" }}
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ if (where .Pages "Section" "posts" | len | eq 0 | not) }}
+<section>
+  <h3>Posts</h3>
+  <ul>
+    {{ range where .Pages.ByDate "Section" "posts" }}
+    {{ .Render "li" }}
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

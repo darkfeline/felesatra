@@ -1,8 +1,10 @@
-+++
-title = "Projects"
-date = "2015-08-28"
-publishdate = "2015-08-28"
-+++
+---
+title: "Projects"
+date: "2015-08-28"
+publishdate: "2015-08-28"
+subjects:
+  - "meta"
+---
 
 A list of my public projects for personal reference.  Most of these are
 presentable (stable, functioning, usable, etc.) so if you find them useful, feel

@@ -1,0 +1,22 @@
+{{ partial "header.html" . }}
+
+<section>
+  <h1>{{ .Title }}</h1>
+
+  {{ $data := .Data }}
+  {{ range $key, $value := .Data.Terms.Alphabetical }}
+  <section>
+    {{ with $value }}
+    <h2>
+      <a href="/{{ $data.Plural }}/{{ .Name | urlize }}">
+        {{ .Name }}
+      </a>
+    </h2>
+
+    {{ partial "taxonomy-list.html" . }}
+    {{ end }}
+  </section>
+  {{ end }}
+</section>
+
+{{ partial "footer.html" . }}
