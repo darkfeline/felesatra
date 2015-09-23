@@ -3,6 +3,9 @@
 <section>
   <h1>{{ .Title }}</h1>
 
+  <p>This page provides a comprehensive listing of all {{ .Data.Singular }}
+    terms.</p>
+
   {{ $data := .Data }}
   {{ range $key, $value := .Data.Terms.Alphabetical }}
   <section>
