@@ -1,15 +1,7 @@
 <article class="summary-article">
   <section>
     <h3>{{ .Title }}</h3>
-    <dl class="attributes-inline">
-      <dt>Published</dt>
-      {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
-      {{ if eq (.PublishDate.Unix) -62135596800 }}
-      <dd>{{ .Date.Format "2006-01-02" }}</dd>
-      {{ else }}
-      <dd>{{ .PublishedDate.Format "2006-01-02" }}</dd>
-      {{ end }}
-    </dl>
+    {{ partial "date-attrs.html" . }}
     <p>{{ .Summary }}</p>
     <a class="block" href="{{ .Permalink }}">Full post</a>
   </section>
