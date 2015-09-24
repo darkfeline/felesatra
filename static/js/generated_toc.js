@@ -6,7 +6,7 @@
 
     To place the TOC on the page, add
 
-    <div id="generated-toc"></div>
+    <div id="generatea-toc"></div>
 
     to the page where you want the TOC to appear. If this element
     is not present, the TOC will not appear.
@@ -53,7 +53,7 @@ generated_toc = {
         if (classes[i].match(/^generate_from_h[1-6]$/)) {
           generate_from = classes[i].substr(classes[i].length-1,1);
         } else if (classes[i].match(/^generate_for_[a-z]+$/)) {
-          generate_for = classes[i].match(/^generate_for_([a-z])+$/)[1];
+          generate_for = classes[i].match(/^generate_for_([a-z]+)$/)[1];
         }
       }
     } else {
@@ -64,7 +64,7 @@ generated_toc = {
     // set top_node to be the element in the document under which
     // we'll be analysing headings
     if (generate_for == 'page') {
-      top_node = document.getElementsByTagName('body');
+      top_node = document.getElementsByTagName('body')[0];
     } else {
       // i.e., explicitly set to "parent", left blank (so "unset"),
       // or some invalid value
