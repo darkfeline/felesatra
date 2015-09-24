@@ -10,7 +10,7 @@ blackfriday:
 metaDataFormat: "yaml"
 permalinks:
   document: /:section/:slug/
-  transcription: /:section/:slug/
-  meta: /:section/:year/:month/:day/:slug/
-  sankaku: /:section/:year/:month/:day/:slug/
-  tech: /:section/:year/:month/:day/:slug/
+  transcription: /:section/:filename/
+  meta: /:section/:year/:month/:day/:filename/
+  sankaku: /:section/:year/:month/:day/:filename/
+  tech: /:section/:year/:month/:day/:filename/
