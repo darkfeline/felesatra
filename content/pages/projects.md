@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-date: "2015-08-28"
+date: "2015-09-23"
 publishdate: "2015-08-28"
 subjects:
   - "meta"
@@ -10,10 +10,17 @@ contents:
 
 A list of my public projects for personal reference.  Most of these are
 presentable (stable, functioning, usable, etc.) so if you find them useful, feel
-free to use them.  Ask if you need a free software license and I forgot to add
-one.
+free to use them.  Contact me if you need a free software license and one isn't
+present.
 
 <dl>
+  <dt>
+    <a href="https://github.com/darkfeline/euterpe">euterpe</a>
+  </dt>
+  <dd>
+    A simple Python 3 program for syncing a music library to a music player.
+  </dd>
+
   <dt>
     <a href="https://github.com/darkfeline/binasphere">binasphere</a>
   </dt>
@@ -30,7 +37,7 @@ one.
   </dd>
 
   <dt>
-    <a href="https://github.com/darkfeline/dantalian">Dantalian</a>
+    <a href="https://github.com/darkfeline/dantalian">dantalian</a>
   </dt>
   <dd>
     Tools for tagging files with hard links.
@@ -42,11 +49,6 @@ one.
   <dd>
     Simple torrent file previewing script.
   </dd>
-</dl>
-
-## NSFW
-
-<dl>
   <dt>
     <a href="https://github.com/darkfeline/sadpanda_downloader">sadpanda_downloader</a>
   </dt>
