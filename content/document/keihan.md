@@ -62,7 +62,7 @@ that illusion shall disappear shortly.
 Here is the alphabet:
 
 <figure>
-  <img src="/img/keihan/alphabet.jpg">
+  <img src="/img/keihan/alphabet.jpg" alt="The Keihan alphabet, from A to Z.">
 </figure>
 
 There is no distinction between upper or lower case.
@@ -70,7 +70,7 @@ There is no distinction between upper or lower case.
 Here are the punctuation characters:
 
 <figure>
-  <img src="/img/keihan/punctuation.jpg">
+  <img src="/img/keihan/punctuation.jpg" alt="Keihan punctuation marks.">
 </figure>
 
 Ignore the leading `a` characters; they are there to force the official
@@ -86,7 +86,8 @@ function like they do in English.
 Keihan's numeric system is hexadecimal (again showing the computer theme):
 
 <figure>
-  <img src="/img/keihan/numbers.jpg">
+  <img src="/img/keihan/numbers.jpg"
+       alt="Keihan digits, from 0 to F and including the decimal point.">
 </figure>
 
 ### Clusters
@@ -110,7 +111,7 @@ Clusters of two characters (2-clusters) have two possible forms.
 </dl>
 
 <figure>
-  <img src="/img/keihan/2-cluster.jpg">
+  <img src="/img/keihan/2-cluster.jpg" alt="Keihan cluster forms A and B.">
 </figure>
 
 Clusters of three characters (3-clusters) have three possible forms.
@@ -127,7 +128,7 @@ Clusters of three characters (3-clusters) have three possible forms.
 </dl>
 
 <figure>
-  <img src="/img/keihan/3-cluster.jpg">
+  <img src="/img/keihan/3-cluster.jpg" alt="Keihan cluster forms C, D, and E.">
 </figure>
 
 Clusters of four characters (4-clusters) have two possible forms.
@@ -141,7 +142,7 @@ Clusters of four characters (4-clusters) have two possible forms.
 </dl>
 
 <figure>
-  <img src="/img/keihan/4-cluster.jpg">
+  <img src="/img/keihan/4-cluster.jpg" alt="Keihan cluster forms F and G.">
 </figure>
 
 #### Rules
@@ -157,6 +158,12 @@ so they might be incorrect or sub-optimal.
 
 <figure>
   <table class="tablesorter">
+
+    <colgroup span="1"></colgroup>
+    <colgroup span="2"></colgroup>
+    <colgroup span="2"></colgroup>
+    <colgroup span="2"></colgroup>
+
     <thead>
       <tr>
         <th>Letter</th>
@@ -174,22 +181,7 @@ so they might be incorrect or sub-optimal.
         <th>Form</th>
         <th>Priority</th>
       </tr>
-
     </thead>
-
-    <col>
-    <colgroup>
-      <col>
-      <col>
-    </colgroup>
-    <colgroup>
-      <col>
-      <col>
-    </colgroup>
-    <colgroup>
-      <col>
-      <col>
-    </colgroup>
 
   <!-- BEGIN RECEIVE ORGTBL cluster-rules -->
 <tr><td>a</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
@@ -293,7 +285,8 @@ There are nine different mutations.
 Here are all of the mutations for all letters:
 
 <figure>
-  <img src="/img/keihan/mutation-all.jpg">
+  <img src="/img/keihan/mutation-all.jpg"
+       alt="A chart showing all Keihan letter mutations.">
 </figure>
 
 ## Corrections

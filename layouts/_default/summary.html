@@ -1,8 +1,6 @@
 <article class="summary-article">
-  <section>
-    <h3>{{ .Title }}</h3>
-    {{ partial "date-attrs.html" . }}
-    <p>{{ .Summary }}</p>
-    <a class="block" href="{{ .Permalink }}">Full post</a>
-  </section>
+  <h3>{{ .Title }}</h3>
+  {{ partial "date-attrs.html" . }}
+  <p>{{ .Summary }}</p>
+  <a class="block" href="{{ .Permalink }}">Full post</a>
 </article>

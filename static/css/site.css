@@ -43,9 +43,12 @@
 
 /* Site footer */
 #site-footer {
+    display: flex;
+    align-items: center;
     border-top: 2px black solid;
     padding: 5px;
     margin-top: 10px;
+    font-size: 80%;
 }
 
 /* Site body */
