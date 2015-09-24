@@ -1,6 +1,7 @@
 ---
 subjects:
   - "anime"
+  - "music"
 contents:
   - "transcription"
 title: The World God Only Knows ED - コイノシルシ

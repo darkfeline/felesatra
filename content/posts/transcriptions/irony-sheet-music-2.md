@@ -1,6 +1,7 @@
 ---
 subjects:
   - "anime"
+  - "music"
 contents:
   - "transcription"
 title: Irony Sheet Music

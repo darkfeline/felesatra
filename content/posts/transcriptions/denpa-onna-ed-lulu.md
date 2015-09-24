@@ -1,6 +1,7 @@
 ---
 subjects:
   - "anime"
+  - "music"
 contents:
   - "transcription"
 title: Denpa Onna to Seishun Otoko ED - Lulu

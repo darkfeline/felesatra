@@ -1,6 +1,7 @@
 ---
 subjects:
   - "anime"
+  - "music"
 contents:
   - "transcription"
 title: Usagi Drop OP TV ver - Sweet Drops
