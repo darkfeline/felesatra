@@ -30,7 +30,6 @@
 }
 
 #site-footer {
-    display: flex;
     border-top: 2px black solid;
     padding: 5px;
     margin-top: 10px;
