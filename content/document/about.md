@@ -39,9 +39,21 @@ I will host it if I like it.
 
 ### Site structure
 
-Every page belongs in one of two sections: pages or posts.  Posts are blog-like
-content, individual items that are published and then generally left alone,
-whereas pages are constant entities that will often be revised or extended.
+Every page belongs in a section.  Each section can be thought of as a mini-site
+or mini-blog, containing related content.
+
+<dl>
+  <dt><a href="/document">document</a></dt>
+  <dd>Formal prose, technical documents, and the like</dd>
+  <dt><a href="/meta">meta</a></dt>
+  <dd>News about the site itself</dd>
+  <dt><a href="/sankaku">sankaku</a></dt>
+  <dd>Posts about things related to anime, manga, visual novels, and RPGs</dd>
+  <dt><a href="/tech">tech</a></dt>
+  <dd>Anything related to technology or general news</dd>
+  <dt><a href="/transcription">transcription</a></dt>
+  <dd>Music transcriptions</dd>
+</dl>
 
 In addition, pages are organized with tagging metadata.  Whereas other sites
 might use categories and tags, this site uses subjects and contents.
@@ -58,7 +70,7 @@ talks about its subjects.
 
 A general RSS feed can be found on the homepage.  Feeds restricted to a given
 section, subject, or content can be found through the
-[site index](/page/site-index).
+[site index]({{< ref "site-index.md" >}}).
 
 ## Contact
 
