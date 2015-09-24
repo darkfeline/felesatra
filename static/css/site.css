@@ -50,7 +50,7 @@
 
 /* Site body */
 body {
-    background-image: url("/img/bg.png");
+    background-image: url("/img/site/bg.png");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;

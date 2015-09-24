@@ -21,49 +21,17 @@
   <h2>Links</h2>
   <nav>
     <ul>
-      <li><a href="/pages/keihan">契絆想解詩</a></li>
-      <li><a href="/pages/projects">Projects</a></li>
+      <li><a href="{{ ref . "keihan.md" }}">契絆想解詩</a></li>
+      <li><a href="{{ ref . "projects.md" }}">Projects</a></li>
     </ul>
   </nav>
 </section>
 
 <section>
   <h2>Posts</h2>
-  {{ range first 5 (where .Data.Pages.ByPublishDate.Reverse "Section" "posts") }}
+  {{ range first 5 .Data.Pages.ByPublishDate.Reverse }}
   {{ .Render "summary" }}
   {{ end }}
-  <a class="block" href="/posts">All posts</a>
-
-  <section>
-    <h3>By subject</h3>
-    <nav>
-      <ul>
-        <li><a href="/subjects/anime">Anime</a></li>
-        <li><a href="/subjects/programming">Programming</a></li>
-        <li><a href="/subjects/meta">Meta</a></li>
-      </ul>
-    </nav>
-  </section>
-
-  <section>
-    <h3>By content</h3>
-    <nav>
-      <ul>
-        <li><a href="/contents/transcription">Transcriptions</a></li>
-        <li><a href="/contents/review">Reviews</a></li>
-      </ul>
-    </nav>
-  </section>
-
-</section>
-
-<section>
-  <h2>Recently updated pages</h2>
-  <nav>
-    {{ range first 10 .Data.Pages.ByDate.Reverse }}
-    {{ .Render "li" }}
-    {{ end }}
-  </nav>
 </section>
 
 {{ partial "footer.html" . }}

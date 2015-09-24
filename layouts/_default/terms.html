@@ -3,19 +3,13 @@
 <section>
   <h1>{{ .Title }}</h1>
 
-  <p>This page provides a comprehensive listing of all {{ .Data.Singular }}
-    terms.</p>
-
-  <ul>
-    {{ $data := .Data }}
-    {{ range $key, $value := .Data.Terms.Alphabetical }}
-    <li>
-      <a href="/{{ $data.Plural }}/{{ $value.Name | urlize }}">
-        {{ $value.Name }}
-      </a>
-    </li>
+  <nav>
+    <ul>
+    {{ range .Data.Terms.Alphabetical }}
+      <li><a href="{{ .Name | urlize }}">{{ .Name }}</a></li>
     {{ end }}
-  </ul>
+   </ul>
+  </nav>
 </section>
 
 {{ partial "footer.html" . }}

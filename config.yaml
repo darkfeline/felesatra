@@ -3,7 +3,14 @@ title: "Feles Atra"
 taxonomies:
   subject: "subjects"
   content: "contents"
+pluralizeListTitles: false
 blackfriday:
   extensions:
     - "definitionLists"
 metaDataFormat: "yaml"
+permalinks:
+  document: /:section/:slug/
+  transcription: /:section/:slug/
+  meta: /:section/:year/:month/:day/:slug/
+  sankaku: /:section/:year/:month/:day/:slug/
+  tech: /:section/:year/:month/:day/:slug/

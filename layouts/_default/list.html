@@ -5,7 +5,7 @@
 
   <nav>
     <ul>
-      {{ range .Data.Pages }}
+      {{ range .Data.Pages.ByDate.Reverse }}
       {{ .Render "li" }}
       {{ end }}
     </ul>

@@ -1,0 +1,29 @@
+{{ partial "header.html" . }}
+
+<section>
+  <h1>{{ .Title }}</h1>
+
+  {{ .Content }}
+
+  <nav>
+    <section>
+      <h2>Sections</h2>
+      <ul>
+        {{ range $key, $value := .Site.Sections }}
+        <li><a href="/{{ $key | urlize }}/">{{ $key }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+    <section>
+      <h2>Taxonomy terms</h2>
+      <ul>
+        {{ range $key, $value := .Site.Taxonomies }}
+        <li><a href="/{{ $key | urlize }}">{{ $key }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+  </nav>
+
+</section>
+
+{{ partial "footer.html" . }}

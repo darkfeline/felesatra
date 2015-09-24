@@ -1,0 +1,22 @@
+---
+title: Fixed Links
+date: 2012-03-05
+publishdate: 2012-03-05
+subjects:
+  - "meta"
+contents:
+  - news
+---
+
+Somehow ifile.it dropped all of my files.  Ever since the MegaUpload incident,
+it seems there are no good file sharing sites anymore.  Nice job inhibiting
+creativity, government!
+
+Until I find a better solution, I'm hosting all files directly on my server.
+I'll also be putting up torrent links so my server doesn't commit suicide.
+Please, please try the torrent links first.  This is my first time with
+torrents, so I'm not sure I set it up correctly, and I can't keep my computer
+on all the time, but I'll try to keep it on during the day, and if you torrent
+it, please keep it open to seed for others.  If anyone has any free file
+hosting suggestions or are willing to mirror, please e-mail me or leave a
+comment or something.

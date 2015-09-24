@@ -1,9 +1,13 @@
 <dl class="attributes-inline">
-  <dt>Last updated</dt>
+  <dt>Written</dt>
   <dd>{{ .Date.Format "2006-01-02" }}</dd>
   {{/*  If publishdate isn't set, it will default to the given UNIX time */}}
   {{ if not (eq (.PublishDate.Unix) -62135596800) }}
   <dt>Published</dt>
   <dd>{{ .PublishDate.Format "2006-01-02" }}</dd>
+  {{ end }}
+  {{ if isset .Params "modified" }}
+  <dt>Last modified</dt>
+  <dd>{{ .Params.modified }}</dd>
   {{ end }}
 </dl>
