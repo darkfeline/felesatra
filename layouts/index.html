@@ -15,22 +15,15 @@
   <p>Site is under construction, so expect it to change over time.  However, it
     will stay simple, as I'm not fond of loading 10 MB of JavaScript and CSS for
     a document that should by all rights be no more than 10 kB.</p>
-
-  <p>In the meantime:</p>
-
-  <ul>
-    <li>Blog posts can be found under "All Posts" in the navigation above.</li>
-
-    <li>Individual pages can likewise be found under "All Pages".</li>
-
-    <li>The Keihan page can be found under "All Pages", or <a href="/pages/keihan">linked
-      here</a> for now.</li>
-  </ul>
 </section>
 
 <section>
   <h2>Links</h2>
   <nav>
+    <ul>
+      <li><a href="/pages/keihan">契絆想解詩</a></li>
+      <li><a href="/pages/projects">Projects</a></li>
+    </ul>
   </nav>
 </section>
 
@@ -65,7 +58,7 @@
 </section>
 
 <section>
-  <h2>Recently updated</h2>
+  <h2>Recently updated pages</h2>
   <nav>
     {{ range first 10 .Data.Pages.ByDate.Reverse }}
     {{ .Render "li" }}

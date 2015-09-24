@@ -6,7 +6,7 @@
 
     To place the TOC on the page, add
 
-    <div id="generatea-toc"></div>
+    <div id="generated-toc"></div>
 
     to the page where you want the TOC to appear. If this element
     is not present, the TOC will not appear.
