@@ -1,4 +1,4 @@
-/* Site Global */
+/* Site header */
 #site-header {
     display: flex;
     align-items: center;
@@ -13,28 +13,42 @@
     color: inherit;
 }
 
-#site-header #site-title {
+/* Site title */
+#site-header > #site-title {
     font-size: 250%;
     margin: 5px;
 }
 
-#site-nav {
+/* Site header right */
+#site-header > #site-header-right {
+    display: flex;
+    align-items: center;
+}
+
+#site-header > #site-header-right > * {
+    margin: 5px;
+}
+
+/* Site nav */
+#site-header > #site-header-right > #site-nav {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-#site-nav a {
+#site-header > #site-header-right > #site-nav > * {
     margin: 11px;
     font-size: 130%
 }
 
+/* Site footer */
 #site-footer {
     border-top: 2px black solid;
     padding: 5px;
     margin-top: 10px;
 }
 
+/* Site body */
 body {
     background-image: url("/img/bg.png");
     background-repeat: no-repeat;
