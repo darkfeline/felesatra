@@ -1,9 +1,9 @@
 baseurl: "http://www.felesatra.moe/"
-languageCode: "en-us"
 title: "Feles Atra"
 taxonomies:
   subject: "subjects"
   content: "contents"
 blackfriday:
   extensions:
-    - definitionLists
+    - "definitionLists"
+metaDataFormat: "yaml"
