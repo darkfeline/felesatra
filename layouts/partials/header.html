@@ -21,6 +21,10 @@
     {{ end }}
     {{ end }}
 
+    {{ if and (isset .Params "toc") (eq .Params.toc true) }}
+    <script src="/js/generated_toc.js"></script>
+    {{ end }}
+
     {{ if and (isset .Params "tablesorter") (eq .Params.tablesorter true) }}
     {{ partial "jquery.html" . }}
     {{ partial "tablesorter.html" . }}
