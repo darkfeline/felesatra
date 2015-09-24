@@ -26,18 +26,7 @@
 }
 
 #site-header > #site-header-right > * {
-    margin: 5px;
-}
-
-/* Site nav */
-#site-header > #site-header-right > #site-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-#site-header > #site-header-right > #site-nav > * {
-    margin: 11px;
+    margin: 9px;
     font-size: 130%
 }
 

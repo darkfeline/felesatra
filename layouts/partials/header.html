@@ -39,13 +39,11 @@
 
     <header id="site-header">
       <a id="site-title" href="/">Feles Atra</a>
-      <div id="site-header-right">
+      <nav id="site-header-right">
         {{ if .RSSlink }}
         <a href="{{ .RSSlink }}"><img src="/img/site/feed-icon-14x14.png" alt="RSS feed"></a>
         {{ end }}
-        <nav id="site-nav">
-          <a href="{{ ref . "about.md" }}">About</a>
-          <a href="{{ ref . "site-index.md" }}">Site Index</a>
-        </nav>
-      </div>
+        <a href="{{ ref . "about.md" }}">About</a>
+        <a href="{{ ref . "site-index.md" }}">Site Index</a>
+      </nav>
     </header>
