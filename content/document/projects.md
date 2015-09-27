@@ -3,7 +3,7 @@ title: "Projects"
 date: "2015-08-28"
 slug: "projects"
 publishdate: "2015-08-28"
-modified: "2015-09-23"
+modified: "2015-09-27"
 subjects:
   - "meta"
 
@@ -15,6 +15,13 @@ free to use them.  Contact me if you need a free software license and one isn't
 present.
 
 <dl>
+  <dt>
+    <a href="https://github.com/darkfeline/animanager">animanager</a>
+  </dt>
+  <dd>
+    Command line anime tracker/manager.
+  </dd>
+
   <dt>
     <a href="https://github.com/darkfeline/euterpe">euterpe</a>
   </dt>
