@@ -69,9 +69,21 @@ content it contains is of the type [news]({{< absURL "contents/news" >}}).
 Subjects describe *what* the page is about, and contents describe *how* the page
 talks about its subjects.
 
+### RSS
+
 A general RSS feed can be found on the homepage.  Feeds restricted to a given
 section, subject, or content can be found through the
 [site index]({{< ref "site-index.md" >}}).
+
+### SSL/TLS
+
+This site uses a self-signed certificate.  The certificate can be found
+[here]({{< absURL "files/cert/cert.crt" >}}), and the signature for the
+certificate, made with [my public key][key] is [here]({{< absURL
+"files/cert/cert.crt.sig" >}}).  After verifying that the certificate is signed
+by me, you can add it to your browser so you know that the content you are
+seeing on this site is indeed from this site and not advertisements or political
+propaganda inserted by third parties such as your ISP or government.
 
 ## Contact
 
