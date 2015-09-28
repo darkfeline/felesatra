@@ -22,11 +22,15 @@
     {{ end }}
     {{ end }}
 
-    {{ if and (isset .Params "toc") (eq .Params.toc true) }}
+    {{ range $key, $value := .Params }}
+    {{ $.Scratch.Add $key $value }}
+    {{ end }}
+
+    {{ if $.Scratch.Get "toc" }}
     <script src="{{ "js/generated_toc.js" | absURL }}"></script>
     {{ end }}
 
-    {{ if and (isset .Params "tablesorter") (eq .Params.tablesorter true) }}
+    {{ if $.Scratch.Get "tablesorter" }}
     {{ partial "jquery.html" . }}
     {{ partial "tablesorter.html" . }}
     {{ end }}
