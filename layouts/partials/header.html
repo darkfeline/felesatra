@@ -3,26 +3,26 @@
   <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" type="text/css" href="/css/site.css">
-    <link rel="stylesheet" type="text/css" href="/css/base.css">
-    <link rel="icon" type="image/png" href="/img/site/favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ "css/site.css" | absURL }}">
+    <link rel="stylesheet" type="text/css" href="{{ "css/base.css" | absURL }}">
+    <link rel="icon" type="image/png" href="{{ "img/site/favicon.png" | absURL }}">
 
     {{ if .RSSlink }}
-    <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml"/>
+    <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml">
     {{ end }}
 
     {{ if .IsPage }}
     {{ if .NextInSection }}
-    <link href="{{ .NextInSection.Permalink }}" rel="next"/>
+    <link href="{{ .NextInSection.Permalink }}" rel="next">
     {{ end }}
 
     {{ if .PrevInSection }}
-    <link href="{{ .PrevInSection.Permalink }}" rel="prev"/>
+    <link href="{{ .PrevInSection.Permalink }}" rel="prev">
     {{ end }}
     {{ end }}
 
     {{ if and (isset .Params "toc") (eq .Params.toc true) }}
-    <script src="/js/generated_toc.js"></script>
+    <script src="{{ "js/generated_toc.js" | absURL }}"></script>
     {{ end }}
 
     {{ if and (isset .Params "tablesorter") (eq .Params.tablesorter true) }}
@@ -38,10 +38,12 @@
   <body>
 
     <header id="site-header">
-      <a id="site-title" href="/">Feles Atra</a>
+      <a id="site-title" href="{{ .Site.BaseURL }}">Feles Atra</a>
       <nav id="site-header-right">
         {{ if .RSSlink }}
-        <a href="{{ .RSSlink }}"><img src="/img/site/feed-icon-14x14.png" alt="RSS feed"></a>
+        <a href="{{ .RSSlink }}">
+          <img src="{{ "img/site/feed-icon-14x14.png" | absURL }}" alt="RSS feed">
+        </a>
         {{ end }}
         <a href="{{ ref . "about.md" }}">About</a>
         <a href="{{ ref . "site-index.md" }}">Site Index</a>

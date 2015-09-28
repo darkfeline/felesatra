@@ -1,4 +1,4 @@
-baseurl: "http://www.felesatra.moe/"
+baseurl: "https://www.felesatra.moe/"
 title: "Feles Atra"
 taxonomies:
   subject: "subjects"

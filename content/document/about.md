@@ -60,10 +60,11 @@ might use categories and tags, this site uses subjects and contents.
 <dfn>Subjects</dfn> describe the subject matters to which the page is relevant,
 and <dfn>contents</dfn> describe the content formats contained in the page.
 
-For example, an anime review post is about the subject matter [anime](/subjects/anime) and
-contains content of the [review](/contents/review) type.  A news post about this
-site has [meta](/subjects/meta) subject matter (since it is talking about
-itself), and the content it contains is of the type [news](/contents/news).
+For example, an anime review post is about the subject matter [anime]({{< absURL
+"subjects/anime" >}}) and contains content of the [review]({{< absURL
+"contents/review" >}}) type.  A news post about this site has [meta]({{< absURL
+"subjects/meta" >}}) subject matter (since it is talking about itself), and the
+content it contains is of the type [news]({{< absURL "contents/news" >}}).
 
 Subjects describe *what* the page is about, and contents describe *how* the page
 talks about its subjects.
