@@ -40,15 +40,6 @@
     font-size: 80%;
 }
 
-/* Site body */
-body {
-    background-image: url("/img/site/bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: contain;
-}
-
 /* Attributes definition list */
 dl.attributes, dl.attributes-inline {
     font-size: 75%;
