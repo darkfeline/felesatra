@@ -1,0 +1,218 @@
+---
+date: 2015-10-02T19:10:38-07:00
+publishdate: 2015-10-02
+subjects:
+- programming
+contents:
+- guide
+toc: true
+title: How to make a FOSS project
+---
+
+<div> {{< toc >}} </div>
+
+## Introduction
+
+This guide outlines how a FOSS project should be made.  I am writing this
+because making a FOSS project is not obvious, especially for programmers who are
+by nature not well-versed in paperwork, management, and things of such nature.
+I have had some experience creating and maintaining FOSS projects, and I have
+had the luxury of reading a well-written book on the subject (unfortunately, I
+have forgotten its name and can no longer find it).  However, that book was a
+veritable tome, and very few people enjoy reading such a long technical text,
+hence this guide.
+
+The aim of this guide is to lay out the fundamental parts of a good FOSS project
+as concisely as possible, to stem the growing tide of poor FOSS projects.
+
+This first part describes a FOSS project abstractly, while a forthcoming second
+part describes the available tools and services for making a FOSS project in
+practice, and future parts may cover certain topics in detail (documentation,
+for example).
+
+## Crazy axe murderer principle
+
+The guiding principle behind all of this is that somewhere out there is a fellow
+programmer cum crazy axe murderer.  You do not want him to become frustrated with
+your FOSS project because he will come to hunt you down, and you better be able
+to convince him that he's the one in the wrong, not you.
+
+If your project lacks a homepage and thus Crazy Axe Murderer cannot find the
+documentation, you're screwed.
+
+If Crazy Axe Murderer wants to file a bug report and he cannot find out how to
+do so, you're screwed.
+
+If your project lacks proper documentation, you're screwed.
+
+If Crazy Axe Murderer wants to contact you to shout at you about all of the
+above, but he cannot even find a single email address to use, you're a special
+kind of screwed.
+
+If you follow this principle, you should be in good shape.
+
+## The homepage
+
+Your project must have a homepage.  The homepage serves as the heart of your
+project.  Every other part of your project links to the homepage and can be
+found on the homepage.  When a user or developer finds your homepage, they will
+have easy access to every single part of your project: the code, release news,
+contact information, contribution guidelines, documentation, everything.
+
+The homepage does not have to be pretty, it just needs to make all the necessary
+information available as easily as possible.
+
+## The documentation
+
+Your project needs documentation, and I mean this seriously, not in a "yeah we
+know, but we're developers, who actually writes documentation?" sense.
+
+Your documentation should cover the following:
+
+-   Installation and dependencies, including dependency versions.  If a user is
+    running into a bug because he used libfoo 1.2 instead of 1.1, that's your
+    fault for not explicitly stating that.
+-   Usage guide.  This should give the user enough information for him to fill in
+    the gaps using your comprehensive command and API reference documentation.
+-   Command and API reference that documents all commands, protocols, APIs,
+    file formats, and/or database formats of your software.
+
+There are two extremes you are aiming to avoid (excluding the degenerate case
+where you don't have any documentation at all):
+
+1.  You have a usage guide but no comprehensive API reference.  The user can get
+    started very quickly, but just as quickly hits a brick wall where the
+    features he wants to use are only partially documented or not documented at
+    all.  This case seems to be the most common.
+2.  You have a comprehensive API reference but no accessible usage guide.  While
+    all the information is there, a new user has no idea where to start looking.
+
+## The code
+
+It goes without saying that as a FOSS project you need code.  Developers speak
+code, so the code itself is generally not a big problem.  However, developers do
+not generally speak law or management, and there are a few critical points here.
+
+### The license
+
+First, you need to pick a FOSS license to use and properly apply to your code.
+Common choices are the GPL, Apache, and MIT licenses, although I suggest the GPL
+or Apache licenses, which have the legal support of the Free Software
+Foundation (FSF).
+
+You need to include a copy of the entire license with your source code and add a
+header to the top of every single source file covered by the license.
+
+The FSF's website contains
+[detailed information about licensing](http://www.fsf.org/licensing), which is
+backed by legal counsel.  You should go read it.
+
+If you do not include a license or apply it properly, your code will receive the
+default legal protection of "All Rights Reserved", i.e. your code will be
+proprietary software.
+
+### Version control
+
+You need to use a distributed version control system.  A version control system
+is mandatory, and for a FOSS project it really needs to be distributed, like Git
+or Mercurial.
+
+A public repository of your code should be accessible from the homepage.
+
+### The source distribution
+
+Your project's source code repository should be what I shall call "source
+distribution ready".  That is to say, a clone or snapshot of your source code
+should be ready for distribution as a finished software product.
+
+It should include everything necessary to build the software, including scripts
+and files used for the build process, the documentation, a README, a change log,
+and the source code license at a minimum.
+
+Someone should be able to put this source distribution on a USB drive (along
+with the source distributions of any necessary dependencies), take it into an
+isolated room without Internet, and compile, install, and use your software.
+
+Ideally, you should provide actual source distributions (in archive format, like
+.tar.gz) for your releases, but using your source code repository as your source
+distribution is acceptable.
+
+(Note that you shouldn't be including external dependencies in your source
+distribution.  Those external dependencies, if they are also FOSS, should have
+their own source distributions.)
+
+## Project management
+
+This section covers boring management stuff that is nevertheless important to
+the running of the project.
+
+### Project communication
+
+You need clear communcation channels for development and support for your
+project.  For a small project, this can be as simple as posting your email on
+the homepage, and for a large project, this can be as complex as an integrated
+forum, IRC, and mailing list solution.
+
+You need communcation channels for your project.  They must be easily accessible
+and usable.  The maintainers and developers for the project must use them, which
+is to say that development communication should be public.
+
+### Bug reporting
+
+You need to have a bug tracker.  This allows users and developers to track bugs.
+This might sound stupidly pedantic, but there are a lot of FOSS projects that
+lack this.  You need this.
+
+### Contribution guidelines
+
+There are two parts to contribution guidelines.  One is providing guidelines for
+how bug reports should look like, how patches should look like, how code should
+look like, how commits are made, and so on.  This will keep the project
+consistent and running smoothly in the long run.
+
+The other part is the legal rights and licensing guidelines.  You need to spell
+these out so you don't run into trouble later on.
+
+Here's a quick introduction (disclaimer: I'm not a lawyer):
+
+-   The person who writes the code owns the copyright over that code.  Copyright
+    is ultimate power.
+-   Licenses are given by the copyright holder to other people so that they can
+    use the code.
+
+If a contributor uses a FOSS license for their code, the project may be able to
+use that code, depending on license compatibility.  However the project cannot
+change that license in the future unless the contributor also hands over his
+copyright to the project (or the license explicitly states so).
+
+This is a serious issue, and this is the reason why the Linux kernel is stuck on
+the inferior GPLv2 instead of the superior GPLv3: the kernel project never got
+the copyrights from the original contributors of all of its code, so it cannot
+change the license of that code.
+
+GPLv3 solves this problem somewhat by explicitly allowing a license upgrade to
+future versions of the GPL even if you do not own copyright.
+
+This is messy legal territory, so I'll only give one piece of non-expert legal
+advice:
+
+The project should be licensed under GPLv3 (it's important to use version 3 of
+the license for the reason stated above).  Contributors keep their copyright
+over code they have written, but they license it under GPLv3, giving the project
+full legal rights to use that code and allowing for upgrades to future versions
+of the GPL.
+
+### Project governance
+
+If/when your project grows large enough, you will need to seriously consider
+setting up the formal governance of the project: who owns what parts of the
+project, who has which rights and powers, how power should be granted or taken
+away, and so on.
+
+This is far outside the scope of the majority of projects, so I won't go into
+further detail.
+
+## Conclusion
+
+Here concludes this guide.  Please send any comments or corrections to <a
+href="mailto:darkfeline@felesatra.moe">darkfeline@felesatra.moe</a>.
