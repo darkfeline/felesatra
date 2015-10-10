@@ -1,20 +1,6 @@
 <article class="summary-article">
   <h3>{{ .Title }}</h3>
-  <dl class="attributes-inline">
-    {{ if isset .Params "subjects" }}
-    <dt>Subjects</dt>
-    <dd>
-      {{ delimit .Params.subjects ", " }}
-    </dd>
-    {{ end }}
-    {{ if isset .Params "contents" }}
-    <dt>Contents</dt>
-    <dd>
-      {{ delimit .Params.contents ", " }}
-    </dd>
-    {{ end }}
-  </dl>
-  {{ partial "date-attrs.html" . }}
+  {{ partial "page-attrs.html" . }}
   <p>{{ .Summary }}</p>
   <a class="block" href="{{ .Permalink }}">Full post</a>
 </article>
