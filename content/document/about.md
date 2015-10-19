@@ -3,7 +3,7 @@ title: "About"
 date: "2015-08-27"
 slug: "about"
 publishdate: "2015-08-27"
-modified: "2015-09-23"
+modified: "2015-10-19"
 subjects:
   - "meta"
 ---
@@ -84,6 +84,19 @@ certificate, made with [my public key][key] is [here]({{< absURL
 by me, you can add it to your browser so you know that the content you are
 seeing on this site is indeed from this site and not advertisements or political
 propaganda inserted by third parties such as your ISP or government.
+
+### Page dates
+
+Each page has up to three dates associated with it: sort date, publish date, and
+last modified date.
+
+The publish date, if present, indicates when the page was published.  The last
+modified date, if present, indicates when the page was last modified.
+
+The sort date is used for ordering pages on various lists.  Generally speaking,
+the sort date serves either as the publish date or last modified date.  If a
+modification requires that the page be bumped up the page ordering, the sort
+date will be updated accordingly.
 
 ## Contact
 
