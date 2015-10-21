@@ -1,0 +1,16 @@
+{{ partial "header.html" . }}
+
+<section>
+  <h1>{{ .Title }}</h1>
+
+  {{ .Content }}
+
+  <ul>
+    {{ range $key, $value := .Site.Pages }}
+    {{ .Render "li" }}
+    {{ end }}
+  </ul>
+
+</section>
+
+{{ partial "footer.html" . }}
