@@ -9,7 +9,9 @@ toc: true
 title: How to make a FOSS project
 ---
 
-<div> {{< toc >}} </div>
+<section>
+  {{< toc >}}
+</section>
 
 ## Introduction
 

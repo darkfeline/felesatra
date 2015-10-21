@@ -60,7 +60,7 @@ dl.attributes-inline dd {
     margin-right: 15px;
 }
 
-/* summary article */
+/* Summary article */
 article.summary-article {
     border-left: 2px groove;
     padding-left: 5px;
@@ -68,10 +68,21 @@ article.summary-article {
     margin-bottom: 1em;
 }
 
-/* single block link */
+/* Single block link */
 a.block {
     display: block;
     margin-top: 1em;
     margin-bottom: 1em;
     font-style: italic;
+}
+
+/* Table of contents */
+nav#generated-toc {
+    border: 2px solid #DDDDDD;
+    padding: 10px;
+}
+
+nav#generated-toc p {
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
