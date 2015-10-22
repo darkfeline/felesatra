@@ -3,7 +3,7 @@ title: "Projects"
 date: "2015-08-28"
 slug: "projects"
 publishdate: "2015-08-28"
-modified: "2015-09-27"
+modified: "2015-10-21"
 subjects:
   - "meta"
 
@@ -16,7 +16,14 @@ present.
 
 <dl>
   <dt>
-    <a href="https://github.com/darkfeline/animanager">animanager</a>
+    <a href="http://darkfeline.github.io/chronoplot/">chronoplot</a>
+  </dt>
+  <dd>
+    Timeline maker written in Python.
+  </dd>
+
+  <dt>
+    <a href="https://darkfeline.github.io/animanager/">animanager</a>
   </dt>
   <dd>
     Command line anime tracker/manager.
@@ -45,7 +52,7 @@ present.
   </dd>
 
   <dt>
-    <a href="https://github.com/darkfeline/dantalian">dantalian</a>
+    <a href="http://darkfeline.github.io/dantalian/">dantalian</a>
   </dt>
   <dd>
     Tools for tagging files with hard links.
@@ -65,7 +72,7 @@ present.
   </dd>
 
   <dt>
-    <a href="https://github.com/darkfeline/sadpanda_downloader">fakku_downloader</a>
+    <a href="https://github.com/darkfeline/fakku_downloader">fakku_downloader</a>
   </dt>
   <dd>
     Doujinshi scraper/downloader for Fakku.
