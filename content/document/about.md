@@ -6,7 +6,12 @@ publishdate: "2015-08-27"
 modified: "2015-10-19"
 subjects:
   - "meta"
+toc: true
 ---
+
+<section>
+  {{< toc >}}
+</section>
 
 ## About me
 
