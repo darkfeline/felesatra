@@ -3,7 +3,7 @@ title: "About"
 date: "2015-08-27"
 slug: "about"
 publishdate: "2015-08-27"
-modified: "2015-10-19"
+modified: "2015-12-05"
 subjects:
   - "meta"
 toc: true
@@ -15,9 +15,9 @@ toc: true
 
 ## About me
 
-I like it when things are done the right way.  I hate it when things are done
-the wrong way because that is the leading cause of every single thing gone wrong
-in society, both now and forever.
+I like it when things are done the right way.  I do not like it when things are
+done the wrong way because that is the leading cause of every single thing gone
+wrong in society, both now and forever.
 
 My interests include:
 
@@ -38,24 +38,29 @@ Some personal links:
 ## About this site
 
 This is my personal website, and thus it hosts content that I feel like hosting.
-For the most part, this is limited to my own blog posts and assorted pages, but
-if you have any content that you would like me to host, feel free to contact me;
-I will host it if I like it.
+For the most part, this is limited to my own blog posts and assorted pages that
+I have written and now maintain, but if you have any content that you would like
+me to host, feel free to contact me; I will host it if I like it.
 
 ### Site structure
 
-Every page belongs in a section.  Each section can be thought of as a mini-site
-or mini-blog, containing related content.
+Every page on this site belongs in one and only one section.  Each section can
+be thought of as a mini-site or mini-blog, containing related content.
 
 <dl>
   <dt><a href="/document">document</a></dt>
-  <dd>Formal prose, technical documents, and the like</dd>
+  <dd>Formal prose, technical documents, and the like.  Pages that will be
+    repeatedly updated in place.</dd>
   <dt><a href="/meta">meta</a></dt>
-  <dd>News about the site itself</dd>
+  <dd>News about the site itself.</dd>
   <dt><a href="/sankaku">sankaku</a></dt>
-  <dd>Posts about things related to anime, manga, visual novels, and RPGs</dd>
+  <dd>Posts about things related to anime, manga, visual novels, and RPGs.  More
+    information about this concept can be found on <a
+    href="https://www.sankakucomplex.com/about/">this (unfortunately NSFW)
+    site</a>.</dd>
   <dt><a href="/tech">tech</a></dt>
-  <dd>Anything related to technology or general news</dd>
+  <dd>Anything related to technology or news in general, in the vein of Slashdot
+    or <a href="https://soylentnews.org/">SoylentNews</a>.</dd>
   <dt><a href="/transcription">transcription</a></dt>
   <dd>Music transcriptions</dd>
 </dl>
@@ -86,9 +91,7 @@ This site uses a self-signed certificate.  The certificate can be found
 [here]({{< absURL "files/cert/cert.crt" >}}), and the signature for the
 certificate, made with [my public key][key] is [here]({{< absURL
 "files/cert/cert.crt.sig" >}}).  After verifying that the certificate is signed
-by me, you can add it to your browser so you know that the content you are
-seeing on this site is indeed from this site and not advertisements or political
-propaganda inserted by third parties such as your ISP or government.
+by me, you can add it to your browser as trusted.
 
 ### Page dates
 
