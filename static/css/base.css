@@ -54,3 +54,8 @@ th, td {
 colgroup {
     border-left: 1px solid;
 }
+
+/* Footnotes */
+div.footnotes {
+    font-size: 75%;
+}
