@@ -16,7 +16,7 @@ software license and one isn't present.
 
 <dl>
   <dt>
-    <a href="http://teiwaz-project.github.io/">Teiwaz Project</a>
+    <a href="https://teiwaz-project.github.io/">Teiwaz Project</a>
   </dt>
   <dd>
     An ambitious endeavor to seriously pursue the development of strong AI and
@@ -24,7 +24,7 @@ software license and one isn't present.
   </dd>
 
   <dt>
-    <a href="http://darkfeline.github.io/chronoplot/">chronoplot</a>
+    <a href="https://darkfeline.github.io/chronoplot/">chronoplot</a>
   </dt>
   <dd>
     Timeline maker written in Python.
@@ -60,7 +60,7 @@ software license and one isn't present.
   </dd>
 
   <dt>
-    <a href="http://darkfeline.github.io/dantalian/">dantalian</a>
+    <a href="https://darkfeline.github.io/dantalian/">dantalian</a>
   </dt>
   <dd>
     Tools for tagging files with hard links.
