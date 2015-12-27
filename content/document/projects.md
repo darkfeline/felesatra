@@ -3,7 +3,7 @@ title: "Projects"
 date: "2015-08-28"
 slug: "projects"
 publishdate: "2015-08-28"
-modified: "2015-12-05"
+modified: "2015-12-27"
 subjects:
   - "meta"
 
@@ -15,6 +15,14 @@ if you find them useful, feel free to use them.  Contact me if you need a free
 software license and one isn't present.
 
 <dl>
+  <dt>
+    <a href="http://teiwaz-project.github.io/">Teiwaz Project</a>
+  </dt>
+  <dd>
+    An ambitious endeavor to seriously pursue the development of strong AI and
+    related topics.
+  </dd>
+
   <dt>
     <a href="http://darkfeline.github.io/chronoplot/">chronoplot</a>
   </dt>
