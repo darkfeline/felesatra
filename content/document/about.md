@@ -88,10 +88,10 @@ section, subject, or content can be found through the
 ### SSL/TLS
 
 This site uses a self-signed certificate.  The certificate can be found
-[here]({{< absURL "files/cert/cert.crt" >}}), and the signature for the
-certificate, made with [my public key][key] is [here]({{< absURL
-"files/cert/cert.crt.sig" >}}).  After verifying that the certificate is signed
-by me, you can add it to your browser as trusted.
+[here]({{< absURL "files/cert/www.felesatra.moe.crt.pem" >}}), and the signature
+for the certificate, made with [my public key][key] is [here]({{< absURL
+"files/cert/www.felesatra.moe.crt.pem.sig" >}}).  After verifying that the
+certificate is signed by me, you can add it to your browser as trusted.
 
 ### Page dates
 
