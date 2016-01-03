@@ -3,7 +3,7 @@ OUTPUTDIR=public
 SSH_HOST=www.felesatra.moe
 SSH_PORT=22
 SSH_USER=root
-SSH_TARGET_DIR=/srv/www
+SSH_TARGET_DIR=/srv/www/www.felesatra.moe
 
 all: build rsync_upload
 
