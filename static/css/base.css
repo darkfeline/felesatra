@@ -5,6 +5,15 @@ body {
     color: #303030;
 }
 
+/* Editing */
+ins {
+    background-color: #E0FFE0;
+}
+
+del {
+    background-color: #FFE0E0;
+}
+
 /* Code */
 code {
     background-color: #E0FFFF;
