@@ -36,8 +36,8 @@ makes me feel nice knowing that people visit my site.  I can use it to see
 roughly what visitors are interested in and roughly what kind of people they
 might be.  Up until now, I have used Google Analytics because it was convenient,
 but it had always made me uncomfortable to sell out my readers to <del>Big
-Brother</del>Google, so I have finally removed it.  Now, I use my web server
-logs and FOSS software for my analytics needs.
+Brother</del><ins>Google</ins>, so I have finally removed it.  Now, I use my web
+server logs and FOSS software for my analytics needs.
 
 ## Getting analytics data
 
