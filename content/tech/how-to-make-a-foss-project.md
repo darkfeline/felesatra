@@ -9,9 +9,9 @@ toc: true
 title: How to make a FOSS project
 ---
 
-<section>
+<aside>
   {{< toc >}}
-</section>
+</aside>
 
 ## Introduction
 

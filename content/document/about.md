@@ -9,9 +9,9 @@ subjects:
 toc: true
 ---
 
-<section>
+<aside>
   {{< toc >}}
-</section>
+</aside>
 
 ## About me
 
