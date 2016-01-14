@@ -87,3 +87,9 @@ blockquote :first-child {
 blockquote :last-child {
     margin-bottom: 0px;
 }
+
+/* Images */
+img.centered {
+    display: block;
+    margin: 0 auto;
+}
