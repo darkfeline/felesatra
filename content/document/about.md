@@ -106,6 +106,12 @@ the sort date serves either as the publish date or last modified date.  If a
 modification requires that the page be bumped up the page ordering, the sort
 date will be updated accordingly.
 
+### Licensing
+
+The content on this site is licensed under a <a rel="license"
+  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+  Attribution-ShareAlike 4.0 International License</a>.
+
 ## Contact
 
 You can contact me via email at [darkfeline@felesatra.moe][email].  I would
