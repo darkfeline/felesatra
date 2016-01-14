@@ -33,11 +33,18 @@
 /* Site footer */
 #site-footer {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     border-top: 2px black solid;
     padding: 5px;
     margin-top: 10px;
-    font-size: 80%;
+    font-size: 75%;
+    color: #808080;
+}
+
+#site-footer > * {
+    margin: 5px;
+    flex: 1 1 40%;
 }
 
 /* Attributes definition list */
