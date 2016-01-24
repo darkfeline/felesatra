@@ -3,7 +3,7 @@ title: "About"
 date: "2015-08-27"
 slug: "about"
 publishdate: "2015-08-27"
-modified: "2015-12-05"
+modified: "2016-01-23"
 subjects:
   - "meta"
 toc: true
@@ -84,6 +84,20 @@ talks about its subjects.
 A general RSS feed can be found on the homepage.  Feeds restricted to a given
 section, subject, or content can be found through the
 [site index]({{< ref "site-index.md" >}}).
+
+### Design principles
+
+This site probably doesn't look like what you're used to.  That's because the
+sites you are familiar with follow questionable design principles.  Here are the
+design principles for this site:
+
+- Simple is best.
+- Content is king.
+- Pages should be HTML documents that are viewable without CSS or JavaScript.
+
+To make a point, compare
+[every fucking website](http://everyfuckingwebsite.com/) with
+[a motherfucking website](http://motherfuckingwebsite.com/).
 
 ### SSL/TLS
 
