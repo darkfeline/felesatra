@@ -3,5 +3,5 @@ publishdate:
 subjects:
   - programming
 contents:
-- article
+  - article
 ---
