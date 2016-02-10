@@ -6,7 +6,7 @@
   {{ .Content }}
 
   <ul>
-    {{ range $key, $value := .Site.Pages }}
+    {{ range .Site.Pages }}
     {{ .Render "li" }}
     {{ end }}
   </ul>
