@@ -3,7 +3,7 @@ title: "Projects"
 date: "2015-08-28"
 slug: "projects"
 publishdate: "2015-08-28"
-modified: "2016-01-17"
+modified: "2016-02-18"
 subjects:
   - "meta"
 
@@ -15,6 +15,13 @@ if you find them useful, feel free to use them.  Contact me if you need a free
 software license and one isn't present.
 
 <dl>
+  <dt>
+    <a href="https://github.com/darkfeline/linca">linca</a>
+  </dt>
+  <dd>
+    A simple program for watching directories and linking new files.
+  </dd>
+
   <dt>
     <a href="https://github.com/darkfeline/winenv">winenv</a>
   </dt>
