@@ -3,7 +3,7 @@ title: "About"
 date: "2015-08-27"
 slug: "about"
 publishdate: "2015-08-27"
-modified: "2016-01-23"
+modified: "2016-03-13"
 subjects:
   - "meta"
 toc: true
@@ -101,11 +101,11 @@ To make a point, compare
 
 ### SSL/TLS
 
-This site uses a self-signed certificate.  The certificate can be found
-[here]({{< absURL "files/cert/www.felesatra.moe.crt.pem" >}}), and the signature
-for the certificate, made with [my public key][key] is [here]({{< absURL
-"files/cert/www.felesatra.moe.crt.pem.sig" >}}).  After verifying that the
-certificate is signed by me, you can add it to your browser as trusted.
+This site's SSL certificate is signed by a private CA, owned by me.  The CA
+certificate can be found [here]({{< absURL "files/cert/ca.cert.pem" >}}), and
+the signature for the certificate, made with [my public key][key] is [here]({{<
+absURL "files/cert/ca.cert.pem.asc" >}}).  After verifying that the certificate
+is signed by me, you can add it to your browser as trusted.
 
 ### Page dates
 
