@@ -24,7 +24,7 @@ class HTMLResource(FileResource):
                     break
                 frontmatter.append(line)
 
-            self.content = file.read()
+            self.content = file.read().lstrip()
 
         self.meta = {
             'template': 'base.html',
@@ -33,7 +33,7 @@ class HTMLResource(FileResource):
             'modified': None,
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
-        logger.debug('with context %s', self.meta)
+        logger.debug('with context %r', self.meta)
 
     def render_html(self, env):
         """Render the HTML only."""

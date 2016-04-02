@@ -19,12 +19,12 @@ class SimpleFileResource(FileResource):
 
     def render(self, env, target):
         # pylint: disable=unused-argument
-        """Render this resource into target."""
-        logger.debug('Render file %s %s', self, target)
+        """Render this resource to target."""
+        logger.debug('Render file %r %r', self, target)
         shutil.copy(self.path, target)
 
 
-class BaseDirectoryResource(FileResource):
+class DirectoryResource(FileResource):
 
     """Represents a directory resource.
 
@@ -34,9 +34,6 @@ class BaseDirectoryResource(FileResource):
     ...     resource.render(path)
 
     path is relative to the directory.
-
-    This resource renders the entries in the directory into the target, but not
-    the directory itself.
 
     """
 
@@ -50,9 +47,10 @@ class BaseDirectoryResource(FileResource):
 
     def render(self, env, target):
         """Render this resource into target."""
-        logger.debug('Render dir %s %s', self, target)
+        logger.debug('Render dir %r %r', self, target)
+        os.makedirs(target, exist_ok=True)
         for path, resource in self:
-            logger.debug('Render dir entry %s %s', path, resource)
+            logger.debug('Render dir entry %r %r', path, resource)
             resource.render(env, os.path.join(target, path))
 
     @classmethod
@@ -63,23 +61,7 @@ class BaseDirectoryResource(FileResource):
         elif os.path.isfile(path):
             return SimpleFileResource(path)
         else:
-            raise LoadingError('Unknown file %s', path)
-
-
-class DirectoryResource(BaseDirectoryResource):
-
-    """Represents a directory resource.
-
-    Unlike BaseDirectoryResource, this will render the directory itself to the
-    target, then render its entries into the newly created directory.
-
-    """
-
-    def render(self, env, target):
-        """Render this resource into target."""
-        new_target = os.path.join(target, self.filename)
-        os.makedirs(new_target, exist_ok=True)
-        super().render(env, new_target)
+            raise LoadingError('Unknown file %r', path)
 
 
 class RenderError(Exception):

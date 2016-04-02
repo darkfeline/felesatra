@@ -8,13 +8,13 @@ from jinja2 import Environment, FileSystemLoader
 from felesatra.utils import cached_property
 from felesatra import filters
 
-from .base import BaseDirectoryResource
+from .base import DirectoryResource
 from .page import HTMLResource, Webpage
 
 logger = logging.getLogger(__name__)
 
 
-class Website(BaseDirectoryResource):
+class Website(DirectoryResource):
 
     """Website for rendering."""
 

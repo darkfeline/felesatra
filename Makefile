@@ -3,6 +3,7 @@ all: clean build_local
 
 SRC_DIR=site
 BUILD_DIR=build
+LOCAL_BUILD_DIR=build_local
 
 .PHONY: build
 build:
@@ -10,15 +11,16 @@ build:
 
 .PHONY: build_local
 build_local:
-	python -m felesatra --site-url 'http://localhost:5000' ${SRC_DIR} ${BUILD_DIR}
+	python -m felesatra --site-url 'http://localhost:5000' ${SRC_DIR} ${LOCAL_BUILD_DIR}
 
 .PHONY: clean
 clean:
 	rm -rf ${BUILD_DIR}
+	rm -rf ${LOCAL_BUILD_DIR}
 
 .PHONY: devserver
 devserver:
-	python -m devserver ${BUILD_DIR}
+	python -m devserver ${LOCAL_BUILD_DIR}
 
 .PHONY: test
 test:

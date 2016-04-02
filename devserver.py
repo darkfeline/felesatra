@@ -13,24 +13,21 @@ logger = logging.getLogger(__name__)
 
 def make_app(serv_dir):
     # pylint: disable=unused-variable
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder=serv_dir)
 
     def getpath(path, *paths):
         return os.path.join(serv_dir, path, *paths)
 
     @app.route('/')
     def root():
-        realpath = getpath('index.html')
-        logger.debug('Path %s', realpath)
-        return app.send_static_file(realpath)
+        return app.send_static_file('index.html')
 
     @app.route('/<path:path>')
     def static_proxy(path):
-        realpath = getpath(path)
-        if os.path.isdir(realpath):
-            realpath = getpath(path, 'index.html')
-        logger.debug('Path %s', realpath)
-        return app.send_static_file(realpath)
+        if os.path.isdir(getpath(path)):
+            path = os.path.join(path, 'index.html')
+        logger.debug('path %s', path)
+        return app.send_static_file(path)
 
     return app
 
