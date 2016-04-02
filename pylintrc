@@ -1,0 +1,12 @@
+# -*- conf-unix -*-
+
+[MASTER]
+jobs=4
+
+[MESSAGES CONTROL]
+disable=
+  # isort handles this for us.
+  ungrouped-imports,
+
+[REPORTS]
+reports=no
