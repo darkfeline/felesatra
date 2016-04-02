@@ -2,8 +2,9 @@
 
 import logging
 import os
+from collections import OrderedDict
 
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, PackageLoader
 
 from felesatra.utils import cached_property
 from felesatra import filters
@@ -18,8 +19,6 @@ class Website(DirectoryResource):
 
     """Website for rendering."""
 
-    _TEMPLATE_DIR = '_templates'
-
     def __init__(self, path, site_url):
         super().__init__(path)
         self.site_url = site_url
@@ -28,7 +27,7 @@ class Website(DirectoryResource):
     def env(self):
         """Get Jinja environment."""
         env = Environment(
-            loader=FileSystemLoader(self.getpath(self._TEMPLATE_DIR)),
+            loader=PackageLoader('felesatra', 'templates'),
             trim_blocks=True,
             lstrip_blocks=True,
             auto_reload=False)
@@ -36,15 +35,12 @@ class Website(DirectoryResource):
         env.globals = {
             'site': {
                 'url': self.site_url,
+                'nav': OrderedDict((
+                    ('Keihan', 'keihan/'),
+                )),
             },
         }
         return env
-
-    def __iter__(self):
-        for filename, resource in super().__iter__():
-            if filename == self._TEMPLATE_DIR:
-                continue
-            yield filename, resource
 
     @classmethod
     def load(cls, path):

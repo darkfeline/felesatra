@@ -4,18 +4,16 @@
 <section>
   <header>
     <h1>{{ title }}</h1>
-    <ul>
+    <dl>
       {% if published %}
-      <li>
-        {{ published }}
-      </li>
+      <dt>Published:</dt>
+      <dd>{{ published }}</dd>
       {% endif %}
       {% if modified %}
-      <li>
-        {{ modified }}
-      </li>
+      <dt>Last modified: </dt>
+      <dd>{{ modified }}</dd>
       {% endif %}
-    </ul>
+    </dl>
   </header>
 
   {{ content }}

@@ -16,7 +16,9 @@
 <header>
   <h1><a href="{{ abs_url('/') }}">Feles Atra</a></h1>
   <ul>
-    <li><a href="{{ abs_url('keihan/') }}">Keihan</a>
+    {% for name, ref in site.nav.items() %}
+    <li><a href="{{ abs_url(ref) }}">{{ name }}</a>
+    {% endfor %}
   </ul>
 </header>
 

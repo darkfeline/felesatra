@@ -2,8 +2,8 @@
 {{ ref|url(site.url) }}
 {%- endmacro %}
 
-{% macro imgfig(src, alt) %}
+{% macro imgfig(src, alt) -%}
 <figure>
   <img src="{{ abs_url(src) }}" alt="{{ alt }}">
 </figure>
-{% endmacro %}
+{%- endmacro %}
