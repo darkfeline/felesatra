@@ -1,12 +1,17 @@
 """Website resource."""
 
+import logging
+import os
+
 from jinja2 import Environment, FileSystemLoader
 
 from felesatra.utils import cached_property
 from felesatra import filters
 
 from .base import DirectoryResource
-from .page import Webpage
+from .page import HTMLResource, Webpage
+
+logger = logging.getLogger(__name__)
 
 
 class Website(DirectoryResource):
@@ -40,7 +45,15 @@ class Website(DirectoryResource):
     @classmethod
     def load(cls, path):
         """Load resource."""
-        if path.endswith('.html'):
+        if path == 'index.html':
+            return HTMLResource(path)
+        elif path.endswith('.html'):
             return Webpage(path)
         else:
             return super().load(path)
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        for path, resource in self:
+            logger.debug('Render %s, %s', path, resource)
+            resource.render(env, os.path.join(target, path))

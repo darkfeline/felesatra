@@ -10,23 +10,20 @@
 {% endblock %}
 
 {% block title %}
-Feles Atra: {{ title }}
+{{ title }}
 {% endblock %}
 
 {% block body %}
 <header>
   <h1>Feles Atra</h1>
   <ul>
+    <li><a href="{{ abs_url('keihan.html') }}">Keihan</a>
   </ul>
 </header>
 
-<section>
-  <h1>{{ title }}</h1>
-
-  {% block content %}
-  {{ content }}
-  {% endblock content %}
-</section>
+{% block content %}
+{{ content }}
+{% endblock content %}
 
 <footer>
 </footer>

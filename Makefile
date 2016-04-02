@@ -1,5 +1,5 @@
 .PHONY: all
-all: build
+all: clean build
 
 SRC_DIR=site
 BUILD_DIR=build
@@ -7,6 +7,10 @@ BUILD_DIR=build
 .PHONY: build
 build:
 	python -m felesatra.__main__ ${SRC_DIR} ${BUILD_DIR}
+
+.PHONY: clean
+clean:
+	rm -r ${BUILD_DIR}
 
 .PHONY: test
 test:
