@@ -1,8 +1,10 @@
 """Website class."""
 
+import os
+
 from jinja2 import Environment, FileSystemLoader
 
-from .resources import DirectoryResource
+from .resources import DirectoryResource, RenderError, SimpleFileResource
 from .utils import cached_property
 
 
@@ -19,5 +21,11 @@ class Website(DirectoryResource):
             lstrip_blocks=True,
             auto_reload=False)
 
-    def render(self):
-        return ''
+    def __iter__(self):
+        for filename in os.listdir(self.path):
+            if os.path.isdir(filename):
+                yield filename, DirectoryResource(filename)
+            elif os.path.isfile(filename):
+                yield filename, SimpleFileResource(filename)
+            else:
+                raise RenderError('Unknown file %s', filename)

@@ -1,8 +1,6 @@
 import argparse
-import os
-import shutil
 
-from felesatra import render, resources
+from felesatra import site
 
 
 def main():
@@ -11,8 +9,8 @@ def main():
     parser.add_argument('build_dir')
     args = parser.parse_args()
 
-    res = resources.Resources()
-    build(args.src_dir, args.dest_dir)
+    website = site.Website(args.src_dir)
+    website.render(args.dest_dir)
 
 if __name__ == '__main__':
     main()
