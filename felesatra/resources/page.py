@@ -3,9 +3,9 @@
 import logging
 import os
 
-from .base import FileResource
-
 import yaml
+
+from .abc import FileResource
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +29,8 @@ class HTMLResource(FileResource):
         self.meta = {
             'template': 'base.html',
             'title': '',
+            'published': None,
+            'modified': None,
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
         logger.debug('with context %s', self.meta)
@@ -44,6 +46,8 @@ class HTMLResource(FileResource):
         context = {
             'title': self.meta['title'],
             'content': content,
+            'published': self.meta['published'],
+            'modified': self.meta['modified'],
         }
         return template.render(context)
 

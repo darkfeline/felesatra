@@ -2,7 +2,21 @@
 
 {% block content %}
 <section>
-  <h1>{{ title }}</h1>
+  <header>
+    <h1>{{ title }}</h1>
+    <ul>
+      {% if published %}
+      <li>
+        {{ published }}
+      </li>
+      {% endif %}
+      {% if modified %}
+      <li>
+        {{ modified }}
+      </li>
+      {% endif %}
+    </ul>
+  </header>
 
   {{ content }}
 </section>

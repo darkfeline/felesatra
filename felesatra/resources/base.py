@@ -4,47 +4,39 @@ import os
 import logging
 import shutil
 
-# pylint: disable=too-few-public-methods
+from .abc import FileResource
 
 logger = logging.getLogger(__name__)
 
 
-class Resource:
+class SimpleFileResource(FileResource):
 
-    """Represents a render-able resource."""
+    """Represents a simple resource file.
 
-    def render(self, env, target):
-        # pylint: disable=no-self-use,unused-argument
-        """Render this resource into target."""
-        pass
+    Renders the resource file by copying it to the target.
 
-
-class FileResource:
-
-    """Represents a resource file with a path."""
-
-    def __init__(self, path):
-        self.path = path
-
-    @property
-    def filename(self):
-        """Filename of resource file."""
-        return os.path.basename(self.path)
+    """
 
     def render(self, env, target):
         # pylint: disable=unused-argument
         """Render this resource into target."""
+        logger.debug('Render file %s %s', self, target)
         shutil.copy(self.path, target)
 
 
-class DirectoryResource(FileResource):
+class BaseDirectoryResource(FileResource):
 
-    """Represents a resource that is a directory.
+    """Represents a directory resource.
 
     Can be iterated for all resources:
 
     >>> for path, resource in DirectoryResource('foo'):
     ...     resource.render(path)
+
+    path is relative to the directory.
+
+    This resource renders the entries in the directory into the target, but not
+    the directory itself.
 
     """
 
@@ -58,9 +50,9 @@ class DirectoryResource(FileResource):
 
     def render(self, env, target):
         """Render this resource into target."""
-        os.makedirs(os.path.join(target, self.filename), exist_ok=True)
+        logger.debug('Render dir %s %s', self, target)
         for path, resource in self:
-            logger.debug('Render %s, %s', path, resource)
+            logger.debug('Render dir entry %s %s', path, resource)
             resource.render(env, os.path.join(target, path))
 
     @classmethod
@@ -69,9 +61,25 @@ class DirectoryResource(FileResource):
         if os.path.isdir(path):
             return DirectoryResource(path)
         elif os.path.isfile(path):
-            return FileResource(path)
+            return SimpleFileResource(path)
         else:
             raise LoadingError('Unknown file %s', path)
+
+
+class DirectoryResource(BaseDirectoryResource):
+
+    """Represents a directory resource.
+
+    Unlike BaseDirectoryResource, this will render the directory itself to the
+    target, then render its entries into the newly created directory.
+
+    """
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        new_target = os.path.join(target, self.filename)
+        os.makedirs(new_target, exist_ok=True)
+        super().render(env, new_target)
 
 
 class RenderError(Exception):
