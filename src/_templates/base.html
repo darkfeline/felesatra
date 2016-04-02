@@ -1,0 +1,30 @@
+{% extends "html_base.html" %}
+
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="icon" type="image/png" href="/img/site/favicon.png">
+{% endblock %}
+
+{% block title %}
+Feles Atra: {{ title }}
+{% endblock %}
+
+{% block body %}
+<header>
+  <h1>Feles Atra</h1>
+</header>
+
+<section>
+  <h1>{{ title }}</h1>
+
+  {% block content %}
+  {{ content }}
+  {% endblock content %}
+</section>
+
+<footer>
+</footer>
+
+{% endblock body %}

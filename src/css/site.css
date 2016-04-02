@@ -1,0 +1,95 @@
+/* Site header */
+#site-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid;
+    padding: 5px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+#site-header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Site title */
+#site-header > #site-title {
+    font-size: 250%;
+    margin: 5px;
+}
+
+/* Site header right */
+#site-header > #site-header-right {
+    display: flex;
+    align-items: center;
+}
+
+#site-header > #site-header-right > * {
+    margin: 9px;
+    font-size: 130%
+}
+
+/* Site footer */
+#site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-top: 2px black solid;
+    padding: 5px;
+    margin-top: 10px;
+    font-size: 75%;
+    color: #808080;
+}
+
+#site-footer > * {
+    margin: 5px;
+    flex: 1 1 40%;
+}
+
+/* Attributes definition list */
+dl.attributes, dl.attributes-inline {
+    font-size: 75%;
+    color: #808080;
+}
+
+dl.attributes-inline {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+dl.attributes-inline dt {
+    display: inline;
+}
+
+dl.attributes-inline dd {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+/* Summary article */
+article.summary-article {
+    border-left: 2px groove;
+    padding-left: 5px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* Single block link */
+a.block {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-style: italic;
+}
+
+/* Table of contents */
+nav#generated-toc {
+    border: 2px solid #DDDDDD;
+    padding: 10px;
+}
+
+nav#generated-toc p {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

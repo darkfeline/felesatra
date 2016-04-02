@@ -1,0 +1,95 @@
+body {
+    max-width: 750px;
+    margin: auto;
+    background-color: #FFFFEF;
+    color: #303030;
+}
+
+/* Editing */
+ins {
+    background-color: #E0FFE0;
+}
+
+del {
+    background-color: #FFE0E0;
+}
+
+/* Code */
+code {
+    background-color: #E0FFFF;
+}
+
+pre {
+    margin-left: 10px;
+    border-left: 3px solid;
+    padding-left: 5px;
+    background-color: #E0FFFF;
+}
+
+pre code {
+    background-color: inherit;
+}
+
+/* Definition lists */
+dt {
+	  font-weight: bold;
+}
+
+dt:after {
+    content: ":";
+}
+
+dd {
+    margin-left: 15px;
+}
+
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    margin: 5px;
+    border-left: hidden;
+}
+
+tr {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+th, td {
+    padding: 4px;
+    text-align: center;
+}
+
+colgroup {
+    border-left: 1px solid;
+}
+
+/* Footnotes */
+div.footnotes {
+    font-size: 75%;
+}
+
+/* Blockquotes */
+blockquote {
+    margin-left: 10px;
+    border-left: 2px solid;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+blockquote :first-child {
+    margin-top: 0px;
+}
+
+blockquote :last-child {
+    margin-bottom: 0px;
+}
+
+/* Images */
+img.centered {
+    display: block;
+    margin: 0 auto;
+}

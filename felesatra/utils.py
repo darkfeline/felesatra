@@ -1,7 +1,12 @@
 """Shared utilities."""
 
-
 import functools
+import xml.etree.ElementTree as ET
+
+
+def tostring(element):
+    """Customized version of ET.tostring()."""
+    return ET.tostring(element, encoding='unicode', method='html')
 
 
 def cached_property(func):
