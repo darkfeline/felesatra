@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 import argparse
 
 from felesatra import site
