@@ -3,7 +3,7 @@
 from jinja2 import Environment, FileSystemLoader
 
 from felesatra.utils import cached_property
-from felesatra.url import url
+from felesatra import filters
 
 from .base import DirectoryResource
 from .page import Webpage
@@ -23,9 +23,7 @@ class Website(DirectoryResource):
             trim_blocks=True,
             lstrip_blocks=True,
             auto_reload=False)
-        env.filters = {
-            'url': url,
-        }
+        env.filters = filters.filters
         env.globals = {
             'site': {
                 'url': 'https://www.felesatra.moe',

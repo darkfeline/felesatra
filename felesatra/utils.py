@@ -9,6 +9,16 @@ def tostring(element):
     return ET.tostring(element, encoding='unicode', method='html')
 
 
+def findpop(element, match):
+    """Like Element.find(), except element is removed."""
+    subelement = element.find(match)
+    if subelement is None:
+        raise ValueError('{} not found'.format(match))
+    else:
+        element.remove(subelement)
+        return subelement
+
+
 def cached_property(func):
     """Cached property."""
     cached = False

@@ -1,10 +1,12 @@
-{% extends "html_base.html" %}
+{% extends 'html_base.html' %}
+
+{% from 'macros.html' import abs_url %}
 
 {% block head %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/css/site.css">
-<link rel="stylesheet" type="text/css" href="/css/base.css">
-<link rel="icon" type="image/png" href="/img/site/favicon.png">
+<link rel="stylesheet" type="text/css" href="{{ abs_url('css/site.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ 'css/base.css'|url(site.url) }}">
+<link rel="icon" type="image/png" href="{{ 'img/site/favicon.png'|url(site.url) }}">
 {% endblock %}
 
 {% block title %}
@@ -14,6 +16,8 @@ Feles Atra: {{ title }}
 {% block body %}
 <header>
   <h1>Feles Atra</h1>
+  <ul>
+  </ul>
 </header>
 
 <section>
@@ -26,5 +30,4 @@ Feles Atra: {{ title }}
 
 <footer>
 </footer>
-
 {% endblock body %}

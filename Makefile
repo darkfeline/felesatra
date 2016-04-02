@@ -1,7 +1,7 @@
 .PHONY: all
 all: build
 
-SRC_DIR=src
+SRC_DIR=site
 BUILD_DIR=build
 
 .PHONY: build
