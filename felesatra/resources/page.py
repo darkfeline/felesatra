@@ -31,7 +31,12 @@ class DirectoryResource(base.DirectoryResource):
 
 class HTMLResource(FileResource):
 
-    """HTML resource for rendering."""
+    """HTML resource.
+
+    This resource will render an HTML file with full templating into its target
+    file.
+
+    """
 
     def __init__(self, path):
         super().__init__(path)
@@ -61,12 +66,8 @@ class HTMLResource(FileResource):
 
         # Render page content into template.
         template = env.get_template(self.meta['template'])
-        context = {
-            'title': self.meta['title'],
-            'content': content,
-            'published': self.meta['published'],
-            'modified': self.meta['modified'],
-        }
+        context = {'content': content}
+        context.update(self.meta)
         return template.render(context)
 
     def render(self, env, target):
@@ -77,9 +78,13 @@ class HTMLResource(FileResource):
 
 class Webpage(HTMLResource):
 
-    """Web page resource for rendering.
+    """Web page resource.
 
-    Will render into <page_name>/index.html.
+    Similar to HTMLResource, but renders a web page into
+    <page_name>/index.html, thus allowing it to be served with the URL
+    <page_name>/.
+
+    As a web page, this resource will also be added to the sitemap.
 
     """
 
@@ -96,7 +101,11 @@ class Webpage(HTMLResource):
         """Render this resource into target."""
         target = self.rendered_path(target)
         env.globals['sitemap'].append(
-            SitemapURL(utils.geturl(env, target), None, None, None))
+            SitemapURL(
+                utils.geturl(env, target),
+                self.meta.get('modified'),
+                None,
+                None))
         os.makedirs(target, exist_ok=True)
         with open(os.path.join(target, 'index.html'), 'w') as file:
             file.write(self.render_html(env))
@@ -104,14 +113,14 @@ class Webpage(HTMLResource):
 
 class Homepage(Webpage):
 
-    """Web page resource for rendering.
+    """Homepage resource.
 
-    Will render into index.html of the directory of the target.
+    Similar to Webpage, but always renders into index.html in its target
+    directory, suitable for the root URL path of a website.
 
     """
 
     def render(self, env, target):
         """Render this resource into target."""
         target = os.path.dirname(target)
-        logger.debug('Render homepage %s', target)
         super().render(env, target)

@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block base_content %}
 <section>
-  <header>
+  <header class="article-header">
     <h1>{{ title }}</h1>
     <dl>
       {% if published %}
-      <dt>Published:</dt>
+      <dt>Published</dt>
       <dd>{{ published }}</dd>
       {% endif %}
       {% if modified %}
-      <dt>Last modified: </dt>
+      <dt>Last modified</dt>
       <dd>{{ modified }}</dd>
       {% endif %}
     </dl>
   </header>
 
+  {% block content %}
   {{ content }}
+  {% endblock %}
 </section>
-{% endblock content %}
+{% endblock base_content %}

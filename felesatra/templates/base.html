@@ -1,14 +1,24 @@
 {# Base template for all site pages. #}
 {% extends 'html_base.html' %}
 
-{% from 'macros.html' import abs_url %}
+{% from 'macros.html' import abs_url, load_jquery %}
 
 {% block head %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{{ abs_url('css/site.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ 'css/base.css'|url(site.url) }}">
-<link rel="icon" type="image/png" href="{{ 'img/site/favicon.png'|url(site.url) }}">
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ abs_url('css/base.css') }}">
+<link rel="icon" type="image/png" href="{{ abs_url('img/site/favicon.png') }}">
+
+{% if js_tablesorter %}
+{{ load_jquery() }}
+<script src="{{ abs_url('js/tablesorter.js') }}"></script>
+<script>
+ $(document).ready(function() {
+   $("table.tablesorter").tablesorter();
+ });
+</script>
+{% endif %}
+{% endblock head %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -22,7 +32,7 @@
   </ul>
 </header>
 
-{% block content %}
+{% block base_content %}
 {{ content }}
 {% endblock %}
 

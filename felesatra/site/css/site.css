@@ -48,6 +48,27 @@
 /*     flex: 1 1 40%; */
 /* } */
 
+/* Article header */
+header.article-header h1 {
+    margin-bottom: 5px;
+}
+
+header.article-header dl {
+    margin-top: 5px;
+    color: #808080;
+    font-size: 75%;
+}
+
+header.article-header dt {
+    display: inline;
+}
+
+header.article-header dd {
+    display: inline;
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
 /* Attributes definition list */
 dl.attributes, dl.attributes-inline {
     font-size: 75%;
@@ -93,4 +114,13 @@ nav#generated-toc {
 nav#generated-toc p {
     margin-top: 2px;
     margin-bottom: 2px;
+}
+
+/* tablesorter.js */
+th.headerSortUp:after {
+    content: "▲";
+}
+
+th.headerSortDown:after {
+    content: "▼";
 }
