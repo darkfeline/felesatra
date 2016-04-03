@@ -1,0 +1,49 @@
+"""Atom feed rendering resources."""
+
+import datetime
+import logging
+from collections import namedtuple
+from datetime import timezone
+
+from .abc import Resource
+
+logger = logging.getLogger(__name__)
+
+Author = namedtuple(
+    'Author',
+    ['name', 'uri', 'email'])
+
+Entry = namedtuple(
+    'Entry',
+    ['id', 'title', 'updated', 'links', 'summary', 'published'])
+
+Link = namedtuple(
+    'Link',
+    ['href', 'rel', 'type'])
+
+
+class AtomResource(Resource):
+
+    """Atom feed resource."""
+
+    def __init__(self, context):
+        self.context = context
+
+    def walk(self, env):
+        pass
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        # XXX
+        context = dict(self.context)
+        entries = env.globals['atom_entries']
+        context['entries'] = entries
+        if entries:
+            updated = max(entry.updated for entry in entries)
+        else:
+            updated = datetime.datetime.now(timezone.utc)
+        context['updated'] = updated
+        template = env.get_template('atom.xml')
+        content = template.render(context)
+        with open(target, 'w') as file:
+            file.write(content)

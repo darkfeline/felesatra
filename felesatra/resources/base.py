@@ -46,11 +46,7 @@ class DirectoryResource(FileResource):
     def iter_entries(self):
         """Iterate over resources in directory."""
         for filename in os.listdir(self.path):
-            yield filename, self.load(self.getpath(filename))
-
-    def getpath(self, path, *paths):
-        """Get path relative to resource directory."""
-        return os.path.join(self.path, path, *paths)
+            yield filename, self.load(os.path.join(self.path, filename))
 
     @classmethod
     def load(cls, path):

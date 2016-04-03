@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <id>{{ id }}</id>
+  <title>{{ title }}</title>
+  <updated>{{ updated }}</updated>
+
+  {% macro make_link(link) -%}
+  <link href="{{ link.href }}" {% if link.rel %} rel="{{ link.rel }}" {% endif %} {% if link.type %} type="{{ link.type }}" {% endif %} />
+  {%- endmacro %}
+
+  {% for link in links %}
+  {{ make_link(link) }}
+  {% endfor %}
+
+  {% for author in authors %}
+  <author>
+    <name>{{ author.name }}</name>
+    {% if author.uri %}
+    <uri>{{ author.uri }}</uri>
+    {% endif %}
+    {% if author.email %}
+    <email>{{ author.email }}</email>
+    {% endif %}
+  </author>
+  {% endfor %}
+
+  {% if rights %}
+  <rights>{{ rights }}</rights>
+  {% endif %}
+
+  {% for entry in entries %}
+  <entry>
+    <id>{{ entry.id }}</id>
+    <title>{{ entry.title }}</title>
+    <updated>{{ entry.updated }}</updated>
+
+    {% for link in entry.links %}
+    {{ make_link(link) }}
+    {% endfor %}
+
+    {% if entry.summary %}
+    <summary>{{ entry.summary }}</summary>
+    {% endif %}
+
+    {% if entry.published %}
+    <published>{{ entry.published }}</published>
+    {% endif %}
+  </entry>
+  {% endfor %}
+
+</feed>

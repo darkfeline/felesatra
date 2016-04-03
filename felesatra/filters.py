@@ -1,6 +1,6 @@
 """Jinja filters."""
 
-from urllib.parse import urljoin
+import urllib.parse
 
 filters = {}
 
@@ -12,10 +12,6 @@ def _filter(func):
 
 
 @_filter
-def url(ref, base):
-    """Make canonical URL for given reference.
-
-    base is the protocol and network location parts of the URL.
-
-    """
-    return urljoin(base, ref)
+def urljoin(url, base):
+    """urljoin filter"""
+    return urllib.parse.urljoin(base, url)

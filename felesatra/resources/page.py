@@ -1,14 +1,16 @@
 """Web page resource."""
 
+import datetime
 import logging
 import os
-
-import yaml
+from datetime import timezone
+from html.parser import HTMLParser
 
 from felesatra import utils
 
 from . import base
-from .abc import FileResource
+from .atom import Entry, Link
+from .html import HTMLResource
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
@@ -29,51 +31,18 @@ class DirectoryResource(base.DirectoryResource):
             return super().load(path)
 
 
-class HTMLResource(FileResource):
+class TextParser(HTMLParser):
 
-    """HTML resource.
+    """HTML parser that extracts all text."""
 
-    This resource will render an HTML file with full templating into its target
-    file.
+    # pylint: disable=abstract-method
 
-    """
+    def __init__(self):
+        super().__init__()
+        self.text = []
 
-    def __init__(self, path):
-        super().__init__(path)
-
-        with open(self.path) as file:
-            frontmatter = []
-            for line in file:
-                if line.rstrip() == '---':
-                    break
-                frontmatter.append(line)
-
-            self.content = file.read().lstrip()
-
-        self.meta = {
-            'template': 'base.html',
-            'title': '',
-            'published': None,
-            'modified': None,
-        }
-        self.meta.update(yaml.load(''.join(frontmatter)))
-
-    def render_html(self, env):
-        """Render the HTML only."""
-        # Render page content itself first (e.g., macros).
-        content_template = env.from_string(self.content)
-        content = content_template.render()
-
-        # Render page content into template.
-        template = env.get_template(self.meta['template'])
-        context = {'content': content}
-        context.update(self.meta)
-        return template.render(context)
-
-    def render(self, env, target):
-        """Render this resource into target."""
-        with open(target, 'w') as file:
-            file.write(self.render_html(env))
+    def handle_data(self, data):
+        self.text.append(data)
 
 
 class Webpage(HTMLResource):
@@ -88,9 +57,39 @@ class Webpage(HTMLResource):
 
     """
 
+    @utils.cached_property
+    def updated(self):
+        """When resource was updated."""
+        if 'modified' in self.meta:
+            return self.meta['modified']
+        elif 'published' in self.meta:
+            return self.meta['published']
+        else:
+            return datetime.datetime.fromtimestamp(
+                os.stat(self.path).st_mtime,
+                timezone.utc)
+
+    def render_summary(self, env):
+        """Content summary.
+
+        Returns a text summary of the resource content without HTML tags.
+
+        """
+        content = self.render_content(env)
+        parser = TextParser()
+        parser.feed(content)
+        summary_words = []
+        for text in parser.text:
+            text.translate({'<': None, '>': None})
+            words = text.split()
+            summary_words.extend(words)
+            if len(summary_words) > 200:
+                break
+        return ' '.join(summary_words)
+
     @staticmethod
     def rendered_path(path):
-        """Get relative path that page would be rendered as.
+        """Get path that page would be rendered as.
 
         Example: 'foo/bar.html' -> 'foo/bar/'
 
@@ -100,15 +99,25 @@ class Webpage(HTMLResource):
     def walk(self, env):
         """Load information about this resource."""
         path = self.rendered_path(self.path)
+        path = utils.geturl(env, path)
         env.globals['sitemap'].append(
             SitemapURL(
-                utils.geturl(env, path),
+                path,
                 self.meta.get('modified'),
                 None,
                 None))
+        env.globals['atom_entries'].append(
+            Entry(
+                path,
+                self.meta['title'],
+                self.updated,
+                [Link(path, 'alternate', 'text/html')],
+                self.render_summary(env),
+                self.meta.get('published')))
 
     def render(self, env, target):
         """Render this resource into target."""
+        target = self.rendered_path(target)
         os.makedirs(target, exist_ok=True)
         with open(os.path.join(target, 'index.html'), 'w') as file:
             file.write(self.render_html(env))

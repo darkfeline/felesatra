@@ -24,8 +24,8 @@ def main():
     args = parser.parse_args()
 
     src_dir = sitepath()
-    env = make_env(args.site_url, src_dir)
-    website = Website(src_dir)
+    env = make_env()
+    website = Website(src_dir, args.site_url)
     website.walk(env)
     website.render(env, args.build_dir)
 
