@@ -82,8 +82,13 @@ blockquote :last-child {
     margin-bottom: 0px;
 }
 
+/* Sections */
+address {
+    font-style: normal;
+}
+
 /* Images */
-/* img.centered { */
-/*     display: block; */
-/*     margin: 0 auto; */
-/* } */
+img.centered {
+    display: block;
+    margin: 0 auto;
+}

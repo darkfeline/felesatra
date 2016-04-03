@@ -4,7 +4,7 @@ published: 2015-08-27
 modified: 2016-03-13
 ---
 
-{% from 'macros.html' import abs_url %}
+{% from 'macros.html' import abs_url, pgpkey %}
 
 <section>
   <h1>About me</h1>
@@ -144,7 +144,7 @@ modified: 2016-03-13
 
   <p>
     My public GPG key can be found on the
-    <a href="https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74">SKS keyservers</a>.
+    {% call pgpkey() %}SKS keyservers{% endcall %}.
     You can contact me using one of the emails associated with that key.  Of
     course, I would prefer that you encrypt your emails using that key.
   </p>

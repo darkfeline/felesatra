@@ -14,3 +14,8 @@
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 {% endif %}
 {%- endmacro %}
+
+{% macro pgpkey() -%}
+<a href="https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74">
+  {{ caller() }}</a>
+{%- endmacro %}
