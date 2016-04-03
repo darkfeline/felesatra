@@ -30,8 +30,10 @@ class DirectoryResource(FileResource):
 
     Can be iterated for all resources:
 
-    >>> for path, resource in DirectoryResource('foo'):
-    ...     resource.render(path)
+    >>> import tempfile
+    >>> with tempfile.TemporaryDirectory() as d:
+    ...     for path, resource in DirectoryResource(d):
+    ...         resource.render(path)
 
     path is relative to the directory.
 

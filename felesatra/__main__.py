@@ -5,6 +5,7 @@ import logging
 import os
 
 from felesatra.resources.site import Website
+from felesatra.env import make_env
 
 
 def getsitepath():
@@ -22,8 +23,9 @@ def main():
     parser.add_argument('--site-url', default='https://www.felesatra.moe')
     args = parser.parse_args()
 
-    website = Website(getsitepath(), args.site_url)
-    website.render(website.env, args.build_dir)
+    env = make_env(args.site_url)
+    website = Website(getsitepath())
+    website.render(env, args.build_dir)
 
 if __name__ == '__main__':
     main()
