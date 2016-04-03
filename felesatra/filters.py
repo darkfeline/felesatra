@@ -17,7 +17,6 @@ def urljoin(url, base):
     return urllib.parse.urljoin(base, url)
 
 
-@_filter
 def tagattr(obj, attr):
     """Conditionally make tag attribute from object."""
     if hasattr(obj, attr):

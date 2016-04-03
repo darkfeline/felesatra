@@ -92,3 +92,9 @@ img.centered {
     display: block;
     margin: 0 auto;
 }
+
+/* Extra semantics */
+span.aside {
+    font-size: 90%;
+    color: #808080;
+}

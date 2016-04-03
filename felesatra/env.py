@@ -12,5 +12,5 @@ def make_env():
         trim_blocks=True,
         lstrip_blocks=True,
         auto_reload=False)
-    env.filters = filters.filters
+    env.filters.update(filters.filters)
     return env

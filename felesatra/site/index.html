@@ -1,4 +1,5 @@
 title: Feles Atra
+published: 2015-01-01
 ---
 
 {%- from 'macros.html' import abs_url -%}
@@ -25,6 +26,25 @@ title: Feles Atra
     </ul>
   </nav>
 </section>
+
+<section>
+  <h1>New pages</h1>
+  <ul>
+    {% for page in pages|sort(attribute='published', reverse=True) %}
+    <li><span class="aside">{{ page.published }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h1>Updated pages</h1>
+  <ul>
+    {% for page in pages|sort(attribute='updated', reverse=True) %}
+    <li><span class="aside">{{ page.updated }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+
 
 {#
 <section>

@@ -1,9 +1,9 @@
 """Web page resource."""
 
-import datetime
+import functools
 import logging
 import os
-from datetime import timezone
+from collections import namedtuple
 from html.parser import HTMLParser
 
 from felesatra import utils
@@ -14,6 +14,8 @@ from .html import HTMLResource
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
+
+Page = namedtuple('Page', ['href', 'title', 'published', 'updated', 'summary'])
 
 
 class DirectoryResource(base.DirectoryResource):
@@ -57,17 +59,14 @@ class Webpage(HTMLResource):
 
     """
 
-    @utils.cached_property
+    @property
+    @functools.lru_cache(None)
     def updated(self):
         """When resource was updated."""
         if 'modified' in self.meta:
             return self.meta['modified']
-        elif 'published' in self.meta:
-            return self.meta['published']
         else:
-            return datetime.datetime.fromtimestamp(
-                os.stat(self.path).st_mtime,
-                timezone.utc)
+            return self.meta['published']
 
     def render_summary(self, env):
         """Content summary.
@@ -80,7 +79,6 @@ class Webpage(HTMLResource):
         parser.feed(content)
         summary_words = []
         for text in parser.text:
-            text.translate({'<': None, '>': None})
             words = text.split()
             summary_words.extend(words)
             if len(summary_words) > 200:
@@ -88,6 +86,7 @@ class Webpage(HTMLResource):
         return ' '.join(summary_words)
 
     @staticmethod
+    @functools.lru_cache()
     def rendered_path(path):
         """Get path that page would be rendered as.
 
@@ -99,21 +98,28 @@ class Webpage(HTMLResource):
     def walk(self, env):
         """Load information about this resource."""
         path = self.rendered_path(self.path)
-        path = utils.geturl(env, path)
+        url = utils.geturl(env, path)
         env.globals['sitemap'].append(
             SitemapURL(
-                path,
+                url,
                 self.meta.get('modified'),
                 None,
                 None))
         env.globals['atom_entries'].append(
             Entry(
-                path,
+                url,
                 self.meta['title'],
                 self.updated,
                 [Link(path, 'alternate', 'text/html')],
                 self.render_summary(env),
                 self.meta.get('published')))
+        env.globals['pages'].append(
+            Page(
+                url,
+                self.meta['title'],
+                self.meta['published'],
+                self.updated,
+                None))
 
     def render(self, env, target):
         """Render this resource into target."""

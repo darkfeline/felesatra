@@ -40,6 +40,7 @@ class AtomResource(Resource):
         """Render this resource into target."""
         context = dict(self.context)
         entries = env.globals['atom_entries']
+        logger.debug('Atom %r', entries)
         context['entries'] = entries
         if entries:
             updated = max(entry.updated for entry in entries)
