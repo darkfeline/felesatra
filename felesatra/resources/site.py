@@ -3,8 +3,8 @@
 import logging
 import os
 
-from .base import DirectoryResource
-from .page import HTMLResource, Webpage
+from .page import DirectoryResource, Homepage
+from .sitemap import SitemapResource
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +17,11 @@ class Website(DirectoryResource):
     def load(cls, path):
         """Load resource."""
         if os.path.basename(path) == 'index.html':
-            return HTMLResource(path)
-        elif path.endswith('.html'):
-            return Webpage(path)
+            return Homepage(path)
         else:
             return super().load(path)
+
+    def render(self, env, target):
+        super().render(env, target)
+        sitemap = SitemapResource(env.globals['sitemap'])
+        sitemap.render(env, os.path.join(target, 'sitemap.xml'))

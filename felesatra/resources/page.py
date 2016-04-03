@@ -5,9 +5,28 @@ import os
 
 import yaml
 
+from felesatra import utils
+
+from . import base
 from .abc import FileResource
+from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
+
+
+class DirectoryResource(base.DirectoryResource):
+
+    """Directory resource extended with webpage support."""
+
+    @classmethod
+    def load(cls, path):
+        """Load resource."""
+        if path.endswith('.html'):
+            return Webpage(path)
+        elif os.path.isdir(path):
+            return DirectoryResource(path)
+        else:
+            return super().load(path)
 
 
 class HTMLResource(FileResource):
@@ -33,7 +52,6 @@ class HTMLResource(FileResource):
             'modified': None,
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
-        logger.debug('with context %r', self.meta)
 
     def render_html(self, env):
         """Render the HTML only."""
@@ -65,9 +83,35 @@ class Webpage(HTMLResource):
 
     """
 
+    @staticmethod
+    def rendered_path(path):
+        """Get relative path that page would be rendered as.
+
+        Example: 'foo/bar.html' -> 'foo/bar/'
+
+        """
+        return os.path.splitext(path)[0] + '/'
+
     def render(self, env, target):
         """Render this resource into target."""
-        dirtarget = os.path.join(target.rstrip('.html'))
-        os.makedirs(dirtarget, exist_ok=True)
-        with open(os.path.join(dirtarget, 'index.html'), 'w') as file:
+        target = self.rendered_path(target)
+        env.globals['sitemap'].append(
+            SitemapURL(utils.geturl(env, target), None, None, None))
+        os.makedirs(target, exist_ok=True)
+        with open(os.path.join(target, 'index.html'), 'w') as file:
             file.write(self.render_html(env))
+
+
+class Homepage(Webpage):
+
+    """Web page resource for rendering.
+
+    Will render into index.html of the directory of the target.
+
+    """
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        target = os.path.dirname(target)
+        logger.debug('Render homepage %s', target)
+        super().render(env, target)

@@ -4,10 +4,10 @@ from collections import OrderedDict
 
 from jinja2 import Environment, PackageLoader
 
-from felesatra import filters
+from . import filters
 
 
-def make_env(site_url):
+def make_env(site_url, build_dir):
     """Get Jinja environment."""
     env = Environment(
         loader=PackageLoader('felesatra', 'templates'),
@@ -18,9 +18,12 @@ def make_env(site_url):
     env.globals = {
         'site': {
             'url': site_url,
+            'builddir': build_dir,
             'nav': OrderedDict((
                 ('Keihan', 'keihan/'),
             )),
         },
+        'sitemap': [
+        ],
     }
     return env

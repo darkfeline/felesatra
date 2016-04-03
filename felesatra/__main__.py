@@ -5,10 +5,10 @@ import logging
 import os
 
 from felesatra.env import make_env
-from felesatra.resources.site import Website
+from felesatra.resources import Website
 
 
-def getsitepath():
+def sitepath():
     return os.path.join(
         os.path.dirname(__file__),
         'site',
@@ -23,8 +23,9 @@ def main():
     parser.add_argument('--site-url', default='https://www.felesatra.moe')
     args = parser.parse_args()
 
-    env = make_env(args.site_url)
-    website = Website(getsitepath())
+    src_dir = sitepath()
+    env = make_env(args.site_url, args.build_dir)
+    website = Website(src_dir)
     website.render(env, args.build_dir)
 
 if __name__ == '__main__':

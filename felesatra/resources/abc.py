@@ -21,12 +21,6 @@ class Resource(ABC):
 
         """
 
-    @classmethod
-    def __subclasshook__(cls, C):
-        if any('render' in B.__dict__ for B in C.__mro__):
-            return True
-        return NotImplemented
-
 
 class FileResource(Resource):
 

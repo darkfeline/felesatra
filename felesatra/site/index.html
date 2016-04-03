@@ -1,4 +1,36 @@
 title: Feles Atra
 ---
 
-<p>Hello World!</p>
+{%- from 'macros.html' import abs_url -%}
+
+<section>
+  <h1>Introduction</h1>
+
+  <p>This is my homepage.  There are many like it, but this one is mine.</p>
+
+  <p>Site will be undergoing a rewrite at some point in the future.</p>
+
+  <p><s>Site is under construction, so expect it to change over time.  However, it
+    will stay simple, as I'm not fond of loading 10 MB of JavaScript and CSS for
+    a document that should by all rights be no more than 10 kB.</s></p>
+</section>
+
+<section>
+  <h1>Selected pages</h1>
+  <nav>
+    <ul>
+      <li><a href="{{ abs_url('keihan/') }}">契絆想解詩</a></li>
+      <li><a href="{{ abs_url('projects/') }}">Projects</a></li>
+      <li><a href="https://teiwaz-project.github.io/">Teiwaz Project</a></li>
+    </ul>
+  </nav>
+</section>
+
+<section>
+  <h1>Recent posts</h1>
+  {#
+  {{ range first 10 .Data.Pages.ByPublishDate.Reverse }}
+  {{ .Render "summary" }}
+  {{ end }}
+  #}
+</section>

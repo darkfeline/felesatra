@@ -28,32 +28,26 @@ class DirectoryResource(FileResource):
 
     """Represents a directory resource.
 
-    Can be iterated for all resources:
-
-    >>> import tempfile
-    >>> with tempfile.TemporaryDirectory() as d:
-    ...     for path, resource in DirectoryResource(d):
-    ...         resource.render(path)
-
     path is relative to the directory.
 
     """
 
+    def __init__(self, path):
+        super().__init__(path)
+        self.entries = dict((path, resource) for path, resource in self.iter_entries())
+
     def __iter__(self):
+        for path, resource, in self.entries.items():
+            yield path, resource
+
+    def iter_entries(self):
+        """Iterate over resources in directory."""
         for filename in os.listdir(self.path):
             yield filename, self.load(self.getpath(filename))
 
     def getpath(self, path, *paths):
         """Get path relative to resource directory."""
         return os.path.join(self.path, path, *paths)
-
-    def render(self, env, target):
-        """Render this resource into target."""
-        logger.debug('Render dir %r %r', self, target)
-        os.makedirs(target, exist_ok=True)
-        for path, resource in self:
-            logger.debug('Render dir entry %r %r', path, resource)
-            resource.render(env, os.path.join(target, path))
 
     @classmethod
     def load(cls, path):
@@ -64,6 +58,14 @@ class DirectoryResource(FileResource):
             return SimpleFileResource(path)
         else:
             raise LoadingError('Unknown file %r', path)
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        logger.debug('Render dir %r %r', self, target)
+        os.makedirs(target, exist_ok=True)
+        for path, resource in self:
+            logger.debug('Render dir entry %r %r', path, resource)
+            resource.render(env, os.path.join(target, path))
 
 
 class RenderError(Exception):
