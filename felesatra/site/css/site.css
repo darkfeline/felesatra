@@ -26,7 +26,7 @@
     margin: 0px;
 }
 
-#site-nav li {
+#site-nav > li {
     padding: 0px;
     margin: 5px;
     font-size: 120%
@@ -53,12 +53,12 @@
     padding: 4px;
 }
 
-/* Content header */
-header.content-header h1 {
+/* Content */
+header.content-header > h1 {
     margin-bottom: 5px;
 }
 
-header.content-header dl {
+header.content-header > dl {
     margin-top: 5px;
     color: #808080;
     font-size: 75%;
@@ -71,6 +71,11 @@ header.content-header dt {
 header.content-header dd {
     display: inline;
     margin-left: 0px;
+    margin-right: 5px;
+}
+
+body > section {
+    margin-left: 5px;
     margin-right: 5px;
 }
 
