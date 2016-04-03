@@ -20,7 +20,8 @@ def make_env(site_url, build_dir):
             'url': site_url,
             'builddir': build_dir,
             'nav': OrderedDict((
-                ('Keihan', 'keihan/'),
+                ('About', 'about/'),
+                ('Projects', 'projects/'),
             )),
         },
         'sitemap': [
