@@ -31,4 +31,4 @@ isort:
 
 .PHONY: pylint
 pylint:
-	pylint --output-format=colorized felesatra
+	pylint --output-format=colorized felesatra tests

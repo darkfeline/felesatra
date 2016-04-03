@@ -1,7 +1,7 @@
 """This module contains classes for accessing resources."""
 
-import os
 import logging
+import os
 import shutil
 
 from .abc import FileResource

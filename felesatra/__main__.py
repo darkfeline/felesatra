@@ -4,8 +4,8 @@ import argparse
 import logging
 import os
 
-from felesatra.resources.site import Website
 from felesatra.env import make_env
+from felesatra.resources.site import Website
 
 
 def getsitepath():

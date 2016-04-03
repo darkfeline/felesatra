@@ -1,7 +1,5 @@
 """Tests for felesatra.resources"""
 
-import os
-
 from jinja2 import Environment
 
 from felesatra.resources.base import SimpleFileResource, DirectoryResource

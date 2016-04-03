@@ -1,7 +1,8 @@
 """Resource ABCs"""
 
-from abc import ABC, abstractmethod
 import os
+from abc import ABC, abstractmethod
+
 
 # pylint: disable=abstract-method
 # pylint: disable=too-few-public-methods
