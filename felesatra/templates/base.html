@@ -13,9 +13,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<header>
-  <h1><a href="{{ abs_url('/') }}">Feles Atra</a></h1>
-  <ul>
+<header id="site-header">
+  <h1 id="site-title"><a href="{{ abs_url('/') }}">Feles Atra</a></h1>
+  <ul id="site-nav">
     {% for name, ref in site.nav.items() %}
     <li><a href="{{ abs_url(ref) }}">{{ name }}</a>
     {% endfor %}
@@ -26,6 +26,6 @@
 {{ content }}
 {% endblock %}
 
-<footer>
+<footer id="site-footer">
 </footer>
 {% endblock body %}

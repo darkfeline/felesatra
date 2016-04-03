@@ -21,6 +21,10 @@ clean:
 devserver:
 	python -m devserver ${LOCAL_BUILD_DIR}
 
+.PHONY: watch
+watch:
+	bin/watch
+
 .PHONY: test
 test:
 	nosetests --with-doctest

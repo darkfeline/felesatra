@@ -4,7 +4,7 @@
     align-items: center;
     border-bottom: 2px solid;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     justify-content: space-between;
 }
 
@@ -13,21 +13,22 @@
     color: inherit;
 }
 
-/* Site title */
-#site-header > #site-title {
-    font-size: 250%;
-    margin: 5px;
+#site-title {
+    font-size: 200%;
+    margin: 0px;
 }
 
-/* Site header right */
-#site-header > #site-header-right {
+#site-nav {
     display: flex;
     align-items: center;
+    list-style-type: none;
+    margin: 0px;
 }
 
-#site-header > #site-header-right > * {
-    margin: 9px;
-    font-size: 130%
+#site-nav li {
+    padding: 0px;
+    margin: 0px;
+    font-size: 120%
 }
 
 /* Site footer */
@@ -37,15 +38,15 @@
     align-items: center;
     border-top: 2px black solid;
     padding: 5px;
-    margin-top: 10px;
+    margin-top: 7px;
     font-size: 75%;
-    color: #808080;
+    /* color: #808080; */
 }
 
-#site-footer > * {
-    margin: 5px;
-    flex: 1 1 40%;
-}
+/* #site-footer > * { */
+/*     margin: 5px; */
+/*     flex: 1 1 40%; */
+/* } */
 
 /* Attributes definition list */
 dl.attributes, dl.attributes-inline {
