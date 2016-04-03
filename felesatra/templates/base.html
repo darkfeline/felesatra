@@ -29,6 +29,11 @@
     {% for name, ref in site.nav.items() %}
     <li><a href="{{ abs_url(ref) }}">{{ name }}</a>
     {% endfor %}
+      <li>
+        <a href="{{ abs_url('atom.xml') }}">
+          <img src="{{ abs_url('img/site/feed-icon-14x14.png') }}" alt="RSS feed">
+        </a>
+      </li>
   </ul>
 </header>
 
