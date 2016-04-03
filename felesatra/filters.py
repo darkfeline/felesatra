@@ -15,3 +15,16 @@ def _filter(func):
 def urljoin(url, base):
     """urljoin filter"""
     return urllib.parse.urljoin(base, url)
+
+
+@_filter
+def tagattr(obj, attr):
+    """Conditionally make tag attribute from object."""
+    if hasattr(obj, attr):
+        return '{}="{}"'.format(attr, getattr(obj, attr))
+
+
+@_filter
+def tagattrs(obj, *attrs):
+    """Conditionally make tag attributes from object."""
+    return ' '.join(tagattr(obj, attr) for attr in attrs)

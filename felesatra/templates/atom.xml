@@ -6,7 +6,11 @@
   <updated>{{ updated }}</updated>
 
   {% macro make_link(link) -%}
-  <link href="{{ link.href }}" {% if link.rel %} rel="{{ link.rel }}" {% endif %} {% if link.type %} type="{{ link.type }}" {% endif %} />
+  <link {{ link|tagattrs('href', 'rel', 'type') }} />
+  {%- endmacro %}
+
+  {% macro make_category(category) -%}
+  <category {{ category|tagattrs('term', 'scheme', 'label') }} />
   {%- endmacro %}
 
   {% for link in links %}
@@ -45,6 +49,9 @@
 
     {% if entry.published %}
     <published>{{ entry.published }}</published>
+    {% endif %}
+
+    {% if entry.category %}
     {% endif %}
   </entry>
   {% endfor %}

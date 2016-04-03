@@ -21,6 +21,10 @@ Link = namedtuple(
     'Link',
     ['href', 'rel', 'type'])
 
+Category = namedtuple(
+    'Category',
+    ['term', 'scheme', 'label'])
+
 
 class AtomResource(Resource):
 
@@ -34,7 +38,6 @@ class AtomResource(Resource):
 
     def render(self, env, target):
         """Render this resource into target."""
-        # XXX
         context = dict(self.context)
         entries = env.globals['atom_entries']
         context['entries'] = entries
