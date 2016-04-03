@@ -1,16 +1,19 @@
 """Resource ABCs"""
 
-import os
-from abc import ABC, abstractmethod
-
-
 # pylint: disable=abstract-method
 # pylint: disable=too-few-public-methods
+
+import os
+from abc import ABC, abstractmethod
 
 
 class Resource(ABC):
 
     """Represents a render-able resource."""
+
+    @abstractmethod
+    def walk(self, env):
+        """Load information about this resource."""
 
     @abstractmethod
     def render(self, env, target):

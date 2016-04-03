@@ -16,15 +16,14 @@ class SitemapResource(Resource):
 
     """Sitemap resource."""
 
-    # pylint: disable=too-few-public-methods
-
-    def __init__(self, sitemap):
-        self.sitemap = sitemap
+    def walk(self, env):
+        pass
 
     def render(self, env, target):
         """Render this resource into target."""
-        logger.debug('sitemap %r', self.sitemap)
+        sitemap = env.globals['sitemap']
+        logger.debug('sitemap %r', sitemap)
         template = env.get_template('sitemap.xml')
-        content = template.render({'sitemap': self.sitemap})
+        content = template.render({'sitemap': sitemap})
         with open(target, 'w') as file:
             file.write(content)

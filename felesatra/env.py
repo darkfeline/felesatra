@@ -7,7 +7,7 @@ from jinja2 import Environment, PackageLoader
 from . import filters
 
 
-def make_env(site_url, build_dir):
+def make_env(site_url, src_dir):
     """Get Jinja environment."""
     env = Environment(
         loader=PackageLoader('felesatra', 'templates'),
@@ -18,7 +18,7 @@ def make_env(site_url, build_dir):
     env.globals = {
         'site': {
             'url': site_url,
-            'builddir': build_dir,
+            'srcdir': src_dir,
             'nav': OrderedDict((
                 ('About', 'about/'),
                 ('Projects', 'projects/'),

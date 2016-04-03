@@ -16,7 +16,7 @@ title: Feles Atra
 </section>
 
 <section>
-  <h1>Selected pages</h1>
+  <h1>Select pages</h1>
   <nav>
     <ul>
       <li><a href="{{ abs_url('keihan/') }}">契絆想解詩</a></li>
@@ -26,11 +26,11 @@ title: Feles Atra
   </nav>
 </section>
 
+{#
 <section>
   <h1>Recent posts</h1>
-  {#
   {{ range first 10 .Data.Pages.ByPublishDate.Reverse }}
   {{ .Render "summary" }}
   {{ end }}
-  #}
 </section>
+#}

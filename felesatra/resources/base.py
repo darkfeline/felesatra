@@ -23,6 +23,9 @@ class SimpleFileResource(FileResource):
         logger.debug('Render file %r %r', self, target)
         shutil.copy(self.path, target)
 
+    def walk(self, env):
+        pass
+
 
 class DirectoryResource(FileResource):
 
@@ -58,6 +61,11 @@ class DirectoryResource(FileResource):
             return SimpleFileResource(path)
         else:
             raise LoadingError('Unknown file %r', path)
+
+    def walk(self, env):
+        # pylint: disable=unused-variable
+        for path, resource in self:
+            resource.walk(env)
 
     def render(self, env, target):
         """Render this resource into target."""

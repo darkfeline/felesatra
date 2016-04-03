@@ -97,15 +97,18 @@ class Webpage(HTMLResource):
         """
         return os.path.splitext(path)[0] + '/'
 
-    def render(self, env, target):
-        """Render this resource into target."""
-        target = self.rendered_path(target)
+    def walk(self, env):
+        """Load information about this resource."""
+        path = self.rendered_path(self.path)
         env.globals['sitemap'].append(
             SitemapURL(
-                utils.geturl(env, target),
+                utils.geturl(env, path),
                 self.meta.get('modified'),
                 None,
                 None))
+
+    def render(self, env, target):
+        """Render this resource into target."""
         os.makedirs(target, exist_ok=True)
         with open(os.path.join(target, 'index.html'), 'w') as file:
             file.write(self.render_html(env))
@@ -119,6 +122,15 @@ class Homepage(Webpage):
     directory, suitable for the root URL path of a website.
 
     """
+
+    def walk(self, env):
+        """Load information about this resource."""
+        env.globals['sitemap'].append(
+            SitemapURL(
+                utils.geturl(env, '/'),
+                self.meta.get('modified'),
+                None,
+                None))
 
     def render(self, env, target):
         """Render this resource into target."""

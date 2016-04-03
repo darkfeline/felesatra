@@ -13,6 +13,9 @@ class Website(DirectoryResource):
 
     """Website for rendering."""
 
+    def __init__(self, path):
+        super().__init__(path)
+
     @classmethod
     def load(cls, path):
         """Load resource."""
@@ -23,5 +26,5 @@ class Website(DirectoryResource):
 
     def render(self, env, target):
         super().render(env, target)
-        sitemap = SitemapResource(env.globals['sitemap'])
+        sitemap = SitemapResource()
         sitemap.render(env, os.path.join(target, 'sitemap.xml'))

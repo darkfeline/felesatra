@@ -13,24 +13,24 @@ class GeturlTestCase(unittest.TestCase):
         self.env = Mock(globals={
             'site': {
                 'url': 'http://www.example.com',
-                'builddir': 'build',
+                'srcdir': 'site',
             }
         })
 
     def test_geturl_file(self):
         """Test geturl on file path."""
-        path = 'build/foo.html'
+        path = 'site/foo.html'
         url = geturl(self.env, path)
         self.assertEqual(url, 'http://www.example.com/foo.html')
 
     def test_geturl_dir(self):
         """Test geturl on directory path."""
-        path = 'build/foo/bar/'
+        path = 'site/foo/bar/'
         url = geturl(self.env, path)
         self.assertEqual(url, 'http://www.example.com/foo/bar/')
 
     def test_geturl_empty(self):
         """Test geturl on empty path."""
-        path = 'build/'
+        path = 'site/'
         url = geturl(self.env, path)
         self.assertEqual(url, 'http://www.example.com/')
