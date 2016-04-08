@@ -5,14 +5,29 @@ import os
 from collections import OrderedDict
 from urllib.parse import urljoin
 
+from . import base
+from .base import DirectoryResource
 from .atom import AtomResource, Author, Link
-from .page import DirectoryResource, Homepage, HTMLResource
+from .blog import Blogpage
+from .page import Homepage, HTMLResource
 from .sitemap import SitemapResource
 
 logger = logging.getLogger(__name__)
 
 
-class Website(DirectoryResource):
+class CustomDirectoryResource(DirectoryResource):
+
+    """DirectoryResource with custom resource loading."""
+
+    @classmethod
+    def resource_classes(cls):
+        yield Blogpage
+        yield DirectoryResource
+        for resource_class in super().resource_classes():
+            yield resource_class
+
+
+class Website(CustomDirectoryResource):
 
     """Website for rendering."""
 
@@ -40,9 +55,10 @@ class Website(DirectoryResource):
     @classmethod
     def load(cls, path):
         """Load resource."""
-        if os.path.basename(path) == '404.html':
+        filename = os.path.basename(path)
+        if filename == '404.html':
             return HTMLResource(path)
-        if os.path.basename(path) == 'index.html':
+        if filename == 'index.html':
             return Homepage(path)
         else:
             return super().load(path)

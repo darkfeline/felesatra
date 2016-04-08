@@ -45,6 +45,10 @@ class HTMLResource(FileResource):
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
 
+    @classmethod
+    def valid_resource(cls, path):
+        return self.path.endswith('.html')
+
     def render_content(self, env):
         """Render content only."""
         content_template = env.from_string(self.content)

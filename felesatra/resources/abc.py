@@ -13,7 +13,7 @@ class Resource(ABC):
 
     @abstractmethod
     def walk(self, env):
-        """Load information about this resource."""
+        """Load information about this resource into the environment."""
 
     @abstractmethod
     def render(self, env, target):
@@ -35,7 +35,21 @@ class FileResource(Resource):
     """
 
     def __init__(self, path):
+        if not self.valid_resource(path):
+            raise ValueError('Invalid {}: {}'.format(self.__class__, path))
         self.path = path
+
+    @classmethod
+    @abstractmethod
+    def valid_resource(cls, path):
+        """Check if the given path is valid for this resource.
+
+        This should return a true value if the path is valid, and a false value
+        otherwise.  The exact return type and value is up to the implementing
+        class.
+
+        """
+
 
     @property
     def filename(self):

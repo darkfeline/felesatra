@@ -8,7 +8,6 @@ from html.parser import HTMLParser
 
 from felesatra import utils
 
-from . import base
 from .atom import Entry, Link
 from .html import HTMLResource
 from .sitemap import SitemapURL
@@ -18,22 +17,7 @@ logger = logging.getLogger(__name__)
 Page = namedtuple('Page', ['href', 'title', 'published', 'updated', 'summary'])
 
 
-class DirectoryResource(base.DirectoryResource):
-
-    """Directory resource extended with webpage support."""
-
-    @classmethod
-    def load(cls, path):
-        """Load resource."""
-        if path.endswith('.html'):
-            return Webpage(path)
-        elif os.path.isdir(path):
-            return DirectoryResource(path)
-        else:
-            return super().load(path)
-
-
-class TextParser(HTMLParser):
+class _TextParser(HTMLParser):
 
     """HTML parser that extracts all text."""
 
@@ -75,7 +59,7 @@ class Webpage(HTMLResource):
 
         """
         content = self.render_content(env)
-        parser = TextParser()
+        parser = _TextParser()
         parser.feed(content)
         summary_words = []
         for text in parser.text:
