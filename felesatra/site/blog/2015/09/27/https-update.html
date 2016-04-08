@@ -1,0 +1,37 @@
+template: content-page.html
+title: HTTPS Update
+---
+
+{%- from 'macros.html' import abs_url -%}
+
+<p>
+Here's some news on recent site updates.
+</p>
+
+<ul>
+  <li>I added HTTPS support.</li>
+  <li>
+    HTTPS uses a self-signed certificate.  Never fear, though, the certificate
+    can be found on the <a href="{{ abs_url('about/') }}">about page</a>, signed
+    with my key, providing both secure encryption and trust.
+  </li>
+  <li>HTTPS uses TLS 1.2 as of this post, sidestepping the vulnerabilities in SSLv2 and v3.</li>
+  <li>HTTP redirects to HTTPS, so you won't accidentally browse without encryption or trust.</li>
+  <li>
+    Caching headers have been added, which means your browser will cache pages
+    from this site and reduce your bandwidth usage.  Probably.
+  </li>
+  <li>Pages are all HTML5 compliant.  Yay!</li>
+</ul>
+
+<p>
+  Due to the unsigned certificate, your browser will most likely panic about
+  unsecured connections.  If this bugs you, you should download the certificate,
+  signature, and my public key from the above link, verify the signature, and
+  then add the certificate to your browser as a trusted authority.
+</p>
+
+<p>
+  Also, pages have been moved around, changing their canonical URLs.  I
+  apologize for the inconvenience, but it's for the best.
+</p>
