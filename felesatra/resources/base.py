@@ -17,9 +17,6 @@ class SimpleFileResource(FileResource):
 
     """
 
-    def __repr__(self):
-        return "SimpleFileResource({})".format(self.path)
-
     @classmethod
     def valid_resource(cls, path):
         return os.path.isfile(path)
@@ -52,9 +49,6 @@ class DirectoryResource(FileResource):
     def __iter__(self):
         for path, resource, in self.entries.items():
             yield path, resource
-
-    def __repr__(self):
-        return "DirectoryResource({})".format(self.path)
 
     @classmethod
     def valid_resource(cls, path):

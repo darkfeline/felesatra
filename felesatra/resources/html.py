@@ -47,9 +47,6 @@ class HTMLResource(FileResource):
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
 
-    def __repr__(self):
-        return "HTMLResource({})".format(self.path)
-
     @classmethod
     def valid_resource(cls, path):
         return path.endswith('.html')

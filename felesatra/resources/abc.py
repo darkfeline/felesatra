@@ -52,6 +52,9 @@ class FileResource(Resource):
             raise ValueError('Invalid {}: {}'.format(self.__class__, path))
         self.path = path
 
+    def __repr__(self):
+        return '{}({})'.format(self.__class__.__name__, self.path)
+
     @classmethod
     @abstractmethod
     def valid_resource(cls, path):

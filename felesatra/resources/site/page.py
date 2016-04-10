@@ -113,9 +113,6 @@ class Webpage(HTMLResource):
 
     """
 
-    def __repr__(self):
-        return "Webpage({})".format(self.path)
-
     @property
     @functools.lru_cache(None)
     def updated(self):
@@ -179,9 +176,6 @@ class Homepage(Webpage):
     directory, suitable for the root URL path of a website.
 
     """
-
-    def __repr__(self):
-        return "Homepage({})".format(self.path)
 
     def walk(self, env):
         """Load information about this resource."""

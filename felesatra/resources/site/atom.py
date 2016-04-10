@@ -42,16 +42,19 @@ class AtomResource(Resource):
     def render(self, env, target):
         """Render this resource into target."""
         super().render(env, target)
+        # Make a copy of the Atom context.
         context = dict(self.context)
+        # Set up Atom entries.
         entries = env.globals['page_index']
         entries = [entry.atom_entry() for entry in entries]
-        logger.debug('Atom %r', entries)
         context['entries'] = entries
+        # Calculate updated time for Atom feed.
         if entries:
             updated = max(entry.updated for entry in entries)
         else:
             updated = datetime.datetime.now(timezone.utc)
         context['updated'] = updated
+        # Render Atom feed.
         template = env.get_template('atom.xml')
         content = template.render(context)
         with open(target, 'w') as file:
