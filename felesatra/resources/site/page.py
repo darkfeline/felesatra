@@ -112,7 +112,7 @@ class Webpage(HTMLResource, SiteResource):
     <page_name>/index.html, thus allowing it to be served with the URL
     <page_name>/.
 
-    As a web page, this resource will also be added to the sitemap.
+    As a web page, this resource will also be added to the page index.
 
     """
 

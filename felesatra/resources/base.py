@@ -82,9 +82,5 @@ class DirectoryResource(FileResource):
             resource.render(env, os.path.join(target, path))
 
 
-class RenderError(Exception):
-    """Generic error when rendering."""
-
-
 class LoadingError(Exception):
     """Generic error when loading resource."""

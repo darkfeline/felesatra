@@ -2,13 +2,11 @@
 
 import logging
 import os
-from collections import OrderedDict
-from urllib.parse import urljoin
 
 from felesatra.resources.base import DirectoryResource
 
 from .abc import SiteResource
-from .atom import AtomResource, Author, Link
+from .atom import AtomResource
 from .blog import Blogpage
 from .page import Homepage, HTMLResource
 from .sitemap import SitemapResource
@@ -36,21 +34,22 @@ class SiteDirectoryResource(DirectoryResource, SiteResource):
 
 class Website(SiteDirectoryResource):
 
-    """Website for rendering."""
+    """Website for rendering.
 
-    def __init__(self, path, site_url):
+    Supports many website things.
+
+    - 404 page
+    - Home page
+    - Sitemap
+    - Atom feed
+    - Page indexing service
+
+    """
+
+    def __init__(self, path):
         super().__init__(path)
-        self.site_url = urljoin(site_url, '/')
 
     def index(self, env):
-        env.globals['site'] = {
-            'url': self.site_url,
-            'srcdir': self.path,
-            'nav': OrderedDict((
-                ('About', 'about/'),
-                ('Projects', 'projects/'),
-            )),
-        }
         env.globals['page_index'] = []
         super().index(env)
 
@@ -71,14 +70,6 @@ class Website(SiteDirectoryResource):
         sitemap = SitemapResource()
         sitemap.render(env, os.path.join(target, 'sitemap.xml'))
 
-        atom_feed = AtomResource({
-            'id': self.site_url,
-            'title': 'Feles Atra',
-            'links': [Link(
-                urljoin(self.site_url, 'atom.xml'),
-                'self',
-                'application/atom+xml')],
-            'authors': [Author('Allen Li', self.site_url, None)],
-            'rights': 'Copyright 2011-2016 Allen Li',  # XXX
-        })
-        atom_feed.render(env, os.path.join(target, 'atom.xml'))
+        if 'atom_context' in env.globals:
+            atom_feed = AtomResource(env.globals['atom_context'])
+            atom_feed.render(env, os.path.join(target, 'atom.xml'))
