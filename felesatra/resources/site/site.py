@@ -5,8 +5,8 @@ import os
 from collections import OrderedDict
 from urllib.parse import urljoin
 
-from . import base
-from .base import DirectoryResource
+from felesatra.resources.base import DirectoryResource
+
 from .atom import AtomResource, Author, Link
 from .blog import Blogpage
 from .page import Homepage, HTMLResource

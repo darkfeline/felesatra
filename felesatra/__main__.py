@@ -5,7 +5,7 @@ import logging
 import os
 
 from felesatra.env import make_env
-from felesatra.resources import Website
+from felesatra.resources.site import Website
 
 
 def sitepath():

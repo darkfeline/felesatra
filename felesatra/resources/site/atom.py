@@ -5,7 +5,7 @@ import logging
 from collections import namedtuple
 from datetime import timezone
 
-from .abc import Resource
+from felesatra.resources.abc import Resource
 
 logger = logging.getLogger(__name__)
 

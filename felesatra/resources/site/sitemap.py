@@ -3,7 +3,7 @@
 import logging
 from collections import namedtuple
 
-from .abc import Resource
+from felesatra.resources.abc import Resource
 
 logger = logging.getLogger(__name__)
 

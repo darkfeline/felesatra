@@ -1,4 +1,10 @@
-"""Web page resource."""
+"""Web page resources.
+
+These resources are for rendering webpage resources, which are distinct from
+HTML resources.  They contain various handling to integrate with the larger
+website.
+
+"""
 
 import functools
 import logging
@@ -7,9 +13,9 @@ from collections import namedtuple
 from html.parser import HTMLParser
 
 from felesatra import utils
+from felesatra.resources.html import HTMLResource
 
 from .atom import Entry, Link
-from .html import HTMLResource
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
