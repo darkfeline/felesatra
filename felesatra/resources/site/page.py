@@ -160,7 +160,7 @@ class Webpage(HTMLResource, SiteResource):
         entry.published = self.meta.get('published')
         entry.updated = self.updated
         entry.summary = self.render_summary(env)
-        entry.include_in_atom = self.meta.get('include_in_atom', False)
+        entry.include_in_atom = self.meta.get('include_in_atom', True)
         env.globals['page_index'].append(entry)
 
     def render(self, env, target):
