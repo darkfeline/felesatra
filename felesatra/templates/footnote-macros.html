@@ -3,11 +3,8 @@
 {%- endmacro %}
 
 {% macro fn(n) -%}
-<section class="footnote" id="fn{{ n }}">
-  <header>
-    <a href="#r{{ n }}">[{{ n }}]</a>
-  </header>
-  {{ caller() }}
+<p id="fn{{ n }}">
+  <a href="#r{{ n }}">[{{ n }}]</a> {{ caller() }}
 </section>
 {%- endmacro %}
 

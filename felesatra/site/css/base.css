@@ -101,9 +101,10 @@ span.aside {
 
 section.footnotes {
     border-top: 1px solid #888888;
-    padding-top: 5px;
 }
 
-section.footnote header {
-    display: inline;
+section.footnotes p {
+    font-size: 75%;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
