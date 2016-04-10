@@ -26,9 +26,9 @@ pre {
     background-color: #E0FFFF;
 }
 
-/* pre code { */
-/*     background-color: inherit; */
-/* } */
+pre code {
+    background-color: inherit;
+}
 
 /* Definition lists */
 dt {
@@ -97,4 +97,13 @@ img.centered {
 span.aside {
     font-size: 90%;
     color: #808080;
+}
+
+section.footnotes {
+    border-top: 1px solid #888888;
+    padding-top: 5px;
+}
+
+section.footnote header {
+    display: inline;
 }
