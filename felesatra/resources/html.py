@@ -9,6 +9,8 @@ registering in the sitemap or Atom feeds, etc.
 
 import yaml
 
+from felesatra.xhtml import XHTMLParser
+
 from .abc import FileResource
 
 
@@ -38,8 +40,12 @@ class HTMLResource(FileResource):
                 if line.rstrip() == '---':
                     break
                 frontmatter.append(line)
+            content = file.read()
 
-            self.content = file.read().lstrip()
+        content = content.strip()
+        parser = XHTMLParser()
+        parser.feed(content)
+        self.content = parser.get_text()
 
         self.meta = {
             'template': 'base.html',

@@ -96,8 +96,8 @@ class _TextParser(HTMLParser):
 
     # pylint: disable=abstract-method
 
-    def __init__(self):
-        super().__init__()
+    def reset(self):
+        super().reset()
         self.text = []
 
     def handle_data(self, data):

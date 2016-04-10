@@ -2,8 +2,6 @@ template: content_page.html
 title: Rewriting the engine
 ---
 
-{%- import "footnote-macros.html" as fn -%}
-
 <p>
   I plan on rewriting this site again sometime in the future. Specifically, I
   will be writing a custom static site engine using Python 3 and Jinja.
@@ -11,10 +9,14 @@ title: Rewriting the engine
 
 <p>
   This will be the seventh complete rewrite/migration of this site, and since I
-  will be writing a custom engine, this should be the last{{ fn.r(1) }} as I
-  will no longer have to wrestle with the restrictions of any "premade" "easy to
-  use" frameworks.
+  will be writing a custom engine, this should be the last<x-fn-ref id="1" /> as
+  I will no longer have to wrestle with the restrictions of any "premade" "easy
+  to use" frameworks.
 </p>
+
+<x-fn id="1">
+No promises.
+</x-fn>
 
 <p>
   This spontaneous decision was motivated by, once again, my struggles trying to
@@ -40,11 +42,3 @@ title: Rewriting the engine
   currently engaged in <a href="https://github.com/darkfeline/animanager">a
   different full rewrite, of Animanager</a>, which will be taking up my time.
 </p>
-
-{% call fn.block() %}
-
-{% call fn.fn(1) %}
-No promises.
-{% endcall %}
-
-{% endcall %}
