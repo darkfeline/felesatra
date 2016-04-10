@@ -8,6 +8,15 @@ LOCAL_BUILD_DIR=build_local
 build:
 	python -m felesatra ${BUILD_DIR}
 
+SSH_HOST=www.felesatra.moe
+SSH_PORT=22
+SSH_USER=root
+SSH_DIR=/srv/www/www.felesatra.moe
+
+.PHONY: upload
+upload: clean build
+	rsync -e "ssh -p $(SSH_PORT)" -P -rvzc --delete $(BUILD_DIR)/ $(SSH_USER)@$(SSH_HOST):$(SSH_DIR) --cvs-exclude
+
 .PHONY: build_local
 build_local:
 	python -m felesatra --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
