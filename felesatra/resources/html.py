@@ -47,7 +47,7 @@ class HTMLResource(FileResource):
 
     @classmethod
     def valid_resource(cls, path):
-        return self.path.endswith('.html')
+        return path.endswith('.html')
 
     def render_content(self, env):
         """Render content only."""
