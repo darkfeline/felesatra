@@ -38,7 +38,7 @@ def setup_env(env, site_url, src_dir):
             'self',
             'application/atom+xml')],
         'authors': [Author('Allen Li', site_url, None)],
-        'rights': 'Copyright 2012-2016 Allen Li',
+        'rights': 'Copyright 2011-2016 Allen Li',
     }
 
 
