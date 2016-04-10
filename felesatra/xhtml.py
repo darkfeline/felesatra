@@ -100,11 +100,37 @@ class XHTMLParser(HTMLParser):
     _fn_block_template = '<section class="footnotes">{}</section>'
     _fn_template = '<p id="fn{0}"><a href="#r{0}">[{0}]</a> {1}</p>'
 
+    def _get_footnote(self, i, key):
+        """Get text for one footnote.
+
+        i is the footnote index (for rendering), key is the internal footnote
+        key.
+
+        """
+        if key not in self._footnotes:
+            raise MissingRefError(key)
+        return self._fn_template.format(i, ''.join(self._footnotes[key]))
+
+    def _get_footnotes(self):
+        """Get text for all footnotes."""
+        return ''.join(
+            self._get_footnote(i, key)
+            for i, key in enumerate(self._footnote_ids, start=1))
+
     def get_text(self):
         """Get processed text."""
         return ''.join(chain(
             self.text,
-            [self._fn_block_template.format(
-                ''.join(
-                    self._fn_template.format(i, ''.join(self._footnotes[key]))
-                    for i, key in enumerate(self._footnote_ids)))]))
+            [self._fn_block_template.format(self._get_footnotes())]))
+
+
+class ParseError(Exception):
+    """Generic XHTML parse error."""
+
+
+class MissingRefError(ParseError):
+
+    """Missing footnote reference."""
+
+    def __init__(self, key):
+        super().__init__('Missing footnote reference {}'.format(key))
