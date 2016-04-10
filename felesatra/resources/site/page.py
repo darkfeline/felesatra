@@ -6,14 +6,13 @@ website.
 
 """
 
-import datetime
 import functools
 import logging
 import os
 from html.parser import HTMLParser
-from weakref import WeakKeyDictionary
 
 from felesatra import utils
+from felesatra.fields import Field, DateTimeField
 from felesatra.resources.html import HTMLResource
 
 from . import atom
@@ -21,39 +20,6 @@ from .abc import SiteResource
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
-
-
-class _Field:
-
-    """Descriptor for a single value field."""
-
-    # pylint: disable=too-few-public-methods
-
-    def __init__(self, default=None):
-        self.default = default
-        self.values = WeakKeyDictionary()
-
-    def __get__(self, obj, objtype):
-        if obj is None:
-            raise AttributeError('Cannot access field from class.')
-        return self.values.get(obj, self.default)
-
-    def __set__(self, obj, value):
-        self.values[obj] = value
-
-
-class _DateTimeField(_Field):
-
-    """_Field for datetimes."""
-
-    # pylint: disable=too-few-public-methods
-
-    def __set__(self, obj, value):
-        if isinstance(value, datetime.date):
-            value = datetime.datetime(value.year, value.month, value.day)
-        if not isinstance(value, datetime.datetime):
-            raise TypeError('value must be datetime')
-        super().__set__(obj, value)
 
 
 class PageIndexEntry:
@@ -64,16 +30,21 @@ class PageIndexEntry:
 
     """
 
+    # pylint: disable=too-many-instance-attributes
+
     def __init__(self, href, title):
         self.href = href
         self.title = title
 
-    published = _DateTimeField()
-    updated = _DateTimeField()
-    summary = _Field(default='')
+    published = DateTimeField()
+    updated = DateTimeField()
+    category = Field()
+    tags = Field()
 
-    include_in_sitemap = _Field(default=True)
-    include_in_atom = _Field(default=True)
+    summary = Field(default='')
+
+    include_in_sitemap = Field(default=True)
+    include_in_atom = Field(default=True)
 
     def sitemap_entry(self):
         """Return sitemap entry of page index."""
@@ -159,6 +130,8 @@ class Webpage(HTMLResource, SiteResource):
         entry = PageIndexEntry(url, self.meta['title'])
         entry.published = self.meta.get('published')
         entry.updated = self.updated
+        entry.category = self.meta.get('category')
+        entry.tags = self.meta.get('tags')
         entry.summary = self.render_summary(env)
         entry.include_in_atom = self.meta.get('include_in_atom', True)
         env.globals['page_index'].append(entry)
