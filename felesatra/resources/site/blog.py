@@ -19,3 +19,6 @@ class Blogpage(Webpage):
             path, month = os.path.split(path)
             path, year = os.path.split(path)
             self.meta['published'] = datetime.datetime(int(year), int(month), int(day))
+
+    def __repr__(self):
+        return "Blogpage({})".format(self.path)

@@ -19,6 +19,10 @@ class HTMLResource(FileResource):
     This resource will render an HTML file with full templating into its target
     file.
 
+    The HTML resource should have a YAML front matter.
+
+    HTMLResource guarantees only template and title keys in meta.
+
     Attributes:
         meta: Parsed from front matter
         content: HTML content sans front matter
@@ -42,6 +46,9 @@ class HTMLResource(FileResource):
             'title': '',
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
+
+    def __repr__(self):
+        return "HTMLResource({})".format(self.path)
 
     @classmethod
     def valid_resource(cls, path):
@@ -68,5 +75,6 @@ class HTMLResource(FileResource):
 
     def render(self, env, target):
         """Render this resource into target."""
+        super().render(env, target)
         with open(target, 'w') as file:
             file.write(self.render_html(env))

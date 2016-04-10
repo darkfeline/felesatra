@@ -1,15 +1,27 @@
-"""Resource ABCs"""
+"""Resource ABCs."""
 
 # pylint: disable=abstract-method
 # pylint: disable=too-few-public-methods
 
+import logging
 import os
 from abc import ABC, abstractmethod
+
+logger = logging.getLogger(__name__)
 
 
 class Resource(ABC):
 
-    """Represents a render-able resource."""
+    """Represents a render-able resource.
+
+    Resources must implement the methods: walk() and render()
+
+    walk() does various preprocessing, such as indexing this resource for any
+    rendering that requires having an index of all relevant resources.
+
+    render() performs the rendering for the resource.
+
+    """
 
     @abstractmethod
     def walk(self, env):
@@ -23,6 +35,7 @@ class Resource(ABC):
         resource.
 
         """
+        logger.debug('Render %r to %s', self, target)
 
 
 class FileResource(Resource):
@@ -49,7 +62,6 @@ class FileResource(Resource):
         class.
 
         """
-
 
     @property
     def filename(self):

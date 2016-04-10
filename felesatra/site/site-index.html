@@ -1,0 +1,12 @@
+template: content_page.html
+title: Site Index
+published: 2015-01-01
+---
+
+{%- from 'macros.html' import page_li -%}
+
+<ul>
+  {% for page in page_index|sort(attribute='href') %}
+    {{ page_li(page) }}
+  {% endfor %}
+</ul>

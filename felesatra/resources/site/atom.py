@@ -33,11 +33,15 @@ class AtomResource(Resource):
     def __init__(self, context):
         self.context = context
 
+    def __repr__(self):
+        return "AtomResource({})".format(self.context)
+
     def walk(self, env):
         pass
 
     def render(self, env, target):
         """Render this resource into target."""
+        super().render(env, target)
         context = dict(self.context)
         entries = env.globals['page_index']
         entries = [entry.atom_entry() for entry in entries]

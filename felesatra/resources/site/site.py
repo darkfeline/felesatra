@@ -19,10 +19,13 @@ class CustomDirectoryResource(DirectoryResource):
 
     """DirectoryResource with custom resource loading."""
 
+    def __repr__(self):
+        return "CustomDirectoryResource({})".format(self.path)
+
     @classmethod
     def resource_classes(cls):
         yield Blogpage
-        yield DirectoryResource
+        yield CustomDirectoryResource
         for resource_class in super().resource_classes():
             yield resource_class
 

@@ -2,7 +2,7 @@ title: Feles Atra
 published: 2015-01-01
 ---
 
-{%- from 'macros.html' import abs_url -%}
+{%- from 'macros.html' import abs_url, page_li -%}
 
 <section>
   <h1>Introduction</h1>
@@ -30,8 +30,10 @@ published: 2015-01-01
 <section>
   <h1>New pages</h1>
   <ul>
-    {% for page in page_index|selectattr("include_in_atom")|sort(attribute='published', reverse=True) %}
-    <li><span class="aside">{{ page.published }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+    {% for page in page_index|selectattr("include_in_atom")
+    |sort(attribute='published', reverse=True)
+    |first(5) %}
+    {{ page_li(page) }}
     {% endfor %}
   </ul>
 </section>
@@ -39,8 +41,10 @@ published: 2015-01-01
 <section>
   <h1>Updated pages</h1>
   <ul>
-    {% for page in page_index|selectattr("include_in_atom")|sort(attribute='updated', reverse=True) %}
-    <li><span class="aside">{{ page.updated }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+    {% for page in page_index|selectattr("include_in_atom")
+    |sort(attribute='updated', reverse=True)
+    |first(5) %}
+    {{ page_li(page) }}
     {% endfor %}
   </ul>
 </section>

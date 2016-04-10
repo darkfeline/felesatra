@@ -1,4 +1,4 @@
-"""Jinja filters."""
+"""Custom Jinja filters for felesatra."""
 
 import urllib.parse
 
@@ -27,3 +27,13 @@ def tagattr(obj, attr):
 def tagattrs(obj, *attrs):
     """Conditionally make tag attributes from object."""
     return ' '.join(tagattr(obj, attr) for attr in attrs)
+
+
+@_filter
+def first(obj, n):
+    """Get the first n items."""
+    i = 0
+    obj = iter(obj)
+    while i < n:
+        yield next(obj)
+        i += 1

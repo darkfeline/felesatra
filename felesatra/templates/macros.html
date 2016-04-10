@@ -19,3 +19,7 @@
 <a href="https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74">
   {{ caller() }}</a>
 {%- endmacro %}
+
+{% macro page_li(page) -%}
+    <li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+{%- endmacro %}

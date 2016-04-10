@@ -16,11 +16,15 @@ class SitemapResource(Resource):
 
     """Sitemap resource."""
 
+    def __repr__(self):
+        return "SitemapResource()"
+
     def walk(self, env):
         pass
 
     def render(self, env, target):
         """Render this resource into target."""
+        super().render(env, target)
         pages = env.globals['page_index']
         sitemap = [entry.sitemap_entry() for entry in pages]
         logger.debug('sitemap %r', sitemap)

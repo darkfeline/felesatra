@@ -6,6 +6,7 @@ website.
 
 """
 
+import datetime
 import functools
 import logging
 import os
@@ -40,6 +41,18 @@ class _Field:
         self.values[obj] = value
 
 
+class _DateTimeField(_Field):
+
+    """_Field for datetimes."""
+
+    def __set__(self, obj, value):
+        if isinstance(value, datetime.date):
+            value = datetime.datetime(value.year, value.month, value.day)
+        if not isinstance(value, datetime.datetime):
+            raise TypeError('value must be datetime')
+        super().__set__(obj, value)
+
+
 class PageIndexEntry:
 
     """Page index entry used for many things.
@@ -52,8 +65,8 @@ class PageIndexEntry:
         self.href = href
         self.title = title
 
-    published = _Field()
-    updated = _Field()
+    published = _DateTimeField()
+    updated = _DateTimeField()
     summary = _Field(default='')
 
     include_in_sitemap = _Field(default=True)
@@ -99,6 +112,9 @@ class Webpage(HTMLResource):
     As a web page, this resource will also be added to the sitemap.
 
     """
+
+    def __repr__(self):
+        return "Webpage({})".format(self.path)
 
     @property
     @functools.lru_cache(None)
@@ -148,10 +164,11 @@ class Webpage(HTMLResource):
 
     def render(self, env, target):
         """Render this resource into target."""
+        logger.debug('Render %r to %s', self, target)
         target = self.rendered_path(target)
         os.makedirs(target, exist_ok=True)
-        with open(os.path.join(target, 'index.html'), 'w') as file:
-            file.write(self.render_html(env))
+        target = os.path.join(target, 'index.html')
+        super().render(env, target)
 
 
 class Homepage(Webpage):
@@ -163,6 +180,9 @@ class Homepage(Webpage):
 
     """
 
+    def __repr__(self):
+        return "Homepage({})".format(self.path)
+
     def walk(self, env):
         """Load information about this resource."""
         entry = PageIndexEntry('/', 'Feles Atra')
@@ -173,5 +193,6 @@ class Homepage(Webpage):
 
     def render(self, env, target):
         """Render this resource into target."""
+        logger.debug('Render %r to %s', self, target)
         target = os.path.dirname(target)
         super().render(env, target)
