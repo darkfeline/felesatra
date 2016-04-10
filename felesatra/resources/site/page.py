@@ -9,18 +9,69 @@ website.
 import functools
 import logging
 import os
-from collections import namedtuple
+from weakref import WeakKeyDictionary
 from html.parser import HTMLParser
 
 from felesatra import utils
 from felesatra.resources.html import HTMLResource
 
-from .atom import Entry, Link
+from . import atom
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
 
-Page = namedtuple('Page', ['href', 'title', 'published', 'updated', 'summary'])
+
+class _Field:
+
+    """Descriptor for a single value field."""
+
+    # pylint: disable=too-few-public-methods
+
+    def __init__(self, default=None):
+        self.default = default
+        self.values = WeakKeyDictionary()
+
+    def __get__(self, obj, objtype):
+        if obj is None:
+            raise AttributeError('Cannot access field from class.')
+        return self.values.get(obj, self.default)
+
+    def __set__(self, obj, value):
+        self.values[obj] = value
+
+
+class PageIndexEntry:
+
+    """Page index entry used for many things.
+
+    For example: sitemap, Atom feed, site index
+
+    """
+
+    def __init__(self, href, title):
+        self.href = href
+        self.title = title
+
+    published = _Field()
+    updated = _Field()
+    summary = _Field(default='')
+
+    include_in_sitemap = _Field(default=True)
+    include_in_atom = _Field(default=True)
+
+    def sitemap_entry(self):
+        """Return sitemap entry of page index."""
+        return SitemapURL(self.href, self.updated, None, None)
+
+    def atom_entry(self):
+        """Return Atom entry of page index."""
+        return atom.Entry(
+            self.href,
+            self.title,
+            self.updated,
+            [atom.Link(self.href, 'alternate', 'text/html')],
+            self.summary,
+            self.published)
 
 
 class _TextParser(HTMLParser):
@@ -89,27 +140,11 @@ class Webpage(HTMLResource):
         """Load information about this resource."""
         path = self.rendered_path(self.path)
         url = utils.geturl(env, path)
-        env.globals['sitemap'].append(
-            SitemapURL(
-                url,
-                self.meta.get('modified'),
-                None,
-                None))
-        env.globals['atom_entries'].append(
-            Entry(
-                url,
-                self.meta['title'],
-                self.updated,
-                [Link(path, 'alternate', 'text/html')],
-                self.render_summary(env),
-                self.meta.get('published')))
-        env.globals['pages'].append(
-            Page(
-                url,
-                self.meta['title'],
-                self.meta['published'],
-                self.updated,
-                None))
+        entry = PageIndexEntry(url, self.meta['title'])
+        entry.published = self.meta.get('published')
+        entry.updated = self.updated
+        entry.summary = self.render_summary(env)
+        env.globals['page_index'].append(entry)
 
     def render(self, env, target):
         """Render this resource into target."""
@@ -130,12 +165,11 @@ class Homepage(Webpage):
 
     def walk(self, env):
         """Load information about this resource."""
-        env.globals['sitemap'].append(
-            SitemapURL(
-                utils.geturl(env, '/'),
-                self.meta.get('modified'),
-                None,
-                None))
+        entry = PageIndexEntry('/', 'Feles Atra')
+        entry.published = self.meta.get('published')
+        entry.updated = self.updated
+        entry.include_in_atom = False
+        env.globals['page_index'].append(entry)
 
     def render(self, env, target):
         """Render this resource into target."""

@@ -1,4 +1,4 @@
-"""Sitemap resources."""
+"""Site index resources."""
 
 import logging
 from collections import namedtuple
@@ -21,8 +21,7 @@ class SitemapResource(Resource):
 
     def render(self, env, target):
         """Render this resource into target."""
-        pages = env.globals['page_index']
-        sitemap = [entry.sitemap_entry() for entry in pages]
+        sitemap = env.globals['sitemap']
         logger.debug('sitemap %r', sitemap)
         template = env.get_template('sitemap.xml')
         content = template.render({'sitemap': sitemap})

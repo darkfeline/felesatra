@@ -39,7 +39,8 @@ class AtomResource(Resource):
     def render(self, env, target):
         """Render this resource into target."""
         context = dict(self.context)
-        entries = env.globals['atom_entries']
+        entries = env.globals['page_index']
+        entries = [entry.atom_entry() for entry in entries]
         logger.debug('Atom %r', entries)
         context['entries'] = entries
         if entries:

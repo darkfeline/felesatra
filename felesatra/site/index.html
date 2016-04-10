@@ -30,7 +30,7 @@ published: 2015-01-01
 <section>
   <h1>New pages</h1>
   <ul>
-    {% for page in pages|sort(attribute='published', reverse=True) %}
+    {% for page in page_index|selectattr("include_in_atom")|sort(attribute='published', reverse=True) %}
     <li><span class="aside">{{ page.published }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
     {% endfor %}
   </ul>
@@ -39,18 +39,8 @@ published: 2015-01-01
 <section>
   <h1>Updated pages</h1>
   <ul>
-    {% for page in pages|sort(attribute='updated', reverse=True) %}
+    {% for page in page_index|selectattr("include_in_atom")|sort(attribute='updated', reverse=True) %}
     <li><span class="aside">{{ page.updated }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
     {% endfor %}
   </ul>
 </section>
-
-
-{#
-<section>
-  <h1>Recent posts</h1>
-  {{ range first 10 .Data.Pages.ByPublishDate.Reverse }}
-  {{ .Render "summary" }}
-  {{ end }}
-</section>
-#}

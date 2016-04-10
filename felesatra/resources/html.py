@@ -40,8 +40,6 @@ class HTMLResource(FileResource):
         self.meta = {
             'template': 'base.html',
             'title': '',
-            'published': None,
-            'modified': None,
         }
         self.meta.update(yaml.load(''.join(frontmatter)))
 

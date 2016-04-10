@@ -44,13 +44,8 @@ class Website(CustomDirectoryResource):
                 ('Projects', 'projects/'),
             )),
         }
-        env.globals['sitemap'] = []
-        env.globals['atom_entries'] = []
-        env.globals['pages'] = []
+        env.globals['page_index'] = []
         super().walk(env)
-        env.globals['sitemap'] = sorted(env.globals['sitemap'])
-        env.globals['atom_entries'] = sorted(env.globals['atom_entries'])
-        env.globals['pages'] = sorted(env.globals['pages'])
 
     @classmethod
     def load(cls, path):
@@ -64,7 +59,6 @@ class Website(CustomDirectoryResource):
             return super().load(path)
 
     def render(self, env, target):
-        logger.debug('Pages %r', env.globals['pages'])
         super().render(env, target)
 
         sitemap = SitemapResource()
