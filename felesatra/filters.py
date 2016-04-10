@@ -2,6 +2,7 @@
 
 import urllib.parse
 
+# A dictionary of filters that can be registered in a Jinja Environment.
 filters = {}
 
 
@@ -18,7 +19,7 @@ def urljoin(url, base):
 
 
 def tagattr(obj, attr):
-    """Conditionally make tag attribute from object."""
+    """Conditionally make HTML tag attribute from object."""
     if hasattr(obj, attr):
         return '{}="{}"'.format(attr, getattr(obj, attr))
 
