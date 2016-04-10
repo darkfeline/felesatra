@@ -10,13 +10,14 @@ import datetime
 import functools
 import logging
 import os
-from weakref import WeakKeyDictionary
 from html.parser import HTMLParser
+from weakref import WeakKeyDictionary
 
 from felesatra import utils
 from felesatra.resources.html import HTMLResource
 
 from . import atom
+from .abc import SiteResource
 from .sitemap import SitemapURL
 
 logger = logging.getLogger(__name__)
@@ -44,6 +45,8 @@ class _Field:
 class _DateTimeField(_Field):
 
     """_Field for datetimes."""
+
+    # pylint: disable=too-few-public-methods
 
     def __set__(self, obj, value):
         if isinstance(value, datetime.date):
@@ -101,7 +104,7 @@ class _TextParser(HTMLParser):
         self.text.append(data)
 
 
-class Webpage(HTMLResource):
+class Webpage(HTMLResource, SiteResource):
 
     """Web page resource.
 
@@ -149,7 +152,7 @@ class Webpage(HTMLResource):
         """
         return os.path.splitext(path)[0] + '/'
 
-    def walk(self, env):
+    def index(self, env):
         """Load information about this resource."""
         path = self.rendered_path(self.path)
         url = utils.geturl(env, path)
@@ -157,6 +160,7 @@ class Webpage(HTMLResource):
         entry.published = self.meta.get('published')
         entry.updated = self.updated
         entry.summary = self.render_summary(env)
+        entry.include_in_atom = self.meta.get('include_in_atom', False)
         env.globals['page_index'].append(entry)
 
     def render(self, env, target):
@@ -177,7 +181,7 @@ class Homepage(Webpage):
 
     """
 
-    def walk(self, env):
+    def index(self, env):
         """Load information about this resource."""
         entry = PageIndexEntry('/', 'Feles Atra')
         entry.published = self.meta.get('published')

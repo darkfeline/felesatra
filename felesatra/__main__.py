@@ -26,7 +26,7 @@ def main():
     src_dir = sitepath()
     env = make_env()
     website = Website(src_dir, args.site_url)
-    website.walk(env)
+    website.index(env)
     website.render(env, args.build_dir)
 
 if __name__ == '__main__':

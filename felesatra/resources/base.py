@@ -27,9 +27,6 @@ class SimpleFileResource(FileResource):
         super().render(env, target)
         shutil.copy(self.path, target)
 
-    def walk(self, env):
-        pass
-
 
 class DirectoryResource(FileResource):
 
@@ -76,11 +73,6 @@ class DirectoryResource(FileResource):
             if resource_class.valid_resource(path):
                 return resource_class(path)
         raise LoadingError('No valid resources for {}'.format(path))
-
-    def walk(self, env):
-        # pylint: disable=unused-variable
-        for path, resource in self:
-            resource.walk(env)
 
     def render(self, env, target):
         """Render this resource into target."""

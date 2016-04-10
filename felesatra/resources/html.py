@@ -67,9 +67,6 @@ class HTMLResource(FileResource):
         context.update(self.meta)
         return template.render(context)
 
-    def walk(self, env):
-        pass
-
     def render(self, env, target):
         """Render this resource into target."""
         super().render(env, target)

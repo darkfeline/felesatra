@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 
 from felesatra.resources.base import DirectoryResource
 
+from .abc import SiteResource
 from .atom import AtomResource, Author, Link
 from .blog import Blogpage
 from .page import Homepage, HTMLResource
@@ -15,19 +16,25 @@ from .sitemap import SitemapResource
 logger = logging.getLogger(__name__)
 
 
-class CustomDirectoryResource(DirectoryResource):
+class SiteDirectoryResource(DirectoryResource, SiteResource):
 
     """DirectoryResource with custom resource loading."""
+
+    def index(self, env):
+        # pylint: disable=unused-variable
+        for path, resource in self:
+            if isinstance(resource, SiteResource):
+                resource.index(env)
 
     @classmethod
     def resource_classes(cls):
         yield Blogpage
-        yield CustomDirectoryResource
+        yield SiteDirectoryResource
         for resource_class in super().resource_classes():
             yield resource_class
 
 
-class Website(CustomDirectoryResource):
+class Website(SiteDirectoryResource):
 
     """Website for rendering."""
 
@@ -35,7 +42,7 @@ class Website(CustomDirectoryResource):
         super().__init__(path)
         self.site_url = urljoin(site_url, '/')
 
-    def walk(self, env):
+    def index(self, env):
         env.globals['site'] = {
             'url': self.site_url,
             'srcdir': self.path,
@@ -45,7 +52,7 @@ class Website(CustomDirectoryResource):
             )),
         }
         env.globals['page_index'] = []
-        super().walk(env)
+        super().index(env)
 
     @classmethod
     def load(cls, path):

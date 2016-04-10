@@ -12,20 +12,7 @@ logger = logging.getLogger(__name__)
 
 class Resource(ABC):
 
-    """Represents a render-able resource.
-
-    Resources must implement the methods: walk() and render()
-
-    walk() does various preprocessing, such as indexing this resource for any
-    rendering that requires having an index of all relevant resources.
-
-    render() performs the rendering for the resource.
-
-    """
-
-    @abstractmethod
-    def walk(self, env):
-        """Load information about this resource into the environment."""
+    """Represents a render-able resource."""
 
     @abstractmethod
     def render(self, env, target):

@@ -30,14 +30,13 @@ class AtomResource(Resource):
 
     """Atom feed resource."""
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, context):
         self.context = context
 
     def __repr__(self):
         return "AtomResource({})".format(self.context)
-
-    def walk(self, env):
-        pass
 
     def render(self, env, target):
         """Render this resource into target."""

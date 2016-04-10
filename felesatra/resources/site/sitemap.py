@@ -16,11 +16,10 @@ class SitemapResource(Resource):
 
     """Sitemap resource."""
 
+    # pylint: disable=too-few-public-methods
+
     def __repr__(self):
         return "SitemapResource()"
-
-    def walk(self, env):
-        pass
 
     def render(self, env, target):
         """Render this resource into target."""

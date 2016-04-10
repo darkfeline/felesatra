@@ -1,12 +1,16 @@
-template: content_page.html
 title: Site Index
 published: 2015-01-01
+include_in_atom: no
 ---
 
 {%- from 'macros.html' import page_li -%}
 
-<ul>
-  {% for page in page_index|sort(attribute='href') %}
+<section>
+  <h1>Site Index</h1>
+
+  <ul>
+    {% for page in page_index|sort(attribute='href') %}
     {{ page_li(page) }}
-  {% endfor %}
-</ul>
+    {% endfor %}
+  </ul>
+</section>
