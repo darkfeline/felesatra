@@ -5,8 +5,8 @@ felesatra-specific extended version of HTML5.
 
 """
 
-from itertools import chain
 from html.parser import HTMLParser
+from itertools import chain
 
 
 def _pop_stack(stack, item):

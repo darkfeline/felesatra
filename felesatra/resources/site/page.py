@@ -12,7 +12,7 @@ import os
 from html.parser import HTMLParser
 
 from felesatra import utils
-from felesatra.fields import Field, DateTimeField
+from felesatra.fields import BoolField, DateTimeField, ListField, StringField
 from felesatra.resources.html import HTMLResource
 
 from . import atom
@@ -32,19 +32,21 @@ class PageIndexEntry:
 
     # pylint: disable=too-many-instance-attributes
 
+    __slots__ = ['__weakref__', 'href', 'title']
+
     def __init__(self, href, title):
         self.href = href
         self.title = title
 
     published = DateTimeField()
     updated = DateTimeField()
-    category = Field()
-    tags = Field()
+    category = StringField()
+    tags = ListField()
 
-    summary = Field(default='')
+    summary = StringField()
 
-    include_in_sitemap = Field(default=True)
-    include_in_atom = Field(default=True)
+    include_in_sitemap = BoolField(True)
+    include_in_atom = BoolField(True)
 
     def sitemap_entry(self):
         """Return sitemap entry of page index."""
@@ -52,13 +54,15 @@ class PageIndexEntry:
 
     def atom_entry(self):
         """Return Atom entry of page index."""
-        return atom.Entry(
-            self.href,
-            self.title,
-            self.updated,
-            [atom.Link(self.href, 'alternate', 'text/html')],
-            self.summary,
-            self.published)
+        entry = atom.Entry(self.href, self.title, self.updated)
+        entry.add_link(self.href, 'alternate', 'text/html')
+        entry.summary = self.summary
+        entry.published = self.published
+        if self.category:
+            entry.add_category(self.category, 'category')
+        for tag in self.tags:
+            entry.add_category(tag, 'tag')
+        return entry
 
 
 class _TextParser(HTMLParser):
@@ -131,7 +135,7 @@ class Webpage(HTMLResource, SiteResource):
         entry.published = self.meta.get('published')
         entry.updated = self.updated
         entry.category = self.meta.get('category')
-        entry.tags = self.meta.get('tags')
+        entry.tags = self.meta.get('tags', [])
         entry.summary = self.render_summary(env)
         entry.include_in_atom = self.meta.get('include_in_atom', True)
         env.globals['page_index'].append(entry)

@@ -51,8 +51,9 @@
     <published>{{ entry.published }}</published>
     {% endif %}
 
-    {% if entry.category %}
-    {% endif %}
+    {% for category in entry.categories %}
+    {{ make_category(category) }}
+    {% endfor %}
   </entry>
   {% endfor %}
 

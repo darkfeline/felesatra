@@ -30,13 +30,13 @@ def setup_env(env, site_url, src_dir):
             ('Projects', 'projects/'),
         )),
     }
+    self_link = Link(urljoin(site_url, 'atom.xml'))
+    self_link.rel = 'self'
+    self_link.type = 'application/atom+xml'
     env.globals['atom_context'] = {
         'id': site_url,
         'title': 'Feles Atra',
-        'links': [Link(
-            urljoin(site_url, 'atom.xml'),
-            'self',
-            'application/atom+xml')],
+        'links': [self_link],
         'authors': [Author('Allen Li', site_url, None)],
         'rights': 'Copyright 2011-2016 Allen Li',
     }
