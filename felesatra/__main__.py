@@ -38,7 +38,7 @@ def setup_env(env, site_url, src_dir):
         'title': 'Feles Atra',
         'links': [self_link],
         'authors': [Author('Allen Li', site_url, None)],
-        'rights': 'Copyright 2011-2016 Allen Li',
+        'rights': 'Copyright 2010-2016 Allen Li',
     }
 
 
