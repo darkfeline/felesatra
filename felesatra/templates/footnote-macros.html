@@ -1,0 +1,18 @@
+{% macro r(n) -%}
+<sup><a href="#fn{{ n }}" id="r{{ n }}">[{{ n }}]</a></sup>
+{%- endmacro %}
+
+{% macro fn(n) -%}
+<section class="footnote" id="fn{{ n }}">
+  <header>
+    <a href="#r{{ n }}">[{{ n }}]</a>
+  </header>
+  {{ caller() }}
+</section>
+{%- endmacro %}
+
+{% macro block() -%}
+<section class="footnotes">
+  {{ caller() }}
+</section>
+{%- endmacro %}
