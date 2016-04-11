@@ -126,11 +126,15 @@ class XHTMLParser(HTMLParser):
             self._get_footnote(i, key)
             for i, key in enumerate(self._footnote_ids, start=1))
 
+    def _get_footnotes_block(self):
+        """Get footnotes text rendered in section."""
+        return self._fn_block_template.format(self._get_footnotes())
+
     def get_text(self):
         """Get processed text."""
         return ''.join(chain(
             self.text,
-            [self._fn_block_template.format(self._get_footnotes())]))
+            [self._get_footnotes_block()] if self._footnote_ids else []))
 
 
 class ParseError(Exception):
