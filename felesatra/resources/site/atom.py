@@ -100,7 +100,7 @@ class AtomResource(Resource):
         context = dict(self.context)
         # Set up Atom entries.
         entries = env.globals['page_index']
-        entries = [entry.atom_entry() for entry in entries]
+        entries = [entry.atom_entry() for entry in entries if entry.include_in_atom]
         context['entries'] = entries
         # Calculate updated time for Atom feed.
         if entries:
