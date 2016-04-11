@@ -1,0 +1,33 @@
+{% macro abs_url(ref) -%}
+{{ ref|urljoin(site.url) }}
+{%- endmacro %}
+
+{% macro imgfig(src, alt) -%}
+<figure>
+  <img src="{{ abs_url(src) }}" alt="{{ alt }}">
+</figure>
+{%- endmacro %}
+
+{% macro load_jquery() -%}
+{% if not jquery_loaded %}
+{% set jquery_loaded = True %}
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+{% endif %}
+{%- endmacro %}
+
+{% macro pgpkey() -%}
+<a href="https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74">
+  {{ caller() }}</a>
+{%- endmacro %}
+
+{% macro page_li(page) -%}
+<li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+{%- endmacro %}
+
+{% macro codeblock() -%}
+<pre><code>{{ caller()|e }}</code></pre>
+{%- endmacro %}
+
+{% macro code(text) -%}
+<code>{{ text|e }}</code>
+{%- endmacro %}

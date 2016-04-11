@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block base_content %}
+<section>
+  <header class="content-header">
+    <h1>{{ title }}</h1>
+    <dl>
+      {% if published %}
+      <dt>Published</dt>
+      <dd>{{ published }}</dd>
+      {% endif %}
+      {% if modified %}
+      <dt>Last modified</dt>
+      <dd>{{ modified }}</dd>
+      {% endif %}
+      {% if category %}
+      <dt>Category</dt>
+      <dd>{{ category }}</dd>
+      {% endif %}
+    </dl>
+    {% if tags %}
+    <dl>
+      <dt>Tags</dt>
+      {% for tag in tags %}
+      <dd>{{ tag }}</dd>
+      {% endfor %}
+    {% endif %}
+  </header>
+
+  {% block content %}
+  {{ content }}
+  {% endblock %}
+</section>
+{% endblock base_content %}

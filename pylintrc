@@ -1,0 +1,14 @@
+# -*- conf-unix -*-
+
+[MASTER]
+jobs=4
+
+[MESSAGES CONTROL]
+disable=
+  # pylint is too whiny, e.g., logger
+  invalid-name,
+  # isort handles this for us.
+  ungrouped-imports,
+
+[REPORTS]
+reports=no

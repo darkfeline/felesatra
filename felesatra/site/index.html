@@ -1,0 +1,51 @@
+title: Feles Atra
+published: 2015-01-01
+---
+
+{%- from 'macros.html' import abs_url, page_li -%}
+
+<section>
+  <h1>Introduction</h1>
+
+  <p>This is my homepage.  There are many like it, but this one is mine.</p>
+
+  <p>Site will be undergoing a rewrite at some point in the future.</p>
+
+  <p><s>Site is under construction, so expect it to change over time.  However, it
+    will stay simple, as I'm not fond of loading 10 MB of JavaScript and CSS for
+    a document that should by all rights be no more than 10 kB.</s></p>
+</section>
+
+<section>
+  <h1>Select pages</h1>
+  <nav>
+    <ul>
+      <li><a href="{{ abs_url('site-index/') }}">Site Index</a></li>
+      <li><a href="{{ abs_url('keihan/') }}">契絆想解詩</a></li>
+      <li><a href="{{ abs_url('projects/') }}">Projects</a></li>
+      <li><a href="https://teiwaz-project.github.io/">Teiwaz Project</a></li>
+    </ul>
+  </nav>
+</section>
+
+<section>
+  <h1>New pages</h1>
+  <ul>
+    {% for page in page_index|selectattr("include_in_atom")
+    |sort(attribute='published', reverse=True)
+    |first(5) %}
+    {{ page_li(page) }}
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h1>Updated pages</h1>
+  <ul>
+    {% for page in page_index|selectattr("include_in_atom")
+    |sort(attribute='updated', reverse=True)
+    |first(5) %}
+    {{ page_li(page) }}
+    {% endfor %}
+  </ul>
+</section>
