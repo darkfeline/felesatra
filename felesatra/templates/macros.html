@@ -21,5 +21,9 @@
 {%- endmacro %}
 
 {% macro page_li(page) -%}
-    <li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+<li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+{%- endmacro %}
+
+{% macro codeblock() -%}
+<pre><code>{{ caller() }}</code></pre>
 {%- endmacro %}
