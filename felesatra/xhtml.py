@@ -21,6 +21,9 @@ class XHTMLParser(HTMLParser):
 
     # pylint: disable=abstract-method
 
+    def __init__(self):
+        super().__init__(convert_charrefs=False)
+
     def reset(self):
         super().reset()
         self.text = []
@@ -96,6 +99,12 @@ class XHTMLParser(HTMLParser):
         handler = self._endtag_handlers.get(
             tag, self._endtag_handlers['default'])
         handler(self, tag)
+
+    def handle_entityref(self, name):
+        self._output('&{};'.format(name))
+
+    def handle_charref(self, name):
+        self._output('&#{};'.format(name))
 
     _fn_block_template = '<section class="footnotes">{}</section>'
     _fn_template = '<p id="fn{0}"><a href="#r{0}">[{0}]</a> {1}</p>'

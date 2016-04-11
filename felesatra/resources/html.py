@@ -40,12 +40,7 @@ class HTMLResource(FileResource):
                 if line.rstrip() == '---':
                     break
                 frontmatter.append(line)
-            content = file.read()
-
-        content = content.strip()
-        parser = XHTMLParser()
-        parser.feed(content)
-        self.content = parser.get_text()
+            self.content = file.read()
 
         self.meta = {
             'template': 'base.html',
@@ -60,7 +55,10 @@ class HTMLResource(FileResource):
     def render_content(self, env):
         """Render content only."""
         content_template = env.from_string(self.content)
-        return content_template.render()
+        rendered_content = content_template.render()
+        parser = XHTMLParser()
+        parser.feed(rendered_content)
+        return parser.get_text()
 
     def render_html(self, env):
         """Render the HTML with template."""

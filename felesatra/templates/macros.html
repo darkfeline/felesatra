@@ -25,5 +25,9 @@
 {%- endmacro %}
 
 {% macro codeblock() -%}
-<pre><code>{{ caller() }}</code></pre>
+<pre><code>{{ caller()|e }}</code></pre>
+{%- endmacro %}
+
+{% macro code(text) -%}
+<code>{{ text|e }}</code>
 {%- endmacro %}
