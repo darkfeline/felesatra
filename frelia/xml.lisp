@@ -1,4 +1,4 @@
-(in-package :html)
+(in-package :xml)
 
 (defun parse-keys (args)
   "Parse keyword arguments.
@@ -15,7 +15,7 @@ Returns `(keys-plist . single-args)'"
     (cons keys (reverse tokens))))
 
 (defun format-attr (attrs)
-  "Format HTML attributes from plist."
+  "Format XML attributes from plist."
   (let (strings current-attr)
     (loop
       for arg in attrs
@@ -28,24 +28,38 @@ Returns `(keys-plist . single-args)'"
            (t (push arg current-attr))))
     (string-join strings)))
 
-(defun make-tag (name &rest tokens)
+(defmacro with-keys (vars args &rest form)
+  "Eval form with keys and tokens from args."
+  (destructuring-bind (keys tokens) vars
+    `(let* ((,tokens (parse-keys ,args))
+            (,keys (pop ,tokens)))
+       ,@form)))
+
+(defun make-tag (name &rest args)
   "Make HTML tag with given name and passing given tokens.
 
 `(make-tag \"html\" :lang \"en\" \"content\")'"
-  (let* ((tokens (parse-keys tokens))
-         (keys (pop tokens)))
+  (with-keys (keys tokens) args
     (string-join
      (list "<" name (format-attr keys) ">"
            (string-join tokens) "</" name ">"))))
 
-(defun make-empty-tag (name &rest tokens)
-  "Make empty (self-closing) HTML tag with given name and passing given tokens."
-  (let* ((tokens (parse-keys tokens))
-         (keys (pop tokens)))
+(defun make-empty-tag (name &rest args)
+  "Make empty (self-closing) XML tag with given name and passing given tokens."
+  (with-keys (keys tokens) args
     (string-join
      (list "<" name (format-attr keys) "/>"))))
 
-(defmacro deftag (name &key empty)
+(defun make-decl-tag (name &rest args)
+  "Make declaration XML tag with given name and passing given tokens."
+  (with-keys (keys tokens) args
+    (string-join
+     (list "<" name (format-attr keys) "/>"))))
+
+(defmacro deftag (name &optional type)
   `(defun ,name (&rest tokens)
-     (apply (if ,empty 'make-empty-tag 'make-tag)
+     (apply (quote ,(cond
+                      ((eq type :empty) 'make-empty-tag)
+                      ((eq type :decl) 'make-decl-tag)
+                      (t 'make-tag)))
             ,(string-downcase (symbol-name name)) tokens)))
