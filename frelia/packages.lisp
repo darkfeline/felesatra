@@ -7,7 +7,7 @@
 (defpackage :xml
   (:use :cl)
   (:import-from :utils :string-join)
-  (:export :deftag :make-tag :make-empty-tag :make-decl-tag))
+  (:export :deftag :parse-xml-tag :format-tag :format-empty-tag))
 
 (defpackage :html-tags
   (:use :cl)

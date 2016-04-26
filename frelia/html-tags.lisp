@@ -7,7 +7,7 @@
 (deftag html)
 
 (deftag head)
-(deftag meta :empty)
+(deftag meta :empty t)
 (deftag title)
 
 (deftag body)

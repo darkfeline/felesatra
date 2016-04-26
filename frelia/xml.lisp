@@ -1,18 +1,23 @@
 (in-package :xml)
 
-(defun parse-keys (args)
-  "Parse keyword arguments.
+(defstruct xml-tag
+  name
+  attrs
+  content)
 
-Returns `(keys-plist . single-args)'"
-  (let (keys tokens current-key)
+(defun parse-xml-tag (name args)
+  "Parse XML tag."
+  (let (attrs content current-attr)
     (loop
       for arg in args
       do (cond
-           (current-key
-            (setf (getf keys (pop current-key)) arg))
-           ((keywordp arg) (push arg current-key))
-           (t (push arg tokens))))
-    (cons keys (reverse tokens))))
+           (current-attr
+            (setf (getf attrs (pop current-attr)) arg))
+           ((keywordp arg) (push arg current-attr))
+           (t (push arg content))))
+    (make-xml-tag :name name
+                  :attrs attrs
+                  :content (reverse content))))
 
 (defun format-attr (attrs)
   "Format XML attributes from plist."
@@ -28,38 +33,29 @@ Returns `(keys-plist . single-args)'"
            (t (push arg current-attr))))
     (string-join strings)))
 
-(defmacro with-keys (vars args &rest form)
-  "Eval form with keys and tokens from args."
-  (destructuring-bind (keys tokens) vars
-    `(let* ((,tokens (parse-keys ,args))
-            (,keys (pop ,tokens)))
-       ,@form)))
+(defun format-tag (tag)
+  "Format `xml-tag' as an XML tag."
+  (string-join
+   (list "<" (xml-tag-name tag) (format-attr (xml-tag-attrs tag)) ">"
+         (string-join (xml-tag-content tag)) "</" (xml-tag-name tag) ">")))
 
-(defun make-tag (name &rest args)
-  "Make HTML tag with given name and passing given tokens.
+(defun format-empty-tag (tag)
+  "Format `xml-tag' as an empty XML tag."
+  (string-join
+   (list "<" (xml-tag-name tag) (format-attr (xml-tag-attrs tag)) "/>")))
 
-`(make-tag \"html\" :lang \"en\" \"content\")'"
-  (with-keys (keys tokens) args
-    (string-join
-     (list "<" name (format-attr keys) ">"
-           (string-join tokens) "</" name ">"))))
+(defun format-decl-tag (tag)
+  "Format `xml-tag' as an XML declaration tag."
+  (string-join
+   (list "<?" (xml-tag-name tag) (format-attr (xml-tag-attrs tag)) "?>")))
 
-(defun make-empty-tag (name &rest args)
-  "Make empty (self-closing) XML tag with given name and passing given tokens."
-  (with-keys (keys tokens) args
-    (string-join
-     (list "<" name (format-attr keys) "/>"))))
+(defun xml-decl (&rest args)
+  "XML declaration."
+  (format-decl-tag (parse-xml-tag "xml" args)))
 
-(defun make-decl-tag (name &rest args)
-  "Make declaration XML tag with given name and passing given tokens."
-  (with-keys (keys tokens) args
-    (string-join
-     (list "<" name (format-attr keys) "/>"))))
-
-(defmacro deftag (name &optional type)
-  `(defun ,name (&rest tokens)
-     (apply (quote ,(cond
-                      ((eq type :empty) 'make-empty-tag)
-                      ((eq type :decl) 'make-decl-tag)
-                      (t 'make-tag)))
-            ,(string-downcase (symbol-name name)) tokens)))
+(defmacro deftag (name &key empty)
+  `(defun ,name (&rest args)
+     (,(cond
+         (empty 'format-empty-tag)
+         (t 'format-tag))
+      (parse-xml-tag ,(string-downcase (symbol-name name)) args))))
