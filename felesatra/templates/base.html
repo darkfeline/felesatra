@@ -27,7 +27,7 @@
   <h1 id="site-title"><a href="{{ abs_url('/') }}">Feles Atra</a></h1>
   <ul id="site-nav">
     {% for name, ref in site.nav.items() %}
-    <li><a href="{{ abs_url(ref) }}">{{ name }}</a>
+    <li><a href="{{ abs_url(ref) }}">{{ name }}</a></li>
     {% endfor %}
       <li>
         <a href="{{ abs_url('atom.xml') }}">
