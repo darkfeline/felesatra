@@ -1,15 +1,15 @@
 (in-package :templates)
 
-(defmacro html-base-template (&key title head-block body-block)
+(defun html-base-template (&key title head-block body-block)
   "HTML base template."
-  `(string-join
-    (doctype)
-    (html `(("lang" . "en"))
-          (head
-           (meta `(("charset" . "UTF-8")))
-           ,@head-block
-           (title ,title))
-          (body ,@body-block))))
+  (string-join
+   (doctype)
+   (html `(("lang" . "en"))
+         (apply 'head
+                (meta `(("charset" . "UTF-8")))
+                (title title)
+                head-block)
+         (apply 'body body-block))))
 
 (defun base-template-header ()
   "Header for site base template."
@@ -49,25 +49,26 @@
                          ("class" . "centered")
                          ("src" . "https://i.creativecommons.org/l/by-sa/4.0/88x31.png")))))))
 
-(defmacro base-template (&key title head-block body-block)
+(defun base-template (&key title head-block body-block)
   "Site base template."
-  `(html-base-template
-    :title ,title
-    :head-block ((meta `(("name" . "viewport")
-                         ("content" . "width=device-width, initial-scale=1")))
-                 (link `(("rel" . "stylesheet")
-                         ("type" . "text/css")
-                         ("href" . ,(abs-url "css/base.css"))))
-                 (link `(("rel" . "stylesheet")
-                         ("type" . "text/css")
-                         ("href" . ,(abs-url "css/site.css"))))
-                 (link `(("rel" . "icon")
-                         ("type" . "image/png")
-                         ("href" . ,(abs-url "img/site/favicon.png"))))
-                 ,@head-block)
-    :body-block (,(base-template-header)
-                 ,@body-block
-                 ,(base-template-footer))))
+  (html-base-template
+    :title title
+    :head-block (append
+                 (list (meta `(("name" . "viewport")
+                               ("content" . "width=device-width, initial-scale=1")))
+                       (link `(("rel" . "stylesheet")
+                               ("type" . "text/css")
+                               ("href" . ,(abs-url "css/base.css"))))
+                       (link `(("rel" . "stylesheet")
+                               ("type" . "text/css")
+                               ("href" . ,(abs-url "css/site.css"))))
+                       (link `(("rel" . "icon")
+                               ("type" . "image/png")
+                               ("href" . ,(abs-url "img/site/favicon.png")))))
+                 head-block)
+    :body-block (append (list (base-template-header))
+                        body-block
+                        (list (base-template-footer)))))
 
 (defstruct page-metadata
   "Page metadata."
@@ -76,21 +77,35 @@
   category
   tags)
 
-(defmacro content-page-template (&key title metadata head-block content-block)
+(defun content-page-template (&key title metadata head-block content-block)
   "Content page template."
-  `(base-template
-    :title ,title
-    :head-block ,head-block
-    :body-block ((section
-                  (header `(("class" . "content-header"))
-                          (h1 ,title)
-                          (dl
-                           ,@(let ((published (page-metadata-published metadata)))
-                               (when published
-                                 `((dt "Published")
-                                   (dd ,published))))
-                           ,@(let ((category (page-metadata-category metadata)))
-                               (when category
-                                 `((dt "Category")
-                                   (dd ,category))))))
-                  ,@content-block))))
+  (base-template
+   :title title
+   :head-block head-block
+   :body-block (append
+                (list
+                 (section
+                  (apply 'header `(("class" . "content-header"))
+                         (h1 title)
+                         (apply 'dl
+                                (append
+                                 (let ((published (page-metadata-published metadata)))
+                                   (when published
+                                     (list (dt "Published")
+                                           (dd published))))
+                                 (let ((modified (page-metadata-modified metadata)))
+                                   (when modified
+                                     (list (dt "Modified")
+                                           (dd modified))))
+                                 (let ((category (page-metadata-category metadata)))
+                                   (when category
+                                     (list (dt "Category")
+                                           (dd category))))))
+                         (let ((tags (page-metadata-tags metadata)))
+                           (when tags
+                             (list
+                              (apply 'dl
+                                     (list (dt "Tags"))
+                                     (loop for tag in tags
+                                           collect (dd tag)))))))))
+                content-block)))

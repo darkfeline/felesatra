@@ -48,6 +48,7 @@
                  li
                  ol
                  p
+                 section
                  span
                  title
                  ul

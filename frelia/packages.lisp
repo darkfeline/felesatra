@@ -24,4 +24,5 @@
   (:import-from :utils :string-join)
   (:import-from :site :abs-url :pgp-key-a :site-a)
   (:export :html-base-template :base-template
-           :content-page-template))
+           :content-page-template
+           :make-page-metadata))
