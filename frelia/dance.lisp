@@ -7,10 +7,10 @@
   (format t "~a~%" (p "test"))
   (format t "~a~%" (base-template
                     :title "HELLO"
-                    :body-block (list (p "how are you"))))
+                    :body-block (p "how are you")))
   (format t "~a~%" (content-page-template
                     :title "HELLO"
                     :metadata (make-page-metadata :published "test")
-                    :content-block (list (p "how are you")))))
+                    :content-block (p "how are you"))))
 
 (main)
