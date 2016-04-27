@@ -36,7 +36,7 @@ watch:
 
 .PHONY: test
 test:
-	nosetests --with-doctest
+	py.test --doctest-modules felesatra tests
 
 .PHONY: isort
 isort:
