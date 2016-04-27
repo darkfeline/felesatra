@@ -7,25 +7,24 @@
 
 `name' is a string.
 `attrs' is an alist mapping strings to strings.
-`content' is a list of strings."
+`content' is a string."
   name
   attrs
   content)
 
 (defun format-attr (attrs)
   "Format XML attributes from alist."
-  (let (strings)
-    (loop
-      for (key . value) in attrs
-      do (push (format nil " ~A=\"~A\"" key value)
-               strings))
-    (apply 'string-join strings)))
+  (apply 'string-join
+         (loop
+           for (key . value) in attrs
+           collect (format nil " ~A=\"~A\"" key value))))
 
 (defun format-tag (tag)
   "Format `xml-tag' as an XML tag."
   (string-join
    "<" (xml-tag-name tag) (format-attr (xml-tag-attrs tag)) ">"
-   (apply 'string-join (xml-tag-content tag)) "</" (xml-tag-name tag) ">"))
+   (xml-tag-content tag)
+   "</" (xml-tag-name tag) ">"))
 
 (defun format-empty-tag (tag)
   "Format `xml-tag' as an empty XML tag."

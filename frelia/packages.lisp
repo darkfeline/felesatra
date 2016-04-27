@@ -2,7 +2,7 @@
 
 (defpackage :utils
   (:use :cl)
-  (:export :string-join))
+  (:export :flatten :string-join :flatten-string))
 
 (defpackage :xml
   (:use :cl)
@@ -12,7 +12,8 @@
    :format-tag :format-empty-tag :format-void-tag :format-decl-tag))
 
 (defpackage :html-tags
-  (:use :cl :xml))
+  (:use :cl :xml)
+  (:import-from :utils :flatten-string))
 
 (defpackage :site
   (:use :cl :html-tags)
