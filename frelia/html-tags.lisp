@@ -36,7 +36,10 @@
                  a
                  address
                  body
+                 dd
                  div
+                 dl
+                 dt
                  footer
                  h1
                  head

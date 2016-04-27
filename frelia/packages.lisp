@@ -23,4 +23,5 @@
   (:use :cl :html-tags)
   (:import-from :utils :string-join)
   (:import-from :site :abs-url :pgp-key-a :site-a)
-  (:export :html-base-template :base-template))
+  (:export :html-base-template :base-template
+           :content-page-template))

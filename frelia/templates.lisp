@@ -1,6 +1,6 @@
 (in-package :templates)
 
-(defmacro html-base-template (&key head-block title-block body-block)
+(defmacro html-base-template (&key title head-block body-block)
   "HTML base template."
   `(string-join
     (doctype)
@@ -8,7 +8,7 @@
           (head
            (meta `(("charset" . "UTF-8")))
            ,@head-block
-           (title ,@title-block))
+           (title ,title))
           (body ,@body-block))))
 
 (defun base-template-header ()
@@ -49,9 +49,10 @@
                          ("class" . "centered")
                          ("src" . "https://i.creativecommons.org/l/by-sa/4.0/88x31.png")))))))
 
-(defmacro base-template (&key head-block title-block body-block)
+(defmacro base-template (&key title head-block body-block)
   "Site base template."
   `(html-base-template
+    :title ,title
     :head-block ((meta `(("name" . "viewport")
                          ("content" . "width=device-width, initial-scale=1")))
                  (link `(("rel" . "stylesheet")
@@ -64,7 +65,32 @@
                          ("type" . "image/png")
                          ("href" . ,(abs-url "img/site/favicon.png"))))
                  ,@head-block)
-    :title-block ,title-block
     :body-block (,(base-template-header)
                  ,@body-block
                  ,(base-template-footer))))
+
+(defstruct page-metadata
+  "Page metadata."
+  published
+  modified
+  category
+  tags)
+
+(defmacro content-page-template (&key title metadata head-block content-block)
+  "Content page template."
+  `(base-template
+    :title ,title
+    :head-block ,head-block
+    :body-block ((section
+                  (header `(("class" . "content-header"))
+                          (h1 ,title)
+                          (dl
+                           ,@(let ((published (page-metadata-published metadata)))
+                               (when published
+                                 `((dt "Published")
+                                   (dd ,published))))
+                           ,@(let ((category (page-metadata-category metadata)))
+                               (when category
+                                 `((dt "Category")
+                                   (dd ,category))))))
+                  ,@content-block))))
