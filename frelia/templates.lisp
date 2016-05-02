@@ -1,4 +1,4 @@
-(in-package :templates)
+(in-package "TEMPLATES")
 
 (defun html-base-template (&key title head-block body-block)
   "HTML base template."

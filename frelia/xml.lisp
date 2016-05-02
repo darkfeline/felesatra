@@ -1,6 +1,6 @@
 ;;;; xml.lisp
 ;;; Construct XML tags with functions.
-(in-package :xml)
+(in-package "XML")
 
 (defstruct xml-tag
   "Defines an XML tag.

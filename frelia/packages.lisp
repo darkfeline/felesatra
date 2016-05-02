@@ -1,29 +1,29 @@
-(in-package :cl-user)
+(in-package "CL-USER")
 
-(defpackage :utils
-  (:use :cl)
-  (:export :flatten :string-join :flatten-string))
+(defpackage "UTILS"
+  (:use "CL")
+  (:export "FLATTEN" "STRING-JOIN" "FLATTEN-STRING"))
 
-(defpackage :xml
-  (:use :cl)
-  (:import-from :utils :string-join)
+(defpackage "XML"
+  (:use "CL")
+  (:import-from "UTILS" "STRING-JOIN")
   (:export
-   :make-xml-tag
-   :format-tag :format-empty-tag :format-void-tag :format-decl-tag))
+   "MAKE-XML-TAG"
+   "FORMAT-TAG" "FORMAT-EMPTY-TAG" "FORMAT-VOID-TAG" "FORMAT-DECL-TAG"))
 
-(defpackage :html-tags
-  (:use :cl :xml)
-  (:import-from :utils :flatten-string))
+(defpackage "HTML-TAGS"
+  (:use "CL" "XML")
+  (:import-from "UTILS" "FLATTEN-STRING"))
 
-(defpackage :site
-  (:use :cl :html-tags)
-  (:import-from :utils :string-join)
-  (:export :abs-url :pgp-key-a :site-a))
+(defpackage "SITE"
+  (:use "CL" "HTML-TAGS")
+  (:import-from "UTILS" "STRING-JOIN")
+  (:export "ABS-URL" "PGP-KEY-A" "SITE-A"))
 
-(defpackage :templates
-  (:use :cl :html-tags)
-  (:import-from :utils :string-join)
-  (:import-from :site :abs-url :pgp-key-a :site-a)
-  (:export :html-base-template :base-template
-           :content-page-template
-           :make-page-metadata))
+(defpackage "TEMPLATES"
+  (:use "CL" "HTML-TAGS")
+  (:import-from "UTILS" "STRING-JOIN")
+  (:import-from "SITE" "ABS-URL" "PGP-KEY-A" "SITE-A")
+  (:export "HTML-BASE-TEMPLATE" "BASE-TEMPLATE"
+           "CONTENT-PAGE-TEMPLATE"
+           "MAKE-PAGE-METADATA"))

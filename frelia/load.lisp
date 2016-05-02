@@ -1,3 +1,5 @@
+(load "~/quicklisp/setup.lisp")
+
 (load "packages.lisp")
 (load "utils.lisp")
 (load "xml.lisp")

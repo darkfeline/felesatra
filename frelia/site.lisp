@@ -1,4 +1,4 @@
-(in-package :site)
+(in-package "SITE")
 
 (defconstant site-url "https://www.felesatra.moe")
 

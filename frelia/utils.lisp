@@ -1,7 +1,4 @@
-;;;; utils.lisp
-;;; Shared utilities
-
-(in-package :utils)
+(in-package "UTILS")
 
 (defun flatten (l)
   "Flatten a list."

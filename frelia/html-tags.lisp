@@ -1,4 +1,4 @@
-(in-package :html-tags)
+(in-package "HTML-TAGS")
 
 (export 'doctype)
 (defun doctype ()
