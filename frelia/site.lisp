@@ -15,3 +15,5 @@
 (defun site-a (path &rest content)
   "`a' tag to site path."
   (a `(("href" . ,(abs-url path))) content))
+
+(defun build-site (site))

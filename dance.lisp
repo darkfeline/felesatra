@@ -1,9 +1,11 @@
 (require "asdf")
 
+(load "~/quicklisp/setup.lisp")
+
 (asdf:load-system "frelia")
 
-(use-package 'html-tags)
-(use-package 'templates)
+(use-package "HTML")
+(use-package "TEMPLATES")
 
 (defun main ()
   "Entry point."
