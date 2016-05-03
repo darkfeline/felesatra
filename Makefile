@@ -45,3 +45,12 @@ isort:
 .PHONY: pylint
 pylint:
 	pylint --output-format=colorized felesatra tests
+
+.PHONY: frelia-install
+frelia-install:
+	mkdir -p ~/.local/share/common-lisp/source
+	ln -sf $(shell realpath frelia/frelia.asd) ~/.local/share/common-lisp/source
+
+.PHONY: dance
+dance:
+	sbcl --script dance.lisp

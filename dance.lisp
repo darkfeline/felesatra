@@ -1,4 +1,7 @@
-(load "load.lisp")
+(require "asdf")
+
+(asdf:load-system "frelia")
+
 (use-package 'html-tags)
 (use-package 'templates)
 

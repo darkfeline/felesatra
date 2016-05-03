@@ -1,6 +1,6 @@
 (in-package "SITE")
 
-(defconstant site-url "https://www.felesatra.moe")
+(defvar site-url "https://www.felesatra.moe")
 
 (defun abs-url (path)
   "Get absolute URL for site path."
