@@ -14,4 +14,5 @@
                (:file "site"
                       :depends-on ("packages" "utils" "html"))
                (:file "templates"
-                      :depends-on ("packages" "utils" "site" "html"))))
+                :depends-on ("packages" "utils" "site" "html")))
+  :depends-on ("com.gigamonkeys.pathnames"))

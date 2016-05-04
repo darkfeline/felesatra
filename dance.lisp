@@ -1,7 +1,7 @@
-(require "asdf")
-
 (load "~/quicklisp/setup.lisp")
+(ql:quickload "com.gigamonkeys.pathnames")
 
+(require "asdf")
 (asdf:load-system "frelia")
 
 (use-package "HTML")
