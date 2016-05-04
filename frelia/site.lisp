@@ -1,5 +1,8 @@
 (in-package "SITE")
 
+(defstruct site-metadata
+  url)
+
 (defvar site-url "https://www.felesatra.moe")
 
 (defun abs-url (path)
