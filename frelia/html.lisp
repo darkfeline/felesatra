@@ -12,16 +12,18 @@
        (setf content (cons attrs content))
        (setf attrs nil))
      (format-tag
-      (make-xml-tag :name ,(string-downcase (symbol-name name))
-                    :attrs attrs
-                    :content (flatten-string content)))))
+      (make-instance xml-tag
+                     :name ,(string-downcase (symbol-name name))
+                     :attrs attrs
+                     :content (flatten-string content)))))
 
 (defmacro defvoidtag (name)
   "Define a void HTML tag as a function."
   `(defun ,name (&optional attrs)
      (format-void-tag
-      (make-xml-tag :name ,(string-downcase (symbol-name name))
-                    :attrs attrs))))
+      (make-instance xml-tag
+                     :name ,(string-downcase (symbol-name name))
+                     :attrs attrs))))
 
 (defmacro deftags (tag-type tags)
   "Define and export a list of tags using the given deftag macro."

@@ -55,5 +55,4 @@ produced by `format-tag', but for example `format-empty-tag' will ignore
   "Format an XML declaration with the given attributes."
   (format-xml-decl-tag
    (make-instance xml-tag :name "xml"
-                          :attrs attrs
-                          :content "")))
+                          :attrs attrs)))

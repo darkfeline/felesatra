@@ -10,7 +10,7 @@
   (:use "CL")
   (:import-from "FRELIA-UTILS"
                 "STRING-JOIN")
-  (:export "MAKE-XML-TAG"
+  (:export "XML-TAG"
            "FORMAT-TAG"
            "FORMAT-EMPTY-TAG"
            "FORMAT-VOID-TAG"
