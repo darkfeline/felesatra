@@ -1,4 +1,4 @@
-(in-package "XML")
+(in-package "frelia-xml")
 
 (defstruct xml-tag
   "Defines an XML tag.

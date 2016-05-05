@@ -1,4 +1,4 @@
-(in-package "TEMPLATES")
+(in-package "frelia-templates")
 
 (defun html-base-template (&key title head-block body-block)
   "HTML base template."
@@ -68,13 +68,6 @@
     :body-block (list (base-template-header)
                       body-block
                       (base-template-footer))))
-
-(defstruct page-metadata
-  "Page metadata."
-  published
-  modified
-  category
-  tags)
 
 (defun content-page-template (&key title metadata head-block content-block)
   "Content page template."

@@ -1,4 +1,4 @@
-(in-package "HTML")
+(in-package "frelia-html")
 
 (export 'doctype)
 (defun doctype ()

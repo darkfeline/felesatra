@@ -4,8 +4,8 @@
 (require "asdf")
 (asdf:load-system "frelia")
 
-(use-package "HTML")
-(use-package "TEMPLATES")
+(use-package "frelia-html")
+(use-package "frelia-templates")
 
 (defun main ()
   "Entry point."
