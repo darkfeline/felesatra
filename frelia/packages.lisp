@@ -20,14 +20,14 @@
   (:use "CL"
         "frelia-xml")
   (:import-from "frelia-utils"
-                "STRING-JOIN"
                 "FLATTEN-STRING"))
 
 (defpackage "frelia-site"
   (:use "CL"
         "frelia-html"
         "COM.GIGAMONKEYS.PATHNAMES")
-  (:import-from "frelia-utils" "STRING-JOIN"))
+  (:import-from "frelia-utils"
+                "STRING-JOIN"))
 
 (defpackage "frelia-site-macros"
   (:use "CL"
