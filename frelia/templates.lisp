@@ -1,4 +1,4 @@
-(in-package "frelia-templates")
+(in-package "FRELIA-TEMPLATES")
 
 (defun html-base-template (&key title head-block body-block)
   "HTML base template."

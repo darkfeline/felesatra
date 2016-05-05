@@ -1,4 +1,4 @@
-(in-package "frelia-utils")
+(in-package "FRELIA-UTILS")
 
 (defun flatten (l)
   "Flatten a list."

@@ -1,4 +1,4 @@
-(in-package "frelia-site")
+(in-package "FRELIA-SITE")
 
 (defstruct site-metadata
   url)

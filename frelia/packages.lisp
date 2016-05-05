@@ -1,14 +1,14 @@
 (in-package "CL-USER")
 
-(defpackage "frelia-utils"
+(defpackage "FRELIA-UTILS"
   (:use "CL")
   (:export "FLATTEN"
            "STRING-JOIN"
            "FLATTEN-STRING"))
 
-(defpackage "frelia-xml"
+(defpackage "FRELIA-XML"
   (:use "CL")
-  (:import-from "frelia-utils"
+  (:import-from "FRELIA-UTILS"
                 "STRING-JOIN")
   (:export "MAKE-XML-TAG"
            "FORMAT-TAG"
@@ -16,34 +16,34 @@
            "FORMAT-VOID-TAG"
            "XML-DECL"))
 
-(defpackage "frelia-html"
+(defpackage "FRELIA-HTML"
   (:use "CL"
-        "frelia-xml")
-  (:import-from "frelia-utils"
+        "FRELIA-XML")
+  (:import-from "FRELIA-UTILS"
                 "FLATTEN-STRING"))
 
-(defpackage "frelia-site"
+(defpackage "FRELIA-SITE"
   (:use "CL"
-        "frelia-html"
+        "FRELIA-HTML"
         "COM.GIGAMONKEYS.PATHNAMES")
-  (:import-from "frelia-utils"
+  (:import-from "FRELIA-UTILS"
                 "STRING-JOIN"))
 
-(defpackage "frelia-site-macros"
+(defpackage "FRELIA-SITE-MACROS"
   (:use "CL"
-        "frelia-html")
-  (:import-from "frelia-utils"
+        "FRELIA-HTML")
+  (:import-from "FRELIA-UTILS"
                 "STRING-JOIN")
   (:export "ABS-URL"
            "PGP-KEY-A"
            "SITE-A"))
 
-(defpackage "frelia-templates"
+(defpackage "FRELIA-TEMPLATES"
   (:use "CL"
-        "frelia-html")
-  (:import-from "frelia-utils"
+        "FRELIA-HTML")
+  (:import-from "FRELIA-UTILS"
                 "STRING-JOIN")
-  (:import-from "frelia-site-macros"
+  (:import-from "FRELIA-SITE-MACROS"
                 "ABS-URL"
                 "PGP-KEY-A"
                 "SITE-A")

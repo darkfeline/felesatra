@@ -1,4 +1,4 @@
-(in-package "frelia-site-macros")
+(in-package "FRELIA-SITE-MACROS")
 
 (defvar site-url "https://www.felesatra.moe")
 

@@ -1,4 +1,4 @@
-(in-package "frelia-html")
+(in-package "FRELIA-HTML")
 
 (export 'doctype)
 (defun doctype ()
@@ -24,6 +24,7 @@
                     :attrs attrs))))
 
 (defmacro deftags (tag-type tags)
+  "Define and export a list of tags using the given deftag macro."
   (append
    '(progn)
    (loop for tag in tags
