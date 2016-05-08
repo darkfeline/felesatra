@@ -8,12 +8,7 @@
                (:file "utils"
                 :depends-on ("packages"))
                (:file "xml"
-                :depends-on ("packages"
-                             "utils"))
-               (:file "html"
-                :depends-on ("packages"
-                             "utils"
-                             "xml"))
+                :depends-on ("packages"))
                (:file "site"
                 :depends-on ("packages"
                              "utils"
@@ -28,4 +23,4 @@
                              "utils"
                              "site-macros"
                              "html")))
-  :depends-on ("alexandria" "cl-fad"))
+  :depends-on ("alexandria" "cl-fad" "cl-who"))

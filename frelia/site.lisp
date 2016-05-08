@@ -5,7 +5,6 @@
 
 (defclass page-metadata ()
   ((path :initarg :path)
-   content
    published
    modified
    category
@@ -57,25 +56,30 @@ to be calculated or fetched in another manner."))
 
 (defmethod render (rendering-data (resource page-resource)))
 
-(defun load-resource (root-path)
+(defun load-resources (root-path)
   "Load resources from a directory tree."
-  (let (site-resources)
+  (let (site-resources
+        (root-length (length (namestring (truename root-path)))))
     (flet ((add-resource (resource)
              (setf site-resources
-                   (cons resource site-resources))))
-      (cl-fad:walk-directory root-path
-                             (lambda (pathname)
-                               (cond
-                                 ((string= (pathname-type pathname) "lisp")
-                                  (add-resource
-                                   (make-instance
-                                    'page-resource
-                                    :metadata (make-instance
-                                               'page-metadata
-                                               :path pathname))))
-                                 (t
-                                  (add-resource
-                                   (make-instance
-                                    'file-resource
-                                    :source pathname)))))))
+                   (cons resource site-resources)))
+           (target-path (pathname)
+             (subseq (namestring pathname) root-length)))
+      (cl-fad:walk-directory
+       root-path
+       (lambda (pathname)
+         (cond
+           ((string= (pathname-type pathname) "lisp")
+            (add-resource
+             (make-instance
+              'page-resource
+              :metadata (make-instance
+                         'page-metadata
+                         :path (target-path pathname)))))
+           (t
+            (add-resource
+             (make-instance
+              'file-resource
+              :path (target-path pathname)
+              :source pathname)))))))
     site-resources))

@@ -7,11 +7,9 @@
 
 (defpackage "FRELIA-XML"
   (:use "CL" "FRELIA-UTILS")
-  (:export "XML-TAG"
-           "FORMAT-TAG"
-           "FORMAT-EMPTY-TAG"
-           "FORMAT-VOID-TAG"
-           "XML-DECL"))
+  (:export "RENDER-XML"
+           "RENDER-XML-DECL"
+           "RENDER-XML-WITH-DECL"))
 
 (defpackage "FRELIA-HTML"
   (:use "CL"

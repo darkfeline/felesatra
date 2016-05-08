@@ -1,58 +1,35 @@
 (in-package "FRELIA-XML")
 
-(defclass xml-tag ()
-  ((name :accessor xml-tag-name
-         :initarg name)
-   (attrs :accessor xml-tag-attrs
-          :initarg attrs)
-   (content :accessor xml-tag-content
-            :initarg content))
-  (:documentation
-   "Defines an XML tag.
+(defun collect-attrs (attributes)
+  (loop
+    for (key . value) in attributes
+    collect (format nil "~A=\"~A\"" key value)))
 
-`name' is a string.
-`attrs' is an alist mapping strings to strings.
-`content' is a string.
+(defun render-xml (xml-tag)
+  "Render XML.
 
-An `xml-tag' roughly corresponds to the following in XML:
+XML-TAG is (TAG-NAME ATTRIBUTES &REST CONTENT).  TAG-NAME is a string.
+ATTRIBUTES is an alist mapping strings to strings.  CONTENT are strings or
+further XML-TAGs."
+  (let* ((tag-name (first xml-tag))
+         (xml-tag (rest xml-tag))
+         (attributes (first xml-tag))
+         (content (rest xml-tag)))
+    (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
+            tag-name
+            (collect-attrs attributes)
+            (loop
+              for item in content
+              collect (cond
+                        ((listp item) (render-xml item))
+                        (t item)))
+            tag-name)))
 
-<name attr1=\"value\" attr2=\"value\">content</name>
-
-However, this varies depending on the format function used; the above is
-produced by `format-tag', but for example `format-empty-tag' will ignore
-`content'."))
-
-(defmethod format-attrs ((tag xml-tag))
-  "Format tag XML attributes."
-  (apply 'string-join
-         (loop
-           for (key . value) in (xml-tag-attrs tag)
-           collect (format nil " ~A=\"~A\"" key value))))
-
-(defmethod format-tag ((tag xml-tag))
-  "Format `xml-tag' as an XML tag."
-  (string-join
-   "<" (xml-tag-name tag) (format-attrs tag) ">"
-   (xml-tag-content tag)
-   "</" (xml-tag-name tag) ">"))
-
-(defmethod format-empty-tag ((tag xml-tag))
-  "Format `xml-tag' as an empty XML tag."
-  (string-join
-   "<" (xml-tag-name tag) (format-attrs tag) "/>"))
-
-(defmethod format-void-tag ((tag xml-tag))
-  "Format `xml-tag' as a void HTML tag."
-  (string-join
-   "<" (xml-tag-name tag) (format-attrs tag) ">"))
-
-(defmethod format-xml-decl-tag ((tag xml-tag))
-  "Format `xml-tag' as an XML declaration tag."
-  (string-join
-   "<?" (xml-tag-name tag) (format-attrs tag) "?>"))
-
-(defun xml-decl (attrs)
+(defun render-xml-decl (attributes)
   "Format an XML declaration with the given attributes."
-  (format-xml-decl-tag
-   (make-instance xml-tag :name "xml"
-                          :attrs attrs)))
+  (format nil "<?xml~{~^ ~A~}?>"
+          (collect-attrs attributes)))
+
+(defun render-xml-with-decl (attributes xml-tag)
+  "Render XML with an XML declaration."
+  (format nil "~A~A" (render-xml-decl attributes) (render-xml xml-tag)))
