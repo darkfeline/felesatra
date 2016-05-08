@@ -2,14 +2,11 @@
 
 (defpackage "FRELIA-UTILS"
   (:use "CL")
-  (:export "FLATTEN"
-           "STRING-JOIN"
+  (:export "STRING-JOIN"
            "FLATTEN-STRING"))
 
 (defpackage "FRELIA-XML"
-  (:use "CL")
-  (:import-from "FRELIA-UTILS"
-                "STRING-JOIN")
+  (:use "CL" "FRELIA-UTILS")
   (:export "XML-TAG"
            "FORMAT-TAG"
            "FORMAT-EMPTY-TAG"
@@ -18,35 +15,29 @@
 
 (defpackage "FRELIA-HTML"
   (:use "CL"
-        "FRELIA-XML")
-  (:import-from "FRELIA-UTILS"
-                "FLATTEN-STRING"))
+        "FRELIA-XML"
+        "FRELIA-UTILS"))
 
 (defpackage "FRELIA-SITE"
   (:use "CL"
-        "FRELIA-HTML"
-        "COM.GIGAMONKEYS.PATHNAMES")
-  (:import-from "FRELIA-UTILS"
-                "STRING-JOIN"))
+        "FRELIA-UTILS")
+  (:export "SITE-URL"))
 
 (defpackage "FRELIA-SITE-MACROS"
   (:use "CL"
+        "FRELIA-UTILS"
         "FRELIA-HTML")
-  (:import-from "FRELIA-UTILS"
-                "STRING-JOIN")
+  (:import-from "FRELIA-SITE"
+                "SITE-URL")
   (:export "ABS-URL"
            "PGP-KEY-A"
            "SITE-A"))
 
 (defpackage "FRELIA-TEMPLATES"
   (:use "CL"
+        "FRELIA-UTILS"
+        "FRELIA-SITE-MACROS"
         "FRELIA-HTML")
-  (:import-from "FRELIA-UTILS"
-                "STRING-JOIN")
-  (:import-from "FRELIA-SITE-MACROS"
-                "ABS-URL"
-                "PGP-KEY-A"
-                "SITE-A")
   (:export "HTML-BASE-TEMPLATE"
            "BASE-TEMPLATE"
            "CONTENT-PAGE-TEMPLATE"))

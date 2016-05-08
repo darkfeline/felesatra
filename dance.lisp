@@ -1,5 +1,6 @@
 (load "~/quicklisp/setup.lisp")
-(ql:quickload "com.gigamonkeys.pathnames")
+(ql:quickload "cl-fad")
+(ql:quickload "alexandria")
 
 (require "asdf")
 (asdf:load-system "frelia")

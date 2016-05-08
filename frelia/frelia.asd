@@ -21,10 +21,11 @@
                (:file "site-macros"
                 :depends-on ("packages"
                              "utils"
+                             "site"
                              "html"))
                (:file "templates"
                 :depends-on ("packages"
                              "utils"
                              "site-macros"
                              "html")))
-  :depends-on ("com.gigamonkeys.pathnames"))
+  :depends-on ("alexandria" "cl-fad"))
