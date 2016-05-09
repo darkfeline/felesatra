@@ -3,7 +3,7 @@
 (defclass rendering-data ()
   (site-metadata
    page-index
-   page-metadata))
+   resource))
 
 (defclass site-metadata ()
   (url))

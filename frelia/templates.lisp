@@ -73,7 +73,8 @@
        (:h1 ,title)
        (:eval-with-data
         (data)
-        (let ((metadata (slot-value data :page-metadata)))
+        (let* ((page-resource (slot-value data :resource))
+               (metadata (slot-value page-resource :metadata)))
           `(:dl
             ,@(let ((published (slot-value metadata :published)))
                 (when published
