@@ -1,19 +1,19 @@
 (in-package "FRELIA-SITE")
 
+(defclass rendering-data ()
+  (site-metadata
+   page-index
+   page-metadata))
+
 (defclass site-metadata ()
   (url))
 
 (defclass page-metadata ()
   ((path :initarg :path)
-   published
-   modified
-   category
-   tags))
-
-(defclass rendering-data ()
-  (site-metadata
-   page-index
-   page-metadata))
+   (published :initarg :published)
+   (modified :initarg :modified)
+   (category :initarg :category)
+   (tags :initarg :tags)))
 
 (defgeneric site-url (instance)
   (:documentation
@@ -34,7 +34,20 @@ other classes that wrap `site-metadata'."))
 
 (defclass page-resource ()
   ((metadata :initarg :metadata)
-   content))
+   (content :initarg :content)))
+
+(defun make-page-resource (path page-data)
+  "Make page resource from page definition plist."
+  (make-instance
+   'page-resource
+   :metadata (make-instance
+              'page-metadata
+              :path path
+              :published (getf page-data :published)
+              :modified (getf page-data :modified)
+              :category (getf page-data :category)
+              :tags (getf page-data :tags))
+   :content (getf page-data :content)))
 
 (defgeneric resource-path (resource)
   (:documentation
@@ -70,12 +83,12 @@ to be calculated or fetched in another manner."))
        (lambda (pathname)
          (cond
            ((string= (pathname-type pathname) "lisp")
-            (add-resource
-             (make-instance
-              'page-resource
-              :metadata (make-instance
-                         'page-metadata
-                         :path (target-path pathname)))))
+            (let (resource)
+              (with-open-file (file pathname)
+                (setf resource (read file)))
+              (add-resource (make-page-resource
+                             (target-path pathname)
+                             resource))))
            (t
             (add-resource
              (make-instance

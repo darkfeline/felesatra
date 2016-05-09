@@ -2,6 +2,19 @@
 
 (defun html-base-template (&key title head-block body-block)
   "HTML base template."
+  `(:html :lang "en"
+          (:head
+           (:meta :charset "UTF-8")
+           (:title ,title)
+           ,@head-block)
+          (:body ,@body-block)))
+
+(html-base-template :title "hello"
+                    :body-block '((:p "testing")))
+
+
+(defun html-base-template (&key title head-block body-block)
+  "HTML base template."
   (string-join
    (doctype)
    (html `(("lang" . "en"))

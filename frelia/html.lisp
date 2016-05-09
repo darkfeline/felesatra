@@ -1,63 +1,70 @@
 (in-package "FRELIA-HTML")
 
-(export 'doctype)
-(defun doctype ()
-  "HTML5 doctype"
-  "<!DOCTYPE html>")
+(defvar *void-elements*)
 
-(defmacro deftag (name)
-  "Define an HTML tag as a function."
-  `(defun ,name (&optional attrs &rest content)
-     (unless (listp attrs)
-       (setf content (cons attrs content))
-       (setf attrs nil))
-     (format-tag
-      (make-instance xml-tag
-                     :name ,(string-downcase (symbol-name name))
-                     :attrs attrs
-                     :content (flatten-string content)))))
+(defun setup-void-elements ()
+  (setf *void-elements* (make-hash-table :test 'equal))
+  (loop
+    for element in '("area"
+                     "base"
+                     "br"
+                     "col"
+                     "embed"
+                     "hr"
+                     "img"
+                     "input"
+                     "keygen"
+                     "link"
+                     "meta"
+                     "param"
+                     "source"
+                     "track"
+                     "wbr")
+    do (setf (gethash element *void-elements*) t)))
+(setup-void-elements)
 
-(defmacro defvoidtag (name)
-  "Define a void HTML tag as a function."
-  `(defun ,name (&optional attrs)
-     (format-void-tag
-      (make-instance xml-tag
-                     :name ,(string-downcase (symbol-name name))
-                     :attrs attrs))))
+(defun render-html-element (element)
+  "Render HTML element."
+  (let* ((element (preprocess-element element))
+         (name (first element))
+         (attributes (second element))
+         (content (cddr element)))
+    (if (gethash name *void-elements*)
+        (format-void-element name attributes)
+        (format-element name attributes content))))
 
-(defmacro deftags (tag-type tags)
-  "Define and export a list of tags using the given deftag macro."
-  (append
-   '(progn)
-   (loop for tag in tags
-         append
-         `((,tag-type ,tag)
-           (export (quote ,tag))))))
+(defun format-element (name attributes content)
+  (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
+          name
+          (collect-attrs attributes)
+          (collect-content 'render-html-element content)
+          name))
 
-(deftags deftag (
-                 a
-                 address
-                 body
-                 dd
-                 div
-                 dl
-                 dt
-                 footer
-                 h1
-                 head
-                 header
-                 html
-                 li
-                 ol
-                 p
-                 section
-                 span
-                 title
-                 ul
-                 ))
+(defun format-void-element (name attributes)
+  (format nil "<~A~{~^ ~A~}>"
+          name
+          (collect-attrs attributes)))
 
-(deftags defvoidtag (
-                     img
-                     link
-                     meta
-                     ))
+(defun preprocess-element (element)
+  "Preprocess HTML element."
+  (let ((name (string-downcase (symbol-name (first element))))
+        attributes
+        content)
+    (loop
+      with attr = nil
+      for item in (rest element)
+      do
+         (cond
+           (attr
+            (push (cons (string-downcase (symbol-name (pop attr)))
+                        item)
+                  attributes))
+           ((symbolp item)
+            (push item attr))
+           (t
+            (push item content))))
+    (append (list name attributes) (reverse content))))
+
+(defun render-html (root-element)
+  "Render XML document."
+  (format nil "~A~A" "<!DOCTYPE html>" (render-html-element root-element)))

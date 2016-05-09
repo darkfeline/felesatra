@@ -7,20 +7,20 @@
   :components ((:file "packages")
                (:file "utils"
                 :depends-on ("packages"))
+               (:file "xmllib"
+                :depends-on ("packages"))
                (:file "xml"
                 :depends-on ("packages"))
+               (:file "html"
+                :depends-on ("packages"))
                (:file "site"
-                :depends-on ("packages"
-                             "utils"
-                             "html"))
+                :depends-on ("packages"))
                (:file "site-macros"
                 :depends-on ("packages"
                              "utils"
-                             "site"
-                             "html"))
+                             "site"))
                (:file "templates"
                 :depends-on ("packages"
                              "utils"
-                             "site-macros"
-                             "html")))
-  :depends-on ("alexandria" "cl-fad" "cl-who"))
+                             "site-macros")))
+  :depends-on ("alexandria" "cl-fad"))

@@ -5,21 +5,25 @@
   (:export "STRING-JOIN"
            "FLATTEN-STRING"))
 
+(defpackage "FRELIA-XMLLIB"
+  (:use "CL")
+  (:export "COLLECT-ATTRS"
+           "COLLECT-CONTENT"))
+
 (defpackage "FRELIA-XML"
-  (:use "CL" "FRELIA-UTILS")
+  (:use "CL" "FRELIA-XMLLIB")
   (:export "RENDER-XML"
-           "RENDER-XML-DECL"
-           "RENDER-XML-WITH-DECL"))
+           "RENDER-XML-ELEMENT"))
 
 (defpackage "FRELIA-HTML"
-  (:use "CL"
-        "FRELIA-XML"
-        "FRELIA-UTILS"))
+  (:use "CL" "FRELIA-XMLLIB")
+  (:export "RENDER-HTML"
+           "RENDER-HTML-ELEMENT"))
 
 (defpackage "FRELIA-SITE"
-  (:use "CL"
-        "FRELIA-UTILS")
-  (:export "SITE-URL"))
+  (:use "CL")
+  (:export "LOAD-RESOURCES"
+           "SITE-URL"))
 
 (defpackage "FRELIA-SITE-MACROS"
   (:use "CL"
