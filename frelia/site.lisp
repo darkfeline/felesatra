@@ -129,6 +129,9 @@ to be calculated or fetched in another manner."))
        collect (render-macros rendering-data subelement)))
     (t "")))
 
+(defsitemacro eval-with-data (rendering-data (var) &rest body)
+  (eval `(funcall (lambda (,var) ,@body) rendering-data)))
+
 (defsitemacro abs-url (rendering-data path)
   "Get absolute URL for site path."
   (concatenate 'string (site-url rendering-data) (string-left-trim "/" path)))
