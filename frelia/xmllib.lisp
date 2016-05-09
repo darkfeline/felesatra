@@ -32,7 +32,7 @@
             (push item content))))
     (append (list name attributes) (reverse content))))
 
-(defun preprocess-1 (element)
+(defun preprocess (element)
   "Preprocess XML-style element.
 
 XML elements should be lists of the following form:
@@ -47,7 +47,7 @@ However, an alternative form is:
 
   (:name :attr value content)
 
-`preprocess-1' will transform the alternative form into the regular form."
+`preprocess' will transform the alternative form into the regular form."
   (if (symbolp (first element))
       (preprocess-force element)
       element))
@@ -73,8 +73,8 @@ However, an alternative form is:
 
   (:name :attr value content)
 
-See also `preprocess-1'."
-  (let* ((element (preprocess-1 element))
+See also `preprocess'."
+  (let* ((element (preprocess element))
          (name (first element))
          (attrs (second element))
          (content (cddr element)))
