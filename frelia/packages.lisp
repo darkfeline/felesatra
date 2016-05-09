@@ -1,10 +1,5 @@
 (in-package "CL-USER")
 
-(defpackage "FRELIA-UTILS"
-  (:use "CL")
-  (:export "STRING-JOIN"
-           "FLATTEN-STRING"))
-
 (defpackage "FRELIA-XMLLIB"
   (:use "CL")
   (:export "COLLECT-ATTRS"
@@ -27,10 +22,7 @@
            "SITE-URL"))
 
 (defpackage "FRELIA-TEMPLATES"
-  (:use "CL"
-        "FRELIA-UTILS"
-        "FRELIA-SITE-MACROS"
-        "FRELIA-HTML")
+  (:use "CL")
   (:export "HTML-BASE-TEMPLATE"
            "BASE-TEMPLATE"
            "CONTENT-PAGE-TEMPLATE"))

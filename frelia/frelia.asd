@@ -5,8 +5,6 @@
 
 (defsystem frelia
   :components ((:file "packages")
-               (:file "utils"
-                :depends-on ("packages"))
                (:file "xmllib"
                 :depends-on ("packages"))
                (:file "xml"
