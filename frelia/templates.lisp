@@ -61,7 +61,7 @@
      ,@block-block
      ,@(base-template-footer))))
 
-(defun content-page-template (&key title metadata head-block content-block)
+(defun content-page-template (&key title head-block content-block)
   "Content page template."
   (base-template
    :title title
@@ -71,23 +71,25 @@
      (:header
       :class "content-header"
       (:h1 ,title)
-      (:dl
-       ,@(let ((published (slot-value metadata :published)))
-          (when published
-            `((:dt "Published")
-              (:dd ,published))))
-       ,@(let ((modified (slot-value metadata :modified)))
-           (when modified
-             `((:dt "Modified")
-               (:dd ,modified))))
-       ,@(let ((category (slot-value metadata :category)))
-           (when category
-             `((:dt "Category")
-               (:dd ,category)))))
-      ,@(let ((tags (slot-value metadata :tags)))
-          (when tags
-            `((:dl
-               (:dt "Tags")
-               ,@(loop for tag in tags
-                       collect `(:dd ,tag)))))))
+      (:eval-with-data
+       (data)
+       (let ((metadata (slot-value data :page-metadata)))
+         `(:dl
+           ,@(let ((published (slot-value metadata :published)))
+               (when published
+                 `((:dt "Published")
+                   (:dd ,published))))
+           ,@(let ((modified (slot-value metadata :modified)))
+               (when modified
+                 `((:dt "Modified")
+                   (:dd ,modified))))
+           ,@(let ((category (slot-value metadata :category)))
+               (when category
+                 `((:dt "Category")
+                   (:dd ,category))))
+           ,@(let ((tags (slot-value metadata :tags)))
+               (when tags
+                 `((:dt "Tags")
+                   ,@(loop for tag in tags
+                           collect `(:dd ,tag)))))))))
      ,@content-block)))

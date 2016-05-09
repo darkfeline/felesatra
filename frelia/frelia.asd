@@ -11,10 +11,11 @@
                 :depends-on ("packages"))
                (:file "html"
                 :depends-on ("packages"))
-               (:file "site"
+               (:file "site-metadata"
+                :depends-on ("packages"))
+               (:file "site-macros"
                 :depends-on ("packages"))
                (:file "templates"
                 :depends-on ("packages"
-                             "utils"
                              "site-macros")))
   :depends-on ("alexandria" "cl-fad"))
