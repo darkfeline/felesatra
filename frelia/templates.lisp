@@ -11,15 +11,15 @@
 
 (defun base-template-header ()
   "Header for site base template."
-  (header `(("id" . "site-header"))
-          (h1 `(("id" . "site-title"))
-              (site-a "/" "Feles Atra"))
-          (ul `(("id" . "site-nav"))
-              (li (site-a "about/" "About"))
-              (li (site-a "projects/" "Projects"))
-              (li (site-a "atom.xml"
-                          (img `(("src" . ,(abs-url "img/site/feed-icon-14x14.png"))
-                                 ("alt" . "Atom feed"))))))))
+  (:header :id "site-header"
+           (:h1 :id "site-title"
+                (:site-a "/" "Feles Atra"))
+           (:ul :id "site-nav"
+                (:li (:site-a "about/" "About"))
+                (:li (:site-a "projects/" "Projects"))
+                (:li (:site-a "atom.xml"
+                              (:img :src (:abs-url "img/site/feed-icon-14x14.png")
+                                    :alt "Atom feed"))))))
 
 (defun base-template-footer ()
   "Footer for site base template."

@@ -15,10 +15,6 @@
                 :depends-on ("packages"))
                (:file "site"
                 :depends-on ("packages"))
-               (:file "site-macros"
-                :depends-on ("packages"
-                             "utils"
-                             "site"))
                (:file "templates"
                 :depends-on ("packages"
                              "utils"

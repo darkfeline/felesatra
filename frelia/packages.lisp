@@ -26,16 +26,6 @@
   (:export "LOAD-RESOURCES"
            "SITE-URL"))
 
-(defpackage "FRELIA-SITE-MACROS"
-  (:use "CL"
-        "FRELIA-UTILS"
-        "FRELIA-HTML")
-  (:import-from "FRELIA-SITE"
-                "SITE-URL")
-  (:export "ABS-URL"
-           "PGP-KEY-A"
-           "SITE-A"))
-
 (defpackage "FRELIA-TEMPLATES"
   (:use "CL"
         "FRELIA-UTILS"
