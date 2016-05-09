@@ -8,7 +8,8 @@
 (defpackage "FRELIA-XMLLIB"
   (:use "CL")
   (:export "COLLECT-ATTRS"
-           "COLLECT-CONTENT"))
+           "COLLECT-CONTENT"
+           "WITH-ELEMENT"))
 
 (defpackage "FRELIA-XML"
   (:use "CL" "FRELIA-XMLLIB")

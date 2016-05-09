@@ -1,13 +1,8 @@
 (in-package "FRELIA-XML")
 
 (defun render-xml-element (element)
-  "Render XML element.
-
-ELEMENT is (NAME ATTRIBUTES &rest CONTENT).  NAME is a string.  ATTRIBUTES is an
-alist mapping strings to strings.  CONTENT are strings or further ELEMENTs."
-  (let ((name (first element))
-        (attributes (second element))
-        (content (cddr element)))
+  "Render XML element."
+  (with-element (element name attrs content)
     (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
             name
             (collect-attrs attributes)

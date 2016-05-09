@@ -25,45 +25,22 @@
 
 (defun render-html-element (element)
   "Render HTML element."
-  (let* ((element (preprocess-element element))
-         (name (first element))
-         (attributes (second element))
-         (content (cddr element)))
+  (with-element (element name attrs content)
     (if (gethash name *void-elements*)
-        (format-void-element name attributes)
-        (format-element name attributes content))))
+        (format-void-element name attrs)
+        (format-element name attrs content))))
 
-(defun format-element (name attributes content)
+(defun format-element (name attrs content)
   (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
           name
-          (collect-attrs attributes)
+          (collect-attrs attrs)
           (collect-content 'render-html-element content)
           name))
 
-(defun format-void-element (name attributes)
+(defun format-void-element (name attrs)
   (format nil "<~A~{~^ ~A~}>"
           name
-          (collect-attrs attributes)))
-
-(defun preprocess-element (element)
-  "Preprocess HTML element."
-  (let ((name (string-downcase (symbol-name (first element))))
-        attributes
-        content)
-    (loop
-      with attr = nil
-      for item in (rest element)
-      do
-         (cond
-           (attr
-            (push (cons (string-downcase (symbol-name (pop attr)))
-                        item)
-                  attributes))
-           ((symbolp item)
-            (push item attr))
-           (t
-            (push item content))))
-    (append (list name attributes) (reverse content))))
+          (collect-attrs attrs)))
 
 (defun render-html (root-element)
   "Render XML document."
