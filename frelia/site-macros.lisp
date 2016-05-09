@@ -32,9 +32,10 @@
        collect (render-macros rendering-data subelement)))
     (t "")))
 
-(defsitemacro eval-with-data (rendering-data (var) &rest body)
-  "Macro for evaluating arbitrary LISP with rendering data."
-  (eval `(funcall (lambda (,var) ,@body) rendering-data)))
+(defsitemacro eval-with-data (rendering-data lambda-list &rest body)
+  "Macro for evaluating arbitrary Lisp with rendering data."
+  (destructuring-bind (var) lambda-list
+    (eval `(funcall (lambda (,var) ,@body) ,rendering-data))))
 
 (defsitemacro abs-url (rendering-data path)
   "Get absolute URL for site path."
