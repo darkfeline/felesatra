@@ -19,7 +19,7 @@
 (defpackage "FRELIA-SITE"
   (:use "CL")
   (:export "LOAD-RESOURCES"
-           "SITE-URL"))
+           "INDEX-PAGES"))
 
 (defpackage "FRELIA-TEMPLATES"
   (:use "CL")

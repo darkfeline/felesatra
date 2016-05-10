@@ -6,6 +6,9 @@
 (asdf:load-system "frelia")
 
 (defun main ()
-  "Entry point.")
+  "Entry point."
+  (let* ((resources (frelia-site:load-resources "site/"))
+         (page-index )))
+  )
 
 (main)

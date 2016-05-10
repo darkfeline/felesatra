@@ -67,3 +67,9 @@ to be calculated or fetched in another manner."))
               :path (target-path pathname)
               :source pathname)))))))
     site-resources))
+
+(defun index-pages (resources)
+  (loop
+    for resource in resources
+    if (typep resource 'page-resource)
+      collect resource))

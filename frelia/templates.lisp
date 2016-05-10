@@ -73,7 +73,7 @@
        (:h1 ,title)
        (:eval-with-data
         (data)
-        (let* ((page-resource (slot-value data :resource))
+        (let* ((page-resource (slot-value data :current-resource))
                (metadata (slot-value page-resource :metadata)))
           `(:dl
             ,@(let ((published (slot-value metadata :published)))
@@ -94,5 +94,3 @@
                     ,@(loop for tag in tags
                             collect `(:dd ,tag)))))))))
       ,@content-block))))
-
-(content-page-template)

@@ -2,8 +2,8 @@
 
 (defclass rendering-data ()
   (site-metadata
-   page-index
-   resource))
+   resources
+   current-resource))
 
 (defclass site-metadata ()
   (url))
