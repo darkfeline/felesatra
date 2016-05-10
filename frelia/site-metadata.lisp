@@ -1,12 +1,12 @@
 (in-package "FRELIA-SITE")
 
-(defclass rendering-data ()
-  (site-metadata
-   resources
+(defclass rendering-context ()
+  ((site-metadata :initarg :site-metadata)
+   (resources :initarg :resources)
    current-resource))
 
 (defclass site-metadata ()
-  (url))
+  ((url :initarg :url)))
 
 (defclass page-metadata ()
   ((path :initarg :path)
@@ -25,5 +25,5 @@ other classes that wrap `site-metadata'."))
 (defmethod site-url ((instance site-metadata))
   (slot-value instance :url))
 
-(defmethod site-url ((instance rendering-data))
+(defmethod site-url ((instance rendering-context))
   (site-url (slot-value instance :site-metadata)))

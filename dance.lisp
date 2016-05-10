@@ -8,7 +8,21 @@
 (defun main ()
   "Entry point."
   (let* ((resources (frelia-site:load-resources "site/"))
-         (page-index )))
-  )
+         (context
+           (make-instance
+            'frelia-site:rendering-context
+            :site-metadata (make-instance
+                            'frelia-site:site-metadata
+                            :url "https://www.felesatra.moe/")
+            :resources resources))
+         (local-context
+           (make-instance
+            'frelia-site:rendering-context
+            :site-metadata (make-instance
+                            'frelia-site:site-metadata
+                            :url "http://localhost:5000/")
+            :resources resources)))
+    (frelia-site:render-resources context resources "build/")
+    (frelia-site:render-resources local-context resources "build_local/")))
 
 (main)

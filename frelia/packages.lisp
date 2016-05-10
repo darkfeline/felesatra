@@ -19,7 +19,9 @@
 (defpackage "FRELIA-SITE"
   (:use "CL")
   (:export "LOAD-RESOURCES"
-           "INDEX-PAGES"))
+           "RENDER-RESOURCES"
+           "RENDERING-CONTEXT"
+           "SITE-METADATA"))
 
 (defpackage "FRELIA-TEMPLATES"
   (:use "CL")

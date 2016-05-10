@@ -34,12 +34,12 @@ to be calculated or fetched in another manner."))
 (defmethod resource-path ((resource page-resource))
   (slot-value (slot-value resource :metadata) :path))
 
-(defgeneric render (rendering-data resource)
+(defgeneric render (context resource target-dir)
   (:documentation "Render a resource."))
 
-(defmethod render (rendering-data (resource file-resource)))
+(defmethod render (context (resource file-resource) target-dir))
 
-(defmethod render (rendering-data (resource page-resource)))
+(defmethod render (context (resource page-resource) target-dir))
 
 (defun load-resources (root-path)
   "Load resources from a directory tree."
@@ -68,8 +68,10 @@ to be calculated or fetched in another manner."))
               :source pathname)))))))
     site-resources))
 
-(defun index-pages (resources)
+(defun render-resources (context resources target-dir)
+  "Render resources."
   (loop
     for resource in resources
-    if (typep resource 'page-resource)
-      collect resource))
+    do
+       (setf (slot-value context :current-resource) resource)
+       (render context resource target-dir)))
