@@ -1,4 +1,4 @@
-(in-package "FRELIA-HTML")
+(in-package :frelia-html)
 
 (defvar *void-elements*)
 

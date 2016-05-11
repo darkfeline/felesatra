@@ -1,30 +1,30 @@
-(in-package "CL-USER")
+(in-package :cl-user)
 
-(defpackage "FRELIA-XMLLIB"
-  (:use "CL")
-  (:export "COLLECT-ATTRS"
-           "COLLECT-CONTENT"
-           "WITH-ELEMENT"))
+(defpackage :frelia-xmllib
+  (:use :cl)
+  (:export #:collect-attrs
+           #:collect-content
+           #:with-element))
 
-(defpackage "FRELIA-XML"
-  (:use "CL" "FRELIA-XMLLIB")
-  (:export "RENDER-XML"
-           "RENDER-XML-ELEMENT"))
+(defpackage :frelia-xml
+  (:use :cl :frelia-xmllib)
+  (:export #:render-xml
+           #:render-xml-element))
 
-(defpackage "FRELIA-HTML"
-  (:use "CL" "FRELIA-XMLLIB")
-  (:export "RENDER-HTML"
-           "RENDER-HTML-ELEMENT"))
+(defpackage :frelia-html
+  (:use :cl :frelia-xmllib)
+  (:export #:render-html
+           #:render-html-element))
 
-(defpackage "FRELIA-SITE"
-  (:use "CL")
-  (:export "LOAD-RESOURCES"
-           "RENDER-RESOURCES"
-           "RENDERING-CONTEXT"
-           "SITE-METADATA"))
+(defpackage :frelia-site
+  (:use :cl)
+  (:export #:load-resources
+           #:render-resources
+           #:rendering-context
+           #:site-metadata))
 
-(defpackage "FRELIA-TEMPLATES"
-  (:use "CL")
-  (:export "HTML-BASE-TEMPLATE"
-           "BASE-TEMPLATE"
-           "CONTENT-PAGE-TEMPLATE"))
+(defpackage :frelia-templates
+  (:use :cl)
+  (:export #:html-base-template
+           #:base-template
+           #:content-page-template))

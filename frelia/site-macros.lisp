@@ -1,4 +1,4 @@
-(in-package "FRELIA-SITE")
+(in-package :frelia-site)
 
 (defvar *site-macros* (make-hash-table))
 

@@ -1,4 +1,4 @@
-(in-package "FRELIA-SITE")
+(in-package :frelia-site)
 
 (defclass file-resource ()
   ((path :initarg :path)

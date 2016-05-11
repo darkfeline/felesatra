@@ -1,4 +1,4 @@
-(in-package "FRELIA-XMLLIB")
+(in-package :frelia-xmllib)
 
 (defun collect-attrs (attributes)
   (loop

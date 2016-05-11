@@ -1,4 +1,4 @@
-(in-package "FRELIA-XML")
+(in-package :frelia-xml)
 
 (defun render-xml-element (element)
   "Render XML element."

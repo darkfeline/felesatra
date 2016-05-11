@@ -1,9 +1,9 @@
-(defpackage "FRELIA-ASD"
-  (:use "CL" "ASDF"))
+(defpackage :frelia-asd
+  (:use :cl :asdf))
 
-(in-package "FRELIA-ASD")
+(in-package :frelia-asd)
 
-(defsystem frelia
+(defsystem "frelia"
   :components ((:file "packages")
                (:file "xmllib"
                 :depends-on ("packages"))
