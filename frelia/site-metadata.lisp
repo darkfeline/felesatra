@@ -10,6 +10,7 @@
 
 (defclass page-metadata ()
   ((path :initarg :path)
+   (content-page :initarg :content-page)
    (published :initarg :published)
    (modified :initarg :modified)
    (category :initarg :category)
