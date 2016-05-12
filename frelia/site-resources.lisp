@@ -29,7 +29,8 @@ to be calculated or fetched in another manner."))
 (defgeneric render (context resource target-dir)
   (:documentation "Render a resource."))
 
-(defmethod render (context (resource file-resource) target-dir))
+(defmethod render (context (resource file-resource) target-dir)
+  (sb-posix:link (resource-path resource) target-dir))
 
 (defmethod render (context (resource page-resource) target-dir))
 
