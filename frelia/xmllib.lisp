@@ -66,3 +66,13 @@
      (make-element-alist-attrs element))
     (t
      (error 'malformed-element-error :element element))))
+
+(defmacro with-element ((element name attrs content) &body body)
+  `(funcall #'call-with-element ,element (lambda (,name ,attrs ,content) ,@body)))
+
+(defun call-with-element (element function)
+  (let* ((element (make-element element))
+         (name (element-name element))
+         (attrs (element-attrs element))
+         (content (element-content element)))
+    (funcall function name attrs content)))

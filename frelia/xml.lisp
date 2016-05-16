@@ -2,10 +2,7 @@
 
 (defun render-xml-element (element)
   "Render XML element."
-  (let* ((element (make-element element))
-         (name (element-name element))
-         (attrs (element-attrs element))
-         (content (element-content element)))
+  (with-element (element name attrs content)
     (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
             name
             (collect-attrs attributes)

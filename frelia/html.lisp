@@ -25,10 +25,7 @@
 
 (defun render-html-element (element)
   "Render HTML element."
-  (let* ((element (make-element element))
-         (name (element-name element))
-         (attrs (element-attrs element))
-         (content (element-content element)))
+  (with-element (element name attrs content)
     (if (gethash name *void-elements*)
         (format-void-element name attrs)
         (format-element name attrs content))))
