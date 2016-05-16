@@ -1,5 +1,14 @@
 (in-package :frelia-site)
 
+(defclass site-metadata ()
+  ((url :initarg :url)))
+
+(defgeneric site-url (instance)
+  (:documentation "Get site URL."))
+
+(defmethod site-url ((instance site-metadata))
+  (slot-value instance :url))
+
 (defclass file-resource ()
   ((path :initarg :path)
    (source :initarg :source)))
@@ -8,12 +17,17 @@
   ((metadata :initarg :metadata)
    (content :initarg :content)))
 
+(defclass page-metadata ()
+  ((path :initarg :path)
+   (content-page :initarg :content-page)
+   (published :initarg :published)
+   (modified :initarg :modified)
+   (category :initarg :category)
+   (tags :initarg :tags)))
+
 (defgeneric resource-path (resource)
   (:documentation
-   "Get the path of the resource.
-
-For some resources this path is stored in a slot, but for others this may need
-to be calculated or fetched in another manner."))
+   "Get the path of the resource."))
 
 (defmethod resource-path ((resource file-resource))
   (slot-value resource :path))
@@ -23,16 +37,11 @@ to be calculated or fetched in another manner."))
 
 (defgeneric set-resource-path (resource path))
 
+(defmethod set-resource-path ((resource file-resource) path)
+  (setf (slot-value resource :path) path))
+
 (defmethod set-resource-path ((resource page-resource) path)
   (setf (slot-value (slot-value resource :metadata) :path) path))
-
-(defgeneric render (context resource target-dir)
-  (:documentation "Render a resource."))
-
-(defmethod render (context (resource file-resource) target-dir)
-  (sb-posix:link (resource-path resource) target-dir))
-
-(defmethod render (context (resource page-resource) target-dir))
 
 (defun load-resources (root-path)
   "Load resources from a directory tree."
@@ -59,11 +68,3 @@ to be calculated or fetched in another manner."))
               :path (target-path pathname)
               :source pathname)))))))
     site-resources))
-
-(defun render-resources (context resources target-dir)
-  "Render resources."
-  (loop
-    for resource in resources
-    do
-       (setf (slot-value context :current-resource) resource)
-       (render context resource target-dir)))
