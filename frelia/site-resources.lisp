@@ -43,6 +43,18 @@
 (defmethod set-resource-path ((resource page-resource) path)
   (setf (slot-value (slot-value resource :metadata) :path) path))
 
+(defun load-page-resource (form)
+  "Load page resource from a description form."
+  (let ((args (loop
+                for (key value) on form by #'cddr
+                append (list key (eval value)))))
+    (make-instance
+     'page-resource
+     :metadata (apply #'make-instance
+                      'page-metadata
+                      args)
+     :content (getf args :content))))
+
 (defun load-resources (root-path)
   "Load resources from a directory tree."
   (let* (site-resources
@@ -59,7 +71,7 @@
            ((string= (pathname-type pathname) "lisp")
             (let (resource)
               (with-open-file (file pathname)
-                (setf resource (eval (read file))))
+                (setf resource (load-page-resource (read file))))
               (set-resource-path resource (target-path pathname))
               (add-resource resource)))
            (t
