@@ -16,6 +16,5 @@
                (:file "site-macros"
                 :depends-on ("packages"))
                (:file "templates"
-                :depends-on ("packages"
-                             "site-macros")))
+                :depends-on ("packages")))
   :depends-on ("alexandria" "cl-fad"))

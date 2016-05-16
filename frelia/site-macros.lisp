@@ -1,20 +1,26 @@
 (in-package :frelia-site)
 
-(defvar *site-macros* (make-hash-table))
+(defun transform-recursively (transform-function element)
+  "Transform an element tree recursively.
 
-(defun make-keyword (symbol)
-  (intern (symbol-name symbol) "KEYWORD"))
+Used for applying macros and other transformations to an XML-style tree."
+  (cond
+    ((stringp element) element)
+    ((symbolp element) element)
+    ((listp element)
+     (transform-function element))
+    (t "")))
 
-(defmacro defsitemacro (name lambda-list &body body)
-  `(progn
-     (defun ,name ,lambda-list
-       ,@body)
-     (setf (gethash ,(make-keyword name) *site-macros*)
-           (quote ,name))))
-
-(defun prerender-html (context element)
-  "Prerender HTML by expanding site-specific macros."
-  (render-macros context element))
+(defun render-footnotes (root-element)
+  "Replace footnote references."
+  (let ((footnote-index 1))
+    (flet ((recurse (element)
+             (transform-recursively
+              (lambda (element)
+                )
+              element)
+             ))
+      (recurse root-element))))
 
 (defun render-macros (context element)
   "Expand site-specific macros."
@@ -30,7 +36,27 @@
      (loop
        for subelement in element
        collect (render-macros context subelement)))
-    (t "")))
+    (t ""))
+  (transform-recursively
+   (lambda (element)
+     (let ((macro (gethash (first element) *site-macros*)))
+       (if macro
+           (render-macros context
+                          (apply macro context (rest element)))
+           (loop
+             for subelement in element
+             collect (render-macros context subelement)))))
+   element))
+
+(defvar *site-macros* (make-hash-table))
+
+(defmacro defsitemacro (name lambda-list &body body)
+  `(progn
+     (defun ,name ,lambda-list
+       ,@body)
+     (setf (gethash ,(alexandria:make-keyword (symbol-name name))
+                    *site-macros*)
+           (quote ,name))))
 
 (defsitemacro eval-with-data (context lambda-list &rest body)
   "Macro for evaluating arbitrary Lisp with rendering data."

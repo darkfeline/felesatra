@@ -4,7 +4,10 @@
   (:use :cl)
   (:export #:collect-attrs
            #:collect-content
-           #:with-element))
+           #:make-element
+           #:element-name
+           #:element-attrs
+           #:element-content))
 
 (defpackage :frelia-xml
   (:use :cl :frelia-xmllib)

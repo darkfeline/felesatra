@@ -1,11 +1,13 @@
 (in-package :frelia-xmllib)
 
-(defun collect-attrs (attributes)
+(defun collect-attrs (attrs)
+  "Format attribute alist as \"key=value\" strings."
   (loop
-    for (key . value) in attributes
+    for (key . value) in attrs
     collect (format nil "~A=\"~A\"" key value)))
 
 (defun collect-content (render-function content)
+  "Collect a list of strings, recursively rendering any sublists."
   (loop
     for item in content
     collect (cond
@@ -13,9 +15,18 @@
               ((stringp item) item)
               (t ""))))
 
-(defun preprocess-force (element)
+(defclass xml-element ()
+  ((name :initarg :name :accessor element-name)
+   (attrs :initarg :attrs :accessor element-attrs)
+   (content :initarg :content :accessor element-content))
+  (:default-initargs (:name "undefined" :attrs '() :content '())))
+
+(defun make-element-plist-attrs (element)
+  "Make an element of the form:
+
+(:name :attr \"value\" \"content\")"
   (let ((name (string-downcase (symbol-name (first element))))
-        attributes
+        attrs
         content)
     (loop
       with attr = nil
@@ -25,57 +36,33 @@
            (attr
             (push (cons (string-downcase (symbol-name (pop attr)))
                         item)
-                  attributes))
+                  attrs))
            ((symbolp item)
             (push item attr))
            (t
             (push item content))))
-    (append (list name attributes) (reverse content))))
+    (make-instance 'xml-element
+                   :name name
+                   :attrs attrs
+                   :content (reverse content))))
 
-(defun preprocess (element)
-  "Preprocess XML-style element.
+(defun make-element-alist-attrs (element)
+  "Make an element of the form:
 
-XML elements should be lists of the following form:
+  (\"name\" ((\"key\" . \"value\")) \"content\")"
+  (make-instance 'xml-element
+                 :name (first element)
+                 :attrs (second element)
+                 :content (cddr element)))
 
-  (name attrs &rest content)
+(define-condition malformed-element-error (error)
+  (element :initarg :element))
 
-name      Name of element as a string.
-attrs     Element attributes as a plist of strings.
-content   Element content, as strings or nested elements.
-
-However, an alternative form is:
-
-  (:name :attr value content)
-
-`preprocess' will transform the alternative form into the regular form."
-  (if (symbolp (first element))
-      (preprocess-force element)
-      element))
-
-(defmacro with-element ((element name attrs content) &body body)
-  "Wrap the body in a lambda for `call-with-element'."
-  `(call-with-element ,element
-                      (lambda (,name ,attrs ,content)
-                        ,@body)))
-
-(defun call-with-element (element function)
-  "Call a function with the given element.
-
-XML elements should be lists of the following form:
-
-  (name attrs &rest content)
-
-name      Name of element as a string.
-attrs     Element attributes as a plist of strings.
-content   Element content, as strings or nested elements.
-
-However, an alternative form is:
-
-  (:name :attr value content)
-
-See also `preprocess'."
-  (let* ((element (preprocess element))
-         (name (first element))
-         (attrs (second element))
-         (content (cddr element)))
-    (funcall function name attrs content)))
+(defun make-element (element)
+  (cond
+    ((symbolp (first element))
+     (make-element-plist-attrs element))
+    ((stringp (first element))
+     (make-element-alist-attrs element))
+    (t
+     (error 'malformed-element-error :element element))))
