@@ -7,7 +7,8 @@
            #:make-element
            #:element-name
            #:element-attrs
-           #:element-content))
+           #:element-content
+           #:with-element))
 
 (defpackage :frelia-xml
   (:use :cl :frelia-xmllib)

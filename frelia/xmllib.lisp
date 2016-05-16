@@ -19,12 +19,12 @@
   ((name :initarg :name :accessor element-name)
    (attrs :initarg :attrs :accessor element-attrs)
    (content :initarg :content :accessor element-content))
-  (:default-initargs (:name "undefined" :attrs '() :content '())))
+  (:default-initargs :name "undefined" :attrs '() :content '()))
 
 (defun make-element-plist-attrs (element)
   "Make an element of the form:
 
-(:name :attr \"value\" \"content\")"
+  (:name :attr \"value\" \"content\")"
   (let ((name (string-downcase (symbol-name (first element))))
         attrs
         content)
@@ -56,7 +56,7 @@
                  :content (cddr element)))
 
 (define-condition malformed-element-error (error)
-  (element :initarg :element))
+  ((element :initarg :element)))
 
 (defun make-element (element)
   (cond
