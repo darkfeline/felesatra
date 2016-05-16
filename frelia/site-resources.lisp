@@ -11,11 +11,11 @@
 
 (defclass file-resource ()
   ((path :initarg :path)
-   (source :initarg :source)))
+   (source :initarg :source :accessor file-source)))
 
 (defclass page-resource ()
   ((metadata :initarg :metadata)
-   (content :initarg :content)))
+   (content :initarg :content :accessor page-content)))
 
 (defclass page-metadata ()
   ((path :initarg :path)
