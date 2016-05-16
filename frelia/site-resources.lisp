@@ -45,8 +45,9 @@
 
 (defun load-resources (root-path)
   "Load resources from a directory tree."
-  (let (site-resources
-        (root-length (length (namestring (truename root-path)))))
+  (let* (site-resources
+         (root-path (namestring (truename root-path)))
+         (root-length (length root-path)))
     (flet ((add-resource (resource)
              (push resource site-resources))
            (target-path (pathname)
