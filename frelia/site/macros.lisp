@@ -1,16 +1,5 @@
 (in-package :frelia-site)
 
-(defun transform-recursively (transform-function element)
-  "Transform an element tree recursively.
-
-Used for applying macros and other transformations to an XML-style tree."
-  (cond
-    ((stringp element) element)
-    ((symbolp element) element)
-    ((listp element)
-     (transform-function element))
-    (t "")))
-
 (defun render-footnotes (root-element)
   "Replace footnote references."
   (let ((footnote-index 1))
