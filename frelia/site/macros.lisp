@@ -16,26 +16,22 @@
   (cond
     ((stringp element) element)
     ((symbolp element) element)
-    ((and (listp element)
-          (gethash (first element) *site-macros*))
-     (let ((macro (gethash (first element) *site-macros*)))
-       (render-macros context
-                      (apply macro context (rest element)))))
+    ((macro-p element)
+     (let* ((macro (get-macro-function element))
+            (expanded-element (apply macro context (rest element))))
+       (render-macros context expanded-element)))
     ((listp element)
      (loop
        for subelement in element
        collect (render-macros context subelement)))
-    (t ""))
-  (transform-recursively
-   (lambda (element)
-     (let ((macro (gethash (first element) *site-macros*)))
-       (if macro
-           (render-macros context
-                          (apply macro context (rest element)))
-           (loop
-             for subelement in element
-             collect (render-macros context subelement)))))
-   element))
+    (t "")))
+
+(defun macro-p (element)
+  (and (listp element)
+       (gethash (first element) *site-macros*)))
+
+(defun get-macro-function (element)
+  (gethash (first element) *site-macros*))
 
 (defvar *site-macros* (make-hash-table))
 
