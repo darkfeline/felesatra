@@ -49,7 +49,7 @@
 (defsitemacro eval-with-data (context lambda-list &rest body)
   "Macro for evaluating arbitrary Lisp with rendering data."
   (destructuring-bind (var) lambda-list
-    (eval `(funcall (lambda (,var) ,@body) ,context))))
+    (funcall (eval `(lambda (,var) ,@body)) context)))
 
 (defsitemacro abs-url (context path)
   "Get absolute URL for site path."
