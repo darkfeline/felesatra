@@ -5,14 +5,14 @@
   (with-element (element name attrs content)
     (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
             name
-            (collect-attrs attributes)
-            (collect-content 'render-xml-element content)
+            (format-attrs attributes)
+            (render-content 'render-xml-element content)
             name)))
 
 (defun render-xml-decl (attributes)
   "Format an XML declaration with the given attributes."
   (format nil "<?xml~{~^ ~A~}?>"
-          (collect-attrs attributes)))
+          (format-attrs attributes)))
 
 (defun render-xml (attributes root-element)
   "Render XML document."

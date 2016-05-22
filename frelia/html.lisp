@@ -33,14 +33,14 @@
 (defun format-element (name attrs content)
   (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
           name
-          (collect-attrs attrs)
-          (collect-content 'render-html-element content)
+          (format-attrs attrs)
+          (render-content 'render-html-element content)
           name))
 
 (defun format-void-element (name attrs)
   (format nil "<~A~{~^ ~A~}>"
           name
-          (collect-attrs attrs)))
+          (format-attrs attrs)))
 
 (defun render-html (root-element)
   "Render XML document."

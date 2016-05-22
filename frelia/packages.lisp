@@ -2,12 +2,8 @@
 
 (defpackage :frelia-xmllib
   (:use :cl)
-  (:export #:collect-attrs
-           #:collect-content
-           #:make-element
-           #:element-name
-           #:element-attrs
-           #:element-content
+  (:export #:format-attrs
+           #:render-content
            #:with-element))
 
 (defpackage :frelia-xml
