@@ -15,10 +15,10 @@
                (:file "templates"
                 :depends-on ("packages"))
 
-               (:file "site-resources"
+               (:file "site/resources"
                 :depends-on ("packages"))
-               (:file "site-rendering"
-                :depends-on ("packages" "site-resources"))
-               (:file "site-macros"
+               (:file "site/rendering"
+                :depends-on ("packages" "site/resources"))
+               (:file "site/macros"
                 :depends-on ("packages")))
   :depends-on ("alexandria" "cl-fad"))
