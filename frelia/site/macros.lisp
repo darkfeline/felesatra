@@ -50,13 +50,16 @@ Used for applying macros and other transformations to an XML-style tree."
 
 (defvar *site-macros* (make-hash-table))
 
+(defun register-site-macro (symbol)
+  (setf (gethash (alexandria:make-keyword (symbol-name symbol))
+                 *site-macros*)
+        symbol))
+
 (defmacro defsitemacro (name lambda-list &body body)
   `(progn
      (defun ,name ,lambda-list
        ,@body)
-     (setf (gethash ,(alexandria:make-keyword (symbol-name name))
-                    *site-macros*)
-           (quote ,name))))
+     (register-site-macro (quote ,name))))
 
 (defsitemacro eval-with-data (context lambda-list &rest body)
   "Macro for evaluating arbitrary Lisp with rendering data."
