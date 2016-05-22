@@ -18,6 +18,7 @@
 
 (defmethod render ((resource page-resource) context target-dir)
   (let* ((content (page-content resource))
+         (content (render-macros content))
          (html (frelia-html:render-html content)))))
 
 (defun render-resources (context resources target-dir)
