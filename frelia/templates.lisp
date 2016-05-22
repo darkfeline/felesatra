@@ -9,7 +9,7 @@
            ,@head-block)
           (:body ,@body-block)))
 
-(defun base-template-header ()
+(defun base-header ()
   "Header for site base template."
   `(:header :id "site-header"
             (:h1 :id "site-title"
@@ -21,7 +21,7 @@
                                (:img :src (:abs-url "img/site/feed-icon-14x14.png")
                                      :alt "Atom feed"))))))
 
-(defun base-template-footer ()
+(defun base-footer ()
   "Footer for site base template."
   `(:footer
     :id "site-footer"
@@ -57,9 +57,9 @@
             :href (:abs-url "img/site/favicon.png"))
      ,@head-block)
    :body-block
-   `(,(base-template-header)
+   `(,(base-header)
      ,@body-block
-     ,(base-template-footer))))
+     ,(base-footer))))
 
 (defun content-page-template (&key title head-block content-block)
   "Content page template."
