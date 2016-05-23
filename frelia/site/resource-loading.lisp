@@ -18,7 +18,7 @@
                    :targeter targeter)))
 
 (defclass path-targeter ()
-  (root-length :initarg :root-length))
+  ((root-length :initarg :root-length)))
 
 (defun make-path-targeter (root-path)
   (make-instance 'path-targeter
@@ -44,7 +44,7 @@
   (let ((resource-maker (make-resource-maker loader pathname)))
     (add-resource (make resource-maker))))
 
-(defun make-resource-maker ((loader resource-loader) pathname)
+(defun make-resource-maker (loader pathname)
   (cond
     ((lisp-file-p pathname)
      (make-page-resource-maker loader pathname)

@@ -15,17 +15,21 @@
               ((stringp item) item)
               (t ""))))
 
-(defun lower-symbol-name (symbol)
-  "Get lowercased name of SYMBOL."
-  (string-downcase (symbol-name symbol)))
+(defmacro with-element ((element name attrs content) &body body)
+  `(funcall #'call-with-element ,element (lambda (,name ,attrs ,content) ,@body)))
+
+(defun call-with-element (element function)
+  (let* ((element (make-element element)))
+    (with-slots (name attrs content) element
+      (funcall function name attrs content))))
 
 (defclass xml-element ()
-  ((name :initarg :name :accessor element-name)
-   (attrs :initarg :attrs :accessor element-attrs)
-   (content :initarg :content :accessor element-content))
-  (:default-initargs :name "undefined" :attrs '() :content '()))
+  ((name :initarg :name)
+   (attrs :initarg :attrs)
+   (content :initarg :content)))
 
 (defun make-element (element)
+  "Make an element from either alist or plist forms."
   (cond
     ((symbolp (first element))
      (make-element-plist-attrs element))
@@ -58,13 +62,18 @@
       for item in element-items
       do (process-item builder item))))
 
+(defun lower-symbol-name (symbol)
+  "Get lowercased name of SYMBOL."
+  (string-downcase (symbol-name symbol)))
+
 (defmethod set-name ((builder plist-element-builder) name)
+  "Set element name for the element builder to build."
   (setf (slot-value builder 'name) name))
 
 (defmethod process-item ((builder plist-element-builder) item)
   (cond
     ((has-pending-attr-p builder)
-     (let* ((pending-attr ((pop-pending-attr builder)))
+     (let* ((pending-attr (pop-pending-attr builder))
             (new-attr (cons pending-attr item)))
        (push-attr builder new-attr)))
     ((symbolp item)
@@ -73,13 +82,13 @@
     (t
      (push-content builder item))))
 
-(defmethod has-pending-attr-p ((builder-plist-element-builder))
+(defmethod has-pending-attr-p ((builder plist-element-builder))
   (slot-value builder 'pending-attr))
 
-(defmethod pop-pending-attr ((builder-plist-element-builder))
+(defmethod pop-pending-attr ((builder plist-element-builder))
   (pop (slot-value builder 'pending-attr)))
 
-(defmethod push-pending-attr ((builder-plist-element-builder) pending-attr)
+(defmethod push-pending-attr ((builder plist-element-builder) pending-attr)
   (push pending-attr (slot-value builder 'pending-attr)))
 
 (defmethod push-content ((builder plist-element-builder) content)
@@ -89,10 +98,11 @@
   (push attr (slot-value builder 'attrs)))
 
 (defmethod build ((builder plist-element-builder))
-  (make-instance 'xml-element
-                 :name name
-                 :attrs (reverse attrs)
-                 :content (reverse content)))
+  (with-slots (name attrs content) builder
+    (make-instance 'xml-element
+                   :name name
+                   :attrs (reverse attrs)
+                   :content (reverse content))))
 
 (defun make-element-alist-attrs (element)
   "Make an element of the form:
@@ -105,13 +115,3 @@
 
 (define-condition malformed-element-error (error)
   ((element :initarg :element)))
-
-(defmacro with-element ((element name attrs content) &body body)
-  `(funcall #'call-with-element ,element (lambda (,name ,attrs ,content) ,@body)))
-
-(defun call-with-element (element function)
-  (let* ((element (make-element element))
-         (name (element-name element))
-         (attrs (element-attrs element))
-         (content (element-content element)))
-    (funcall function name attrs content)))

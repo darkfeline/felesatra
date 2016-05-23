@@ -54,3 +54,7 @@ frelia-install:
 .PHONY: dance
 dance:
 	sbcl --script dance.lisp
+
+.PHONY: frelia-test
+frelia-test:
+	sbcl --script test.lisp

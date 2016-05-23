@@ -1,5 +1,7 @@
 (in-package :frelia-site)
 
+(defvar *site-macros* (make-hash-table))
+
 (defun render-footnotes (root-element)
   "Replace footnote references."
   (let ((footnote-index 1))
@@ -32,8 +34,6 @@
 
 (defun get-macro-function (element)
   (gethash (first element) *site-macros*))
-
-(defvar *site-macros* (make-hash-table))
 
 (defun register-site-macro (symbol)
   (setf (gethash (alexandria:make-keyword (symbol-name symbol))
