@@ -63,3 +63,9 @@
 (defsitemacro site-a (context path &rest content)
   "<a> tag to site path."
   `(:a :href (:abs-url ,path) ,@content))
+
+(defsitemacro ref (context &rest content)
+  "Footnote/ref tag macro."
+  `(:span :class "ref"
+          (:span :class "refnum" (format nil "[~A]" (get-next-refnum context)))
+          (:span :class "refbody" :style "display: none;" ,@content)))

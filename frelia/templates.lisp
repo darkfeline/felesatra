@@ -9,6 +9,28 @@
            ,@head-block)
           (:body ,@body-block)))
 
+(defun base-template (&key title head-block body-block)
+  "Site base template."
+  (html-base-template
+   :title title
+   :head-block
+   `((:meta :name "viewport"
+            :content "width=device-width, initial-scale=1")
+     (:link :rel "stylesheet"
+            :type "text/css"
+            :href (:abs-url "css/base.css"))
+     (:link :rel "stylesheet"
+            :type "text/css"
+            :href (:abs-url "css/site.css"))
+     (:link :rel "icon"
+            :type "image/png"
+            :href (:abs-url "img/site/favicon.png"))
+     ,@head-block)
+   :body-block
+   `(,(base-header)
+     ,@body-block
+     ,(base-footer))))
+
 (defun base-header ()
   "Header for site base template."
   `(:header :id "site-header"
@@ -39,27 +61,11 @@
                     :class "centered"
                     :src "https://i.creativecommons.org/l/by-sa/4.0/88x31.png")))))
 
-(defun base-template (&key title head-block body-block)
-  "Site base template."
-  (html-base-template
-   :title title
-   :head-block
-   `((:meta :name "viewport"
-            :content "width=device-width, initial-scale=1")
-     (:link :rel "stylesheet"
-            :type "text/css"
-            :href (:abs-url "css/base.css"))
-     (:link :rel "stylesheet"
-            :type "text/css"
-            :href (:abs-url "css/site.css"))
-     (:link :rel "icon"
-            :type "image/png"
-            :href (:abs-url "img/site/favicon.png"))
-     ,@head-block)
-   :body-block
-   `(,(base-header)
-     ,@body-block
-     ,(base-footer))))
+(defun jquery-template ()
+  `(:script :src "https://code.jquery.com/jquery-2.2.4.min.js"))
+
+(defun ref-script-template ()
+  `(:script ,(alexandria:read-file-into-string "frelia-resources/ref-script.js")))
 
 (defun content-page-template (&key title head-block content-block)
   "Content page template."
