@@ -18,10 +18,10 @@
 
 (defpackage :frelia-site
   (:use :cl)
-  (:export #:load-resources
-           #:render-resources
+  (:export #:make-site-metadata
            #:rendering-context
-           #:site-metadata))
+           #:load-resources
+           #:render-resources))
 
 (defpackage :frelia-templates
   (:use :cl)
