@@ -1,0 +1,23 @@
+(in-package :frelia-html-test)
+
+(plan 4)
+(is (render-html-element '(:test))
+    "<test></test>")
+(is (render-html-element '(:test :foo "bar"))
+    "<test foo=\"bar\"></test>")
+(is (render-html-element '(:test :foo "bar" "content a" :spam "eggs" "content b"))
+    "<test foo=\"bar\" spam=\"eggs\">content acontent b</test>")
+(is (render-html-element '("test" (("foo-dash" . "bar")) "spam" "eggs"))
+    "<test foo-dash=\"bar\">spameggs</test>")
+(finalize)
+
+(plan 3)
+(is (render-html-element '("br")) "<br>")
+(is (render-html-element '("link")) "<link>")
+(is (render-html-element '("meta")) "<meta>")
+(finalize)
+
+(plan 1)
+(is (render-html '(:test))
+    "<!DOCTYPE html><test></test>")
+(finalize)

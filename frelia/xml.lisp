@@ -5,7 +5,7 @@
   (with-element (element name attrs content)
     (format nil "<~A~{~^ ~A~}>~{~A~}</~A>"
             name
-            (format-attrs attributes)
+            (format-attrs attrs)
             (render-content 'render-xml-element content)
             name)))
 

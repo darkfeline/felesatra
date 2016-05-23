@@ -5,3 +5,6 @@
 
 (defpackage :frelia-xml-test
   (:use :cl :prove :frelia-xml))
+
+(defpackage :frelia-html-test
+  (:use :cl :prove :frelia-html))

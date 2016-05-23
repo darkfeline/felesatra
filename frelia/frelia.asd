@@ -37,6 +37,8 @@
                (:test-file "xmllib-test"
                 :depends-on ("test-packages"))
                (:test-file "xml-test"
+                :depends-on ("test-packages"))
+               (:test-file "html-test"
                 :depends-on ("test-packages")))
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run) :prove) c)))

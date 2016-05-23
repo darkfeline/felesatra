@@ -48,9 +48,9 @@
 
 (defclass plist-element-builder ()
   (name
-   attrs
-   content
-   pending-attr)
+   (attrs :initform '())
+   (content :initform '())
+   (pending-attr :initform '()))
   (:documentation "Class for building elements from a plist attrs list."))
 
 (defmethod process-element ((builder plist-element-builder) element)
