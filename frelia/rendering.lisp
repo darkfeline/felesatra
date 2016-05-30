@@ -10,23 +10,23 @@
 (defmethod register-macro ((renderer macro-renderer) symbol func)
   (setf (gethash symbol (macros-table renderer)) func))
 
-(defmethod macrop ((renderer macro-renderer) element)
-  (and (listp element)
-       (lookup-macro renderer (first element))))
+(defmethod macrop ((renderer macro-renderer) form)
+  (and (listp form)
+       (lookup-macro renderer (first form))))
 
-(defmethod get-macro-function ((renderer macro-renderer) element)
-  (lookup-macro renderer (first element)))
+(defmethod get-macro-function ((renderer macro-renderer) form)
+  (lookup-macro renderer (first form)))
 
-(defmethod render-macros ((renderer macro-renderer) context element)
+(defmethod render-macros ((renderer macro-renderer) context form)
   (cond
-    ((stringp element) element)
-    ((symbolp element) element)
-    ((macrop renderer element)
-     (let* ((macro (get-macro-function renderer element))
-            (expanded-element (apply macro context (rest element))))
-       (render-macros renderer context expanded-element)))
-    ((listp element)
+    ((stringp form) form)
+    ((symbolp form) form)
+    ((macrop renderer form)
+     (let* ((macro (get-macro-function renderer form))
+            (expanded-form (apply macro context (rest form))))
+       (render-macros renderer context expanded-form)))
+    ((listp form)
      (loop
-       for subelement in element
+       for subelement in form
        collect (render-macros renderer context subelement)))
     (t "")))

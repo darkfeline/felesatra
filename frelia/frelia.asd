@@ -26,8 +26,6 @@
                (:file "site/resources"
                 :depends-on ("packages"))
                (:file "site/resource-loading"
-                :depends-on ("packages"))
-               (:file "site/macros"
                 :depends-on ("packages")))
   :depends-on (:alexandria
                :cl-fad)
