@@ -15,7 +15,7 @@
 
 (defsitemacro abs-url (context path)
   "Get absolute URL for site path."
-  (concatenate 'string (site-url context) (string-left-trim "/" path)))
+  (concatenate 'string (gethash :site-url context) (string-left-trim "/" path)))
 
 (defsitemacro pgp-key-a (context &rest content)
   "<a> tag to my PGP key."
@@ -28,6 +28,8 @@
 
 (defsitemacro ref (context &rest content)
   "Footnote/ref tag macro."
-  `(:span :class "ref"
-          (:span :class "refnum" (format nil "[~A]" (get-next-refnum context)))
-          (:span :class "refbody" :style "display: none;" ,@content)))
+  (let ((refnum (gethash :refnum context 1)))
+    (setf (gethash :refnum context) (+ refnum 1))
+    `(:span :class "ref"
+            (:span :class "refnum" (format nil "[~A]" refnum))
+            (:span :class "refbody" :style "display: none;" ,@content))))
