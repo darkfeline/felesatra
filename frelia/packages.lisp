@@ -16,15 +16,16 @@
   (:export #:render-html
            #:render-html-element))
 
+(defpackage :frelia-templates
+  (:use :cl)
+  (:export #:render
+           #:html-base-template
+           #:base-template
+           #:content-page-template))
+
 (defpackage :frelia-site
   (:use :cl)
   (:export #:make-site-metadata
            #:rendering-context
            #:load-resources
            #:render-resources))
-
-(defpackage :frelia-templates
-  (:use :cl)
-  (:export #:html-base-template
-           #:base-template
-           #:content-page-template))
