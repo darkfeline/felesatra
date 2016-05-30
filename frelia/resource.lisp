@@ -1,0 +1,1 @@
+(in-package :frelia-resource)

@@ -11,12 +11,13 @@
                 :depends-on ("packages"))
                (:file "html"
                 :depends-on ("packages"))
-
                (:file "templates"
                 :depends-on ("packages"))
-
                (:file "rendering"
                 :depends-on ("packages"))
+               (:file "resource"
+                :depends-on ("packages"))
+
                (:file "site-rendering"
                 :depends-on ("packages"))
 

@@ -76,24 +76,23 @@
       (:header
        :class "content-header"
        (:h1 ,title)
-       (:eval-with-data
-        (data)
-        (let* ((page-resource (current-resource data))
-               (metadata (metadata page-resource)))
+       (:eval-with-context
+        (context)
+        (let* ((metadata (gethash :metadata context)))
           `(:dl
-            ,@(let ((published (published-date metadata)))
+            ,@(let ((published (gethash :published metadata)))
                 (when published
                   `((:dt "Published")
                     (:dd ,published))))
-            ,@(let ((modified (modified-date metadata)))
-                (when modified
-                  `((:dt "Modified")
-                    (:dd ,modified))))
-            ,@(let ((category (page-category metadata)))
+            ,@(let ((updated (gethash :updated metadata)))
+                (when updated
+                  `((:dt "Updated")
+                    (:dd ,updated))))
+            ,@(let ((category (gethash :category metadata)))
                 (when category
                   `((:dt "Category")
                     (:dd ,category))))
-            ,@(let ((tags (page-tags metadata)))
+            ,@(let ((tags (gethash :tags metadata)))
                 (when tags
                   `((:dt "Tags")
                     ,@(loop for tag in tags

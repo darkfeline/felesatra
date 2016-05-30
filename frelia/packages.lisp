@@ -28,11 +28,15 @@
            #:register-macro
            #:render-macros))
 
+(defpackage :frelia-resource
+  (:use :cl))
+
 (defpackage :frelia-site-rendering
   (:use :cl)
   (:import-from :frelia-rendering
                 #:macro-renderer
-                #:register-macro))
+                #:register-macro)
+  (:export #:*frelia-renderer*))
 
 (defpackage :frelia-site
   (:use :cl)
