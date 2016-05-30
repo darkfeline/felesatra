@@ -11,3 +11,6 @@
 
 (defpackage :frelia-templates-test
   (:use :cl :prove :frelia-templates))
+
+(defpackage :frelia-rendering-test
+  (:use :cl :prove :frelia-rendering))

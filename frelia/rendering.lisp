@@ -7,8 +7,8 @@
 (defmethod lookup-macro ((renderer macro-renderer) symbol)
   (gethash symbol (macros-table renderer)))
 
-(defmethod register-macro ((renderer macro-renderer) symbol function)
-  (setf (gethash symbol (macros-table renderer)) function))
+(defmethod register-macro ((renderer macro-renderer) symbol func)
+  (setf (gethash symbol (macros-table renderer)) func))
 
 (defmethod macrop ((renderer macro-renderer) element)
   (and (listp element)
@@ -22,7 +22,7 @@
     ((stringp element) element)
     ((symbolp element) element)
     ((macrop renderer element)
-     (let* ((macro (get-macro-function element))
+     (let* ((macro (get-macro-function renderer element))
             (expanded-element (apply macro context (rest element))))
        (render-macros renderer context expanded-element)))
     ((listp element)
