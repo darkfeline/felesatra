@@ -15,13 +15,16 @@
                (:file "templates"
                 :depends-on ("packages"))
 
+               (:file "rendering"
+                :depends-on ("packages"))
+               (:file "site-rendering"
+                :depends-on ("packages"))
+
                (:file "site/site-metadata"
                 :depends-on ("packages"))
                (:file "site/resources"
                 :depends-on ("packages"))
                (:file "site/resource-loading"
-                :depends-on ("packages"))
-               (:file "site/rendering"
                 :depends-on ("packages"))
                (:file "site/macros"
                 :depends-on ("packages")))
@@ -39,6 +42,9 @@
                (:test-file "xml-test"
                 :depends-on ("test-packages"))
                (:test-file "html-test"
-                :depends-on ("test-packages")))
+                :depends-on ("test-packages"))
+               (:test-file "templates-test"
+                :depends-on ("test-packages"))
+               )
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run) :prove) c)))

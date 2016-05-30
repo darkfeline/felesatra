@@ -1,4 +1,4 @@
-(in-package :frelia-site)
+(in-package :frelia-rendering)
 
 (defclass rendering-context ()
   ((site-metadata :initarg :site-metadata)

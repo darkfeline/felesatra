@@ -2,17 +2,6 @@
 
 (defvar *site-macros* (make-hash-table))
 
-(defun render-footnotes (root-element)
-  "Replace footnote references."
-  (let ((footnote-index 1))
-    (flet ((recurse (element)
-             (transform-recursively
-              (lambda (element)
-                )
-              element)
-             ))
-      (recurse root-element))))
-
 (defun render-macros (context element)
   "Expand site-specific macros."
   (cond

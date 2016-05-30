@@ -18,10 +18,21 @@
 
 (defpackage :frelia-templates
   (:use :cl)
-  (:export #:render
-           #:html-base-template
+  (:export #:html-base-template
            #:base-template
            #:content-page-template))
+
+(defpackage :frelia-rendering
+  (:use :cl)
+  (:export #:macro-renderer
+           #:register-macro
+           #:render-macros))
+
+(defpackage :frelia-site-rendering
+  (:use :cl)
+  (:import-from :frelia-rendering
+                #:macro-renderer
+                #:register-macro))
 
 (defpackage :frelia-site
   (:use :cl)
