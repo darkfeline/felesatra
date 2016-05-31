@@ -25,14 +25,14 @@
   (push resource (resources loader)))
 
 (defmethod load-resource-from-pathname ((loader resource-loader) pathname)
-  (add-resource
-   (cond
-     ((lisp-file-p pathname)
-      (make-page-resource (root-path loader) pathname))
-     (t
-      (make-instance 'file-resource
-                     :source pathname
-                     :path (root-path loader))))))
+  (add-resource loader
+                (cond
+                  ((lisp-file-p pathname)
+                   (make-page-resource (root-path loader) pathname))
+                  (t
+                   (make-instance 'file-resource
+                                  :source pathname
+                                  :path (root-path loader))))))
 
 (defun lisp-file-p (pathname)
   (string= (pathname-type pathname) "lisp"))

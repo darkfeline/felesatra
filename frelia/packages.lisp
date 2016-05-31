@@ -29,7 +29,10 @@
            #:render-macros))
 
 (defpackage :frelia-resource
-  (:use :cl))
+  (:use :cl)
+  (:export #:resource-loader
+           #:load-resources
+           #:resources))
 
 (defpackage :frelia-felesatra-macro
   (:use :cl)
