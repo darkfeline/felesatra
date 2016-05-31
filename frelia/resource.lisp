@@ -64,18 +64,12 @@
           (page-context object)))
 
 (defclass resource-renderer ()
-  ((context :initarg :context
-            :accessor context)
+  ((site-context :initarg :site-context
+                 :accessor site-context)
    (macro-renderer :initarg :macro-renderer
                    :accessor macro-renderer)
    (template-renderer :initarg :template-renderer
                       :accessor template-renderer)))
-
-(defun add-plist-to-hash (plist table)
-  (loop
-    for (key value) on plist by #'cddr
-    do (setf (gethash key table) value))
-  table)
 
 (defmethod render-resources ((renderer resource-renderer) resources target-dir)
   (loop
@@ -97,4 +91,23 @@
       (sb-posix:syscall-error ()))
     (sb-posix:link (file-source resource) dest)))
 
-(defmethod render ((renderer resource-renderer) (resource page-resource) target-dir))
+(defmethod render ((renderer resource-renderer) (resource page-resource) target-dir)
+  (with-accessors ((template-renderer template-renderer)
+                   (macro-renderer macro-renderer))
+      renderer
+    (let* ((post-template (render-template template-renderer
+                                           (template-context resource)))
+           (post-macro
+             (render-macros macro-renderer
+                            (macro-context resource (site-context renderer))
+                            post-template))))))
+
+(defmethod template-context ((resource page-resource)))
+
+(defmethod macro-context ((resource page-resource) site-context))
+
+(defun add-plist-to-hash (plist table)
+  (loop
+    for (key value) on plist by #'cddr
+    do (setf (gethash key table) value))
+  table)

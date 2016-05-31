@@ -34,4 +34,6 @@
            #:load-resources
            #:resources
            #:resource-renderer
-           #:render-resources))
+           #:render-resources)
+  (:import-from :frelia-template #:render-template)
+  (:import-from :frelia-macro #:render-macro))
