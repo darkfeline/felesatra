@@ -1,7 +1,7 @@
 .PHONY: all
 all: clean build_local
 
-BUILD_MODULE=felesatra
+BUILD_MODULE=frelia
 BUILD_DIR=build
 LOCAL_BUILD_DIR=build_local
 
@@ -38,10 +38,6 @@ watch:
 .PHONY: test
 test:
 	py.test --doctest-modules ${BUILD_MODULE} tests
-
-.PHONY: isort
-isort:
-	isort -rc ${BUILD_MODULE}
 
 .PHONY: pylint
 pylint:
