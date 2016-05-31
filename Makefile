@@ -1,12 +1,13 @@
 .PHONY: all
 all: clean build_local
 
+BUILD_MODULE=felesatra
 BUILD_DIR=build
 LOCAL_BUILD_DIR=build_local
 
 .PHONY: build
 build:
-	python -m felesatra ${BUILD_DIR}
+	python -m ${BUILD_MODULE} ${BUILD_DIR}
 
 SSH_HOST=www.felesatra.moe
 SSH_PORT=22
@@ -19,7 +20,7 @@ upload: clean build
 
 .PHONY: build_local
 build_local:
-	python -m felesatra --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
+	python -m ${BUILD_MODULE} --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
 
 .PHONY: clean
 clean:
@@ -36,12 +37,12 @@ watch:
 
 .PHONY: test
 test:
-	py.test --doctest-modules felesatra tests
+	py.test --doctest-modules ${BUILD_MODULE} tests
 
 .PHONY: isort
 isort:
-	isort -rc felesatra
+	isort -rc ${BUILD_MODULE}
 
 .PHONY: pylint
 pylint:
-	pylint --output-format=colorized felesatra tests
+	pylint --output-format=colorized ${BUILD_MODULE} tests
