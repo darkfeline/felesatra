@@ -16,16 +16,6 @@
                (:file "macro"
                 :depends-on ("packages"))
                (:file "resource"
-                :depends-on ("packages"))
-
-               (:file "felesatra-macro"
-                :depends-on ("packages"))
-
-               (:file "site/site-metadata"
-                :depends-on ("packages"))
-               (:file "site/resources"
-                :depends-on ("packages"))
-               (:file "site/resource-loading"
                 :depends-on ("packages")))
   :depends-on (:alexandria
                :cl-fad)

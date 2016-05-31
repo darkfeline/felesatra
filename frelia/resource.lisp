@@ -42,13 +42,7 @@
   (with-open-file (file source)
     (make-instance 'page-resource
                    :path path
-                   :context (eval-plist-values (read file)))))
-
-(defun eval-plist-values (plist)
-  "Evaluate the values in a plist."
-  (loop
-    for (key value) on plist by #'cddr
-    append (list key (eval value))))
+                   :context (eval (read file)))))
 
 (defclass base-resource ()
   ((path :initarg :path :accessor resource-path)))
@@ -68,3 +62,12 @@
   (format stream "#<PAGE-RESOURCE :path ~S :context ~S>"
           (resource-path object)
           (page-context object)))
+
+(defclass resource-renderer ()
+  ((context :initarg :context
+            :initform (make-hash-table)
+            :accessor context)
+   (macro-renderer :initarg :macro-renderer
+                   :accessor macro-renderer)
+   (resources :initarg :resources
+              :accessor resources)))

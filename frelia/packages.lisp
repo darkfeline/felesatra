@@ -32,18 +32,5 @@
   (:use :cl)
   (:export #:resource-loader
            #:load-resources
-           #:resources))
-
-(defpackage :frelia-felesatra-macro
-  (:use :cl)
-  (:import-from :frelia-macro
-                #:macro-renderer
-                #:register-macro)
-  (:export #:*frelia-renderer*))
-
-(defpackage :frelia-site
-  (:use :cl)
-  (:export #:make-site-metadata
-           #:rendering-context
-           #:load-resources
-           #:render-resources))
+           #:resources
+           #:resource-renderer))
