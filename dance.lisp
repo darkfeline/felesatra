@@ -16,7 +16,9 @@
 
 (defun main ()
   "Entry point."
-  (build-site :site-url "https://www.felesatra.moe" "build-frelia/")
-  (build-site :site-url "http://localhost:5000" "build-frelia-local/"))
+  (build-site :site-url "https://www.felesatra.moe"
+              :target-dir "build-frelia/")
+  (build-site :site-url "http://localhost:5000"
+              :target-dir "build-frelia-local/"))
 
 (main)
