@@ -90,4 +90,7 @@
                             (resource-path resource)))
          (dest-dir (directory-namestring dest)))
     (ensure-directories-exist dest-dir)
+    (handler-case
+        (sb-posix:unlink dest)
+      (sb-posix:syscall-error ()))
     (sb-posix:link (file-source resource) dest)))
