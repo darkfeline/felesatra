@@ -9,8 +9,8 @@
 (defpackage :frelia-html-test
   (:use :cl :prove :frelia-html))
 
-(defpackage :frelia-templates-test
-  (:use :cl :prove :frelia-templates))
+(defpackage :frelia-template-test
+  (:use :cl :prove :frelia-template))
 
 (defpackage :frelia-macro-test
   (:use :cl :prove :frelia-macro))

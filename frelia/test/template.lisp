@@ -1,0 +1,10 @@
+(in-package :frelia-template-test)
+
+(plan 1)
+(let ((renderer (make-instance 'template-renderer)))
+  (flet ((test-template (&key content-block)
+           `(:p ,@content-block)))
+    (register-template renderer :test-template #'test-template)
+    (is (render-template renderer :test-template `(:content-block ((:p "hi"))))
+        '(:p (:p "hi")))))
+(finalize)

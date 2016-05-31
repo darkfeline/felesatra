@@ -31,3 +31,8 @@
     `(:span :class "ref"
             (:span :class "refnum" (format nil "[~A]" refnum))
             (:span :class "refbody" :style "display: none;" ,@content))))
+
+(defsitemacro imgfig (context src alt)
+  "HTML image figure."
+  `(:figure (:img :src (:abs-url ,src)
+                  :alt ,alt)))

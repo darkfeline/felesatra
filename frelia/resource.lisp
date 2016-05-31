@@ -67,7 +67,9 @@
   ((context :initarg :context
             :accessor context)
    (macro-renderer :initarg :macro-renderer
-                   :accessor macro-renderer)))
+                   :accessor macro-renderer)
+   (template-renderer :initarg :template-renderer
+                      :accessor template-renderer)))
 
 (defun add-plist-to-hash (plist table)
   (loop
@@ -94,3 +96,5 @@
         (sb-posix:unlink dest)
       (sb-posix:syscall-error ()))
     (sb-posix:link (file-source resource) dest)))
+
+(defmethod render ((renderer resource-renderer) (resource page-resource) target-dir))

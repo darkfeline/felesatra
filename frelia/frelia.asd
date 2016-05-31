@@ -11,7 +11,7 @@
                 :depends-on ("packages"))
                (:file "html"
                 :depends-on ("packages"))
-               (:file "templates"
+               (:file "template"
                 :depends-on ("packages"))
                (:file "macro"
                 :depends-on ("packages"))
@@ -32,7 +32,7 @@
                 :depends-on ("test/packages"))
                (:test-file "test/html"
                 :depends-on ("test/packages"))
-               (:test-file "test/templates"
+               (:test-file "test/template"
                 :depends-on ("test/packages"))
                (:test-file "test/macro"
                 :depends-on ("test/packages")))

@@ -16,11 +16,11 @@
   (:export #:render-html
            #:render-html-element))
 
-(defpackage :frelia-templates
+(defpackage :frelia-template
   (:use :cl)
-  (:export #:html-base-template
-           #:base-template
-           #:content-page-template))
+  (:export #:template-renderer
+           #:register-template
+           #:render-template))
 
 (defpackage :frelia-macro
   (:use :cl)
