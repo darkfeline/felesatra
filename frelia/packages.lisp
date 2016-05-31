@@ -33,4 +33,5 @@
   (:export #:resource-loader
            #:load-resources
            #:resources
-           #:resource-renderer))
+           #:resource-renderer
+           #:render-resources))

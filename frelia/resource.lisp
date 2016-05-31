@@ -65,9 +65,14 @@
 
 (defclass resource-renderer ()
   ((context :initarg :context
-            :initform (make-hash-table)
             :accessor context)
    (macro-renderer :initarg :macro-renderer
-                   :accessor macro-renderer)
-   (resources :initarg :resources
-              :accessor resources)))
+                   :accessor macro-renderer)))
+
+(defun add-plist-to-hash (plist table)
+  (loop
+    for (key value) on plist by #'cddr
+    do (setf (gethash key table) value))
+  table)
+
+(defmethod render-resources ((renderer resource-renderer) target-dir))
