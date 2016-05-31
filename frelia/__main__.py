@@ -1,9 +1,11 @@
 import argparse
 import logging
 
+from .env import make_environment
 from .static import copy_static_files
 
 STATIC_FILES = 'static'
+PAGES = 'pages'
 
 
 def main():
@@ -15,6 +17,8 @@ def main():
     args = parser.parse_args()
 
     copy_static_files(STATIC_FILES, args.build_dir)
+    environment = make_environment()
+    environment.globals['site_url'] = args.site_url
     # Load site.
     # Load pages.
     # Render pages.
