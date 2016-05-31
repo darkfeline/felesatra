@@ -56,7 +56,4 @@
   ((source :initarg :source :accessor file-source)))
 
 (defclass page-resource (base-resource)
-  ((metadata :initarg :metadata :accessor page-metatdata)
-   (content :initarg :content :accessor page-content)))
-
-(defgeneric render (resource site-context))
+  ((context :initarg :context :accessor page-context)))
