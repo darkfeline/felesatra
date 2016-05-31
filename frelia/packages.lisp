@@ -22,7 +22,7 @@
            #:base-template
            #:content-page-template))
 
-(defpackage :frelia-rendering
+(defpackage :frelia-macro
   (:use :cl)
   (:export #:macro-renderer
            #:register-macro
@@ -31,9 +31,9 @@
 (defpackage :frelia-resource
   (:use :cl))
 
-(defpackage :frelia-site-rendering
+(defpackage :frelia-felesatra-macro
   (:use :cl)
-  (:import-from :frelia-rendering
+  (:import-from :frelia-macro
                 #:macro-renderer
                 #:register-macro)
   (:export #:*frelia-renderer*))

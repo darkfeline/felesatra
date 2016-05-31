@@ -1,4 +1,4 @@
-(in-package :frelia-site-rendering)
+(in-package :frelia-felesatra-macro)
 
 (defvar *felesatra-renderer*
   (make-instance 'macro-renderer))

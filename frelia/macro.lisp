@@ -1,4 +1,4 @@
-(in-package :frelia-rendering)
+(in-package :frelia-macro)
 
 (defclass macro-renderer ()
   ((macros-table :accessor macros-table

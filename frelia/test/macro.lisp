@@ -1,4 +1,4 @@
-(in-package :frelia-rendering-test)
+(in-package :frelia-macro-test)
 
 (plan 1)
 (let ((renderer (make-instance 'macro-renderer))

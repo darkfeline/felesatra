@@ -13,12 +13,12 @@
                 :depends-on ("packages"))
                (:file "templates"
                 :depends-on ("packages"))
-               (:file "rendering"
+               (:file "macro"
                 :depends-on ("packages"))
                (:file "resource"
                 :depends-on ("packages"))
 
-               (:file "site-rendering"
+               (:file "felesatra-macro"
                 :depends-on ("packages"))
 
                (:file "site/site-metadata"
@@ -35,16 +35,16 @@
   :depends-on (:frelia
                :prove)
   :defsystem-depends-on (:prove-asdf)
-  :components ((:file "test-packages")
-               (:test-file "xmllib-test"
-                :depends-on ("test-packages"))
-               (:test-file "xml-test"
-                :depends-on ("test-packages"))
-               (:test-file "html-test"
-                :depends-on ("test-packages"))
-               (:test-file "templates-test"
-                :depends-on ("test-packages"))
-               (:test-file "rendering-test"
-                :depends-on ("test-packages")))
+  :components ((:file "test/packages")
+               (:test-file "test/xmllib"
+                :depends-on ("test/packages"))
+               (:test-file "test/xml"
+                :depends-on ("test/packages"))
+               (:test-file "test/html"
+                :depends-on ("test/packages"))
+               (:test-file "test/templates"
+                :depends-on ("test/packages"))
+               (:test-file "test/macro"
+                :depends-on ("test/packages")))
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run) :prove) c)))
