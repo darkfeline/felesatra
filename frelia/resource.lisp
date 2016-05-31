@@ -75,4 +75,19 @@
     do (setf (gethash key table) value))
   table)
 
-(defmethod render-resources ((renderer resource-renderer) target-dir))
+(defmethod render-resources ((renderer resource-renderer) resources target-dir)
+  (loop
+    for resource in resources
+    do (render renderer resource target-dir)))
+
+(defgeneric render (renderer resource target-dir))
+
+(defmethod render ((renderer resource-renderer) (resource base-resource) target-dir))
+
+(defmethod render ((renderer resource-renderer) (resource file-resource) target-dir)
+  (let* ((dest (concatenate 'string
+                            target-dir
+                            (resource-path resource)))
+         (dest-dir (directory-namestring dest)))
+    (ensure-directories-exist dest-dir)
+    (sb-posix:link (file-source resource) dest)))

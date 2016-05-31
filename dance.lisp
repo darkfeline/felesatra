@@ -11,7 +11,8 @@
                                  :context '(:site-url "https://www.felesatra.moe")
                                  :macro-renderer *macro-renderer*)))
     (frelia-resource:load-resources loader)
-    (print (frelia-resource:resources loader))
-    (frelia-resource:render-resources renderer "build-frelia/")))
+    (let ((resources (frelia-resource:resources loader)))
+      (print resources)
+      (frelia-resource:render-resources renderer resources "build-frelia/"))))
 
 (main)
