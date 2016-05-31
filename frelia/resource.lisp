@@ -24,15 +24,16 @@
 (defmethod add-resource ((loader resource-loader) resource)
   (push resource (resources loader)))
 
-(defmethod load-resource-from-pathname ((loader resource-loader) pathname)
-  (add-resource loader
-                (cond
-                  ((lisp-file-p pathname)
-                   (make-page-resource (root-path loader) pathname))
-                  (t
-                   (make-instance 'file-resource
-                                  :source pathname
-                                  :path (root-path loader))))))
+(defmethod load-resource-from-pathname ((loader resource-loader) source)
+  (let ((path (get-target-path loader source)))
+    (add-resource loader
+                  (cond
+                    ((lisp-file-p source)
+                     (make-page-resource path source))
+                    (t
+                     (make-instance 'file-resource
+                                    :source source
+                                    :path path))))))
 
 (defun lisp-file-p (pathname)
   (string= (pathname-type pathname) "lisp"))
@@ -59,11 +60,11 @@
   ((context :initarg :context :accessor page-context)))
 
 (defmethod print-object ((object file-resource) stream)
-  (format stream "#<FILE-RESOURCE :path ~A :source ~A>"
+  (format stream "#<FILE-RESOURCE :path ~S :source ~S>"
           (resource-path object)
           (file-source object)))
 
 (defmethod print-object ((object page-resource) stream)
-  (format stream "#<PAGE-RESOURCE :path ~A :context ~A>"
+  (format stream "#<PAGE-RESOURCE :path ~S :context ~S>"
           (resource-path object)
           (page-context object)))
