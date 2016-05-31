@@ -57,3 +57,13 @@
 
 (defclass page-resource (base-resource)
   ((context :initarg :context :accessor page-context)))
+
+(defmethod print-object ((object file-resource) stream)
+  (format stream "#<FILE-RESOURCE :path ~A :source ~A>"
+          (resource-path object)
+          (file-source object)))
+
+(defmethod print-object ((object page-resource) stream)
+  (format stream "#<PAGE-RESOURCE :path ~A :context ~A>"
+          (resource-path object)
+          (page-context object)))
