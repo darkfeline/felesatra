@@ -28,8 +28,7 @@ class SiteDirectoryResource(DirectoryResource, SiteResource):
     def resource_classes(cls):
         yield Blogpage
         yield SiteDirectoryResource
-        for resource_class in super().resource_classes():
-            yield resource_class
+        yield from super().resource_classes()
 
 
 class Website(SiteDirectoryResource):
