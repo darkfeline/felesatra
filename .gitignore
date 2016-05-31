@@ -1,5 +1,4 @@
 __pycache__/
 
-/build/
-/build_local/
+/build*/
 /.venv/

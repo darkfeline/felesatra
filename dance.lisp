@@ -3,16 +3,20 @@
 
 (load "macros.lisp")
 
-(defun main ()
-  "Entry point."
+(defun build-site (&key site-url target-dir)
   (let ((loader (make-instance 'frelia-resource:resource-loader
                                :root-path "site/"))
         (renderer (make-instance 'frelia-resource:resource-renderer
-                                 :context '(:site-url "https://www.felesatra.moe")
+                                 :context `(:site-url ,site-url)
                                  :macro-renderer *macro-renderer*)))
     (frelia-resource:load-resources loader)
     (let ((resources (frelia-resource:resources loader)))
       (print resources)
-      (frelia-resource:render-resources renderer resources "build-frelia/"))))
+      (frelia-resource:render-resources renderer resources target-dir))))
+
+(defun main ()
+  "Entry point."
+  (build-site :site-url "https://www.felesatra.moe" "build-frelia/")
+  (build-site :site-url "http://localhost:5000" "build-frelia-local/"))
 
 (main)
