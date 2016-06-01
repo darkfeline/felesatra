@@ -1,6 +1,7 @@
 # Required
 PyYAML==3.11
 Jinja2==2.8
+lxml==3.6.0
 
 # For development
 Flask==0.10.1
