@@ -1,5 +1,7 @@
 """Make Jinja environment."""
 
+from collections import OrderedDict
+
 from jinja2 import Environment, PackageLoader
 
 from . import filters
@@ -13,5 +15,10 @@ def make_environment(env_globals):
         lstrip_blocks=True,
         auto_reload=False)
     env.filters.update(filters.filters)
+    env_globals = env_globals.copy()
     env.globals = env_globals
+    env_globals.setdefault('site', {})['nav'] = OrderedDict((
+        ('About', 'about/'),
+        ('Projects', 'projects/'),
+    ))
     return env
