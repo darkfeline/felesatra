@@ -19,7 +19,7 @@ class PageResource:
 
     """Represents a page resource for rendering.
 
-    Contains the page itself and the path where the page would be rendered.
+    Contains the page itself and the path where the page would be built.
 
     """
 
@@ -35,7 +35,11 @@ class PageResource:
 
     def build(self, env):
         build_dir = env.globals['build_dir']
-        dst = os.path.join(build_dir, self.path)
+        dst = os.path.join(
+            build_dir,
+            os.path.dirname(self.path), os.path.splitext(self.path)[0],
+            'index.html',
+        )
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         with open(dst, 'w') as file:
             file.write(self.page.render(env))
