@@ -1,4 +1,4 @@
-"""Custom Jinja filters for felesatra."""
+"""Custom Jinja filters."""
 
 import urllib.parse
 
@@ -18,16 +18,6 @@ def urljoin(url, base):
     return urllib.parse.urljoin(base, url)
 
 
-def tagattr(obj, attr):
-    """Make HTML tag attribute from object.
-
-    Return a string of the attribute and value formatted as an HTML tag
-    attribute.
-
-    """
-    return '{}="{}"'.format(attr, getattr(obj, attr))
-
-
 @_filter
 def tagattrs(obj, *attrs):
     """Conditionally make tag attributes from object.
@@ -37,6 +27,16 @@ def tagattrs(obj, *attrs):
 
     """
     return ' '.join(tagattr(obj, attr) for attr in attrs if hasattr(obj, attr))
+
+
+def tagattr(obj, attr):
+    """Make HTML tag attribute from object.
+
+    Return a string of the attribute and value formatted as an HTML tag
+    attribute.
+
+    """
+    return '{}="{}"'.format(attr, getattr(obj, attr))
 
 
 @_filter

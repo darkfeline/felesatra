@@ -1,0 +1,113 @@
+template: content_page_with_toc.html
+title: About
+published: 2015-08-27
+modified: 2016-03-13
+---
+
+{% from 'macros.html' import abs_url, pgpkey %}
+
+<section>
+  <h1>About me</h1>
+
+  <p>
+    I like it when things are done the right way.  I do not like it when things
+    are done the wrong way because that is the leading cause of every single
+    thing gone wrong in society, both now and forever.
+  </p>
+
+  <p>My interests include:</p>
+
+  <ul>
+    <li>single player video games</li>
+    <li>anime</li>
+    <li>music</li>
+    <li>scripting/programming</li>
+    <li>system administration/management</li>
+    <li>hacking ("MacGyvering")</li>
+  </ul>
+
+  <p>Some personal links:</p>
+
+  <ul>
+    <li><a href="{{ abs_url('projects/') }}">my projects</a></li>
+    <li><a href="https://gethub.com/darkfeline">my GitHub page</a></li>
+  </ul>
+
+</section>
+
+<section>
+  <h1>About this site</h1>
+
+  <p>
+    This is my personal website, and thus it hosts content that I feel like
+    hosting.  For the most part, this is limited to my own blog posts and
+    assorted pages that I have written and now maintain, but if you have any
+    content that you would like me to host, feel free to contact me; I will host
+    it if I like it.
+  </p>
+
+  <section>
+    <h1>Design principles</h1>
+
+    <p>
+      This site may not look like what you're used to.  If so, that would because
+      the sites you are familiar with follow questionable design principles.
+      Here are the design principles for this site:
+    </p>
+
+    <ul>
+      <li>Simple is best.</li>
+      <li>Content is king.</li>
+      <li>Pages should be HTML documents that are viewable without CSS or
+        JavaScript.</li>
+    </ul>
+
+    <p>
+      To make a point, compare
+      <a href="http://everyfuckingwebsite.com/">every fucking website</a> with
+      <a href="http://motherfuckingwebsite.com/">a motherfucking website</a>.
+    </p>
+  </section>
+
+  <section>
+    <h1 id="ssl">SSL/TLS</h1>
+
+    <p>
+      This site's SSL certificate is signed by a private CA, owned by me.  The CA
+      certificate can be found <a href="{{ abs_url('files/cert/ca.cert.pem') }}">here</a>, and
+      the signature for the certificate, made with my public key is
+      <a href="{{ abs_url('files/cert/ca.cert.pem.asc') }}">here</a>.  After verifying
+      that the certificate is signed by me, you can add it to your browser as
+      trusted.
+    </p>
+
+    <p>
+      Actually, you shouldn't do that, unless you trust me unconditionally.  You
+      can however check that the specific certificate for this site is signed by
+      the above CA, and whitelist that certificate only.  The advantage of doing
+      it this way is that in the future, I will only need to change the site's
+      certificate and not the CA certificate (i.e., because I'm lazy).
+    </p>
+  </section>
+
+  <section>
+    <h1>Licensing</h1>
+
+    <p>
+      The <em>content</em> on this site is licensed under a
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+        Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+  </section>
+
+</section>
+
+<section>
+  <h1>Contact</h1>
+
+  <p>
+    My public GPG key can be found on the
+    {% call pgpkey() %}SKS keyservers{% endcall %}.
+    You can contact me using one of the emails associated with that key.  Of
+    course, I would prefer that you encrypt your emails using that key.
+  </p>

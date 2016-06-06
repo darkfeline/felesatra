@@ -7,7 +7,7 @@ from jinja2 import Environment, PackageLoader
 from . import filters
 
 
-def make_environment(env_globals):
+def make_env(env_globals):
     """Get Jinja environment."""
     env = Environment(
         loader=PackageLoader('felesatra', 'templates'),

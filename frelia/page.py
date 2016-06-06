@@ -1,3 +1,10 @@
+"""Frelia page module.
+
+Contains resources for loading and rendering content pages.  Content pages are
+pages that present an independent document of content, as opposed to a page
+that aggregates content pages, like a listing of blog posts.
+
+"""
 import os
 
 import yaml
@@ -35,37 +42,33 @@ class PageResource:
 
     def build(self, env):
         build_dir = env.globals['build_dir']
-        dst = os.path.join(
-            build_dir,
-            os.path.dirname(self.path), os.path.splitext(self.path)[0],
-            'index.html',
-        )
+        dst = self._get_dst_path(build_dir)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         with open(dst, 'w') as file:
             file.write(self.page.render(env))
+
+    def _get_dst_path(self, build_dir):
+        return os.path.join(
+            build_dir,
+            os.path.dirname(self.path),
+            os.path.splitext(self.path)[0],
+            'index.html',
+        )
 
 
 class Page:
 
     """Represents a (web)page.
 
-    A page consists of content and its associated metadata.
+    A page consists of content and its associated metadata.  Much like files in
+    a filesystem, a page doesn't contain information about its filename or
+    path.
 
     """
 
     def __init__(self, metadata, content):
         self.metadata = metadata
         self.content = content
-
-    @staticmethod
-    def _parse_frontmatter(file):
-        frontmatter = []
-        for line in file:
-            if line.startswith('---'):
-                break
-            frontmatter.append(line)
-        content = file.read()
-        return ''.join(frontmatter), content
 
     @classmethod
     def from_file(cls, file):
@@ -79,14 +82,25 @@ class Page:
         metadata.update(yaml.load(frontmatter))
         return cls(metadata, content)
 
-    def get_context(self):
-        """Get context for rendering"""
-        context = self.metadata.copy()
-        context['content'] = self.content
-        return context
+    @staticmethod
+    def _parse_frontmatter(file):
+        frontmatter = []
+        for line in file:
+            if line.startswith('---'):
+                break
+            frontmatter.append(line)
+        content = file.read()
+        return ''.join(frontmatter), content
 
     def render(self, env):
+        """Return the rendered page."""
         template = env.get_template(self.metadata['template'])
-        context = self.get_context()
+        context = self.metadata.copy()
+        context['content'] = self._render_content(env)
         rendered_page = template.render(context)
         return rendered_page
+
+    def _render_content(self, env):
+        """Render macros in content."""
+        content_as_template = env.from_string(self.content)
+        return content_as_template.render()
