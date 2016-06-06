@@ -9,17 +9,16 @@ import os
 
 import yaml
 
-from .fs import walk_files
+import frelia.cache
+import frelia.fs
 
 
-def load_pages(page_dir):
-    for filepath in walk_files(page_dir):
-        yield PageResource.from_pathname(filepath, page_dir)
-
-
-def build_pages(env, pages):
-    for page in pages:
-        page.build(env)
+def load_pages(env, page_dir):
+    for filepath in frelia.fs.walk_files(page_dir):
+        with open(filepath) as file:
+            page = Page.from_file(env, file)
+        rel_path = os.path.relpath(filepath, page_dir)
+        yield PageResource(rel_path, page)
 
 
 class PageResource:
@@ -34,18 +33,12 @@ class PageResource:
         self.path = path
         self.page = page
 
-    @classmethod
-    def from_pathname(cls, pathname, start):
-        with open(pathname) as file:
-            return cls(os.path.relpath(pathname, start),
-                       Page.from_file(file))
-
-    def build(self, env):
-        build_dir = env.globals['build_dir']
+    def build(self, build_dir):
+        """Build page into build_dir."""
         dst = self._get_dst_path(build_dir)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         with open(dst, 'w') as file:
-            file.write(self.page.render(env))
+            file.write(self.page.rendered_page)
 
     def _get_dst_path(self, build_dir):
         return os.path.join(
@@ -66,12 +59,13 @@ class Page:
 
     """
 
-    def __init__(self, metadata, content):
+    def __init__(self, env, metadata, content):
+        self.env = env
         self.metadata = metadata
         self.content = content
 
     @classmethod
-    def from_file(cls, file):
+    def from_file(cls, env, file):
         """Make a Page instance from a file object."""
         frontmatter, content = cls._parse_frontmatter(file)
 
@@ -80,7 +74,7 @@ class Page:
             'title': '',
         }
         metadata.update(yaml.load(frontmatter))
-        return cls(metadata, content)
+        return cls(env, metadata, content)
 
     @staticmethod
     def _parse_frontmatter(file):
@@ -92,15 +86,17 @@ class Page:
         content = file.read()
         return ''.join(frontmatter), content
 
-    def render(self, env):
+    @frelia.cache.CachedProperty
+    def rendered_page(self):
         """Return the rendered page."""
-        template = env.get_template(self.metadata['template'])
+        template = self.env.get_template(self.metadata['template'])
         context = self.metadata.copy()
-        context['content'] = self._render_content(env)
+        context['content'] = self.rendered_content
         rendered_page = template.render(context)
         return rendered_page
 
-    def _render_content(self, env):
+    @frelia.cache.CachedProperty
+    def rendered_content(self):
         """Render macros in content."""
-        content_as_template = env.from_string(self.content)
+        content_as_template = self.env.from_string(self.content)
         return content_as_template.render()
