@@ -59,7 +59,7 @@ class LazyField(BaseField):
             return self.values.get(instance, self.default)
 
 
-class DefaultField(Field):
+class DefaultField(BaseField):
 
     """Descriptor for a generic single value field.
 
@@ -76,7 +76,7 @@ class DefaultField(Field):
     def __get__(self, instance, owner):
         try:
             return super().__get__(instance, owner)
-        except AttributeError:
+        except KeyError:
             default_value = self.default_func()
             self.__set__(instance, default_value)
             return default_value
