@@ -1,8 +1,4 @@
-"""Frelia static site generator.
-
-Dance!
-
-"""
+"""Frelia static site generator."""
 
 from collections import OrderedDict
 import argparse
@@ -10,25 +6,21 @@ import logging
 
 import frelia.jinja
 import frelia.page
-import frelia.static
-
-STATIC_FILES = 'static'
-PAGES_DIR = 'pages'
+import frelia.fs
 
 
 def main():
+    """Dance!"""
     logging.basicConfig(level='DEBUG')
     args = parse_args()
-    frelia.static.link_static_files(STATIC_FILES, args.build_dir)
+
+    frelia.fs.link_files(args.static_dir, args.build_dir)
 
     env_globals = make_env_globals(args)
-    env = frelia.jinja.Environment(env_globals)
-    pages = list(frelia.page.load_pages(env, PAGES_DIR))
-    build_dir = args.build_dir
-    for page in pages:
-        page.build(build_dir)
+    content_pages = list(load_content_pages(env_globals))
+    build_pages(content_pages, args.build_dir)
 
-    env_globals['site']['pages'] = pages
+    env_globals['site']['content_pages'] = content_pages
     env = frelia.jinja.Environment(env_globals)
     # Load site.
     # Render site.
@@ -39,6 +31,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('build_dir')
     parser.add_argument('--site-url', default='https://www.felesatra.moe')
+    parser.add_argument('--static-dir', default='static')
+    parser.add_argument('--content-pages-dir', default='pages')
     return parser.parse_args()
 
 
@@ -52,8 +46,21 @@ def make_env_globals(args):
             )),
             'url': args.site_url,
         },
-        'build_dir': args.build_dir,
+        'build': {
+            'build_dir': args.build_dir,
+        },
     }
+
+
+def load_content_pages(env_globals):
+    """Load content pages."""
+    env = frelia.jinja.Environment(env_globals)
+    yield from frelia.page.load_pages(env, PAGES_DIR)
+
+
+def build_pages(pages, build_dir):
+    for page in pages:
+        page.build(build_dir)
 
 
 if __name__ == '__main__':
