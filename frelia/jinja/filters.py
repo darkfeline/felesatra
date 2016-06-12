@@ -1,4 +1,9 @@
-"""Custom Jinja filters."""
+"""Custom Jinja filters.
+
+This module contains an attribute :data:`filters` which is a dict that can be
+used in a Jinja Environment.
+
+"""
 
 import urllib.parse
 
@@ -7,7 +12,7 @@ filters = {}
 
 
 def _filter(func):
-    """Decorator to register filter."""
+    """Decorator to register a filter function."""
     filters[func.__name__] = func
     return func
 
@@ -26,16 +31,11 @@ def tagattrs(obj, *attrs):
     attribute if the object has the attribute, for each given attribute.
 
     """
-    return ' '.join(tagattr(obj, attr) for attr in attrs if hasattr(obj, attr))
+    return ' '.join(_tagattr(obj, attr) for attr in attrs)
 
 
-def tagattr(obj, attr):
-    """Make HTML tag attribute from object.
-
-    Return a string of the attribute and value formatted as an HTML tag
-    attribute.
-
-    """
+def _tagattr(obj, attr):
+    """Format an HTML tag attribute string from an object."""
     return '{}="{}"'.format(attr, getattr(obj, attr))
 
 

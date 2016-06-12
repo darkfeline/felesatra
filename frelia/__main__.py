@@ -8,7 +8,7 @@ from collections import OrderedDict
 import argparse
 import logging
 
-import frelia.env
+import frelia.jinja
 from frelia import page
 from frelia import static
 
@@ -22,12 +22,12 @@ def main():
     static.link_static_files(STATIC_FILES, args.build_dir)
 
     env_globals = make_env_globals(args)
-    env = frelia.env.make_env(env_globals)
+    env = frelia.jinja.Environment(env_globals)
     pages = list(page.load_pages(env, PAGES_DIR))
     build_pages(pages, args.build_dir)
 
     env_globals['site']['pages'] = pages
-    env = frelia.env.make_env(env_globals)
+    env = frelia.jinja.Environment(env_globals)
     # Load site.
     # Render site.
 
