@@ -5,15 +5,19 @@ pages that present an independent document of content, as opposed to a page
 that aggregates content pages, like a listing of blog posts.
 
 """
+
+import io
 import os
+from collections import namedtuple
 
 import yaml
 
-import frelia.cache
+import frelia.descriptors
 import frelia.fs
 
 
 def load_pages(env, page_dir):
+    """Generate PageResource instances from a directory tree."""
     for filepath in frelia.fs.walk_files(page_dir):
         with open(filepath) as file:
             page = Page.from_file(env, file)
@@ -41,6 +45,7 @@ class PageResource:
             file.write(self.page.rendered_page)
 
     def _get_dst_path(self, build_dir):
+        """Get the path of the file that this resource will build."""
         return os.path.join(
             build_dir,
             os.path.dirname(self.path),
@@ -67,26 +72,27 @@ class Page:
     @classmethod
     def from_file(cls, env, file):
         """Make a Page instance from a file object."""
-        frontmatter, content = cls._parse_frontmatter(file)
+        page_file = cls._parse_page_file(file)
+        metadata = cls._DEFAULT_METADATA.copy()
+        metadata.update(yaml.load(page_file.frontmatter))
+        return cls(env, metadata, page_file.content)
 
-        metadata = {
-            'template': 'base.html',
-            'title': '',
-        }
-        metadata.update(yaml.load(frontmatter))
-        return cls(env, metadata, content)
+    _DEFAULT_METADATA = {
+        'template': 'base.html',
+        'title': '',
+    }
 
     @staticmethod
-    def _parse_frontmatter(file):
-        frontmatter = []
+    def _parse_page_file(file):
+        frontmatter = io.StringIO()
         for line in file:
             if line.startswith('---'):
                 break
-            frontmatter.append(line)
+            frontmatter.write(line)
         content = file.read()
-        return ''.join(frontmatter), content
+        return PageFile(frontmatter.getvalue(), content)
 
-    @frelia.cache.CachedProperty
+    @frelia.descriptors.CachedProperty
     def rendered_page(self):
         """Return the rendered page."""
         template = self.env.get_template(self.metadata['template'])
@@ -95,8 +101,10 @@ class Page:
         rendered_page = template.render(context)
         return rendered_page
 
-    @frelia.cache.CachedProperty
+    @frelia.descriptors.CachedProperty
     def rendered_content(self):
         """Render macros in content."""
         content_as_template = self.env.from_string(self.content)
         return content_as_template.render()
+
+PageFile = namedtuple('PageFile', ['frontmatter', 'content'])

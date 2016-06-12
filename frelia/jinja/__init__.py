@@ -1,7 +1,6 @@
 """Jinja extensions for frelia."""
 
 import jinja2
-from jinja2 import Environment, PackageLoader
 
 from . import filters
 
@@ -18,7 +17,7 @@ class Environment(jinja2.Environment):
     @property
     def _default_options(self):
         return {
-            'loader': PackageLoader('frelia', 'templates'),
+            'loader': jinja2.PackageLoader('frelia', 'templates'),
             'trim_blocks': True,
             'lstrip_blocks': True,
             'auto_reload': False,

@@ -1,5 +1,3 @@
-"""Caching related module."""
-
 import weakref
 
 
@@ -18,3 +16,6 @@ class CachedProperty:
 
     def __set__(self, instance, value):
         raise AttributeError('CachedProperty cannot be set.')
+
+    def __delete__(self, instance):
+        self.cached_values.pop(instance, None)

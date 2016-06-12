@@ -9,8 +9,8 @@ import argparse
 import logging
 
 import frelia.jinja
-from frelia import page
-from frelia import static
+import frelia.page
+import frelia.static
 
 STATIC_FILES = 'static'
 PAGES_DIR = 'pages'
@@ -19,12 +19,14 @@ PAGES_DIR = 'pages'
 def main():
     logging.basicConfig(level='DEBUG')
     args = parse_args()
-    static.link_static_files(STATIC_FILES, args.build_dir)
+    frelia.static.link_static_files(STATIC_FILES, args.build_dir)
 
     env_globals = make_env_globals(args)
     env = frelia.jinja.Environment(env_globals)
-    pages = list(page.load_pages(env, PAGES_DIR))
-    build_pages(pages, args.build_dir)
+    pages = list(frelia.page.load_pages(env, PAGES_DIR))
+    build_dir = args.build_dir
+    for page in pages:
+        page.build(build_dir)
 
     env_globals['site']['pages'] = pages
     env = frelia.jinja.Environment(env_globals)
@@ -52,11 +54,6 @@ def make_env_globals(args):
         },
         'build_dir': args.build_dir,
     }
-
-
-def build_pages(pages, build_dir):
-    for page_obj in pages:
-        page_obj.build(build_dir)
 
 
 if __name__ == '__main__':
