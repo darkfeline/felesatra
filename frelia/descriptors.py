@@ -3,6 +3,18 @@ import weakref
 
 class CachedProperty:
 
+    """
+    >>> class Foo:
+    ...     @CachedProperty
+    ...     def foo(self):
+    ...         return 1
+    ...
+    >>> foo = Foo()
+    >>> foo.foo
+    1
+
+    """
+
     def __init__(self, method_func):
         self.method_func = method_func
         self.cached_values = weakref.WeakKeyDictionary()

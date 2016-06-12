@@ -17,7 +17,7 @@ def main():
     frelia.fs.link_files(args.static_dir, args.build_dir)
 
     env_globals = make_env_globals(args)
-    content_pages = list(load_content_pages(env_globals))
+    content_pages = list(load_content_pages(env_globals, args.content_pages_dir))
     build_pages(content_pages, args.build_dir)
 
     env_globals['site']['content_pages'] = content_pages
@@ -52,10 +52,10 @@ def make_env_globals(args):
     }
 
 
-def load_content_pages(env_globals):
+def load_content_pages(env_globals, pages_dir):
     """Load content pages."""
     env = frelia.jinja.Environment(env_globals)
-    yield from frelia.page.load_pages(env, PAGES_DIR)
+    yield from frelia.page.load_pages(env, pages_dir)
 
 
 def build_pages(pages, build_dir):
