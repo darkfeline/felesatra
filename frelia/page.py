@@ -6,7 +6,6 @@ that aggregates content pages, like a listing of blog posts.
 
 """
 
-import io
 import os
 from collections import namedtuple
 
@@ -84,13 +83,13 @@ class Page:
 
     @staticmethod
     def _parse_page_file(file):
-        frontmatter = io.StringIO()
+        frontmatter = []
         for line in file:
             if line.startswith('---'):
                 break
-            frontmatter.write(line)
+            frontmatter.append(line)
         content = file.read()
-        return PageFile(frontmatter.getvalue(), content)
+        return PageFile(''.join(frontmatter), content)
 
     @frelia.descriptors.CachedProperty
     def rendered_page(self):
