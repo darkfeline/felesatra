@@ -1,7 +1,7 @@
 {% extends 'base.lisp' %}
 
 {% block base_content %}
-(section
+(article
  (header
   class = "content-header"
   (h1 "{{ title }}")
