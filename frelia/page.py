@@ -46,12 +46,7 @@ class PageResource:
     def _get_dst_path(self, build_dir):
         """Get the path of the file that this resource will build."""
         root, ext = os.path.splitext(self.path)
-        return os.path.join(
-            build_dir,
-            os.path.dirname(self.path),
-            root,
-            'index' + ext,
-        )
+        return os.path.join(build_dir, root, 'index' + ext)
 
 
 class Page:
