@@ -1,6 +1,6 @@
-{% macro abs_url(ref) %}
+{% macro abs_url(ref) -%}
 {{ ref|urljoin(site.url) }}
-{% endmacro %}
+{%- endmacro %}
 
 {% macro imgfig(src, alt) %}
 (figure
