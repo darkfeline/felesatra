@@ -44,7 +44,9 @@
 
 (footer
  id = "site-footer"
- (address "The webmaster for this site is {% call pgpkey() %}darkfeline{% endcall %}.")
+ (address "The webmaster for this site is "
+          {% call pgpkey() %}"darkfeline"{% endcall %}
+          ".")
  (div
   id = "site-copyright"
   (p "Feles Atra by Allen Li is licensed under a "
