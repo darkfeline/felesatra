@@ -17,7 +17,8 @@ SSH_DIR=/srv/www/www.felesatra.moe
 
 .PHONY: upload
 upload: clean build
-	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete ${BUILD_DIR}/ ${SSH_USER}@${SSH_HOST}:${SSH_DIR} --cvs-exclude
+	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete \
+		${BUILD_DIR}/ ${SSH_USER}@${SSH_HOST}:${SSH_DIR} --cvs-exclude
 
 .PHONY: build_local
 build_local:
@@ -39,7 +40,3 @@ watch:
 .PHONY: test
 test:
 	py.test --doctest-modules ${BUILDER_PACKAGE} ${TEST_PACKAGE}
-
-.PHONY: lint
-lint:
-	pylint --output-format=colorized ${BUILDER_PACKAGE} ${TEST_PACKAGE}
