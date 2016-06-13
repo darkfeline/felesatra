@@ -30,31 +30,24 @@ class ChibiEnja(EnjaCommand):
         return ('chibi-scheme', '-I{}'.format(self.module_path), '-Renja.main')
 
 
-def filter_lisp(filenames):
-    yield from (x for x in filenames if x.endswith('.lisp'))
-
-
-async def convert_enja(enja_command, src, dst):
-    with open(src, 'rb') as srcfile, open(dst, 'wb') as dstfile:
-        proc = await asyncio.create_subprocess_exec(
-            *enja_command.command,
-            stdin=srcfile, stdout=dstfile)
-        await proc.wait()
-
-
 def main():
     logging.basicConfig(level='INFO')
     args = parse_args()
     convert_enja_files(args.build_dir)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('build_dir')
+    return parser.parse_args()
+
+
 def convert_enja_files(build_dir):
     loop = asyncio.get_event_loop()
     enja_command = ChibiEnja('enja')
     futures = []
-    for src in filter_lisp(frelia.fs.walk_files(build_dir)):
+    for src, dst in get_files_to_convert(build_dir):
         logger.info('Converting %s', src)
-        dst = os.path.splitext(src)[0] + '.html'
         coro = convert_enja(enja_command, src, dst)
         future = asyncio.ensure_future(coro)
         futures.append(future)
@@ -63,10 +56,22 @@ def convert_enja_files(build_dir):
     logger.info('Done.')
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('build_dir')
-    return parser.parse_args()
+def get_files_to_convert(build_dir):
+    for src in find_enja_files(build_dir):
+        dst = os.path.splitext(src)[0] + '.html'
+        yield src, dst
+
+
+def find_enja_files(build_dir):
+    yield from frelia.fs.filter_ext(frelia.fs.walk_files(build_dir), '.lisp')
+
+
+async def convert_enja(enja_command, src, dst):
+    with open(src, 'rb') as srcfile, open(dst, 'wb') as dstfile:
+        proc = await asyncio.create_subprocess_exec(
+            *enja_command.command,
+            stdin=srcfile, stdout=dstfile)
+        await proc.wait()
 
 if __name__ == '__main__':
     main()
