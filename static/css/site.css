@@ -1,82 +1,82 @@
 /* Site header */
 #site-header {
-    display: flex;
-    align-content: center;
-    border-bottom: 2px solid;
-    padding: 5px;
-    margin-bottom: 7px;
-    justify-content: space-between;
+  display: flex;
+  align-content: center;
+  border-bottom: 2px solid;
+  padding: 5px;
+  margin-bottom: 7px;
+  justify-content: space-between;
 }
 
 #site-header a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 #site-title {
-    font-size: 200%;
-    margin: 0px;
+  font-size: 200%;
+  margin: 0px;
 }
 
 #site-nav {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    list-style-type: none;
-    margin: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  list-style-type: none;
+  margin: 0px;
 }
 
 #site-nav > li {
-    padding: 0px;
-    margin: 5px;
-    font-size: 120%
+  padding: 0px;
+  margin: 5px;
+  font-size: 120%
 }
 
 /* Site footer */
 #site-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top: 2px black solid;
-    padding: 5px;
-    margin-top: 7px;
-    font-size: 75%;
-    color: #808080;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 2px black solid;
+  padding: 5px;
+  margin-top: 7px;
+  font-size: 75%;
+  color: #808080;
 }
 
 #site-footer p {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #site-footer img {
-    padding: 4px;
+  padding: 4px;
 }
 
 /* Content */
 header.content-header > h1 {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 header.content-header > dl {
-    margin-top: 5px;
-    color: #808080;
-    font-size: 75%;
+  margin-top: 5px;
+  color: #808080;
+  font-size: 75%;
 }
 
 header.content-header dt {
-    display: inline;
+  display: inline;
 }
 
 header.content-header dd {
-    display: inline;
-    margin-left: 0px;
-    margin-right: 5px;
+  display: inline;
+  margin-left: 0px;
+  margin-right: 5px;
 }
 
 body > section {
-    margin-left: 5px;
-    margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Summary article */
@@ -97,20 +97,20 @@ body > section {
 
 /* Table of contents */
 nav#generated-toc {
-    border: 2px solid #DDDDDD;
-    padding: 10px;
+  border: 2px solid #DDDDDD;
+  padding: 10px;
 }
 
 nav#generated-toc p {
-    margin-top: 2px;
-    margin-bottom: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 /* tablesorter.js */
 th.headerSortUp:after {
-    content: "▲";
+  content: "▲";
 }
 
 th.headerSortDown:after {
-    content: "▼";
+  content: "▼";
 }

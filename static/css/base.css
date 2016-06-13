@@ -1,110 +1,110 @@
 body {
-    max-width: 750px;
-    margin: auto;
-    background-color: #FFFFEF;
-    color: #303030;
+  max-width: 750px;
+  margin: auto;
+  background-color: #FFFFEF;
+  color: #303030;
 }
 
 /* Proofreading */
 ins {
-    background-color: #E0FFE0;
+  background-color: #E0FFE0;
 }
 
 del {
-    background-color: #FFE0E0;
+  background-color: #FFE0E0;
 }
 
 /* Code */
 code {
-    background-color: #E0FFFF;
+  background-color: #E0FFFF;
 }
 
 pre {
-    margin-left: 10px;
-    border-left: 3px solid;
-    padding-left: 5px;
-    background-color: #E0FFFF;
+  margin-left: 10px;
+  border-left: 3px solid;
+  padding-left: 5px;
+  background-color: #E0FFFF;
 }
 
 pre code {
-    background-color: inherit;
+  background-color: inherit;
 }
 
 /* Definition lists */
 dt {
-	  font-weight: bold;
+  font-weight: bold;
 }
 
 dt:after {
-    content: ":";
+  content: ": ";
 }
 
 dd {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 /* Tables */
 table {
-    border-collapse: collapse;
-    margin: 5px;
-    border-left: hidden;
+  border-collapse: collapse;
+  margin: 5px;
+  border-left: hidden;
 }
 
 tr {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
 th, td {
-    padding: 4px;
-    text-align: center;
+  padding: 4px;
+  text-align: center;
 }
 
 colgroup {
-    border-left: 1px solid;
+  border-left: 1px solid;
 }
 
 /* Blockquotes */
 blockquote {
-    margin-left: 10px;
-    border-left: 2px solid;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  margin-left: 10px;
+  border-left: 2px solid;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 blockquote :first-child {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 blockquote :last-child {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 /* Sections */
 address {
-    font-style: normal;
+  font-style: normal;
 }
 
 /* Images */
 img.centered {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Extra semantics */
 span.aside {
-    font-size: 90%;
-    color: #808080;
+  font-size: 90%;
+  color: #808080;
 }
 
 section.footnotes {
-    border-top: 1px solid #888888;
+  border-top: 1px solid #888888;
 }
 
 section.footnotes p {
-    font-size: 75%;
-    margin-top: 8px;
-    margin-bottom: 8px;
+  font-size: 75%;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
