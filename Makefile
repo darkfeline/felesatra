@@ -1,5 +1,5 @@
 .PHONY: all
-all: clean build_local
+all: clean buildlocal
 
 BUILDER_PACKAGE=frelia
 TEST_PACKAGE=frelia_tests
@@ -20,8 +20,8 @@ upload: clean build
 	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete \
 		${BUILD_DIR}/ ${SSH_USER}@${SSH_HOST}:${SSH_DIR} --cvs-exclude
 
-.PHONY: build_local
-build_local:
+.PHONY: buildlocal
+buildlocal:
 	python -m ${BUILDER_PACKAGE} --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
 
 .PHONY: clean
