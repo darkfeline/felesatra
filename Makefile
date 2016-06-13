@@ -16,7 +16,7 @@ SSH_DIR=/srv/www/www.felesatra.moe
 
 .PHONY: upload
 upload: clean build
-	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete \
+	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete --exclude "*.lisp" \
 		${BUILD_DIR}/ ${SSH_USER}@${SSH_HOST}:${SSH_DIR} --cvs-exclude
 
 .PHONY: buildlocal

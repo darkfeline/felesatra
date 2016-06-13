@@ -45,10 +45,7 @@ async def convert_enja(enja_command, src, dst):
 def main():
     logging.basicConfig(level='INFO')
     args = parse_args()
-    if args.clean:
-        pass
-    else:
-        convert_enja_files(args.build_dir)
+    convert_enja_files(args.build_dir)
 
 
 def convert_enja_files(build_dir):
@@ -69,7 +66,6 @@ def convert_enja_files(build_dir):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('build_dir')
-    parser.add_argument('--clean', action='store_true')
     return parser.parse_args()
 
 if __name__ == '__main__':
