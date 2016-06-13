@@ -30,6 +30,32 @@ class ChibiEnja(EnjaCommand):
         return ('chibi-scheme', '-I{}'.format(self.module_path), '-Renja.main')
 
 
+class EnjaFutures:
+
+    def __init__(self, enja_command):
+        self.enja_command = enja_command
+        self.futures = []
+
+    def __await__(self):
+        return asyncio.gather(*self.futures)
+
+    @frelia.descriptors.CachedProperty
+    def command(self):
+        return self.enja_command.command
+
+    def create_enja_task(self, src, dst):
+        coro = self.convert_enja_file(src, dst)
+        future = asyncio.ensure_future(coro)
+        self.futures.append(future)
+        return future
+
+    async def convert_enja_file(self, src, dst):
+        with open(src, 'rb') as srcfile, open(dst, 'wb') as dstfile:
+            proc = await asyncio.create_subprocess_exec(
+                *self.command, stdin=srcfile, stdout=dstfile)
+            await proc.wait()
+
+
 def main():
     logging.basicConfig(level='INFO')
     args = parse_args()
@@ -44,14 +70,11 @@ def parse_args():
 
 def convert_enja_files(build_dir):
     loop = asyncio.get_event_loop()
-    enja_command = ChibiEnja('enja')
-    futures = []
+    enja_futures = EnjaFutures(ChibiEnja('enja'))
     for src, dst in get_files_to_convert(build_dir):
         logger.info('Converting %s', src)
-        coro = convert_enja(enja_command, src, dst)
-        future = asyncio.ensure_future(coro)
-        futures.append(future)
-    loop.run_until_complete(asyncio.gather(*futures))
+        enja_futures.create_enja_task(src, dst)
+    loop.run_until_complete(enja_futures)
     loop.close()
     logger.info('Done.')
 
@@ -64,14 +87,6 @@ def get_files_to_convert(build_dir):
 
 def find_enja_files(build_dir):
     yield from frelia.fs.filter_ext(frelia.fs.walk_files(build_dir), '.lisp')
-
-
-async def convert_enja(enja_command, src, dst):
-    with open(src, 'rb') as srcfile, open(dst, 'wb') as dstfile:
-        proc = await asyncio.create_subprocess_exec(
-            *enja_command.command,
-            stdin=srcfile, stdout=dstfile)
-        await proc.wait()
 
 if __name__ == '__main__':
     main()
