@@ -1,4 +1,4 @@
-"""Call enja to generate HTML."""
+"""Use enja to generate HTML."""
 
 import abc
 import argparse
@@ -27,18 +27,7 @@ class ChibiEnja(EnjaCommand):
 
     @frelia.descriptors.CachedProperty
     def command(self):
-        return ['chibi-scheme', '-I{}'.format(self.module_path), '-Renja.main']
-
-
-async def convert_enja_dirtree(enja_command, dirpath):
-    futures = []
-    for src in filter_lisp(frelia.fs.walk_files(dirpath)):
-        logger.info('Converting %s', src)
-        dst = os.path.splitext(src)[0] + '.html'
-        future = asyncio.ensure_future(convert_enja(enja_command, src, dst))
-        futures.append(future)
-    await asyncio.gather(*futures)
-    logger.info('Done.')
+        return ('chibi-scheme', '-I{}'.format(self.module_path), '-Renja.main')
 
 
 def filter_lisp(filenames):
@@ -56,15 +45,31 @@ async def convert_enja(enja_command, src, dst):
 def main():
     logging.basicConfig(level='INFO')
     args = parse_args()
+    if args.clean:
+        pass
+    else:
+        convert_enja_files(args.build_dir)
+
+
+def convert_enja_files(build_dir):
     loop = asyncio.get_event_loop()
-    coro = convert_enja_dirtree(ChibiEnja('enja'), args.build_dir)
-    loop.run_until_complete(coro)
+    enja_command = ChibiEnja('enja')
+    futures = []
+    for src in filter_lisp(frelia.fs.walk_files(build_dir)):
+        logger.info('Converting %s', src)
+        dst = os.path.splitext(src)[0] + '.html'
+        coro = convert_enja(enja_command, src, dst)
+        future = asyncio.ensure_future(coro)
+        futures.append(future)
+    loop.run_until_complete(asyncio.gather(*futures))
     loop.close()
+    logger.info('Done.')
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('build_dir')
+    parser.add_argument('--clean', action='store_true')
     return parser.parse_args()
 
 if __name__ == '__main__':
