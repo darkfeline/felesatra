@@ -17,7 +17,7 @@ class EnjaDocument:
 
     @classmethod
     def from_file(cls, file):
-        return cls.fromstring(file)
+        return cls.from_string(file)
 
     @classmethod
     def from_string(cls, s):
