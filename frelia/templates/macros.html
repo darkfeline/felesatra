@@ -1,18 +1,15 @@
 {% macro abs_url(ref) -%}
-{{ ref|urljoin(site.url) }}
+{{ ref|urljoin(site.url)|e }}
 {%- endmacro %}
 
 {% macro imgfig(src, alt) -%}
 <figure>
-  <img src="{{ abs_url(src) }}" alt="{{ alt }}">
+  <img src="{{ abs_url(src)|e }}" alt="{{ alt|e }}">
 </figure>
 {%- endmacro %}
 
 {% macro load_jquery() -%}
-{% if not jquery_loaded %}
-{% set jquery_loaded = True %}
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-{% endif %}
 {%- endmacro %}
 
 {% macro pgpkey() -%}
@@ -20,7 +17,7 @@
 {%- endmacro %}
 
 {% macro page_li(page) -%}
-<li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href }}">{{ page.title }}</a></li>
+<li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href|e }}">{{ page.title }}</a></li>
 {%- endmacro %}
 
 {% macro codeblock() -%}

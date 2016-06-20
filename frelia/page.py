@@ -7,11 +7,9 @@ that aggregates content pages, like a listing of blog posts.
 """
 
 import os
-from collections import namedtuple
-
-import yaml
 
 import frelia.descriptors
+import frelia.enja
 import frelia.fs
 
 
@@ -59,47 +57,57 @@ class Page:
 
     """
 
-    def __init__(self, env, metadata, content):
+    def __init__(self, env, document):
         self.env = env
-        self.metadata = metadata
-        self.content = content
+        self.document = document
+
+    def __repr__(self):
+        return '{classname}({env!r}, {document!r})'.format(
+            classname=type(self).__name__,
+            env=self.env,
+            document=self.document)
 
     @classmethod
     def from_file(cls, env, file):
         """Make a Page instance from a file object."""
-        page_file = cls._parse_page_file(file)
-        metadata = cls._DEFAULT_METADATA.copy()
-        metadata.update(yaml.load(page_file.frontmatter))
-        return cls(env, metadata, page_file.content)
+        rendered_content = cls._render_content(env, file.read())
+        document = frelia.enja.EnjaDocument.from_string(rendered_content)
+        return cls(env, document)
+
+    @property
+    def metadata(self):
+        return self.document.metadata
+
+    @property
+    def content(self):
+        return self.document.content
+
+    @frelia.descriptors.CachedProperty
+    def rendered_page(self):
+        """The rendered page."""
+        template = self.env.get_template(self.metadata['template'])
+        rendered_page = template.render(self._context)
+        return rendered_page
+
+    @classmethod
+    def _get_default_metadata(cls):
+        return cls._DEFAULT_METADATA.copy()
 
     _DEFAULT_METADATA = {
         'template': 'base.html',
         'title': '',
     }
 
+    @property
+    def _context(self):
+        """Jinja rendering context for this page."""
+        context = self._get_default_metadata()
+        context.update(self.metadata)
+        context['content'] = self.content
+        return context
+
     @staticmethod
-    def _parse_page_file(file):
-        frontmatter = []
-        for line in file:
-            if line.startswith('---'):
-                break
-            frontmatter.append(line)
-        content = file.read()
-        return PageFile(''.join(frontmatter), content)
-
-    @frelia.descriptors.CachedProperty
-    def rendered_page(self):
-        """Return the rendered page."""
-        template = self.env.get_template(self.metadata['template'])
-        context = self.metadata.copy()
-        context['content'] = self.rendered_content
-        rendered_page = template.render(context)
-        return rendered_page
-
-    @frelia.descriptors.CachedProperty
-    def rendered_content(self):
+    def _render_content(env, raw_content):
         """Render macros in content."""
-        content_as_template = self.env.from_string(self.content)
+        content_as_template = env.from_string(raw_content)
         return content_as_template.render()
-
-PageFile = namedtuple('PageFile', ['frontmatter', 'content'])
