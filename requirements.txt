@@ -1,6 +1,6 @@
 # Required
-PyYAML==3.11
 Jinja2==2.8
+beautifulsoup4==4.4.1
 lxml==3.6.0
 
 # For development

@@ -1,4 +1,4 @@
-"""Frelia page module.
+"""frelia page module.
 
 Contains resources for loading and rendering content pages.  Content pages are
 pages that present an independent document of content, as opposed to a page
