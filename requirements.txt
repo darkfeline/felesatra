@@ -2,6 +2,7 @@
 Jinja2==2.8
 beautifulsoup4==4.4.1
 lxml==3.6.0
+python-dateutil==2.5.3
 
 # For development
 Flask==0.10.1

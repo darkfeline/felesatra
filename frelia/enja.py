@@ -1,9 +1,57 @@
 """enja is frelia's document format built on HTML."""
 
-from bs4 import BeautifulSoup
+import bs4
+import dateutil.parser
+
+
+class _MetadataLoader:
+
+    def __init__(self, soup):
+        self.head = soup.head
+
+    def _find(self, tag):
+        try:
+            return self.head.find(tag).text
+        except AttributeError:
+            return None
+
+    @property
+    def title(self):
+        return self._find('title')
+
+    @property
+    def template(self):
+        return self._find('enja-template')
+
+    @property
+    def published(self):
+        text = self._find('enja-published')
+        if text is None:
+            return None
+        else:
+            return dateutil.parser.parse(text)
+
+    @property
+    def updated(self):
+        text = self._find('enja-updated')
+        if text is None:
+            return None
+        else:
+            return dateutil.parser.parse(text)
+
+    @property
+    def metadata(self):
+        return {
+            'title': self.title,
+            'template': self.template,
+            'published': self.published,
+            'updated': self.updated,
+        }
 
 
 class EnjaDocument:
+
+    _metadata_loader = _MetadataLoader
 
     def __init__(self, metadata, content):
         self.metadata = metadata
@@ -21,21 +69,15 @@ class EnjaDocument:
 
     @classmethod
     def from_string(cls, s):
-        soup = BeautifulSoup(s, 'lxml')
+        soup = bs4.BeautifulSoup(s, 'lxml')
         metadata = cls._get_metadata(soup)
         content = cls._get_content(soup)
         return cls(metadata, content)
 
-    @staticmethod
-    def _get_metadata(soup):
-        if soup.head is None:
-            return {}
-        else:
-            return {
-                tag['name']: tag['content']
-                for tag in soup.head('meta')
-                if 'name' in tag.attrs
-            }
+    @classmethod
+    def _get_metadata(cls, soup):
+        """Get document metadata."""
+        return cls._metadata_loader(soup).metadata
 
     @staticmethod
     def _get_content(soup):

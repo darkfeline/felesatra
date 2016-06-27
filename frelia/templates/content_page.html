@@ -7,11 +7,11 @@
     <dl>
       {% if published %}
       <dt>Published</dt>
-      <dd>{{ published }}</dd>
+      <dd>{{ published.strftime('%Y-%m-%d') }}</dd>
       {% endif %}
       {% if modified %}
       <dt>Last modified</dt>
-      <dd>{{ modified }}</dd>
+      <dd>{{ modified.strftime('%Y-%m-%d') }}</dd>
       {% endif %}
       {% if category %}
       <dt>Category</dt>
