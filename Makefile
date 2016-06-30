@@ -37,4 +37,4 @@ watch:
 
 .PHONY: test
 test:
-	py.test --doctest-modules frelia frelia_tests
+	py.test --doctest-modules --cov=frelia --cov-report term-missing frelia frelia_tests

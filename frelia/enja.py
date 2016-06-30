@@ -1,57 +1,18 @@
-"""enja is frelia's document format built on HTML."""
+"""enja is an XML document format.
 
-import bs4
-import dateutil.parser
+enja primarily provides a means for providing metadata for an HTML document and
+extending HTML with useful markup.
 
+"""
 
-class _MetadataLoader:
+import io
+import json
+import xml.etree.ElementTree as ET
 
-    def __init__(self, soup):
-        self.head = soup.head
-
-    def _find(self, tag):
-        try:
-            return self.head.find(tag).text
-        except AttributeError:
-            return None
-
-    @property
-    def title(self):
-        return self._find('title')
-
-    @property
-    def template(self):
-        return self._find('enja-template')
-
-    @property
-    def published(self):
-        text = self._find('enja-published')
-        if text is None:
-            return None
-        else:
-            return dateutil.parser.parse(text)
-
-    @property
-    def updated(self):
-        text = self._find('enja-updated')
-        if text is None:
-            return None
-        else:
-            return dateutil.parser.parse(text)
-
-    @property
-    def metadata(self):
-        return {
-            'title': self.title,
-            'template': self.template,
-            'published': self.published,
-            'updated': self.updated,
-        }
+from frelia import descriptors
 
 
 class EnjaDocument:
-
-    _metadata_loader = _MetadataLoader
 
     def __init__(self, metadata, content):
         self.metadata = metadata
@@ -64,24 +25,22 @@ class EnjaDocument:
             content=self.content)
 
     @classmethod
-    def from_file(cls, file):
-        return cls.from_string(file)
+    def parse(cls, file):
+        """Parse an enja document from a file object."""
+        tree = ET.parse(file)
+        root = tree.getroot()
+        metadata = json.loads(root.find('metadata').text)
+        content_element = root.find('content')
+        return cls(metadata, content_element)
 
     @classmethod
-    def from_string(cls, s):
-        soup = bs4.BeautifulSoup(s, 'lxml')
-        metadata = cls._get_metadata(soup)
-        content = cls._get_content(soup)
-        return cls(metadata, content)
+    def from_string(cls, string):
+        """Parse an enja document from a string."""
+        return cls.parse(io.StringIO(string))
 
-    @classmethod
-    def _get_metadata(cls, soup):
-        """Get document metadata."""
-        return cls._metadata_loader(soup).metadata
-
-    @staticmethod
-    def _get_content(soup):
-        if soup.body is None:
-            return ''
-        else:
-            return ''.join(str(tag) for tag in soup.body.children)
+    @descriptors.CachedProperty
+    def inner_content(self):
+        """Get content as a string."""
+        return ''.join(
+            ET.tostring(elem, encoding='unicode')
+            for elem in self.content)

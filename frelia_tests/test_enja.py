@@ -1,37 +1,45 @@
-import textwrap
+import io
 import unittest
+import xml.etree.ElementTree as ET
 
 from frelia import enja
 
 
-class EnjaTestCase(unittest.TestCase):
+class SimpleDocumentTestCase(unittest.TestCase):
 
-    def test_fromstring_metadata(self):
-        doc = enja.EnjaDocument.from_string("""
-        <head>
-        <meta name="foo" content="bar">
-        <meta name="spam" content="eggs">
-        </head>
-        """)
-        self.assertEqual(doc.metadata, {
-            'foo': 'bar',
-            'spam': 'eggs',
-        })
+    def setUp(self):
+        builder = ET.TreeBuilder()
+        builder.start('content', {})
+        builder.start('p', {})
+        builder.data('Hello world!')
+        builder.end('p')
+        builder.end('content')
+        content = builder.close()
 
-    def test_fromstring_content(self):
-        doc = enja.EnjaDocument.from_string("""
-        <body>
-        <section>
-        <h1>Title</h1>
-        <p>text</p>
-        <p>more text</p>
+        self.doc = enja.EnjaDocument(
+            metadata={'title': 'Example'},
+            content=content)
+
+    def test_inner_content(self):
+        """Test getting an enja document's inner_content property."""
+        self.assertEqual(self.doc.inner_content, '<p>Hello world!</p>')
+
+
+class DocumentTextTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.content_string = """<section><h1>Test section</h1>
+        <p>Hello world!</p>
         </section>
-        </body>
-        """)
-        self.assertEqual(doc.content, textwrap.dedent("""
-        <section>
-        <h1>Title</h1>
-        <p>text</p>
-        <p>more text</p>
-        </section>
-        """))
+        """
+        self.text = """<enja-document>
+        <metadata>{"foo": "bar"}</metadata>
+        <content>%s</content>
+        </enja-document>
+        """ % (self.content_string,)
+
+    def test_simple_document_from_string(self):
+        """Test parsing a simple enja document from a string."""
+        doc = enja.EnjaDocument.from_string(self.text)
+        self.assertEqual(doc.metadata, {'foo': 'bar'})
+        self.assertEqual(doc.inner_content, self.content_string)
