@@ -43,3 +43,10 @@ class DocumentTextTestCase(unittest.TestCase):
         doc = enja.EnjaDocument.from_string(self.text)
         self.assertEqual(doc.metadata, {'foo': 'bar'})
         self.assertEqual(doc.inner_content, self.content_string)
+
+    def test_parse_simple_document_(self):
+        """Test parsing a simple enja document from a file."""
+        file = io.StringIO(self.text)
+        doc = enja.EnjaDocument.parse(file)
+        self.assertEqual(doc.metadata, {'foo': 'bar'})
+        self.assertEqual(doc.inner_content, self.content_string)
