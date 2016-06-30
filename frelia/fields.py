@@ -6,7 +6,10 @@ import weakref
 
 
 class Field(abc.ABC):
+
     """Abstract base class for fields."""
+
+    # pylint: disable=too-few-public-methods
 
     @abc.abstractmethod
     def __get__(self, instance, owner):
@@ -23,20 +26,39 @@ class Field(abc.ABC):
 
 class BaseField(Field):
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self):
-        self.values = weakref.WeakKeyDictionary()
+        self._values = weakref.WeakKeyDictionary()
 
     def __get__(self, instance, owner):
         if instance is None:
             return self
         else:
-            return self.values[instance]
+            return self._get_for_instance(instance)
+
+    def _get_for_instance(self, instance):
+        try:
+            return self._values[instance]
+        except KeyError:
+            raise AttributeError('Field is not set.')
 
     def __set__(self, instance, value):
-        self.values[instance] = value
+        self._values[instance] = value
 
     def __delete__(self, instance):
-        del self.values[instance]
+        del self._values[instance]
+
+
+class TypedFieldMeta(type):
+
+    # pylint: disable=too-few-public-methods
+
+    def __new__(cls, name, bases, dct): pass
+
+    def __init__(self, default):
+        super().__init__()
+        self.default = default
 
 
 class LazyField(BaseField):
@@ -48,15 +70,17 @@ class LazyField(BaseField):
 
     """
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, default):
         super().__init__()
         self.default = default
 
     def __get__(self, instance, owner):
-        if instance is None:
-            return self
-        else:
-            return self.values.get(instance, self.default)
+        try:
+            return super().__get__(instance, owner)
+        except AttributeError:
+            return self.default
 
 
 class DefaultField(BaseField):
@@ -69,6 +93,8 @@ class DefaultField(BaseField):
 
     """
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, default_func):
         super().__init__()
         self.default_func = default_func
@@ -76,7 +102,7 @@ class DefaultField(BaseField):
     def __get__(self, instance, owner):
         try:
             return super().__get__(instance, owner)
-        except KeyError:
+        except AttributeError:
             default_value = self.default_func()
             self.__set__(instance, default_value)
             return default_value
@@ -85,6 +111,8 @@ class DefaultField(BaseField):
 class BoolField(LazyField):
 
     """Boolean Field."""
+
+    # pylint: disable=too-few-public-methods
 
     def __init__(self, default=False):
         assert isinstance(default, bool)
@@ -95,29 +123,20 @@ class StringField(LazyField):
 
     """String Field."""
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, default=''):
         assert isinstance(default, str)
         super().__init__(default)
-
-
-class AttrField(BaseField):
-
-    """A string field used for rendering HTML tag attributes.
-
-    See the tagattrs() filter.
-
-    """
-
-    def __set__(self, instance, value):
-        assert isinstance(value, str)
-        super().__set__(instance, value)
 
 
 class ListField(DefaultField):
 
     """List field."""
 
-    def __init__(self, default_func=lambda: []):
+    # pylint: disable=too-few-public-methods
+
+    def __init__(self, default_func=list):
         assert isinstance(default_func(), list)
         super().__init__(default_func)
 
@@ -125,6 +144,8 @@ class ListField(DefaultField):
 class DateTimeField(LazyField):
 
     """Field for datetimes."""
+
+    # pylint: disable=too-few-public-methods
 
     def __init__(self, default):
         assert isinstance(default, datetime.datetime)
