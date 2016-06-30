@@ -24,6 +24,11 @@ class SimpleDocumentTestCase(unittest.TestCase):
         """Test getting an enja document's inner_content property."""
         self.assertEqual(self.doc.inner_content, '<p>Hello world!</p>')
 
+    def test_repr(self):
+        self.assertEqual(
+            repr(self.doc),
+            "<EnjaDocument object with metadata {'title': 'Example'}>")
+
 
 class DocumentTextTestCase(unittest.TestCase):
 

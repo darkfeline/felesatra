@@ -14,15 +14,21 @@ from frelia import descriptors
 
 class EnjaDocument:
 
+    """Basic enja document class.
+
+    This provides the basic functionality of parsing and representing an enja
+    document, and no more.
+
+    """
+
     def __init__(self, metadata, content):
         self.metadata = metadata
         self.content = content
 
     def __repr__(self):
-        return '{classname}({metadata!r}, {content!r})'.format(
+        return '<{classname} object with metadata {metadata!r}>'.format(
             classname=type(self).__name__,
-            metadata=self.metadata,
-            content=self.content)
+            metadata=self.metadata)
 
     @classmethod
     def parse(cls, file):

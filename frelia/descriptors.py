@@ -3,7 +3,8 @@ import weakref
 
 class CachedProperty:
 
-    """
+    """Cached property descriptor.
+
     >>> class Foo:
     ...     @CachedProperty
     ...     def foo(self):
@@ -15,9 +16,16 @@ class CachedProperty:
 
     """
 
+    # pylint: disable=too-few-public-methods
+
     def __init__(self, fget):
         self.fget = fget
         self.cache = weakref.WeakKeyDictionary()
+
+    def __repr__(self):
+        return '{cls}({fget!r})'.format(
+            cls=type(self).__name__,
+            fget=self.fget)
 
     def __get__(self, instance, owner):
         if instance is None:
