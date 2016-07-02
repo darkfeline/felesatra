@@ -1,3 +1,15 @@
+"""Document files with in-band metadata.
+
+The enja module provides an implementation for reading enja documents, which
+are text file documents of an unspecified format accompanied with structured
+metadata.
+
+An enja document file is a text file that contains YAML metadata separated from
+the succeeding document content by a line containing three hyphen-minus
+characters (U+002D).
+
+"""
+
 import io
 
 import yaml
@@ -5,10 +17,26 @@ import yaml
 
 class EnjaDocument:
 
-    """Basic enja document class.
+    """This class represents an enja document.
 
-    This provides the basic functionality of parsing and representing an enja
-    document, and no more.
+    Instances can be created by directly supplying the metadata and content:
+
+    >>> x = EnjaDocument({'title': 'Example'}, 'hello')
+    >>> x.metadata
+    {'title': 'Example'}
+    >>> x.content
+    'hello'
+
+    However, most often you will be parsing enja documents from files:
+
+    >>> x = EnjaDocument.parse(io.StringIO('''
+    ... foo: bar
+    ... ---
+    ... hello'''))
+    >>> x.metadata
+    {'foo': 'bar'}
+    >>> x.content
+    'hello'
 
     """
 
@@ -17,9 +45,10 @@ class EnjaDocument:
         self.content = content
 
     def __repr__(self):
-        return '<{classname} object with metadata {metadata!r}>'.format(
-            classname=type(self).__name__,
-            metadata=self.metadata)
+        return '{cls}({metadata!r}, {content!r})'.format(
+            cls=type(self).__name__,
+            metadata=self.metadata,
+            content=self.content)
 
     @classmethod
     def parse(cls, file):
@@ -38,6 +67,7 @@ class EnjaDocument:
         of the document content.
 
         """
+        assert isinstance(file, io.TextIOBase)
         metadata_stream = io.StringIO()
         for line in file:
             if line == '---\n':

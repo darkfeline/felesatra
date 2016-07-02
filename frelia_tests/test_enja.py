@@ -15,7 +15,7 @@ class SimpleDocumentTestCase(unittest.TestCase):
     def test_repr(self):
         self.assertEqual(
             repr(self.doc),
-            "<EnjaDocument object with metadata {'title': 'Example'}>")
+            "EnjaDocument({'title': 'Example'}, '<p>Hello world!</p>')")
 
 
 class DocumentTextTestCase(unittest.TestCase):
