@@ -1,15 +1,6 @@
-"""enja is an XML document format.
-
-enja primarily provides a means for providing metadata for an HTML document and
-extending HTML with useful markup.
-
-"""
-
 import io
-import json
-import xml.etree.ElementTree as ET
 
-from frelia import descriptors
+import yaml
 
 
 class EnjaDocument:
@@ -33,20 +24,25 @@ class EnjaDocument:
     @classmethod
     def parse(cls, file):
         """Parse an enja document from a file object."""
-        tree = ET.parse(file)
-        root = tree.getroot()
-        metadata = json.loads(root.find('metadata').text)
-        content_element = root.find('content')
-        return cls(metadata, content_element)
+        metadata_stream, file = cls._create_metadata_stream(file)
+        metadata = yaml.load(metadata_stream, Loader=yaml.CLoader)
+        content = file.read()
+        return cls(metadata, content)
 
     @classmethod
-    def from_string(cls, string):
-        """Parse an enja document from a string."""
-        return cls.parse(io.StringIO(string))
+    def _create_metadata_stream(cls, file):
+        """Create metadata stream from a file object.
 
-    @descriptors.CachedProperty
-    def inner_content(self):
-        """Get content as a string."""
-        return ''.join(
-            ET.tostring(elem, encoding='unicode')
-            for elem in self.content)
+        Read off the metadata section from a file object and return that stream
+        along with the file object, whose stream position will be at the start
+        of the document content.
+
+        """
+        metadata_stream = io.StringIO()
+        for line in file:
+            if line == '---\n':
+                break
+            else:
+                metadata_stream.write(line)
+        metadata_stream.seek(0)
+        return metadata_stream, file
