@@ -5,6 +5,7 @@ used in a Jinja Environment.
 
 """
 
+import html
 import urllib.parse
 
 # A dictionary of filters that can be registered in a Jinja Environment.
@@ -36,7 +37,9 @@ def tagattrs(obj, *attrs):
 
 def _tagattr(obj, attr):
     """Format an HTML tag attribute string from an object."""
-    return '{}="{}"'.format(attr, getattr(obj, attr))
+    return '{}="{}"'.format(
+        attr,
+        html.escape(getattr(obj, attr)))
 
 
 @_filter
