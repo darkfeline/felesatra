@@ -1,4 +1,5 @@
 import itertools
+import string
 import unittest
 import urllib.parse
 
@@ -10,7 +11,13 @@ from frelia.jinja import filters
 
 class FiltersTestCase(unittest.TestCase):
 
-    @hypothesis.given(strategies.text(), strategies.text())
+    _url_alphabet = string.ascii_lowercase + '/'
+    _url_text = strategies.text(
+        alphabet=_url_alphabet,
+        max_size=8)
+
+    @hypothesis.given(_url_text, _url_text)
+    @hypothesis.settings(max_examples=50)
     def test_urljoin(self, base, url):
         self.assertEqual(
             filters.urljoin(url, base),
