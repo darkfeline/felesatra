@@ -8,23 +8,18 @@ used in a Jinja Environment.
 import html
 import urllib.parse
 
-# A dictionary of filters that can be registered in a Jinja Environment.
-filters = {}
+__all__ = [
+    'urljoin',
+    'tagattrs',
+    'first',
+]
 
 
-def _filter(func):
-    """Decorator to register a filter function."""
-    filters[func.__name__] = func
-    return func
-
-
-@_filter
 def urljoin(url, base):
     """urljoin filter"""
     return urllib.parse.urljoin(base, url)
 
 
-@_filter
 def tagattrs(obj, *attrs):
     """Conditionally make tag attributes from object.
 
@@ -42,7 +37,6 @@ def _tagattr(obj, attr):
         html.escape(getattr(obj, attr)))
 
 
-@_filter
 def first(obj, n):
     """Get the first n items."""
     i = 0

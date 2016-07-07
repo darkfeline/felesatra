@@ -6,7 +6,7 @@ import urllib.parse
 import hypothesis
 from hypothesis import strategies
 
-from frelia.jinja import filters
+from frelia import filters
 
 
 class FiltersTestCase(unittest.TestCase):

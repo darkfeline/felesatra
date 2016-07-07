@@ -32,7 +32,8 @@ def parse_args():
     parser.add_argument('build_dir')
     parser.add_argument('--site-url', default='https://www.felesatra.moe')
     parser.add_argument('--static-dir', default='static')
-    parser.add_argument('--content-pages-dir', default='pages')
+    parser.add_argument('--content-page-dir', default='pages')
+    parser.add_argument('--template-dir', default='templates')
     return parser.parse_args()
 
 
