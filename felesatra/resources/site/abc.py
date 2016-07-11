@@ -1,8 +1,5 @@
 """Site-specific resource ABCs."""
 
-# pylint: disable=abstract-method
-# pylint: disable=too-few-public-methods
-
 from abc import abstractmethod
 
 from felesatra.resources.abc import Resource

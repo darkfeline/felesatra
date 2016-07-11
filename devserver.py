@@ -6,13 +6,10 @@ import os
 
 from flask import Flask
 
-# pylint: disable=missing-docstring
-
 logger = logging.getLogger(__name__)
 
 
 def make_app(serv_dir):
-    # pylint: disable=unused-variable
     app = Flask(__name__, static_folder=serv_dir)
 
     def getpath(path, *paths):

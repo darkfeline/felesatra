@@ -9,9 +9,6 @@ from abc import ABC
 from weakref import WeakKeyDictionary
 
 
-# pylint: disable=too-few-public-methods
-
-
 class Field(ABC):
 
     """Abstract base class for fields."""

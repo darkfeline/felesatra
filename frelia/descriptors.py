@@ -16,8 +16,6 @@ class CachedProperty:
 
     """
 
-    # pylint: disable=too-few-public-methods
-
     def __init__(self, fget):
         self.fget = fget
         self.cache = weakref.WeakKeyDictionary()

@@ -1,61 +1,53 @@
 from collections import Counter
-import unittest
-from unittest import mock
+import os
+
+import pytest
 
 import frelia.fs
 
 
-class WalkFilesTestCase(unittest.TestCase):
+@pytest.fixture
+def dirtree(tmpdir):
+    srcdir = tmpdir.mkdir('src')
 
-    @mock.patch('os.walk')
-    def test_walk_files(self, walk):
-        walk.return_value = [
-            ('foo', ['bar'], ['baz']),
-            ('spam', ['eggs'], ['bacon']),
-        ]
+    foodir = srcdir.mkdir('foo')
+    foodir.mkdir('bar')
+    foodir.join('baz').write('')
 
-        got = Counter(frelia.fs.walk_files('path'))
-
-        walk.assert_called_once_with('path')
-        self.assertEqual(got, Counter(['foo/baz', 'spam/bacon']))
-
-
-class LinkFilesTestCase(unittest.TestCase):
-
-    @mock.patch('os.link')
-    @mock.patch('os.makedirs')
-    @mock.patch('frelia.fs.walk_files')
-    def test_link_files(self, walk, makedirs, link):
-        walk.return_value = [
-            'src/foo/bar/baz',
-            'src/spam/eggs/bacon',
-        ]
-
-        frelia.fs.link_files('src', 'dst')
-
-        walk.assert_called_once_with('src')
-        self.assertEqual(
-            makedirs.mock_calls,
-            [
-                mock.call('dst/foo/bar', exist_ok=True),
-                mock.call('dst/spam/eggs', exist_ok=True),
-            ])
-        self.assertEqual(
-            link.mock_calls,
-            [
-                mock.call('src/foo/bar/baz','dst/foo/bar/baz'),
-                mock.call('src/spam/eggs/bacon','dst/spam/eggs/bacon'),
-            ])
+    spamdir = srcdir.mkdir('spam')
+    spamdir.mkdir('eggs')
+    spamdir.join('bacon').write('')
+    return tmpdir
 
 
-class FilterExtTestCase(unittest.TestCase):
+def test_walk_files(dirtree):
+    root = str(dirtree.join('src'))
+    got = Counter(frelia.fs.walk_files(root))
+    assert got == Counter(
+        os.path.join(root, path)
+        for path in ('foo/baz', 'spam/bacon')
+    )
 
-    def test_filter_ext(self):
-        files = [
-            'page.html',
-            'page2.HTML',
-            'script.js',
-        ]
-        self.assertEqual(
-            list(frelia.fs.filter_ext(files, '.html')),
-            ['page.html'])
+
+def _samefile(path, first, second):
+    first = first.join(path)
+    second = second.join(path)
+    return first.samefile(second)
+
+
+def test_link_files(dirtree):
+    src = dirtree.join('src')
+    dst = dirtree.join('dst')
+    frelia.fs.link_files(str(src), str(dst))
+    assert _samefile('foo/baz', src, dst)
+    assert _samefile('spam/bacon', src, dst)
+
+
+def test_filter_ext():
+    files = [
+        'page.html',
+        'page2.HTML',
+        'script.js',
+    ]
+    got = list(frelia.fs.filter_ext(files, '.html'))
+    assert got == ['page.html']

@@ -19,7 +19,6 @@ class SiteDirectoryResource(DirectoryResource, SiteResource):
     """DirectoryResource with custom resource loading."""
 
     def index(self, env):
-        # pylint: disable=unused-variable
         for path, resource in self:
             if isinstance(resource, SiteResource):
                 resource.index(env)

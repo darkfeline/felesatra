@@ -30,8 +30,6 @@ class PageIndexEntry:
 
     """
 
-    # pylint: disable=too-many-instance-attributes
-
     __slots__ = ['__weakref__', 'href', 'title']
 
     def __init__(self, href, title):
@@ -68,8 +66,6 @@ class PageIndexEntry:
 class _TextParser(HTMLParser):
 
     """HTML parser that extracts all text."""
-
-    # pylint: disable=abstract-method
 
     def reset(self):
         super().reset()

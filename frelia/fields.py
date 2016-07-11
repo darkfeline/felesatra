@@ -9,8 +9,6 @@ class Field(abc.ABC):
 
     """Abstract base class for fields."""
 
-    # pylint: disable=too-few-public-methods
-
     @abc.abstractmethod
     def __get__(self, instance, owner):
         raise NotImplementedError
@@ -25,8 +23,6 @@ class Field(abc.ABC):
 
 
 class BaseField(Field):
-
-    # pylint: disable=too-few-public-methods
 
     def __init__(self):
         self._values = weakref.WeakKeyDictionary()
@@ -52,8 +48,6 @@ class BaseField(Field):
 
 class TypedFieldMeta(type):
 
-    # pylint: disable=too-few-public-methods
-
     def __new__(cls, name, bases, dct): pass
 
     def __init__(self, default):
@@ -69,8 +63,6 @@ class LazyField(BaseField):
     an instance value doesn't exist.
 
     """
-
-    # pylint: disable=too-few-public-methods
 
     def __init__(self, default):
         super().__init__()
@@ -93,8 +85,6 @@ class DefaultField(BaseField):
 
     """
 
-    # pylint: disable=too-few-public-methods
-
     def __init__(self, default_func):
         super().__init__()
         self.default_func = default_func
@@ -112,8 +102,6 @@ class BoolField(LazyField):
 
     """Boolean Field."""
 
-    # pylint: disable=too-few-public-methods
-
     def __init__(self, default=False):
         assert isinstance(default, bool)
         super().__init__(default)
@@ -122,8 +110,6 @@ class BoolField(LazyField):
 class StringField(LazyField):
 
     """String Field."""
-
-    # pylint: disable=too-few-public-methods
 
     def __init__(self, default=''):
         assert isinstance(default, str)
@@ -134,8 +120,6 @@ class ListField(DefaultField):
 
     """List field."""
 
-    # pylint: disable=too-few-public-methods
-
     def __init__(self, default_func=list):
         assert isinstance(default_func(), list)
         super().__init__(default_func)
@@ -144,8 +128,6 @@ class ListField(DefaultField):
 class DateTimeField(LazyField):
 
     """Field for datetimes."""
-
-    # pylint: disable=too-few-public-methods
 
     def __init__(self, default):
         assert isinstance(default, datetime.datetime)

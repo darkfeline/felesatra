@@ -16,8 +16,6 @@ class SitemapResource(Resource):
 
     """Sitemap resource."""
 
-    # pylint: disable=too-few-public-methods
-
     def __repr__(self):
         return "SitemapResource()"
 

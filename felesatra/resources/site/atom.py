@@ -1,7 +1,5 @@
 """Atom feed rendering resources."""
 
-# pylint: disable=too-few-public-methods
-
 import datetime
 import logging
 from collections import namedtuple

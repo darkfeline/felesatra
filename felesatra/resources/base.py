@@ -22,7 +22,6 @@ class SimpleFileResource(FileResource):
         return os.path.isfile(path)
 
     def render(self, env, target):
-        # pylint: disable=unused-argument
         """Render this resource to target."""
         super().render(env, target)
         shutil.copy(self.path, target)
