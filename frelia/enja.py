@@ -29,7 +29,7 @@ class EnjaDocument:
 
     However, most often you will be parsing enja documents from files:
 
-    >>> x = EnjaDocument.parse(io.StringIO('''
+    >>> x = EnjaDocument.load(io.StringIO('''
     ... foo: bar
     ... ---
     ... hello'''))
@@ -51,15 +51,25 @@ class EnjaDocument:
             content=self.content)
 
     @classmethod
-    def parse(cls, file):
-        """Parse an enja document from a file object."""
+    def load(cls, file):
+        """Load an enja document from a file object."""
         metadata_stream, file = cls._create_metadata_stream(file)
         metadata = yaml.load(metadata_stream, Loader=yaml.CLoader)
         content = file.read()
         return cls(metadata, content)
 
-    @classmethod
-    def _create_metadata_stream(cls, file):
+    def dump(self, file):
+        """Dump an enja document to a file object."""
+        yaml.dump(
+            self.metadata,
+            file,
+            Dumper=yaml.CDumper,
+            default_flow_style=False)
+        file.write('---\n')
+        file.write(self.content)
+
+    @staticmethod
+    def _create_metadata_stream(file):
         """Create metadata stream from a file object.
 
         Read off the metadata section from a file object and return that stream

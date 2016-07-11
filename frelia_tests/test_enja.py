@@ -1,22 +1,24 @@
 import io
 import textwrap
 
-import pytest
-
 from frelia import enja
 
 
-@pytest.fixture
-def simple_doc():
+def test_load():
+    """Test parsing a simple enja document from a file."""
     text = textwrap.dedent("""\
     foo: bar
     ---
     <p>Hello world!</p>""")
-    return io.StringIO(text)
-
-
-def test_parse_simple_document(simple_doc):
-    """Test parsing a simple enja document from a file."""
-    doc = enja.EnjaDocument.parse(simple_doc)
+    file = io.StringIO(text)
+    doc = enja.EnjaDocument.load(file)
     assert doc.metadata == {'foo': 'bar'}
     assert doc.content == '<p>Hello world!</p>'
+
+
+def test_dump():
+    """Test parsing a simple enja document from a file."""
+    file = io.StringIO()
+    doc = enja.EnjaDocument({'foo': 'bar'}, '<p>Hello world!</p>')
+    doc.dump(file)
+    assert file.getvalue() == 'foo: bar\n---\n<p>Hello world!</p>'
