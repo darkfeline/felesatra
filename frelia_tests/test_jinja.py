@@ -1,12 +1,29 @@
+# pylint: disable=protected-access
+
 import unittest
 from unittest import mock
 
 import frelia.jinja
 
 
-class EnvironmentTestCase(unittest.TestCase):
+class LoadFiltersTestCase(unittest.TestCase):
 
-     # pylint: disable=protected-access
+    def test_load_filters_from_module(self):
+        module = mock.NonCallableMock()
+        module.__all__ = ['shurelia', 'frelia', 'tyria']
+        module.shurelia = mock.sentinel.shurelia
+        module.frelia = mock.sentinel.frelia
+        module.tyria = mock.sentinel.tyria
+
+        got = frelia.jinja._load_filters_from_module(module)
+        self.assertEqual(got, {
+            'shurelia': mock.sentinel.shurelia,
+            'frelia': mock.sentinel.frelia,
+            'tyria': mock.sentinel.tyria,
+        })
+
+
+class EnvironmentTestCase(unittest.TestCase):
 
     def test_default_options(self):
         env = frelia.jinja.Environment()
@@ -23,20 +40,6 @@ class EnvironmentTestCase(unittest.TestCase):
             env = frelia.jinja.Environment(trim_blocks=True)
             self.assertEqual(env.trim_blocks, True)
 
-    def test_load_filters_from_module(self):
-        module = mock.NonCallableMock()
-        module.__all__ = ['shurelia', 'frelia', 'tyria']
-        module.shurelia = mock.sentinel.shurelia
-        module.frelia = mock.sentinel.frelia
-        module.tyria = mock.sentinel.tyria
-
-        got = frelia.jinja.Environment._load_filters_from_module(module)
-        self.assertEqual(got, {
-            'shurelia': mock.sentinel.shurelia,
-            'frelia': mock.sentinel.frelia,
-            'tyria': mock.sentinel.tyria,
-        })
-
     def test_load_filters_from_module_missing_all(self):
         module = mock.NonCallableMock([])
         with self.assertRaises(AttributeError):
@@ -50,7 +53,7 @@ class EnvironmentTestCase(unittest.TestCase):
 
     def test_customize_options(self):
         patcher = mock.patch.dict(
-            frelia.jinja.Environment.DEFAULT_OPTIONS,
+            frelia.jinja.Environment._Environment__DEFAULT_OPTIONS,
             {'shurelia': 'bunnies'},
             clear=True)
 
