@@ -24,6 +24,13 @@ class Field(abc.ABC):
 
 class BaseField(Field):
 
+    """Base field implementation.
+
+    The base field implementation functions transparently, as if the descriptor
+    didn't exist and were simply an instance attribute.
+
+    """
+
     def __init__(self):
         self._values = weakref.WeakKeyDictionary()
 
@@ -44,15 +51,6 @@ class BaseField(Field):
 
     def __delete__(self, instance):
         del self._values[instance]
-
-
-class TypedFieldMeta(type):
-
-    def __new__(cls, name, bases, dct): pass
-
-    def __init__(self, default):
-        super().__init__()
-        self.default = default
 
 
 class LazyField(BaseField):
@@ -125,16 +123,31 @@ class ListField(DefaultField):
         super().__init__(default_func)
 
 
-class DateTimeField(LazyField):
+class BaseDateTimeField(BaseField):
 
     """Field for datetimes."""
 
-    def __init__(self, default):
-        assert isinstance(default, datetime.datetime)
-        super().__init__(default)
-
     def __set__(self, instance, value):
-        if isinstance(value, datetime.date):
-            value = datetime.datetime(value.year, value.month, value.day)
+        value = self._ensure_datetime(value)
         assert isinstance(value, datetime.datetime)
         super().__set__(instance, value)
+
+    @staticmethod
+    def _ensure_datetime(value):
+        """Ensure value is datetime (if it is a date instead)."""
+        if isinstance(value, datetime.datetime):
+            return value
+        elif isinstance(value, datetime.date):
+            return datetime.datetime(value.year, value.month, value.day)
+        else:  # pragma: no cover
+            assert False, '{!r} is not date-like'.format(value)
+
+
+class DateTimeField(BaseDateTimeField, LazyField):
+
+    """Field for datetimes, with a lazy default value."""
+
+    def __init__(self, default):
+        default = self._ensure_datetime(default)
+        assert isinstance(default, datetime.datetime)
+        super().__init__(default)
