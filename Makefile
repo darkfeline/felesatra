@@ -39,5 +39,5 @@ watch:
 test:
 	py.test --doctest-modules \
 		--durations=5 \
-		--cov=frelia --cov-report term-missing \
+		--cov=frelia --cov=frelia_tests --cov-report term-missing \
 		frelia frelia_tests
