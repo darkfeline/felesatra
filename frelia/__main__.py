@@ -5,7 +5,6 @@ import logging
 
 import yaml
 
-import frelia.config
 import frelia.jinja
 import frelia.page
 import frelia.fs
@@ -18,7 +17,7 @@ def main():
     frelia.fs.link_files(args.static_dir, args.build_dir)
     globals_dict = load_globals(args.globals)
 
-    content_pages = list(load_content_pages(env_globals, args.content_pages_dir))
+    content_pages = list(load_pages(env_globals, args.pages_dir))
     build_pages(content_pages, args.build_dir)
 
     env_globals['site']['content_pages'] = content_pages
@@ -44,9 +43,14 @@ def load_globals(filename):
         return yaml.load(file, Loader=yaml.CLoader)
 
 
-def load_content_pages(env_globals, pages_dir):
+def load_pages(globals_dict, pages_dir):
     """Load content pages."""
-    env = frelia.jinja.Environment(env_globals)
+    page_loader = ...
+    loader = frelia.page.PageResourceLoader(
+        frelia.page.PageLoader(),
+        frelia.page.PageResource)
+    env = frelia.jinja.Environment()
+    env.globals = globals_dict
     yield from frelia.page.load_pages(env, pages_dir)
 
 
