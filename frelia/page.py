@@ -42,12 +42,12 @@ class PageResource:
         self.path = path
         self.page = page
 
-    def build(self, build_dir):
+    def build(self, env, build_dir):
         """Build page into build_dir."""
         dst = self._get_dst_path(build_dir)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         with open(dst, 'w') as file:
-            file.write(self.page.rendered_page)
+            file.write(self.page.render_page(env))
 
     def _get_dst_path(self, build_dir):
         """Get the path of the file that this resource will build."""

@@ -1,18 +1,14 @@
+from unittest import mock
 import pytest
 
 import frelia.page
 
 
-class _MockPage:
-
-    @property
-    def rendered_page(self):
-        return 'page content'
-
-
 @pytest.fixture
 def page():
-    return _MockPage()
+    page_mock = mock.create_autospec(frelia.page.Page)
+    page_mock.render_page.return_value = 'page content'
+    return page_mock
 
 
 @pytest.fixture
@@ -21,7 +17,7 @@ def page_resource(page):
 
 
 def test_build(tmpdir, page_resource):
-    page_resource.build(str(tmpdir.join('dst')))
+    page_resource.build(mock.sentinel.env, str(tmpdir.join('dst')))
     indexfile = tmpdir.join('dst/blog/page/index.html')
     assert indexfile.read() == 'page content'
 
