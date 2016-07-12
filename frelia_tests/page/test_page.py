@@ -29,6 +29,16 @@ def test_template(page):
     assert page.env.mock_calls == [mock.call.get_template('base.html')]
 
 
+def test_rendered_page(monkeypatch, page):
+    template = mock.Mock()
+    context = mock.Mock()
+    monkeypatch.setattr(frelia.page.Page, '_template', template)
+    monkeypatch.setattr(frelia.page.Page, '_context', context)
+    got = page.rendered_page
+    assert template.mock_calls == [mock.call.render(context)]
+    assert context.mock_calls == []
+
+
 @pytest.fixture
 def document():
     return frelia.document.Document({'cass': 'delta'}, 'reincarnation')
