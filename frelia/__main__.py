@@ -3,6 +3,8 @@
 import argparse
 import logging
 
+import yaml
+
 import frelia.config
 import frelia.jinja
 import frelia.page
@@ -13,11 +15,9 @@ def main():
     """Dance!"""
     logging.basicConfig(level='DEBUG')
     args = parse_args()
-    config = load_config(args.config)
+    frelia.fs.link_files(args.static_dir, args.build_dir)
+    globals_dict = load_globals(args.globals)
 
-    frelia.fs.link_files(config['static_dir'], config['build_dir'])
-
-    env_globals = make_env_globals(args)
     content_pages = list(load_content_pages(env_globals, args.content_pages_dir))
     build_pages(content_pages, args.build_dir)
 
@@ -31,13 +31,17 @@ def parse_args():
     """Parse arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument('build_dir')
-    parser.add_argument('--config', default='config.yaml')
+    parser.add_argument('--site-url', default='https://www.felesatra.moe')
+    parser.add_argument('--static-dir', default='static')
+    parser.add_argument('--page-dir', default='pages')
+    parser.add_argument('--template-dir', default='templates')
+    parser.add_argument('--globals', default='globals.yaml')
     return parser.parse_args()
 
 
-def load_config(filename):
+def load_globals(filename):
     with open(filename) as file:
-        return frelia.config.load(file)
+        return yaml.load(file, Loader=yaml.CLoader)
 
 
 def load_content_pages(env_globals, pages_dir):
