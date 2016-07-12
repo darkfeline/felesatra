@@ -1,18 +1,13 @@
-from unittest import mock
-
 import pytest
 
-import frelia.page
-
 
 @pytest.fixture
-def doc_loader():
-    class _MockDocumentLoader:
-        def load(self, file):
-            return mock.sentinel.document
-    return _MockDocumentLoader
+def document():
+    return _Document({'sophie': 'prachta'}, 'girl meets girl')
 
 
-@pytest.fixture
-def page_loader(doc_loader):
-    return frelia.page.PageLoader(frelia.page.Page, doc_loader())
+class _Document:
+
+    def __init__(self, metadata, content):
+        self.metadata = metadata
+        self.content = content
