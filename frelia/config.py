@@ -5,6 +5,26 @@ import copy
 import yaml
 
 
+class AttrDict:
+
+    """dict wrapper that allows lookup by attribute."""
+
+    def __new__(cls, value):
+        if isinstance(value, dict):
+            return super().__new__(cls)
+        else:
+            return value
+
+    def __init__(self, dict_):
+        self.__dict = dict_
+
+    def __eq__(self, other):
+        return self.__dict == other
+
+    def __getattr__(self, name):
+        return type(self)(self.__dict[name])
+
+
 def _recursive_update(base, other):
     """Recursively update dictionaries."""
     for key, value in other.items():
