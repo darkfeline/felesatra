@@ -5,30 +5,26 @@ import pytest
 import frelia.page
 
 
-def test_load_page(pageloader, mockenv, mockdoc):
-    page = pageloader.load(mock.sentinel.file)
-    assert page.env is mockenv
-    assert page.document is mockdoc
+def test_load_pages(tmpdir, page_loader):
+    tmpdir.mkdir('blog').join('page.html')
+
+    # pages = list(frelia.page.load_pages(page_loader))
+
+
+def test_load_page(page_loader):
+    page = page_loader.load(mock.sentinel.file)
+    assert isinstance(page, frelia.page.Page)
+    assert page.document is mock.sentinel.document
 
 
 @pytest.fixture
-def mockdoc():
-    return mock.sentinel.document
-
-
-@pytest.fixture
-def docloader(mockdoc):
+def doc_loader():
     class _MockDocumentLoader:
         def load(self, file):
-            return mockdoc
+            return mock.sentinel.document
     return _MockDocumentLoader
 
 
 @pytest.fixture
-def mockenv():
-    return mock.sentinel.env
-
-
-@pytest.fixture
-def pageloader(mockenv, docloader):
-    return frelia.page.PageLoader(mockenv, docloader())
+def page_loader(doc_loader):
+    return frelia.page.PageLoader(frelia.page.Page, doc_loader())

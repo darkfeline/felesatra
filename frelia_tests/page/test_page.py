@@ -1,5 +1,6 @@
 from unittest import mock
 
+import jinja2
 import pytest
 
 import frelia.document
@@ -22,21 +23,34 @@ def test_context(page):
     }
 
 
-def test_template(page):
-    page.env.get_template.return_value = mock.sentinel.template
-    template = page._template
+def test_template(page, environment):
+    template = page._get_template(environment)
     assert template == mock.sentinel.template
-    assert page.env.mock_calls == [mock.call.get_template('base.html')]
+    assert environment.mock_calls == [mock.call.get_template('base.html')]
 
 
-def test_rendered_page(monkeypatch, page):
-    template = mock.Mock()
-    context = mock.Mock()
-    monkeypatch.setattr(frelia.page.Page, '_template', template)
-    monkeypatch.setattr(frelia.page.Page, '_context', context)
-    got = page.rendered_page
-    assert template.mock_calls == [mock.call.render(context)]
-    assert context.mock_calls == []
+def test_render_page(monkeypatch, page):
+    get_template = mock.Mock(**{
+        'return_value.render.return_value': mock.sentinel.rendered,
+    })
+    monkeypatch.setattr(frelia.page.Page, '_get_template', get_template)
+    monkeypatch.setattr(frelia.page.Page, '_context', mock.sentinel.context)
+    got = page.render_page(mock.sentinel.env)
+    assert get_template.mock_calls == [
+        mock.call(mock.sentinel.env),
+        mock.call().render(mock.sentinel.context)
+    ]
+    assert got == mock.sentinel.rendered
+
+
+@pytest.fixture
+def environment():
+    env = mock.create_autospec(
+        jinja2.Environment,
+        instance=True)
+    env.get_template.return_value = mock.sentinel.template
+    return env
+
 
 
 @pytest.fixture
@@ -46,4 +60,4 @@ def document():
 
 @pytest.fixture
 def page(document):
-    return frelia.page.Page(mock.Mock(), document)
+    return frelia.page.Page(document)

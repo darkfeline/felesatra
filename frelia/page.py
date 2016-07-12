@@ -13,13 +13,21 @@ import frelia.enja
 import frelia.fs
 
 
-def load_pages(env, page_dir):
+class PageReourceLoader:
+
+    def __init__(self, page_loader, resource_class):
+        self.page_loader = page_loader
+        self.resource_class = resource_class
+
+
+def load_pages(page_loader, page_dir):
     """Generate PageResource instances from a directory tree."""
     for filepath in frelia.fs.walk_files(page_dir):
         with open(filepath) as file:
-            page = Page.from_file(env, file)
-        rel_path = os.path.relpath(filepath, page_dir)
-        yield PageResource(rel_path, page)
+            page = page_loader.load(file)
+        relpath = os.path.relpath(filepath, page_dir)
+        pagepath = os.path.splitext(relpath)[0]
+        yield PageResource(pagepath, page)
 
 
 class PageResource:
@@ -56,8 +64,7 @@ class Page:
 
     """
 
-    def __init__(self, env, document):
-        self.env = env
+    def __init__(self, document):
         self.document = document
 
     def __repr__(self):
@@ -66,10 +73,10 @@ class Page:
             env=self.env,
             document=self.document)
 
-    @frelia.descriptors.CachedProperty
-    def rendered_page(self):
-        """The rendered page."""
-        return self._template.render(self._context)
+    def render_page(self, env):
+        """Render page."""
+        template = self._get_template(env)
+        return template.render(self._context)
 
     @classmethod
     def _copy_default_context(cls):
@@ -80,10 +87,9 @@ class Page:
         'title': '',
     }
 
-    @frelia.descriptors.CachedProperty
-    def _template(self):
+    def _get_template(self, env):
         """Jinja template."""
-        return self.env.get_template(self._context['template'])
+        return env.get_template(self._context['template'])
 
     @frelia.descriptors.CachedProperty
     def _context(self):
@@ -96,19 +102,19 @@ class Page:
 
 class PageLoader:
 
-    _page_class = Page
+    """Loads pages."""
 
-    def __init__(self, env, document_loader):
-        self.env = env
+    def __init__(self, page_class, document_loader):
+        self.page_class = page_class
         self.document_loader = document_loader
 
     def __repr__(self):
-        return '{classname}({env!r}, {loader!r})'.format(
+        return '{classname}({page_class!r}, {loader!r})'.format(
             classname=type(self).__name__,
-            env=self.env,
+            page_class=self.page_class,
             loader=self.document_loader)
 
     def load(self, file):
         """Make a Page instance from a file object."""
         document = self.document_loader.load(file)
-        return self._page_class(self.env, document)
+        return self.page_class(document)
