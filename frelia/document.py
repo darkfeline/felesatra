@@ -61,16 +61,28 @@ class DocumentLoader(abc.ABC):
         """Transform the document."""
 
 
-class EnjaDocumentLoader(DocumentLoader):
+class RawDocumentLoader(DocumentLoader):
+
+    """DocumentLoader that delegates loading to a raw document class.
+
+    Raw document classes implement the load() classmethod, which take a file
+    object and return an instance of the class, representing the loaded
+    document.
+
+    """
+
+    def __init__(self, raw_document_class):
+        self.raw_document_class = raw_document_class
 
     def _load(self, file):
-        enja_doc = enja.EnjaDocument.load(file)
+        enja_doc = self.raw_document_class.load(file)
         return Document(enja_doc.metadata, enja_doc.content, loader=self)
 
 
 class JinjaDocumentLoader(DocumentLoader):
 
-    def __init__(self, env):
+    def __init__(self, env, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.env = env
 
     def _transform(self, document):

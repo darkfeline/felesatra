@@ -1,20 +1,13 @@
-from unittest import mock
-
 import frelia.document
-
-
-
 
 
 def test_documents_equal():
     doc1 = frelia.document.Document(
         {'ion': 'nero'},
-        'content',
-        loader=mock.sentinel.loader1)
+        'content')
     doc2 = frelia.document.Document(
         {'ion': 'nero'},
-        'content',
-        loader=mock.sentinel.loader2)
+        'content')
     assert doc1 == doc2
 
 

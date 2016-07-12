@@ -1,5 +1,6 @@
 import itertools
 import string
+from unittest import mock
 import urllib.parse
 
 import hypothesis
@@ -20,7 +21,8 @@ def test_urljoin(base, url):
 
 
 def test_tagattrs():
-    obj = _MockWithFields(
+    obj = mock.NonCallableMock(
+        [],
         foo='bar',
         spam='eggs"',
         cloche='pastalie')
@@ -31,10 +33,3 @@ def test_tagattrs():
 def test_first():
     got = list(filters.first(itertools.count(1), 4))
     assert got == [1, 2, 3, 4]
-
-
-class _MockWithFields:
-
-    def __init__(self, **fields):
-        for attr, value in fields.items():
-            setattr(self, attr, value)

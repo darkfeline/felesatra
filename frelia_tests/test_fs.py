@@ -30,6 +30,7 @@ def test_walk_files(dirtree):
 
 
 def _samefile(path, first, second):
+    """Return True if path relative to first and second are the same file."""
     first = first.join(path)
     second = second.join(path)
     return first.samefile(second)
