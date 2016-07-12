@@ -1,7 +1,7 @@
 """Transformations.
 
-This module defines a generic Transformer, which groups object transformation
-functions to be applied to objects.
+This module defines a generic TransformGroup, which groups object
+transformation functions to be applied to objects.
 
 This module also defines specific transformation callables, for example
 transformations for document objects.
@@ -11,17 +11,28 @@ Document objects have metadata and content attributes.
 """
 
 
-class Transformer:
+class TransformGroup:
 
     """Groups transformation functions."""
 
-    def __init__(self, transformers=()):
-        self.transformers = list(transformers)
+    def __init__(self, transforms=()):
+        self.transforms = list(transforms)
 
-    def transform(self, obj):
+    def __call__(self, obj):
         """Apply all transformation functions to obj."""
-        for func in self.transformers:
-            func(obj)
+        for transform in self.transforms:
+            transform(obj)
+
+
+class DocumentPageTransform:
+
+    """Maps a document transformation to a page transformation."""
+
+    def __init__(self, transform):
+        self.transform = transform
+
+    def __call__(self, page):
+        self.transform(page.document)
 
 
 class RenderJinja:

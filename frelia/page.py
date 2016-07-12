@@ -24,7 +24,6 @@ corresponding to the page's path.
 import os
 
 import frelia.descriptors
-import frelia.enja
 import frelia.fs
 
 
