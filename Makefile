@@ -34,10 +34,3 @@ devserver:
 .PHONY: watch
 watch:
 	bin/watch
-
-.PHONY: test
-test:
-	py.test --doctest-modules \
-		--durations=5 \
-		--cov=frelia --cov=frelia_tests --cov-report term-missing \
-		frelia frelia_tests
