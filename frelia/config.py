@@ -27,7 +27,9 @@ DEFAULT_CONFIG = {
 
 def load(file):
     """Load configuration from YAML file with defaults."""
-    config = copy.deepcopy(DEFAULT_CONFIG)
+    config = {
+        'config': copy.deepcopy(DEFAULT_CONFIG),
+    }
     user_config = yaml.load(file, Loader=yaml.CLoader)
     _recursive_update(config, user_config)
     return config
