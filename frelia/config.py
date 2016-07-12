@@ -5,7 +5,7 @@ import copy
 import yaml
 
 
-class AttrDict:
+class _AttrDict:
 
     """dict wrapper that allows lookup by attribute."""
 
@@ -60,4 +60,4 @@ def load(file):
     }
     user_config = yaml.load(file, Loader=yaml.CLoader)
     _recursive_update(config, user_config)
-    return config
+    return _AttrDict(config)
