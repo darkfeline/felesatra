@@ -1,8 +1,23 @@
 """frelia page module.
 
-Contains resources for loading and rendering content pages.  Content pages are
-pages that present an independent document of content, as opposed to a page
-that aggregates content pages, like a listing of blog posts.
+Contains resources for loading and rendering pages.
+
+Documents represent documents of unspecified format.  Documents have metadata
+and content attributes.
+
+Pages bind documents to paths.  Pages have path and document attributes.
+
+Pages can be loaded from the file system using PageLoader.  You need to pass in
+the document class, which is used to load documents from files.  frelia.enja
+implements one such document class and file format.
+
+Documents are rendered using a DocumentRenderer.  This transforms the
+document's content and metadata into an output format.  This module implements
+JinjaDocumentRenderer.  DocumentRenderers have the method render(document).
+
+Pages are rendered using PageRenderer.  PageRenderer takes a DocumentRenderer
+and renders pages by writing the document's rendered output to the file
+corresponding to the page's path.
 
 """
 
@@ -13,33 +28,41 @@ import frelia.enja
 import frelia.fs
 
 
-class PageResourceLoader:
+class PageLoader:
 
-    def __init__(self, page_loader, resource_class):
-        self.page_loader = page_loader
-        self.resource_class = resource_class
+    """Page loader.
 
-    def load_pages(self, page_dir):
+    document_class defines the class method load(file).
+
+    """
+
+    def __init__(self, document_class):
+        self.document_class = document_class
+
+    def load_pages(self, root):
         """Generate PageResource instances from a directory tree."""
-        for filepath in frelia.fs.walk_files(page_dir):
-            with open(filepath) as file:
-                page = self.page_loader.load(file)
-            pagepath = self._get_page_resource_path(page_dir, filepath)
-            resource = self.resource_class(pagepath, page)
-            self._transform(resource)
-            yield resource
+        for filepath in frelia.fs.walk_files(root):
+            yield self.load_page(filepath, root)
 
-    def _transform(self, resource):
-        """Can be overridden to implement page resource transformations."""
+    def load_page(self, filepath, root=os.curdir):
+        """Load a single page resource from the file system."""
+        path = self._get_page_resource_path(filepath, root)
+        with open(filepath) as file:
+            document = self.document_class.load(file)
+        return Page(path, document)
 
     @staticmethod
-    def _get_page_resource_path(page_dir, filepath):
+    def _get_page_resource_path(filepath, root=os.curdir):
         """Get path of page resource loaded from file."""
-        relpath = os.path.relpath(filepath, page_dir)
-        return os.path.splitext(relpath)[0]
+        relpath = os.path.relpath(filepath, root)
+        base, ext = os.path.splitext(relpath)
+        if ext.lower() == '.html':
+            return base
+        else:
+            return relpath
 
 
-class PageResource:
+class Page:
 
     """Represents a page resource for rendering.
 
@@ -47,82 +70,55 @@ class PageResource:
 
     """
 
-    def __init__(self, path, page):
+    def __init__(self, path, document):
         self.path = path
-        self.page = page
+        self.document = document
 
-    def build(self, env, build_dir):
-        """Build page into build_dir."""
-        dst = self._get_dst_path(build_dir)
+
+class PageRenderer:
+
+    """Contains logic for rendering pages."""
+
+    def __init__(self, document_renderer, target_dir):
+        self.document_renderer = document_renderer
+        self.target_dir = target_dir
+
+    def render(self, page):
+        dst = os.path.join(self.target_dir, page.path)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
+        rendered_content = self.document_renderer.render(self)
         with open(dst, 'w') as file:
-            file.write(self.page.render_page(env))
-
-    def _get_dst_path(self, build_dir):
-        """Get the path of the file that this resource will build."""
-        return os.path.join(build_dir, self.path, 'index.html')
+            file.write(rendered_content)
 
 
-class Page:
+class JinjaDocumentRenderer:
 
-    """Represents a (web)page.
+    """Renders documents using Jinja.
 
-    A page consists of content and its associated metadata.  Much like files in
-    a filesystem, a page doesn't contain information about its filename or
-    path.
+    Documents have the metadata and content attributes.
 
     """
 
-    def __init__(self, document):
-        self.document = document
+    def __init__(self, env, default_template='base.html'):
+        self.env = env
+        self.default_template = default_template
 
-    def __repr__(self):
-        return '{classname}({document!r})'.format(
-            classname=type(self).__name__,
-            document=self.document)
+    def render(self, document):
+        """Render document."""
+        template = self._get_template(document)
+        context = self._get_context(document)
+        return template.render(context)
 
-    def render_page(self, env):
-        """Render page."""
-        template = self._get_template(env)
-        return template.render(self._context)
-
-    @classmethod
-    def _copy_default_context(cls):
-        return cls._DEFAULT_CONTEXT.copy()
-
-    _DEFAULT_CONTEXT = {
-        'template': 'base.html',
-        'title': '',
-    }
-
-    def _get_template(self, env):
-        """Jinja template."""
-        return env.get_template(self._context['template'])
-
-    @frelia.descriptors.CachedProperty
-    def _context(self):
-        """Jinja rendering context for this page."""
-        context = self._copy_default_context()
-        context.update(self.document.metadata)
-        context['content'] = self.document.content
+    def _get_context(self, document):
+        """Get context for rendering document."""
+        context = document.metadata.copy()
+        context['content'] = document.content
         return context
 
+    def _get_template(self, document):
+        """Get Jinja template for document."""
+        template_name = self._get_template_name(document)
+        return self.env.get_template(template_name)
 
-class PageLoader:
-
-    """Loads pages."""
-
-    def __init__(self, page_class, document_loader):
-        self.page_class = page_class
-        self.document_loader = document_loader
-
-    def __repr__(self):
-        return '{classname}({page_class!r}, {loader!r})'.format(
-            classname=type(self).__name__,
-            page_class=self.page_class,
-            loader=self.document_loader)
-
-    def load(self, file):
-        """Make a Page instance from a file object."""
-        document = self.document_loader.load(file)
-        return self.page_class(document)
+    def _get_template_name(self, document):
+        return document.metadata.get('template', self.default_template)
