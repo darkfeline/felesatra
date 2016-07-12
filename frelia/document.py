@@ -26,15 +26,6 @@ class Document:
             metadata=self.metadata,
             content=self.content)
 
-    def __eq__(self, other):
-        if isinstance(other, type(self)):
-            return (
-                self.metadata == other.metadata
-                and self.content == other.content
-            )
-        else:
-            return NotImplemented
-
 
 class DocumentLoader(abc.ABC):
 

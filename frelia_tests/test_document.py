@@ -9,7 +9,8 @@ import frelia.document
 def test_raw_document_loader(enja_document_class):
     loader = frelia.document.RawDocumentLoader(enja_document_class)
     got = loader.load(mock.sentinel.file)
-    assert got == frelia.document.Document({'ion': 'nero'}, 'content')
+    assert got.metadata == {'ion': 'nero'}
+    assert got.content == 'content'
     assert got.loader is loader
 
 

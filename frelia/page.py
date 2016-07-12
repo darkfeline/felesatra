@@ -34,16 +34,6 @@ class PageResourceLoader:
         return os.path.splitext(relpath)[0]
 
 
-def load_pages(page_loader, page_dir):
-    """Generate PageResource instances from a directory tree."""
-    for filepath in frelia.fs.walk_files(page_dir):
-        with open(filepath) as file:
-            page = page_loader.load(file)
-        relpath = os.path.relpath(filepath, page_dir)
-        pagepath = os.path.splitext(relpath)[0]
-        yield PageResource(pagepath, page)
-
-
 class PageResource:
 
     """Represents a page resource for rendering.
@@ -82,9 +72,8 @@ class Page:
         self.document = document
 
     def __repr__(self):
-        return '{classname}({env!r}, {document!r})'.format(
+        return '{classname}({document!r})'.format(
             classname=type(self).__name__,
-            env=self.env,
             document=self.document)
 
     def render_page(self, env):

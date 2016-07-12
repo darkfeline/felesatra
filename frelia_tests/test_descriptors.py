@@ -14,6 +14,15 @@ def test_property_caching():
     assert obj.value == 1
 
 
+def test_explicit_attr():
+    obj = _AttrClass()
+    assert obj.attr == 1
+    assert obj.attr == 1
+    del obj.attr
+    assert obj.attr == 1
+    assert obj.attr == 1
+
+
 def test_property_access_via_class():
     assert isinstance(
         _IncrementValueClass.value,
@@ -22,8 +31,13 @@ def test_property_access_via_class():
 
 def test_setting_property():
     obj = _IncrementValueClass()
-    with pytest.raises(AttributeError):
-        obj.value = 1
+    obj.value = 1
+    assert obj.value == 1
+
+
+class _AttrClass:
+    """Class for testing CachedProperty."""
+    attr = descriptors.CachedProperty(lambda self: 1, attr='attr')
 
 
 class _IncrementValueClass:

@@ -1,6 +1,3 @@
-import weakref
-
-
 class CachedProperty:
 
     """Cached property descriptor.
@@ -16,24 +13,23 @@ class CachedProperty:
 
     """
 
-    def __init__(self, fget):
+    def __init__(self, fget, attr=None):
         self.fget = fget
-        self.cache = weakref.WeakKeyDictionary()
+        if attr is None:
+            self.attr = self.fget.__name__
+        else:
+            self.attr = attr
 
     def __repr__(self):
-        return '{cls}({fget!r})'.format(
+        return '{cls}({fget!r}, attr={attr!r})'.format(
             cls=type(self).__name__,
-            fget=self.fget)
+            fget=self.fget,
+            attr=self.attr)
 
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        if instance not in self.cache:
-            self.cache[instance] = self.fget(instance)
-        return self.cache[instance]
-
-    def __set__(self, instance, value):
-        raise AttributeError('CachedProperty cannot be set.')
-
-    def __delete__(self, instance):
-        self.cache.pop(instance, None)
+        else:
+            value = self.fget(instance)
+            setattr(instance, self.attr, value)
+            return value

@@ -5,10 +5,16 @@ import pytest
 import frelia.page
 
 
-def test_load_pages(tmpdir, page_loader):
-    tmpdir.mkdir('blog').join('page.html')
+def test_load_pages(tmpdir, page_resource_loader):
+    pagedir = tmpdir.mkdir('pages')
+    pagedir.mkdir('blog').join('page.html').write('')
 
-    # pages = list(frelia.page.load_pages(page_loader))
+    got = list(page_resource_loader.load_pages(str(pagedir)))
+
+    assert len(got) == 1
+    resource = got[0]
+    assert resource.path == 'blog/page'
+    assert resource.page.document == mock.sentinel.document
 
 
 def test_get_page_resource_path(page_resource_loader):
