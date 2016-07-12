@@ -13,11 +13,25 @@ import frelia.enja
 import frelia.fs
 
 
-class PageReourceLoader:
+class PageResourceLoader:
 
     def __init__(self, page_loader, resource_class):
         self.page_loader = page_loader
         self.resource_class = resource_class
+
+    def load_pages(self, page_dir):
+        """Generate PageResource instances from a directory tree."""
+        for filepath in frelia.fs.walk_files(page_dir):
+            with open(filepath) as file:
+                page = self.page_loader.load(file)
+            pagepath = self._get_page_resource_path(page_dir, filepath)
+            yield self.resource_class(pagepath, page)
+
+    @staticmethod
+    def _get_page_resource_path(page_dir, filepath):
+        """Get path of page resource loaded from file."""
+        relpath = os.path.relpath(filepath, page_dir)
+        return os.path.splitext(relpath)[0]
 
 
 def load_pages(page_loader, page_dir):
