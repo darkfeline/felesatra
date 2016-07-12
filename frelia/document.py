@@ -14,13 +14,13 @@ class Document:
 
     """Represents a loaded document."""
 
-    def __init__(self, loader, metadata, content):
+    def __init__(self, metadata, content, *, loader=None):
         self.loader = loader
         self.metadata = metadata
         self.content = content
 
     def __repr__(self):
-        return '{cls}({loader!r}, {metadata!r}, {content!r})'.format(
+        return '{cls}({metadata!r}, {content!r}, loader={loader!r})'.format(
             cls=type(self).__name__,
             loader=self.loader,
             metadata=self.metadata,
@@ -65,7 +65,7 @@ class EnjaDocumentLoader(DocumentLoader):
 
     def _load(self, file):
         enja_doc = enja.EnjaDocument.load(file)
-        return Document(self, enja_doc.metadata, enja_doc.content)
+        return Document(enja_doc.metadata, enja_doc.content, loader=self)
 
 
 class JinjaDocumentLoader(DocumentLoader):

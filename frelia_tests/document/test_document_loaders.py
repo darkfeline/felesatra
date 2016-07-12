@@ -18,9 +18,9 @@ def test_enja_document_loader(monkeypatch):
     got = loader.load(mock.sentinel.file)
 
     assert got == frelia.document.Document(
-        mock.sentinel.loader,
         {'ion': 'nero'},
-        'content')
+        'content',
+        loader=mock.sentinel.loader)
     load_mock.assert_called_once_with(mock.sentinel.file)
 
 
@@ -29,9 +29,11 @@ def test_jinja_document_loader():
     env.globals['yuno'] = 'miya'
 
     class Loader(frelia.document.JinjaDocumentLoader):
-
         def _load(self, file):
-            return frelia.document.Document(self, {'ion': 'nero'}, '{{yuno}}')
+            return frelia.document.Document(
+                {'ion': 'nero'},
+                '{{yuno}}',
+                loader=self)
 
     loader = Loader(env)
     got = loader.load(mock.sentinel.file)
