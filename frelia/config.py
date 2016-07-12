@@ -1,3 +1,5 @@
+"""Configuration loading for building frelia sites."""
+
 import copy
 
 import yaml
@@ -26,7 +28,13 @@ DEFAULT_CONFIG = {
 
 
 def load(file):
-    """Load configuration from YAML file with defaults."""
+    """Load configuration from YAML file with defaults.
+
+    The default configuration is loaded into the 'config' section, leaving the
+    namespace available for user settings.  frelia-specific configuration will
+    go into the 'config' section.
+
+    """
     config = {
         'config': copy.deepcopy(DEFAULT_CONFIG),
     }

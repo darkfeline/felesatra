@@ -1,7 +1,9 @@
-"""Document classes.
+"""Document loading and processing.
 
-This module contains Document classes.  These are encapsulations of EnjaDocument
-that apply some kind of processing to the document content or metadata.
+This module contains Document classes.  Documents represent content with
+metadata.  This class primarily provides an abstraction for Documents and a
+DocumentLoader framework that allows Document metadata and content to be
+transformed on load.
 
 """
 
