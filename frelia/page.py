@@ -25,7 +25,12 @@ class PageResourceLoader:
             with open(filepath) as file:
                 page = self.page_loader.load(file)
             pagepath = self._get_page_resource_path(page_dir, filepath)
-            yield self.resource_class(pagepath, page)
+            resource = self.resource_class(pagepath, page)
+            self._transform(resource)
+            yield resource
+
+    def _transform(self, resource):
+        """Can be overridden to implement page resource transformations."""
 
     @staticmethod
     def _get_page_resource_path(page_dir, filepath):
