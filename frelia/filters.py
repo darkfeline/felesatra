@@ -1,9 +1,4 @@
-"""Custom Jinja filters.
-
-This module contains an attribute :data:`filters` which is a dict that can be
-used in a Jinja Environment.
-
-"""
+"""Custom Jinja filters."""
 
 import html
 import urllib.parse

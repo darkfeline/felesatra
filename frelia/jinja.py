@@ -1,4 +1,4 @@
-"""Jinja extensions for frelia."""
+"""Custom Jinja environment for frelia."""
 
 import jinja2
 
