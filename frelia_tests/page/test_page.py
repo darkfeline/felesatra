@@ -45,10 +45,5 @@ def document():
 
 
 @pytest.fixture
-def mockenv():
-    return mock.Mock()
-
-
-@pytest.fixture
-def page(mockenv, document):
-    return frelia.page.Page(mockenv, document)
+def page(document):
+    return frelia.page.Page(mock.Mock(), document)

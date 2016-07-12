@@ -14,33 +14,27 @@ def test_raw_document_loader(enja_document_class):
 
 
 @pytest.fixture
-def enja_document():
-    return frelia.enja.EnjaDocument({'ion': 'nero'}, 'content')
-
-
-@pytest.fixture
-def enja_document_class(enja_document):
+def enja_document_class():
     MockEnjaDocument = mock.create_autospec(frelia.enja.EnjaDocument)
-    MockEnjaDocument.load.return_value = enja_document
+    doc = frelia.enja.EnjaDocument({'ion': 'nero'}, 'content')
+    MockEnjaDocument.load.return_value = doc
     return MockEnjaDocument
 
 
-@pytest.fixture
-def jinja_loader_class():
-    class Loader(frelia.document.JinjaDocumentLoader):
-        def _load(self, file):
-            return frelia.document.Document(
-                {'ion': 'nero'},
-                '{{yuno}}',
-                loader=self)
-    return Loader
+class _Loader(frelia.document.JinjaDocumentLoader):
+
+    def _load(self, file):
+        return frelia.document.Document(
+            {'ion': 'nero'},
+            '{{yuno}}',
+            loader=self)
 
 
-def test_jinja_document_loader(jinja_loader_class):
+def test_jinja_document_loader():
     env = jinja2.Environment()
     env.globals['yuno'] = 'miya'
 
-    loader = jinja_loader_class(env)
+    loader = _Loader(env)
     got = loader.load(mock.sentinel.file)
 
     assert got.metadata == {'ion': 'nero'}

@@ -96,34 +96,7 @@ class DefaultField(BaseField):
             return default_value
 
 
-class BoolField(LazyField):
-
-    """Boolean Field."""
-
-    def __init__(self, default=False):
-        assert isinstance(default, bool)
-        super().__init__(default)
-
-
-class StringField(LazyField):
-
-    """String Field."""
-
-    def __init__(self, default=''):
-        assert isinstance(default, str)
-        super().__init__(default)
-
-
-class ListField(DefaultField):
-
-    """List field."""
-
-    def __init__(self, default_func=list):
-        assert isinstance(default_func(), list)
-        super().__init__(default_func)
-
-
-class BaseDateTimeField(BaseField):
+class DateTimeField(BaseField):
 
     """Field for datetimes."""
 
@@ -141,13 +114,3 @@ class BaseDateTimeField(BaseField):
             return datetime.datetime(value.year, value.month, value.day)
         else:  # pragma: no cover
             assert False, '{!r} is not date-like'.format(value)
-
-
-class DateTimeField(BaseDateTimeField, LazyField):
-
-    """Field for datetimes, with a lazy default value."""
-
-    def __init__(self, default):
-        default = self._ensure_datetime(default)
-        assert isinstance(default, datetime.datetime)
-        super().__init__(default)
