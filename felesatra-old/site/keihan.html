@@ -1,0 +1,342 @@
+template: content_page_with_toc.html
+title: 契絆想解詩
+published: 2015-05-28
+modified: 2015-09-22
+js_tablesorter: true
+---
+
+{%- from 'macros.html' import imgfig -%}
+
+<section>
+  <h1>Introduction</h1>
+
+  <dl>
+    <dt>Hiragana</dt>
+    <dd>けいはんそうかいし</dd>
+
+    <dt>Romanized</dt>
+    <dd>Keihansoukaishi</dd>
+
+    <dt>Localized</dt>
+    <dd>Emotional Song Pact</dd>
+
+    <dt>Abbreviated</dt>
+    <dd>Keihan</dd>
+  </dl>
+
+  <p>
+    Keihan is a constructed language from the Surge Concerto video game series
+    made by GUST.  It is fairly complex; what follows are some of my notes on the
+    language.
+  </p>
+</section>
+
+<section>
+  <h1>Resources</h1>
+
+  <p>A lot of information can be found in officially released materials and other
+    pages:</p>
+
+  <ul>
+    <li><a href="http://www.genomirai.com/WorldSettingDocument/language/">
+      Official Keihan generator
+    </a></li>
+    <li><a href="http://www.genomirai.com/WorldSettingDocument/index.php?%25E5%25A5%2591%25E7%25B5%2586%25E6%2583%25B3%25E7%2595%258C%25E8%25A9%25A9">
+      Official Keihan World Setting page
+    </a></li>
+    <li><a href="http://artonelico.wikia.com/wiki/Emotional_Song_Pact">
+      EXA_PICO page (English translation)
+    </a></li>
+  </ul>
+</section>
+
+<section>
+  <h1>Writing</h1>
+
+  <p>Since there does not exist a detailed description of Keihan's writing system
+    at this time, I have done some research and written one here.</p>
+
+  <p>Note that some of this information was derived experimentally and might be
+    inaccurate.  Please send me any contradictions you find.</p>
+
+  <section>
+    <h1>Characters</h1>
+
+    <p>Keihan possesses a straightforward set of alphabet and punctuation
+      characters.  Keihan may seem like a substitution of the Latin alphabet on the
+      surface, but that illusion shall disappear shortly.</p>
+
+    <p>Here is the alphabet:</p>
+
+    {{ imgfig('img/keihan/alphabet.jpg', 'The Keihan alphabet, from A to Z.') }}
+
+    <p>There is no distinction between upper or lower case.</p>
+
+    <p>Here are the punctuation characters:</p>
+
+    {{ imgfig('img/keihan/punctuation.jpg', 'Keihan punctuation marks.') }}
+
+    <p>Ignore the leading <code>a</code> characters; they are there to force the official
+      character generator to render the punctuation.</p>
+
+    <p>From left to right, they are <code>;</code>, <code>?</code>, <code>!</code>,
+      and <code>=</code>.  The semicolon is Keihan's sentence terminator; it
+      functions like a period.  The reason it is a semicolon may be related to the
+      strong computer themes in Surge Concerto (this is obvious in the other
+      language in the series, REON-4213).  The equal sign is used as a topic or
+      subject marker.  The question mark and exclamation mark function like they do
+      in English.</p>
+
+    <p>Keihan's numeric system is hexadecimal (again showing the computer theme):</p>
+
+    {{ imgfig(
+    'img/keihan/numbers.jpg',
+    'Keihan digits, from 0 to F and including the decimal point.')}}
+  </section>
+
+  <section>
+    <h1>Clusters</h1>
+
+    <p>While the characters shown above are used for loanwords, they are never used
+      alone in Keihan itself.  Instead, they are combined into clusters consisting
+      of two, three, or four characters each.</p>
+
+    <section>
+      <h1>Forms</h1>
+
+      <p>Clusters come in seven different forms.</p>
+
+      <p>Clusters of two characters (2-clusters) have two possible forms.</p>
+
+      <dl>
+        <dt>Form A</dt>
+        <dd>First at right, second at left.</dd>
+
+        <dt>Form B</dt>
+        <dd>First at bottom, second at top.</dd>
+      </dl>
+
+      {{ imgfig('img/keihan/2-cluster.jpg', 'Keihan cluster forms A and B.') }}
+
+      <p>Clusters of three characters (3-clusters) have three possible forms.</p>
+
+      <dl>
+        <dt>Form C</dt>
+        <dd>First at top right, second at bottom right, third at left</dd>
+
+        <dt>Form D</dt>
+        <dd>First at bottom right, second at bottom left, third at top</dd>
+
+        <dt>Form E</dt>
+        <dd>First at bottom, second at middle, third at top</dd>
+      </dl>
+
+      {{ imgfig('img/keihan/3-cluster.jpg', 'Keihan cluster forms C, D, and E.') }}
+
+      Clusters of four characters (4-clusters) have two possible forms.
+
+      <dl>
+        <dt>Form F</dt>
+        <dd>First at bottom right, second at bottom middle, third at bottom left, forth at top</dd>
+
+        <dt>Form G</dt>
+        <dd>First at bottom, second at middle right, third at middle left, fourth at top</dd>
+      </dl>
+
+      {{ imgfig('img/keihan/4-cluster.jpg', 'Keihan cluster forms F and G.') }}
+    </section>
+
+    <section>
+      <h1>Rules</h1>
+
+      <p>The rules for forming clusters is fairly complex.  Using the table below,
+        find the letter in the cluster with the highest priority and use the form
+        indicated by that letter.</p>
+
+      <p>These rules were determined experimentally from the official Keihan generator,
+        so they might be incorrect or sub-optimal.</p>
+
+      <p>(Table can be sorted with Javascript; try clicking on the the headers.)</p>
+
+      <figure>
+        <table class="tablesorter">
+
+          <colgroup span="1"></colgroup>
+          <colgroup span="2"></colgroup>
+          <colgroup span="2"></colgroup>
+          <colgroup span="2"></colgroup>
+
+          <thead>
+            <tr>
+              <th>Letter</th>
+              <th colspan="2">2-cluster</th>
+              <th colspan="2">3-cluster</th>
+              <th colspan="2">4-cluster</th>
+            </tr>
+
+            <tr>
+              <th></th>
+              <th>Form</th>
+              <th>Priority</th>
+              <th>Form</th>
+              <th>Priority</th>
+              <th>Form</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+
+          <!-- BEGIN RECEIVE ORGTBL cluster-rules -->
+          <tr><td>a</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>a</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>b</td> <td>B</td> <td>2</td> <td>E</td> <td>2</td> <td>G</td> <td>2</td></tr>
+          <tr><td>c</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>d</td> <td>B</td> <td>2</td> <td>E</td> <td>2</td> <td>G</td> <td>2</td></tr>
+          <tr><td>e</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>f</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>g</td> <td>B</td> <td>2</td> <td>E</td> <td>2</td> <td>G</td> <td>2</td></tr>
+          <tr><td>h</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>i</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>j</td> <td>A</td> <td>3</td> <td>D</td> <td>3</td> <td>F</td> <td>3</td></tr>
+          <tr><td>k</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>l</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>m</td> <td>B</td> <td>4</td> <td>D</td> <td>3</td> <td>G</td> <td>6</td></tr>
+          <tr><td>n</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>o</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>p</td> <td>B</td> <td>2</td> <td>C</td> <td>1</td> <td>G</td> <td>4</td></tr>
+          <tr><td>q</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>r</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>s</td> <td>A</td> <td>1</td> <td>E</td> <td>4</td> <td>F</td> <td>5</td></tr>
+          <tr><td>t</td> <td>B</td> <td>2</td> <td>C</td> <td>1</td> <td>G</td> <td>4</td></tr>
+          <tr><td>u</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>v</td> <td>A</td> <td>1</td> <td>D</td> <td>3</td> <td>F</td> <td>3</td></tr>
+          <tr><td>w</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <tr><td>x</td> <td>B</td> <td>2</td> <td>E</td> <td>2</td> <td>G</td> <td>2</td></tr>
+          <tr><td>y</td> <td>A</td> <td>1</td> <td>D</td> <td>3</td> <td>F</td> <td>3</td></tr>
+          <tr><td>z</td> <td>A</td> <td>1</td> <td>C</td> <td>1</td> <td>F</td> <td>1</td></tr>
+          <!-- END RECEIVE ORGTBL cluster-rules -->
+          <!--
+               #+ORGTBL: SEND cluster-rules orgtbl-to-html-bare
+               | a | A | 1 | C | 1 | F | 1 |
+               | a | A | 1 | C | 1 | F | 1 |
+               | b | B | 2 | E | 2 | G | 2 |
+               | c | A | 1 | C | 1 | F | 1 |
+               | d | B | 2 | E | 2 | G | 2 |
+               | e | A | 1 | C | 1 | F | 1 |
+               | f | A | 1 | C | 1 | F | 1 |
+               | g | B | 2 | E | 2 | G | 2 |
+               | h | A | 1 | C | 1 | F | 1 |
+               | i | A | 1 | C | 1 | F | 1 |
+               | j | A | 3 | D | 3 | F | 3 |
+               | k | A | 1 | C | 1 | F | 1 |
+               | l | A | 1 | C | 1 | F | 1 |
+               | m | B | 4 | D | 3 | G | 6 |
+               | n | A | 1 | C | 1 | F | 1 |
+               | o | A | 1 | C | 1 | F | 1 |
+               | p | B | 2 | C | 1 | G | 4 |
+               | q | A | 1 | C | 1 | F | 1 |
+               | r | A | 1 | C | 1 | F | 1 |
+               | s | A | 1 | E | 4 | F | 5 |
+               | t | B | 2 | C | 1 | G | 4 |
+               | u | A | 1 | C | 1 | F | 1 |
+               | v | A | 1 | D | 3 | F | 3 |
+               | w | A | 1 | C | 1 | F | 1 |
+               | x | B | 2 | E | 2 | G | 2 |
+               | y | A | 1 | D | 3 | F | 3 |
+               | z | A | 1 | C | 1 | F | 1 |
+             -->
+
+        </table>
+      </figure>
+    </section>
+
+    <section>
+      <h1>Mutations</h1>
+
+      <p>In addition to forming clusters, each letter in Keihan also mutates according
+        to its position in a cluster.</p>
+
+      <p>There are nine different mutations.</p>
+
+      <dl>
+        <dt>Pure</dt>
+        <dd>Base form of character when not in a cluster.</dd>
+
+        <dt>Vertical-0</dt>
+        <dd>Used for the right character in form A.</dd>
+
+        <dt>Horizontal-0</dt>
+        <dd>Used for the bottom character in form B.</dd>
+
+        <dt>Vertical-1</dt>
+        <dd>Used for the left character in forms A and C.</dd>
+
+        <dt>Horizontal-1</dt>
+        <dd>Used for the top character in forms B, D, and F, and for the horizontal
+          characters in forms E and G.</dd>
+
+        <dt>Horizontal-2</dt>
+        <dd>Used for the right characters in form C.</dd>
+
+        <dt>Vertical-2</dt>
+        <dd>Used for the bottom characters in form D.</dd>
+
+        <dt>Vertical-3</dt>
+        <dd>Used for the bottom characters in form F.</dd>
+
+        <dt>Horizontal-3</dt>
+        <dd>Used for the middle characters in form G.</dd>
+      </dl>
+
+      <p>Here are all of the mutations for all letters:</p>
+
+      {{ imgfig(
+      'img/keihan/mutation-all.jpg',
+      'A chart showing all Keihan letter mutations.')}}
+    </section>
+  </section>
+</section>
+
+<section>
+  <h1>Corrections</h1>
+
+  <p>
+    Please send me any corrections:
+    <a href="mailto:darkfeline@felesatra.moe">darkfeline@felesatra.moe</a>
+  </p>
+</section>
+
+<section>
+  <h1>Notes</h1>
+
+  <ul>
+    <li>The official Keihan generator seems to make the first cluster of each line
+      smaller.  I'm not sure if this is intentional or not.</li>
+  </ul>
+</section>
+
+<section>
+  <h1>Changelog</h1>
+
+  <section>
+    <h1>v1.1 2015-06-09</h1>
+
+    <ul>
+      <li>Removed Appendix because it was poorly written.</li>
+      <li>Removed alternate clustering rules because maintaining two sets of rules
+        takes extra work.</li>
+      <li>Added rule generation algorithm, so now clustering rules are generated
+        using gathered data.  This should make things go more smoothly.</li>
+      <li>Fixed clustering rules using observation by aquagon. Added sorting
+        functionality to rules table.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h1>v1.0 2015-05-28</h1>
+
+    <ul>
+      <li>Finished info on mutations.</li>
+      <li>Typo correction by aquagon.</li>
+    </ul>
+  </section>
+</section>
