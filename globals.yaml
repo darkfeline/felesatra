@@ -1,6 +1,6 @@
 site:
   nav:
     - name: About
-      url: about/
+      url: about
     - name: Projects
-      url: projects/
+      url: projects
