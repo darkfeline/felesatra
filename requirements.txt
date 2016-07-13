@@ -1,2 +1,6 @@
+# Required
+Jinja2==2.8
+PyYAML==3.11
+
 # For development
 Flask==0.10.1

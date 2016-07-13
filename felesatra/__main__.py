@@ -1,8 +1,10 @@
 """Frelia static site generator."""
 
 import argparse
+import functools
 import logging
 
+import jinja2
 import yaml
 
 import frelia.enja
@@ -15,10 +17,16 @@ def main():
     """Dance!"""
     logging.basicConfig(level='DEBUG')
     args = parse_args()
-    frelia.fs.link_files(args.static_dir, args.build_dir)
+    make_env = EnvironmentMaker(
+        frelia.jinja.Environment,
+        loader=jinja2.FileSystemLoader(args.template_dir))
     globals_dict = load_globals(args.globals)
+
+    frelia.fs.link_files(args.static_dir, args.build_dir)
+
+    env = make_env(globals_dict)
     pages = list(load_pages(args.page_dir))
-    render_pages(globals_dict, pages, args.build_dir)
+    render_pages(env, pages, args.build_dir)
 
 
 def parse_args():
@@ -43,13 +51,23 @@ def load_pages(page_dir):
     yield from page_loader.load_pages(page_dir)
 
 
-def render_pages(globals_dict, pages, build_dir):
-    env = frelia.jinja.Environment()
-    env.globals = globals_dict
+def render_pages(env, pages, build_dir):
     document_renderer = frelia.page.JinjaDocumentRenderer(env)
     page_renderer = frelia.page.PageRenderer(document_renderer, build_dir)
     for page in pages:
         page_renderer.render(page)
+
+
+class EnvironmentMaker:
+
+    def __init__(self, env_class, **kwargs):
+        self.env_class = env_class
+        self.kwargs = kwargs
+
+    def __call__(self, globals_dict):
+        env = self.env_class(**self.kwargs)
+        env.globals = globals_dict
+        return env
 
 
 if __name__ == '__main__':
