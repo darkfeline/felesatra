@@ -28,7 +28,8 @@ def main():
     args = parse_args()
     make_env = EnvironmentMaker(
         frelia.jinja.Environment,
-        loader=jinja2.FileSystemLoader(args.template_dir))
+        loader=jinja2.FileSystemLoader(args.template_dir),
+        extensions=['jinja2.ext.with_'])
     globals_dict = load_globals(args.globals)
     globals_dict['site']['url'] = args.site_url
 
@@ -89,13 +90,6 @@ def load_pages(page_dir):
     yield from page_loader.load_pages(page_dir)
 
 
-def process_pages(env, pages, build_dir):
-    """Transform, render, and write pages."""
-    transform_pages(env, pages)
-    render_pages(env, pages)
-    write_pages(pages, build_dir)
-
-
 def preprocess_pages(pages, basepath):
     """Do preliminary page transformations."""
     transform = generic_transforms.ComposeTransforms([
@@ -105,12 +99,19 @@ def preprocess_pages(pages, basepath):
         page_transforms.DocumentPageTransforms([
             document_transforms.SetDefaultMetadata({
                 'aggregate': True,
-                'updated': None,
             }),
             felesatra.transforms.mark_aggregations,
+            felesatra.transforms.set_updated_from_published,
         ]),
     ])
     transform(pages)
+
+
+def process_pages(env, pages, build_dir):
+    """Transform, render, and write pages."""
+    transform_pages(env, pages)
+    render_pages(env, pages)
+    write_pages(pages, build_dir)
 
 
 def transform_pages(env, pages):
@@ -136,14 +137,5 @@ def is_aggregation(page):
     return page.document.metadata.get('aggregation', False)
 
 
-def debug(func):
-    try:
-        func()
-    except Exception:
-        import pdb
-        pdb.post_mortem()
-
-
 if __name__ == '__main__':
     main()
-    # debug(main)

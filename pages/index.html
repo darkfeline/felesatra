@@ -34,23 +34,14 @@ aggregation: yes
 </section>
 
 <section>
-  <h1>Debug</h1>
-  <dl>
-    {% for page in site.pages %}
-    <dt>{{ page.path|e }}</dt>
-    <dd><code>{{ page.document|e }}</code></dd>
-    {% endfor %}
-  </dl>
-</section>
-
-<section>
   <h1>New pages</h1>
   <ul>
     {% for page in site.pages
     |selectattr('document.metadata.aggregate')
+    |selectattr('document.metadata.published')
     |sort(attribute='document.metadata.published', reverse=True)
     |first(5) %}
-    <li>{{ page.document.metadata.title }}</li>
+    {{ page_li(page) }}
     {% endfor %}
   </ul>
 </section>
@@ -60,6 +51,7 @@ aggregation: yes
   <ul>
     {% for page in site.pages
     |selectattr('document.metadata.aggregate')
+    |selectattr('document.metadata.updated')
     |sort(attribute='document.metadata.updated', reverse=True)
     |first(5) %}
     {{ page_li(page) }}

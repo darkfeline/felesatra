@@ -17,7 +17,12 @@
 {%- endmacro %}
 
 {% macro page_li(page) -%}
-<li><span class="aside">{{ page.updated.date() }}</span> <a href="{{ page.href|e }}">{{ page.title }}</a></li>
+{% with metadata = page.document.metadata -%}
+<li>
+  <span class="aside">{{ metadata.updated }}</span>
+  <a href="{{ abs_url(page.path)|e }}">{{ metadata.title }}</a>
+</li>
+{%- endwith %}
 {%- endmacro %}
 
 {% macro codeblock() -%}
