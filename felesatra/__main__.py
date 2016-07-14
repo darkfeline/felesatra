@@ -38,6 +38,7 @@ def main():
 
     logger.info('Loading pages...')
     pages = list(load_pages(args.page_dir))
+
     logger.info('Preprocessing pages...')
     preprocess_pages(pages, args.page_dir)
     aggregation_pages = [page for page in pages if is_aggregation(page)]
@@ -97,11 +98,11 @@ def preprocess_pages(pages, basepath):
         page_transforms.strip_page_extension,
         page_transforms.DateFromPath('published'),
         page_transforms.DocumentPageTransforms([
+            felesatra.transforms.set_updated_from_published,
+            felesatra.transforms.mark_aggregations,
             document_transforms.SetDefaultMetadata({
                 'aggregate': True,
             }),
-            felesatra.transforms.mark_aggregations,
-            felesatra.transforms.set_updated_from_published,
         ]),
     ])
     transform(pages)
