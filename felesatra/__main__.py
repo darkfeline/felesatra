@@ -3,19 +3,28 @@
 import argparse
 import logging
 
-import frelia.document.enja
-import frelia.document.renderers
+import coloredlogs
+import frelia.document.enja as enja
+import frelia.document.renderers as document_renderers
 import frelia.fs
 import frelia.jinja
 import frelia.page
-import frelia.transform
+import frelia.transforms.document as document_transforms
+import frelia.transforms.generic as generic_transforms
+import frelia.transforms.page as page_transforms
 import jinja2
 import yaml
+
+import felesatra.transforms
+
+logger = logging.getLogger(__name__)
 
 
 def main():
     """Dance!"""
-    logging.basicConfig(level='DEBUG')
+    coloredlogs.install(
+        level='DEBUG',
+        fmt='%(asctime)s %(name)s %(levelname)s %(message)s')
     args = parse_args()
     make_env = EnvironmentMaker(
         frelia.jinja.Environment,
@@ -23,18 +32,23 @@ def main():
     globals_dict = load_globals(args.globals)
     globals_dict['site']['url'] = args.site_url
 
+    logger.info('Linking static files...')
     frelia.fs.link_files(args.static_dir, args.build_dir)
 
+    logger.info('Loading pages...')
     pages = list(load_pages(args.page_dir))
+    logger.info('Preprocessing pages...')
     preprocess_pages(pages, args.page_dir)
     aggregation_pages = [page for page in pages if is_aggregation(page)]
     content_pages = [page for page in pages if not is_aggregation(page)]
 
+    logger.info('Processing pages...')
     env = make_env(globals_dict)
     process_pages(env, content_pages, args.build_dir)
 
     globals_dict['site']['pages'] = content_pages
 
+    logger.info('Processing aggregation pages...')
     env = make_env(globals_dict)
     process_pages(env, aggregation_pages, args.build_dir)
 
@@ -71,7 +85,7 @@ def load_globals(filename):
 
 
 def load_pages(page_dir):
-    page_loader = frelia.page.PageLoader(frelia.document.enja.read)
+    page_loader = frelia.page.PageLoader(enja.read)
     yield from page_loader.load_pages(page_dir)
 
 
@@ -83,23 +97,31 @@ def process_pages(env, pages, build_dir):
 
 
 def preprocess_pages(pages, basepath):
-    transform = frelia.transform.TransformGroup([
-        frelia.transform.RebasePagePath(basepath),
-        frelia.transform.strip_page_extension,
+    """Do preliminary page transformations."""
+    transform = generic_transforms.ComposeTransforms([
+        page_transforms.RebasePagePath(basepath),
+        page_transforms.strip_page_extension,
+        page_transforms.DateFromPath('published'),
+        page_transforms.DocumentPageTransforms([
+            document_transforms.SetDefaultMetadata({
+                'aggregate': True,
+                'updated': None,
+            }),
+            felesatra.transforms.mark_aggregations,
+        ]),
     ])
     transform(pages)
 
 
 def transform_pages(env, pages):
-    transform = frelia.transform.TransformGroup([
-        frelia.transform.DocumentPageTransform(
-            frelia.transform.RenderJinja(env)),
+    transform = page_transforms.DocumentPageTransforms([
+        document_transforms.RenderJinja(env),
     ])
     transform(pages)
 
 
 def render_pages(env, pages):
-    document_renderer = frelia.document.renderers.JinjaDocumentRenderer(env)
+    document_renderer = document_renderers.JinjaDocumentRenderer(env)
     page_renderer = frelia.page.PageRenderer(document_renderer)
     page_renderer(pages)
 
@@ -114,5 +136,14 @@ def is_aggregation(page):
     return page.document.metadata.get('aggregation', False)
 
 
+def debug(func):
+    try:
+        func()
+    except Exception:
+        import pdb
+        pdb.post_mortem()
+
+
 if __name__ == '__main__':
     main()
+    # debug(main)

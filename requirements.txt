@@ -1,6 +1,7 @@
 # Required
 Jinja2==2.8
 PyYAML==3.11
+coloredlogs==5.0
 
 # For development
 Flask==0.10.1
