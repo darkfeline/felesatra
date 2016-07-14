@@ -3,14 +3,14 @@
 import argparse
 import logging
 
-import jinja2
-import yaml
-
-import frelia.enja
+import frelia.document.enja
+import frelia.document.renderers
 import frelia.fs
 import frelia.jinja
 import frelia.page
 import frelia.transform
+import jinja2
+import yaml
 
 
 def main():
@@ -26,9 +26,16 @@ def main():
     frelia.fs.link_files(args.static_dir, args.build_dir)
 
     pages = list(load_pages(args.page_dir))
+    aggregation_pages = [page for page in pages if is_aggregation(page)]
+    content_pages = [page for page in pages if not is_aggregation(page)]
+
     env = make_env(globals_dict)
-    transform_pages(env, pages)
-    render_pages(env, pages, args.build_dir)
+    process_pages(env, content_pages, args.build_dir)
+
+    globals_dict['site']['pages'] = content_pages
+
+    env = make_env(globals_dict)
+    process_pages(env, aggregation_pages, args.build_dir)
 
 
 def parse_args():
@@ -43,32 +50,6 @@ def parse_args():
     return parser.parse_args()
 
 
-def load_globals(filename):
-    with open(filename) as file:
-        return yaml.load(file, Loader=yaml.CLoader)
-
-
-def load_pages(page_dir):
-    page_loader = frelia.page.PageLoader(frelia.enja.EnjaDocument)
-    yield from page_loader.load_pages(page_dir)
-
-
-def render_pages(env, pages, build_dir):
-    document_renderer = frelia.page.JinjaDocumentRenderer(env)
-    page_renderer = frelia.page.PageRenderer(document_renderer, build_dir)
-    for page in pages:
-        page_renderer.render(page)
-
-
-def transform_pages(env, pages):
-    page_transform = frelia.transform.TransformGroup([
-        frelia.transform.DocumentPageTransform(
-            frelia.transform.RenderJinja(env)),
-    ])
-    for page in pages:
-        page_transform(page)
-
-
 class EnvironmentMaker:
 
     def __init__(self, env_class, **kwargs):
@@ -80,6 +61,51 @@ class EnvironmentMaker:
         if globals_dict is not None:
             env.globals = globals_dict
         return env
+
+
+def load_globals(filename):
+    """Load globals dict from YAML file."""
+    with open(filename) as file:
+        return yaml.load(file, Loader=yaml.CLoader)
+
+
+def load_pages(page_dir):
+    page_loader = frelia.page.PageLoader(frelia.document.enja.read)
+    yield from page_loader.load_pages(page_dir)
+
+
+def process_pages(env, pages, build_dir):
+    """Transform, render, and write pages."""
+    transform_pages(env, pages)
+    render_pages(env, pages)
+    write_pages(pages, build_dir)
+
+
+def transform_pages(env, pages):
+    transform = frelia.transform.TransformGroup([
+        frelia.transform.DocumentPageTransform(
+            frelia.transform.RenderJinja(env)),
+    ])
+    for page in pages:
+        transform(page)
+
+
+def render_pages(env, pages):
+    document_renderer = frelia.document.renderers.JinjaDocumentRenderer(env)
+    page_renderer = frelia.page.PageRenderer(document_renderer)
+    for page in pages:
+        page_renderer(page)
+
+
+def write_pages(pages, build_dir):
+    writer = frelia.page.PageWriter(build_dir)
+    for page in pages:
+        writer(page)
+
+
+def is_aggregation(page):
+    """Return True if page is an aggregation page."""
+    return page.document.metadata.get('aggregation', False)
 
 
 if __name__ == '__main__':

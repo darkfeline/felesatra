@@ -1,5 +1,6 @@
 title: Feles Atra
 published: 2015-01-01
+aggregation: yes
 ---
 
 {%- from 'macros.html' import abs_url, page_li -%}
@@ -34,11 +35,17 @@ published: 2015-01-01
 
 <section>
   <h1>New pages</h1>
+  <code>
+  {% for page in site.pages %}
+  {{ page|e }}
+  {% endfor %}
+  </code>
   <ul>
-    {% for page in page_index|selectattr("include_in_atom")
+    {% for page in site.pages
+    |selectattr("aggregate")
     |sort(attribute='published', reverse=True)
     |first(5) %}
-    {{ page_li(page) }}
+    <li>{{ page.metadata.title }}</li>
     {% endfor %}
   </ul>
 </section>
@@ -46,7 +53,8 @@ published: 2015-01-01
 <section>
   <h1>Updated pages</h1>
   <ul>
-    {% for page in page_index|selectattr("include_in_atom")
+    {% for page in site.pages
+    |selectattr("aggregate")
     |sort(attribute='updated', reverse=True)
     |first(5) %}
     {{ page_li(page) }}
