@@ -26,6 +26,7 @@ def main():
     frelia.fs.link_files(args.static_dir, args.build_dir)
 
     pages = list(load_pages(args.page_dir))
+    preprocess_pages(pages, args.page_dir)
     aggregation_pages = [page for page in pages if is_aggregation(page)]
     content_pages = [page for page in pages if not is_aggregation(page)]
 
@@ -81,26 +82,31 @@ def process_pages(env, pages, build_dir):
     write_pages(pages, build_dir)
 
 
+def preprocess_pages(pages, basepath):
+    transform = frelia.transform.TransformGroup([
+        frelia.transform.RebasePagePath(basepath),
+        frelia.transform.strip_page_extension,
+    ])
+    transform(pages)
+
+
 def transform_pages(env, pages):
     transform = frelia.transform.TransformGroup([
         frelia.transform.DocumentPageTransform(
             frelia.transform.RenderJinja(env)),
     ])
-    for page in pages:
-        transform(page)
+    transform(pages)
 
 
 def render_pages(env, pages):
     document_renderer = frelia.document.renderers.JinjaDocumentRenderer(env)
     page_renderer = frelia.page.PageRenderer(document_renderer)
-    for page in pages:
-        page_renderer(page)
+    page_renderer(pages)
 
 
 def write_pages(pages, build_dir):
     writer = frelia.page.PageWriter(build_dir)
-    for page in pages:
-        writer(page)
+    writer(pages)
 
 
 def is_aggregation(page):

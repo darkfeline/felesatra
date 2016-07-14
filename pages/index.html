@@ -35,11 +35,6 @@ aggregation: yes
 
 <section>
   <h1>New pages</h1>
-  <code>
-  {% for page in site.pages %}
-  {{ page|e }}
-  {% endfor %}
-  </code>
   <ul>
     {% for page in site.pages
     |selectattr("aggregate")
