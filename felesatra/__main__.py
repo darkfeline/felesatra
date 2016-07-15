@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def main():
     coloredlogs.install(
-        level='DEBUG',
+        level='INFO',
         fmt='%(asctime)s %(name)s %(levelname)s %(message)s')
     args = parse_args()
 
