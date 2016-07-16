@@ -50,14 +50,16 @@ class BuildProcess:
         aggregation_pages, content_pages = self._partition_aggregation(pages)
 
         logger.info('Processing pages...')
-        env = self.make_env(globals_dict)
-        self._process_pages(env, content_pages)
+        self._transform_template_pages(globals_dict, content_pages)
 
         globals_dict['site']['pages'] = content_pages
 
         logger.info('Processing aggregation pages...')
         env = self.make_env(globals_dict)
-        self._process_pages(env, aggregation_pages)
+        self._transform_jinja_pages(env, aggregation_pages)
+
+        self._render_pages(env, pages)
+        self._write_pages(pages)
 
     _preprocess_pages = generic_transforms.ComposeTransforms([
         page_transforms.strip_page_extension,
@@ -101,14 +103,15 @@ class BuildProcess:
                 content_pages.append(page)
         return aggregation_pages, content_pages
 
-    def _process_pages(self, env, pages):
-        """Transform, render, and write pages."""
-        self._transform_pages(env, pages)
-        self._render_pages(env, pages)
-        self._write_pages(pages)
+    @staticmethod
+    def _transform_template_pages(mapping, pages):
+        transform = page_transforms.DocumentPageTransforms([
+            document_transforms.RenderTemplate(mapping),
+        ])
+        transform(pages)
 
     @staticmethod
-    def _transform_pages(env, pages):
+    def _transform_jinja_pages(env, pages):
         transform = page_transforms.DocumentPageTransforms([
             document_transforms.RenderJinja(env),
         ])

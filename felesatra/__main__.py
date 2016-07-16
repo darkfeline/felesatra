@@ -1,6 +1,7 @@
 """Frelia static site generator."""
 
 import argparse
+import cProfile
 import logging
 
 import coloredlogs
@@ -53,4 +54,5 @@ def parse_args():
 
 
 if __name__ == '__main__':
-    main()
+    cProfile.run('main()', sort='cumtime')
+    # main()
