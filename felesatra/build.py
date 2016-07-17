@@ -1,17 +1,17 @@
 import logging
 import os
-import urllib.parse
 
 from frelia.document import enja
 import frelia.document.renderers as document_renderers
 import frelia.fs
 import frelia.page
-from frelia import sitemap
 import frelia.transforms.document as document_transforms
 import frelia.transforms.generic as generic_transforms
 import frelia.transforms.page as page_transforms
 import yaml
 
+from felesatra import atom
+from felesatra import sitemap
 import felesatra.transforms
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,10 @@ class BuildProcess:
         self._preprocess_pages(self.pages)
 
         logger.info('Making sitemap...')
-        self._make_sitemap(self.site_url, self.pages)
+        self._make_sitemap()
+
+        logger.info('Making Atom feed...')
+        self._make_atom()
 
         aggregation_pages, content_pages = self._partition(self.pages)
 
@@ -84,21 +87,15 @@ class BuildProcess:
         ]),
     ])
 
-    def _make_sitemap(self, site_url, pages):
-        output = sitemap.render(self._generate_urls(site_url, pages))
+    def _make_sitemap(self):
+        output = sitemap.render(self.site_url, self.pages)
         with open(os.path.join(self.build_dir, 'sitemap.xml'), 'w') as file:
             file.write(output)
 
-    @staticmethod
-    def _generate_urls(site_url, pages):
-        urljoin = urllib.parse.urljoin
-        URL = frelia.sitemap.URL
-        for page in pages:
-            metadata = page.document.metadata
-            if metadata.get('index', True):
-                yield URL(
-                    loc=urljoin(site_url, page.path),
-                    lastmod=metadata['updated'])
+    def _make_atom(self):
+        output = atom.render(self.site_url, 'atom.xml', self.pages)
+        with open(os.path.join(self.build_dir, 'atom.xml'), 'w') as file:
+            file.write(output)
 
     @staticmethod
     def _partition(pages):
