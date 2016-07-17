@@ -47,9 +47,6 @@ class BuildProcess:
         logger.info('Making sitemap...')
         self._make_sitemap()
 
-        logger.info('Making Atom feed...')
-        self._make_atom()
-
         aggregation_pages, content_pages = self._partition(self.pages)
 
         logger.info('Processing pages...')
@@ -60,6 +57,9 @@ class BuildProcess:
         logger.info('Processing aggregation pages...')
         env = self._make_env()
         self._transform_jinja_pages(env, aggregation_pages)
+
+        logger.info('Making Atom feed...')
+        self._make_atom()
 
         logger.info('Rendering pages...')
         self._render_pages(env)
