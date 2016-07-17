@@ -37,8 +37,12 @@ def main():
     rebase_paths(pages)
 
     logger.info('Building site...')
-    builder = felesatra.build.BuildProcess(args.build_dir, make_env)
-    builder(globals_dict, pages)
+    builder = felesatra.build.BuildProcess(
+        args.build_dir,
+        make_env,
+        globals_dict,
+        pages)
+    builder()
 
 
 def parse_args():

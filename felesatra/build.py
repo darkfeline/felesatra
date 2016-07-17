@@ -34,35 +34,43 @@ def load_pages(page_dir):
 
 class BuildProcess:
 
-    def __init__(self, build_dir, make_env):
+    def __init__(self, build_dir, make_env, globals_dict, pages):
         self.build_dir = build_dir
         self.make_env = make_env
+        self.globals_dict = globals_dict.copy()
+        self.pages = pages
 
-    def __call__(self, globals_dict, pages):
-        globals_dict = globals_dict.copy()
-
+    def __call__(self):
         logger.info('Preprocessing pages...')
-        self._preprocess_pages(pages)
+        self._preprocess_pages(self.pages)
 
         logger.info('Making sitemap...')
-        self._make_sitemap(globals_dict['site']['url'], pages)
+        self._make_sitemap(self.site_url, self.pages)
 
-        aggregation_pages, content_pages = self._partition_aggregation(pages)
+        aggregation_pages, content_pages = self._partition(self.pages)
 
         logger.info('Processing pages...')
-        self._transform_template_pages(globals_dict, content_pages)
+        self._transform_template_pages(self.globals_dict, content_pages)
 
-        globals_dict['site']['pages'] = content_pages
+        self.globals_dict['site']['pages'] = content_pages
 
         logger.info('Processing aggregation pages...')
-        env = self.make_env(globals_dict)
+        env = self._make_env()
         self._transform_jinja_pages(env, aggregation_pages)
 
-        self._render_pages(env, pages)
-        self._write_pages(pages)
+        logger.info('Rendering pages...')
+        self._render_pages(env)
+        self._write_pages()
+
+    @property
+    def site_url(self):
+        return self.globals_dict['site']['url']
+
+    def _make_env(self):
+        return self.make_env(self.globals_dict)
 
     _preprocess_pages = generic_transforms.ComposeTransforms([
-        page_transforms.strip_page_extension,
+        page_transforms.StripExtensions(),
         page_transforms.DateFromPath('published'),
         page_transforms.DocumentPageTransforms([
             felesatra.transforms.mark_aggregations,
@@ -93,7 +101,8 @@ class BuildProcess:
                     lastmod=metadata['updated'])
 
     @staticmethod
-    def _partition_aggregation(pages):
+    def _partition(pages):
+        """Partition pages into aggregation pages and not."""
         aggregation_pages = []
         content_pages = []
         for page in pages:
@@ -117,15 +126,14 @@ class BuildProcess:
         ])
         transform(pages)
 
-    @staticmethod
-    def _render_pages(env, pages):
+    def _render_pages(self, env):
         document_renderer = document_renderers.JinjaDocumentRenderer(env)
         page_renderer = frelia.page.PageRenderer(document_renderer)
-        page_renderer(pages)
+        page_renderer(self.pages)
 
-    def _write_pages(self, pages):
+    def _write_pages(self):
         writer = frelia.page.PageWriter(self.build_dir)
-        writer(pages)
+        writer(self.pages)
 
 
 class EnvironmentMaker:
