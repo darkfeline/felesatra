@@ -1,5 +1,3 @@
-"""Frelia static site generator."""
-
 import argparse
 import cProfile
 import logging

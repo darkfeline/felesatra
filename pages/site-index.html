@@ -2,6 +2,7 @@ title: Site Index
 published: 2015-01-01
 index: no
 aggregate: no
+aggregation: yes
 ---
 
 {%- from 'macros.html' import page_li -%}
@@ -10,7 +11,7 @@ aggregate: no
   <h1>Site Index</h1>
 
   <ul>
-    {% for page in page_index|sort(attribute='href') %}
+    {% for page in site.pages|sort(attribute='path') %}
     {{ page_li(page) }}
     {% endfor %}
   </ul>
