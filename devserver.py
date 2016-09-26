@@ -1,5 +1,7 @@
 """Simple static web server for local development."""
 
+# XXX cherrypy
+
 import argparse
 import logging
 import os

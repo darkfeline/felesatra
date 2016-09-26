@@ -1,13 +1,13 @@
 import logging
 import os
 
-from frelia.document import enja
-import frelia.document.renderers as document_renderers
-import frelia.fs
-import frelia.page
-import frelia.transforms.document as document_transforms
-import frelia.transforms.generic as generic_transforms
-import frelia.transforms.page as page_transforms
+from mir.frelia.document import enja
+import mir.frelia.document.renderers as document_renderers
+import mir.frelia.fs as fs_mod
+import mir.frelia.page
+import mir.frelia.transforms.document as document_transforms
+import mir.frelia.transforms.generic as generic_transforms
+import mir.frelia.transforms.page as page_transforms
 import yaml
 
 from felesatra import atom
@@ -17,22 +17,37 @@ import felesatra.transforms
 logger = logging.getLogger(__name__)
 
 
-def load_globals_dict(filename):
-    """Load globals dict from YAML file."""
-    with open(filename) as file:
-        return yaml.load(file, Loader=yaml.CLoader)
+def build(conf):
+    link_static_files(conf)
+    logger.info('Linking static files...')
+
+    logger.info('Loading pages...')
+    pages = load_pages(args.page_dir)
+    rebase_paths = page_transforms.RebasePagePath(args.page_dir)
+    rebase_paths(pages)
+
+    logger.info('Building site...')
+    builder = build.BuildProcess(
+        args.build_dir,
+        make_env,
+        globals_dict,
+        pages)
+    builder()
 
 
-def link_static_files(src, dst):
-    frelia.fs.link_files(src, dst)
+def link_static_files(srcdir, dstdir):
+    logger.info('Linking static files...')
+    fs_mod.link_files(srcdir, dstdir)
 
 
-def load_pages(page_dir):
-    page_loader = frelia.page.PageLoader(enja.read)
-    return list(page_loader.load_pages(page_dir))
+def load_pages(pagedir):
+    ...
 
 
 class BuildProcess:
+
+    def __init__(self, args):
+        self.args = args
 
     def __init__(self, build_dir, make_env, globals_dict, pages):
         self.build_dir = build_dir
@@ -41,6 +56,8 @@ class BuildProcess:
         self.pages = pages
 
     def __call__(self):
+        self.globals_dict['site']['pages'] = self.pages
+
         logger.info('Preprocessing pages...')
         self._preprocess_pages(self.pages)
 
@@ -52,7 +69,7 @@ class BuildProcess:
         logger.info('Processing pages...')
         self._transform_template_pages(self.globals_dict, content_pages)
 
-        self.globals_dict['site']['pages'] = content_pages
+        self.globals_dict['site']['content_pages'] = content_pages
 
         logger.info('Processing aggregation pages...')
         env = self._make_env()
