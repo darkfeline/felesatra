@@ -37,11 +37,3 @@ watch:
 .PHONY: test
 test:
 	nosetests --with-doctest
-
-.PHONY: isort
-isort:
-	isort -rc felesatra
-
-.PHONY: pylint
-pylint:
-	pylint --output-format=colorized felesatra tests
