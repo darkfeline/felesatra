@@ -1,5 +1,0 @@
-site_url: https://www.felesatra.moe
-static_dir: static
-page_dir: pages
-template_dir: templates
-globals: globals.yaml

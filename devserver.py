@@ -1,38 +1,33 @@
 """Simple static web server for local development."""
 
-# XXX cherrypy
-
 import argparse
 import logging
 import os
 
-import flask
+from flask import Flask
+
+# pylint: disable=missing-docstring
 
 logger = logging.getLogger(__name__)
 
 
 def make_app(serv_dir):
-    app = flask.Flask(__name__)
+    # pylint: disable=unused-variable
+    app = Flask(__name__, static_folder=serv_dir)
 
     def getpath(path, *paths):
         return os.path.join(serv_dir, path, *paths)
 
     @app.route('/')
     def root():
-        return flask.send_from_directory(serv_dir, 'index.html')
-
-    def no_extension(path):
-        return not os.path.splitext(path)[1]
+        return app.send_static_file('index.html')
 
     @app.route('/<path:path>')
     def static_proxy(path):
         if os.path.isdir(getpath(path)):
             path = os.path.join(path, 'index.html')
         logger.debug('path %s', path)
-        if no_extension(path):
-            return flask.send_from_directory(serv_dir, path, mimetype='text/html')
-        else:
-            return flask.send_from_directory(serv_dir, path)
+        return app.send_static_file(path)
 
     return app
 

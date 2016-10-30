@@ -1,10 +1,5 @@
 __pycache__/
-*.egg-info/
 
-# Test artifacts
-/.cache/
-/.coverage
-/.hypothesis
-
-# Website build artifacts
-/build*/
+/build/
+/build_local/
+/.venv/

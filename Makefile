@@ -1,5 +1,5 @@
 .PHONY: all
-all: clean buildlocal
+all: clean build_local
 
 BUILD_DIR=build
 LOCAL_BUILD_DIR=build_local
@@ -15,11 +15,10 @@ SSH_DIR=/srv/www/www.felesatra.moe
 
 .PHONY: upload
 upload: clean build
-	rsync -e "ssh -p ${SSH_PORT}" -P -rvzc --delete \
-		${BUILD_DIR}/ ${SSH_USER}@${SSH_HOST}:${SSH_DIR} --cvs-exclude
+	rsync -e "ssh -p $(SSH_PORT)" -P -rvzc --delete $(BUILD_DIR)/ $(SSH_USER)@$(SSH_HOST):$(SSH_DIR) --cvs-exclude
 
-.PHONY: buildlocal
-buildlocal:
+.PHONY: build_local
+build_local:
 	python -m felesatra --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
 
 .PHONY: clean
@@ -34,3 +33,15 @@ devserver:
 .PHONY: watch
 watch:
 	bin/watch
+
+.PHONY: test
+test:
+	nosetests --with-doctest
+
+.PHONY: isort
+isort:
+	isort -rc felesatra
+
+.PHONY: pylint
+pylint:
+	pylint --output-format=colorized felesatra tests
