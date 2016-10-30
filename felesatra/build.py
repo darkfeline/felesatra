@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def build(conf):
-    link_static_files(conf)
+    link_static_files(conf['static_dir'], conf[''])
     logger.info('Linking static files...')
 
     logger.info('Loading pages...')

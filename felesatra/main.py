@@ -40,3 +40,8 @@ def parse_args():
     parser.add_argument('--config', default='config.yaml')
     parser.add_argument('--profile', action='store_true')
     return parser.parse_args()
+
+
+def add_args_to_config(args, conf: dict):
+    """Add arguments to config dict."""
+    conf['build_dir'] = args.build_dir
