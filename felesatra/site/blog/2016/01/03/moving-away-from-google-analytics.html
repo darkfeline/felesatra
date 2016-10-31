@@ -57,16 +57,11 @@ when the request was received, and what was requested.
 
 <p>
 The request headers contain a lot of auxiliary information, including the user
-agent and referrer<x-fn-ref id="1" /> fields.  These headers can be useful for
+agent and referrer fields.  These headers can be useful for
 analytics and potentially damaging to one's privacy, but they can be forged or
 omitted, so their value depends on whether or not they can be corroborated with
 other, more trustworthy data.
 </p>
-
-<x-fn id="1">
-The field is officially called "Referer" due to a costly mistake by the
-author of the relevant RFC.
-</x-fn>
 
 <p>
 What subset of this information is available in the server logs depends on your
@@ -123,14 +118,14 @@ First, from Google Analytics.  There was a peak in visits in the latter half of
 December, with an average of about 30 per day.  Before that, the average was
 around 7 per day.  Of the roughly 300 visits in the past month, almost all go to
 <code>/</code> (the homepage).  There were 250 Chrome users and 40 Firefox
-users.<x-fn-ref id="2" />
+users.
 </p>
 
-<x-fn id="2">
+<aside>
 If you do the math, the numbers don't seem to match up.  This is due to the
 dirty details involved in tracking visits, sessions, unique users as opposed
 to raw page hits.
-</x-fn>
+</aside>
 
 <p>
 Next, from my server logs.  There was a fairly even distribution of visits in

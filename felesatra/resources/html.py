@@ -9,8 +9,6 @@ registering in the sitemap or Atom feeds, etc.
 
 import yaml
 
-from felesatra.xhtml import XHTMLParser
-
 from .abc import FileResource
 
 
@@ -56,9 +54,7 @@ class HTMLResource(FileResource):
         """Render content only."""
         content_template = env.from_string(self.content)
         rendered_content = content_template.render()
-        parser = XHTMLParser()
-        parser.feed(rendered_content)
-        return parser.get_text()
+        return rendered_content
 
     def render_html(self, env):
         """Render the HTML with template."""

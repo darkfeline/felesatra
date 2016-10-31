@@ -131,15 +131,15 @@ flames of the hell.
 Note that these two choruses are being sung simultaneously, which in this case
 sets their opposing feeling against one another in sharp relief: the first
 chorus is singing about the act of purification with joy, and the second chorus
-is singing about the same act with hatred.<x-fn-ref id="4" />
+is singing about the same act with hatred.
 </p>
 
-<x-fn id="4">
+<aside>
 This fragment comes from EXEC_NULLASCENSION/., a song which has the power to
 destroy the world.  The power of the song reflects the usage of Binasphere
 within it; in the Ar Tonelico universe, the parallel execution of Binasphere
 is more powerful than a single line of lyric.
-</x-fn>
+</aside>
 
 <p>
   Here's an English example (if you actually want this feature in English, take a
@@ -188,27 +188,27 @@ EXEC hymme 2x1/0>>*pattern*
 
 <p>
   It's easy to see that <code>=></code> is a beginning marker.
-  <code>EXEC</code> is "execute", as in "run a process to decode the Binasphere
-  text": <code>echo $text | exec decode $pattern</code>. "Hymme" in Hymmnos
-  means "sing, play (an instrument), resonate", but as a noun, it means "waves,
-  waving, vibration of formless things".<x-fn-ref id="1"/>  In this case, I'm
-  willing to leave it as a "decode" symbol or function, as it's not terribly
-  important.
+  <code>EXEC</code> is "execute", as in "run a process to decode the
+  Binasphere text": <code>echo $text | exec decode
+  $pattern</code>.  "Hymme" in Hymmnos means "sing, play (an
+  instrument), resonate", but as a noun, it means "waves, waving,
+  vibration of formless things".  In this case, I'm willing to leave
+  it as a "decode" symbol or function, as it's not terribly important.
 </p>
 
-<x-fn id="1">
+<aside>
 The Ar Tonelico universe also features its own laws of physics, called Wave
 Theory or Wave Science.  In reality, we have atoms in atomic physics (and
 strings in string theory), in Ar Tonelico, everything is made up of waves.
 Thus, "hymme" is an extremely important world in Hymmnos.
-</x-fn>
+</aside>
 
 <p>
   What is important, is the following <code>2x1/0>>01101010</code>.  This is
   Hymmnos Binary, which follows the format <code>#x#>>####</code>.  The problem
   is figuring out what each of the fields mean, since the syntax isn't used very
   often and therefore there aren't many Hymmnos texts to
-  reference.<x-fn-ref id="2"/> The third field is the binary data—in this case,
+  reference.  The third field is the binary data—in this case,
   the pattern for the Binasphere.  The first field, `2` may refer to a number of
   things.  It may be referring to the two lines of lyrics that are interwoven in
   the Binasphere, or it may be referring to the fact that the third field, the
@@ -220,12 +220,12 @@ Thus, "hymme" is an extremely important world in Hymmnos.
   following:
 </p>
 
-<x-fn id="2">
-Binasphere so far only appears in one text, the song EXEC_NULLASCENSION/.
+<aside>
+  Binasphere so far only appears in one text, the song EXEC_NULLASCENSION/.
 Hymmnos Binary also appears in EXEC_with.METHOD_METAFALICA/. ("Wee ki ra chs
 wasara dor en xest eazas yanyaue yor, xest 1x1101101001100110111000 >> syec
 mea."), but here it doesn't look very much like the one in Binasphere.
-</x-fn>
+</aside>
 
 {% call codeblock() %}
 # 4 lines/base 4, digits ranging from 3 to 0, base 4 data
@@ -262,7 +262,7 @@ mea."), but here it doesn't look very much like the one in Binasphere.
 <p>
 I think it's very likely that the data itself is in binary, as Hymmnos sticks
 with binary for most data (for example, the song chmod b111000000/n uses
-binary, instead of octal: chmod o700/n).<x-fn-ref id="3"/> There isn't any way
+binary, instead of octal: chmod o700/n).  There isn't any way
 to figure out the first or second fields though, so I just follow my hacker
 instincts and assume that the first field indicates the number of lines, and the
 second field indicates the range of values to use.  The grammar then looks like
@@ -274,12 +274,12 @@ this:
 EXEC hymme 4x11/0>>*pattern*
 {% endcall %}
 
-<x-fn id="3">
+<aside>
   One exception I can think of is METHOD_HYMMELI/., which uses the New
   Testament of Pastalie dialect of Hymmnos:
   <code>INFEL_PHIRA => ADDR:0x121:3461:3270 :: jYEwA KAIRA/.</code>
   Here, the address appears to be octal.
-</x-fn>
+</aside>
 
 <p>
   where the pattern uses two digits for each word fragment, such that
@@ -307,15 +307,15 @@ EXEC hymme 6x100/0>>000001010011100
   are executed by a server and require processing power.  Thus, extending
   Binasphere to Quatrasphere and beyond would be extremely resource-demanding,
   and it is possible that they cannot be run by any of the servers or
-  Reyvateils<x-fn-ref id="5" /> in the series.
+  Reyvateils in the series.
 </p>
 
-<x-fn id="5">
-In the Ar Tonelico universe, Reyvateils are artificial lifeforms that serve
+<aside>
+  In the Ar Tonelico universe, Reyvateils are artificial lifeforms that serve
 as "clients" to the Song Servers and are thus able to sing songs to execute
 on those servers.  Sometimes, they also take part in the execution of the
 songs that they sing.
-</x-fn>
+</aside>
 
 <p>
 And now I present to you an epic linguistic treat; I hope you enjoy it.
