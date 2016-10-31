@@ -14,7 +14,6 @@ class SimpleFileResource(FileResource):
     """Represents a simple resource file.
 
     Renders the resource file by copying it to the target.
-
     """
 
     @classmethod
@@ -22,7 +21,6 @@ class SimpleFileResource(FileResource):
         return os.path.isfile(path)
 
     def render(self, env, target):
-        # pylint: disable=unused-argument
         """Render this resource to target."""
         super().render(env, target)
         shutil.copy(self.path, target)
@@ -36,7 +34,6 @@ class DirectoryResource(FileResource):
     special) from its directory.  It attempts to load resources according to
     the classes returned from the resource_classes() class method.  Subclasses
     can extend resource_classes() or load() to modify resource loading.
-
     """
 
     def __init__(self, path):
@@ -61,7 +58,6 @@ class DirectoryResource(FileResource):
         """Resources that can be loaded.
 
         Returns an iterable.
-
         """
         yield DirectoryResource
         yield SimpleFileResource

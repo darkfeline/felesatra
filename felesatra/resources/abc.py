@@ -1,8 +1,5 @@
 """Resource ABCs."""
 
-# pylint: disable=abstract-method
-# pylint: disable=too-few-public-methods
-
 import logging
 import os
 from abc import ABC, abstractmethod
@@ -20,7 +17,6 @@ class Resource(ABC):
 
         How the resource is rendered relative to the target depends on the
         resource.
-
         """
         logger.debug('Render %r to %s', self, target)
 
@@ -31,7 +27,6 @@ class FileResource(Resource):
 
     Specifically, either a file, directory, or other object on the file system
     with a path.
-
     """
 
     def __init__(self, path):
@@ -50,7 +45,6 @@ class FileResource(Resource):
         This should return a true value if the path is valid, and a false value
         otherwise.  The exact return type and value is up to the implementing
         class.
-
         """
 
     @property
