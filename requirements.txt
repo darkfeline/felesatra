@@ -1,6 +1,6 @@
 # Required
-PyYAML==3.11
 Jinja2==2.8
+mir.frelia==0.1.0
 
 # For development
 Flask==0.10.1

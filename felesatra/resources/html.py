@@ -4,10 +4,9 @@ This module provides HTMLResource for rendering HTML files with Jinja
 templating.  However, HTMLResource does not support any of the features needed
 for a web page as part of a web site, such as rendering to index.html,
 registering in the sitemap or Atom feeds, etc.
-
 """
 
-import yaml
+from mir.frelia import enja
 
 from .abc import FileResource
 
@@ -26,25 +25,20 @@ class HTMLResource(FileResource):
     Attributes:
         meta: Parsed from front matter
         content: HTML content sans front matter
-
     """
 
     def __init__(self, path):
         super().__init__(path)
 
         with open(self.path) as file:
-            frontmatter = []
-            for line in file:
-                if line.rstrip() == '---':
-                    break
-                frontmatter.append(line)
-            self.content = file.read()
+            document = enja.load(file)
+        self.content = document.body
 
         self.meta = {
             'template': 'base.html',
             'title': '',
         }
-        self.meta.update(yaml.load(''.join(frontmatter)))
+        self.meta.update(document.header)
 
     @classmethod
     def valid_resource(cls, path):
