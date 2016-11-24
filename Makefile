@@ -19,16 +19,12 @@ upload: clean build
 
 .PHONY: build_local
 build_local:
-	python -m felesatra --site-url 'http://localhost:5000' ${LOCAL_BUILD_DIR}
+	python -m felesatra --site-url 'http://localhost:8080' ${LOCAL_BUILD_DIR}
 
 .PHONY: clean
 clean:
 	rm -rf ${BUILD_DIR}
 	rm -rf ${LOCAL_BUILD_DIR}
-
-.PHONY: devserver
-devserver:
-	python -m devserver ${LOCAL_BUILD_DIR}
 
 .PHONY: watch
 watch:
