@@ -1,3 +1,1 @@
-package { ['nginx']:
-  ensure => latest,
-}
+include felesatra::felesatra

@@ -1,0 +1,18 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+
+    include snippets/snakeoil.conf;
+
+    root /srv/www;
+
+    index index.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
