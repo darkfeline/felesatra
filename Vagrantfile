@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   # your network.
   # config.vm.network "public_network"
 
-  config.vm.synced_folder "build_local", "/srv/www"
+  config.vm.synced_folder "build_local", "/srv/www", owner: "www-data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
