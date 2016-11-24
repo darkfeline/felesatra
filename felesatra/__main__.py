@@ -1,5 +1,3 @@
-# pylint: disable=missing-docstring
-
 import argparse
 import logging
 import os
