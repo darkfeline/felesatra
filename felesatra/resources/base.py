@@ -38,7 +38,8 @@ class DirectoryResource(FileResource):
 
     def __init__(self, path):
         super().__init__(path)
-        self.entries = dict((path, resource) for path, resource in self.iter_resources())
+        self.entries = dict((path, resource)
+                            for path, resource in self.iter_resources())
 
     def __iter__(self):
         for path, resource, in self.entries.items():
