@@ -27,7 +27,6 @@ class PageIndexEntry:
     """Page index entry used for many things.
 
     For example: sitemap, Atom feed, site index
-
     """
 
     # pylint: disable=too-many-instance-attributes
