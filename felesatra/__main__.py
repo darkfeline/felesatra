@@ -55,5 +55,6 @@ def main():
     website.index(env)
     website.render(env, args.build_dir)
 
+
 if __name__ == '__main__':
     main()

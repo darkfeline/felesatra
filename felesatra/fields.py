@@ -1,15 +1,12 @@
 """Instance field descriptors.
 
-This module contains instance field descriptor classes that are handy for rendering.
-
+This module contains instance field descriptor classes that are handy for
+rendering.
 """
 
 import datetime
 from abc import ABC
 from weakref import WeakKeyDictionary
-
-
-# pylint: disable=too-few-public-methods
 
 
 class Field(ABC):
@@ -28,7 +25,6 @@ class StrictField(Field):
     """Descriptor for a generic single value field.
 
     This field strictly requires being set and doesn't support defaults.
-
     """
 
     def __get__(self, obj, objtype):
@@ -45,7 +41,6 @@ class LazyField(Field):
 
     Unlike DefaultField, the default value will not be set on the instance if
     an instance value doesn't exist.
-
     """
 
     def __init__(self, default=None):
@@ -64,7 +59,6 @@ class DefaultField(Field):
 
     This field is different because accessing it on an instance will set the
     value if it doesn't exist, like a defaultdict.
-
     """
 
     def __init__(self, default=lambda: None):
@@ -100,7 +94,6 @@ class AttrField(StrictField):
     """A strict string field used for rendering HTML tag attributes.
 
     See the tagattrs() filter.
-
     """
 
     def __set__(self, obj, value):
@@ -115,7 +108,6 @@ class ListField(DefaultField):
 
     This field is different because accessing it on an instance will set the
     value if it doesn't exist, like a defaultdict.
-
     """
 
     def __init__(self, default=lambda: []):
