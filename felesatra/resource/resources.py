@@ -155,3 +155,61 @@ class WebPageResource(HTMLResource, Indexable):
 
     def _deploy_file(self, env, target_path):
         super()._deploy_file(env, target_path / 'index.html')
+
+
+class HomePageResource(HTMLResource, Indexable):
+
+    """Homepage resource.
+
+    Similar to Webpage, but always renders into index.html in its target
+    directory, suitable for the root URL path of a website.
+    """
+
+    @property
+    @functools.lru_cache(None)
+    def _updated(self):
+        """When resource was updated."""
+        if 'modified' in self._meta:
+            return self._meta['modified']
+        else:
+            return self._meta['published']
+
+    def get_index_entry(self, env):
+        entry = PageIndexEntry('/', 'Feles Atra')
+        entry.published = self._meta.get('published')
+        entry.updated = self._updated
+        entry.include_in_atom = False
+        return entry
+
+
+# XXX
+class AtomResource(Resource):
+
+    """Atom feed resource."""
+
+    def __init__(self, context):
+        self.context = context
+
+    def __repr__(self):
+        return "AtomResource({})".format(self.context)
+
+    def render(self, env, target):
+        """Render this resource into target."""
+        super().render(env, target)
+        # Make a copy of the Atom context.
+        context = dict(self.context)
+        # Set up Atom entries.
+        entries = env.globals['page_index']
+        entries = [entry.atom_entry() for entry in entries if entry.include_in_atom]
+        context['entries'] = entries
+        # Calculate updated time for Atom feed.
+        if entries:
+            updated = max(entry.updated for entry in entries)
+        else:
+            updated = datetime.datetime.now(timezone.utc)
+        context['updated'] = updated
+        # Render Atom feed.
+        template = env.get_template('atom.xml')
+        content = template.render(context)
+        with open(target, 'w') as file:
+            file.write(content)

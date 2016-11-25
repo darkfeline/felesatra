@@ -28,10 +28,6 @@ class WebsiteDirectoryLoader(ResourceLoader):
             yield from self._load_resources(subpath, resource_path)
 
     def _load_resources(self, path, resource_path):
-        """Load resources.
-
-        path is a Path object.
-        """
         if path.is_dir():
             yield from self(path, resource_path / path.name)
         else:
@@ -47,3 +43,18 @@ class WebsiteDirectoryLoader(ResourceLoader):
 class WebsiteLoader(WebsiteDirectoryLoader):
 
     """ResourceLoader for a website."""
+
+    def _load_resources(self, path, resource_path):
+        if path.is_dir():
+            loader = WebsiteDirectoryLoader()
+            yield from loader(path, resource_path / path.name)
+        else:
+            yield self._load_resource(path, resource_path)
+
+    def _load_resource(self, path, resource_path):
+        if path.name == '404.html':
+            return resources.HTMLResource(path, resource_path / path.name)
+        elif path.name == 'index.html':
+            return resources.HomePageResource(path, resource_path)
+        else:
+            return super()._load_resource(path, resource_path)
