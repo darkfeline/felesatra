@@ -39,10 +39,9 @@ class WebsiteDirectoryLoader(ResourceLoader):
 
     def _load_resource(self, path, resource_path):
         if path.suffix == '.html':
-            cls = resources.WebPageResource
+            return resources.WebPageResource(path, resource_path / path.stem)
         else:
-            cls = resources.FileResource
-        return cls(path, resource_path)
+            return resources.FileResource(path, resource_path / path.name)
 
 
 class WebsiteLoader(WebsiteDirectoryLoader):
