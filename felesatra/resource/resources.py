@@ -223,3 +223,17 @@ class AtomResource(BaseFileResource):
         content = template.render(context)
         with target_path.open('w') as file:
             file.write(content)
+
+
+class SitemapResource(BaseFileResource):
+
+    """Sitemap resource."""
+
+    def _deploy_file(self, env, target_path):
+        pages = env.globals['page_index']
+        sitemap = [entry.sitemap_entry() for entry in pages]
+        logger.debug('sitemap %r', sitemap)
+        template = env.get_template('sitemap.xml')
+        content = template.render({'sitemap': sitemap})
+        with target_path.open('w') as file:
+            file.write(content)
