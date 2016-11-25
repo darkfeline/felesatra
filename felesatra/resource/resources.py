@@ -1,10 +1,11 @@
 """Website resources."""
 
 import abc
+import datetime
+from datetime import timezone
 import functools
 from html.parser import HTMLParser
 import logging
-import os
 import pathlib
 import shutil
 
@@ -20,7 +21,7 @@ class Resource(abc.ABC):
     """Resource."""
 
     @abc.abstractmethod
-    def deploy(self, env):
+    def deploy(self, env, target):
         """Deploy resource using the given environment."""
 
 
@@ -32,7 +33,23 @@ class Indexable(abc.ABC):
         """Get index entry."""
 
 
-class FileResource(Resource):
+class BaseFileResource(Resource):
+
+    def __init__(self, resource_path):
+        self._resource_path = pathlib.PurePath(resource_path)
+
+    def deploy(self, env, target_path):
+        logger.debug('Deploying %r to %r with %r', self, target_path, env)
+        target_path = pathlib.Path(target_path) / self._resource_path
+        target_path.mkdir(parents=True, exist_ok=True)
+        self._deploy_file(env, target_path)
+
+    @abc.abstractmethod
+    def _deploy_file(self, env, target_path):
+        """Deploy a file resource."""
+
+
+class FileResource(BaseFileResource):
 
     """Represents a file resource.
 
@@ -41,14 +58,8 @@ class FileResource(Resource):
     """
 
     def __init__(self, file_path, resource_path):
+        super().__init__(resource_path)
         self._file_path = pathlib.Path(file_path)
-        self._resource_path = pathlib.PurePath(resource_path)
-
-    def deploy(self, env):
-        logger.debug('Deploying %r with %r', self, env)
-        target_path = env.get_target_path() / self._resource_path
-        target_path.mkdir(parents=True, exist_ok=True)
-        self._deploy_file(env, target_path)
 
     def _deploy_file(self, env, target_path):
         shutil.copy(self._file_path, target_path)
@@ -182,25 +193,24 @@ class HomePageResource(HTMLResource, Indexable):
         return entry
 
 
-# XXX
-class AtomResource(Resource):
+class AtomResource(BaseFileResource):
 
     """Atom feed resource."""
 
-    def __init__(self, context):
-        self.context = context
+    def __init__(self, context, resource_path):
+        super().__init__(resource_path)
+        self._context = context
 
-    def __repr__(self):
-        return "AtomResource({})".format(self.context)
-
-    def render(self, env, target):
-        """Render this resource into target."""
-        super().render(env, target)
+    def _deploy_file(self, env, target_path):
         # Make a copy of the Atom context.
         context = dict(self.context)
         # Set up Atom entries.
         entries = env.globals['page_index']
-        entries = [entry.atom_entry() for entry in entries if entry.include_in_atom]
+        entries = [
+            entry.atom_entry()
+            for entry in entries
+            if entry.include_in_atom
+        ]
         context['entries'] = entries
         # Calculate updated time for Atom feed.
         if entries:
@@ -211,5 +221,5 @@ class AtomResource(Resource):
         # Render Atom feed.
         template = env.get_template('atom.xml')
         content = template.render(context)
-        with open(target, 'w') as file:
+        with target_path.open('w') as file:
             file.write(content)

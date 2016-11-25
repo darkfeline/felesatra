@@ -55,6 +55,6 @@ class WebsiteLoader(WebsiteDirectoryLoader):
         if path.name == '404.html':
             return resources.HTMLResource(path, resource_path / path.name)
         elif path.name == 'index.html':
-            return resources.HomePageResource(path, resource_path)
+            return resources.HomePageResource(path, resource_path / path.name)
         else:
             return super()._load_resource(path, resource_path)
