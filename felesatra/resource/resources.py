@@ -127,6 +127,15 @@ class WebPageResource(HTMLResource, Indexable):
     As a web page, this resource will also be added to the page index.
     """
 
+    def __init__(self, file_path, resource_path):
+        """Initialize instance."""
+        super().__init__(file_path, resource_path)
+
+        if 'published' not in self._meta and len(file_path.parents) >= 3:
+            year, month, day = file_path.parts[-4:-1]
+            self._meta['published'] = datetime.datetime(
+                int(year), int(month), int(day))
+
     @property
     @functools.lru_cache(None)
     def _updated(self):
