@@ -130,7 +130,6 @@ class WebPageResource(HTMLResource, Indexable):
     def __init__(self, file_path, resource_path):
         """Initialize instance."""
         super().__init__(file_path, resource_path)
-
         if 'published' not in self._meta and len(file_path.parents) >= 3:
             year, month, day = file_path.parts[-4:-1]
             self._meta['published'] = datetime.datetime(
