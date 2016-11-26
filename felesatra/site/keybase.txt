@@ -1,0 +1,66 @@
+==================================================================
+https://keybase.io/darkfeline
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://www.felesatra.moe
+  * I am darkfeline (https://keybase.io/darkfeline) on keybase.
+  * I have a public key with fingerprint E939 7FA1 7F25 01B5 EF73  44B9 871A C6C8 2D45 F74D
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "010106ccd41ebd4f1d44f1692a80c4d5d486134ec8931e13bdd96a7c55e24097b4f80a",
+            "fingerprint": "e9397fa17f2501b5ef7344b9871ac6c82d45f74d",
+            "host": "keybase.io",
+            "key_id": "871ac6c82d45f74d",
+            "kid": "010106ccd41ebd4f1d44f1692a80c4d5d486134ec8931e13bdd96a7c55e24097b4f80a",
+            "uid": "44d6214fdab11fbce75b3f7fbee86119",
+            "username": "darkfeline"
+        },
+        "service": {
+            "hostname": "www.felesatra.moe",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1480122023,
+    "expire_in": 157680000,
+    "prev": "e6fbb548d6b89d2cd19ea1e0be25906fa7c4cfa534494fcb775f166158078e65",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owGtUmtIFUEY3WtZJiWJRgiltZRSmu7snX1dDSo1IrJICizJ287OjHd93L3u3esj
+syKCDAOVCiqEtKAgQiG0Qi0IJMke9KAH9EAMeloGoiAZNCv2r5/NwAzzzTlnvu/M
+17JoDhfjKUxbxxWnR654HnxBXJH6/mE9jyxcx/vq+XIys5EKTMKOv9zEvI8XAJuy
+YWAICMKQAgzZImuirgoGxBKGqgy8kBiq5gUEeBHGmqwrhiQREQqagiBVBZ3P4KkZ
+LCV2yDaDDpMlmldTqA4UKkoCQBKhihdCpKkK0A3ZUEUMJapAzIgBK+wyWHJID5NM
+02IxdvDPpPcP/H/OOzIjByGWRQAp1hEAFBlEkZCXKhQRwnSA5gLDxA7qlYShsW6X
+U1JhBgnfkMGzeLVpENdat5ZZTE1NTSbDkLDu2HpmpUWYRMi2HMuwKth1wHFCPpft
+1IVm4AT5Z4X8yAxi5iYjVBM7bFpB3gcY0nBMVxlAVQCiKIjeDJ7Uhkyb+E0XISmy
+KrDhPkOq3T8okSlCElSxjFQNiwYGGtEBERARJU2QKbMDGlSX2M9okBpIUSRmoQwk
+VVBUIku8W1tV0OJ9EstTL2WaYbM0qDsRmxUee8KzbC7nieHmRUe5fcbFLlj8t/n8
+iTHc8968pOsdqdusgtjP+1Y4ZmfKgBlKSouPzruKHg/e27S2aKw9f6kcyd7gRLjV
+C+1BP9cfUE+ee1/2q7HHXpmZOHzw1tSSpvas9R92TE+2dR3flWsf+j6alZh/tG3r
+a/Cq+V3Ic68l4c6qhIrG7hclUVXhnFsTBwb64k49zg08uZGx9+kUV9iZ0j3+wNs6
+9KRsePrSo4ZvH4+VfGvdvXFy6cvkN8lJ8Z6hju2RpLMdxZGukH24ct/EzdMjZ5rK
+ss7/LI8pnH+3pe1TYM/Ihebb8b9z7hekXyv4MRD9rmdoZ9zyLf1N+wdfjQ88cxan
+j3Ymp665vJkmvKWR7CNjtX1f+byLd3v/AA==
+=wq3d
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/darkfeline
+
+==================================================================
