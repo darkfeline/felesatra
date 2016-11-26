@@ -11,7 +11,7 @@ build:
 SSH_HOST=www.felesatra.moe
 SSH_PORT=22
 SSH_USER=root
-SSH_DIR=/srv/www/www.felesatra.moe
+SSH_DIR=/srv/www
 
 .PHONY: upload
 upload: clean build
