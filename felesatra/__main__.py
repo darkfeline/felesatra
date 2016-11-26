@@ -6,8 +6,7 @@ from collections import OrderedDict
 from urllib.parse import urljoin
 
 from felesatra.env import make_env
-from felesatra.resources.site import Website
-from felesatra.resources.site.atom import Author, Link
+from felesatra.resource.index import Author, Link
 import felesatra.resource.loaders
 import felesatra.resource.resources
 
@@ -54,9 +53,6 @@ def main():
     src_dir = sitepath()
     env = make_env()
     setup_env(env, args.site_url, src_dir)
-    # website = Website(src_dir)
-    # website.index(env)
-    # website.render(env, args.build_dir)
 
     args.build_dir = pathlib.Path(args.build_dir)
 
