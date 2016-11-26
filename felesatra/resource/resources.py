@@ -61,8 +61,16 @@ class FileResource(BaseFileResource):
         super().__init__(resource_path)
         self._file_path = pathlib.Path(file_path)
 
+    def __repr__(self):
+        return ('{cls}(file_path={this._file_path!r},'
+                ' resource_path={this._resource_path!r})'
+                .format(
+                    cls=type(self).__qualname__,
+                    this=self))
+
     def _deploy_file(self, env, target_path):
-        shutil.copy(self._file_path, target_path)
+        # XXX Python 3.6 fspath support
+        shutil.copy(str(self._file_path), str(target_path))
 
 
 class HTMLResource(FileResource):
