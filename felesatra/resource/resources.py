@@ -41,7 +41,7 @@ class BaseFileResource(Resource):
     def deploy(self, env, target_path):
         logger.debug('Deploying %r to %r with %r', self, target_path, env)
         target_path = pathlib.Path(target_path) / self._resource_path
-        target_path.mkdir(parents=True, exist_ok=True)
+        target_path.parent.mkdir(parents=True, exist_ok=True)
         self._deploy_file(env, target_path)
 
     @abc.abstractmethod
@@ -181,6 +181,7 @@ class WebPageResource(HTMLResource, Indexable):
         return entry
 
     def _deploy_file(self, env, target_path):
+        target_path.mkdir(exist_ok=True)
         super()._deploy_file(env, target_path / 'index.html')
 
 
