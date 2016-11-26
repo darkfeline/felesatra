@@ -3,7 +3,7 @@
 import abc
 import pathlib
 
-from mir.resource import resources
+from felesatra.resource import resources
 
 
 class ResourceLoader(abc.ABC):

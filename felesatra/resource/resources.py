@@ -29,7 +29,7 @@ class Indexable(abc.ABC):
     """Interface for indexable resource."""
 
     @abc.abstractmethod
-    def get_index_entry(self):
+    def get_index_entry(self, env):
         """Get index entry."""
 
 
@@ -84,7 +84,7 @@ class HTMLResource(FileResource):
 
     def _render_content(self, env):
         """Render content only."""
-        content_template = env.from_string(self.content)
+        content_template = env.from_string(self._content)
         rendered_content = content_template.render()
         return rendered_content
 
@@ -94,9 +94,9 @@ class HTMLResource(FileResource):
         content = self._render_content(env)
 
         # Render page content into template.
-        template = env.get_template(self.meta['template'])
+        template = env.get_template(self._meta['template'])
         context = {'content': content}
-        context.update(self.meta)
+        context.update(self._meta)
         return template.render(context)
 
     def _deploy_file(self, env, target_path):
@@ -163,7 +163,7 @@ class WebPageResource(HTMLResource, Indexable):
     def get_index_entry(self, env):
         path = str(self._resource_path) + '/'
         url = utils.geturl(env, path)
-        entry = PageIndexEntry(url, self.meta['title'])
+        entry = PageIndexEntry(url, self._meta['title'])
         entry.published = self._meta.get('published')
         entry.updated = self._updated
         entry.category = self._meta.get('category')
@@ -211,7 +211,7 @@ class AtomResource(BaseFileResource):
 
     def _deploy_file(self, env, target_path):
         # Make a copy of the Atom context.
-        context = dict(self.context)
+        context = dict(self._context)
         # Set up Atom entries.
         entries = env.globals['page_index']
         entries = [
@@ -229,7 +229,7 @@ class AtomResource(BaseFileResource):
         # Render Atom feed.
         template = env.get_template('atom.xml')
         content = template.render(context)
-        with target_path.open('w') as file:
+        with (target_path / self._resource_path).open('w') as file:
             file.write(content)
 
 
@@ -243,5 +243,5 @@ class SitemapResource(BaseFileResource):
         logger.debug('sitemap %r', sitemap)
         template = env.get_template('sitemap.xml')
         content = template.render({'sitemap': sitemap})
-        with target_path.open('w') as file:
+        with (target_path / self._resource_path).open('w') as file:
             file.write(content)
