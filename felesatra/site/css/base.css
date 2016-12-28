@@ -92,9 +92,6 @@ aside {
     color: #666666;
     padding: 10px;
     margin: 10px;
-    border: 1px solid #666666;
-    border-radius: 10px;
-    background-color: #eeeeee;
 }
 
 aside:before {
@@ -105,20 +102,4 @@ aside:before {
 img.centered {
     display: block;
     margin: 0 auto;
-}
-
-/* Extra semantics */
-span.aside {
-    font-size: 90%;
-    color: #808080;
-}
-
-section.footnotes {
-    border-top: 1px solid #888888;
-}
-
-section.footnotes p {
-    font-size: 75%;
-    margin-top: 8px;
-    margin-bottom: 8px;
 }
