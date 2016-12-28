@@ -11,6 +11,9 @@ server {
     location / {
         try_files $uri $uri/ =404;
     }
+
+    # For Virtualbox development
+    sendfile off;
 }
 
 # Local Variables:
