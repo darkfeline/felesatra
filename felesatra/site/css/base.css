@@ -89,14 +89,14 @@ address {
 }
 
 aside {
-    font-size: 80%;
-    color: #666666;
-    padding: 10px;
+    font-size: 75%;
+    color: #777777;
     margin: 10px;
 }
 
 aside:before {
-    content: "Aside: ";
+    content: "Aside:";
+    font-weight: bold;
 }
 
 /* Images */
