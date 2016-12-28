@@ -97,6 +97,10 @@ aside {
     background-color: #eeeeee;
 }
 
+aside:before {
+    content: "Aside: ";
+}
+
 /* Images */
 img.centered {
     display: block;
