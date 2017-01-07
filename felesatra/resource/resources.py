@@ -69,8 +69,7 @@ class FileResource(BaseFileResource):
                     this=self))
 
     def _deploy_file(self, env, target_path):
-        # XXX Python 3.6 fspath support
-        shutil.copy(str(self._file_path), str(target_path))
+        shutil.copy(self._file_path, target_path)
 
 
 class HTMLResource(FileResource):
