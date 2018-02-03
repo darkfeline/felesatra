@@ -1,5 +1,0 @@
-#!/bin/sh
-while inotifywait -qre close_write felesatra; do
-    make clean
-    make build_local
-done
