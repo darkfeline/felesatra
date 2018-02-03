@@ -1,0 +1,696 @@
+title: Introduction to ed
+template: content_page.html
+---
+{%- from "macros.html" import codeblock -%}
+
+<section>
+<h1>What is ed?</h1>
+
+<p>
+ed is the standard UNIX text editor, although it is more specifically a line
+editor: it edits lines of text.  It is required to be installed on UNIX
+systems and many text editors are descendants of ed.
+</p>
+
+<p>
+ed was originally written by Ken Thompson in 1971 and later worked on by
+others, notably Dennis M. Ritchie.
+</p>
+</section>
+
+<section>
+<h1>Why ed?</h1>
+
+<p>
+There are many reasons why one might want to become familiar with ed.
+</p>
+
+<p>
+First, it is a powerful tool, despite its simplicity and age.  Many simple text
+editors cannot match ed in features or ease of scripting even today.
+</p>
+
+<p>
+Second, even if you were to use more powerful text editors in your work (which
+is a smart thing to do), you may find yourself in a situation where ed is the
+only text editor available, for it is the standard UNIX editor, and every UNIX
+system is required to have it, unlike other editors such as vi or Emacs.
+Alternatively, a system may become so broken that no other editors will work
+any more, for example, due to terminal or library issues.  In such a situation,
+knowledge of ed will help you immensely.
+</p>
+
+<p>
+Third, many text editors are descended from ed, such as vi, Vim, sam, and acme,
+and an understanding of ed will help you learn how to use these editors and
+understand their design.  The standard UNIX tools sed and awk also draw from
+ed.
+</p>
+
+<p>
+Fourth, even if you have no interest in ed as a text editor, it still provides
+a strong example of good UNIX design.
+</p>
+
+<p>
+Finally, if you ever accidentally run ed, you will know how to exit it:
+</p>
+
+{% call codeblock() %}
+golem$ ed
+
+?
+help
+?
+?
+?
+quit
+?
+exit
+?
+bye
+?
+hello?
+?
+eat flaming death
+?
+^C
+?
+^C
+?
+^D
+?
+{% endcall %}
+
+<p>
+  (Taken from <a href="http://www.gnu.org/fun/jokes/ed.msg.html">ed humor</a>.)
+</p>
+</section>
+
+<section>
+<h1>Where to get help</h1>
+
+<p>
+Like all UNIX software, the full and canonical documentation for ed can be
+found in its man page.  Not all versions of ed are identical, so the man page
+on the system you are using should be considered the most correct.  However,
+the implementation of ed is pretty well-defined, so in practice you should
+not have much problem using any man page for it found on the Internet.
+</p>
+
+<p>
+  I will be using <a href="https://www.gnu.org/software/ed/">GNU ed</a>.  <a href="https://www.gnu.org/software/ed/manual/ed_manual.html">Its documentation</a> can be found online.
+</p>
+</section>
+
+<section>
+<h1>Using ed</h1>
+
+<p>
+For the purposes of this tutorial, I will use the following passage from
+<i>Alice's Adventures in Wonderland</i> by Lewis Carroll, taken from
+<a href="http://www.gutenberg.org/">Project Gutenberg</a>.
+</p>
+
+
+{% call codeblock() %}
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+{% endcall %}
+
+<section>
+<h1>Starting ed</h1>
+
+<p>
+Starting ed is simple.
+</p>
+
+{% call codeblock() %}
+$ ed
+{% endcall %}
+
+<p>
+Notice that ed does not print anything.  This is an example of <code>ed</code>'s
+terseness, which will become familiar as you use ed, and hopefully, even
+comforting (if, God forbid, you find yourself needing to edit a text file with
+only ticker tape as your output, printing at the speed of a single character
+per second, this terseness will become like ambrosia).
+</p>
+
+<p>
+The command to quit is also simple: <code>q</code>.  ed works similar to all command
+line interfaces; you press Enter or Return after each command.
+</p>
+
+{% call codeblock() %}
+$ ed
+q
+$
+{% endcall %}
+
+<p>
+Whenever ed becomes unhappy (it reports an error or warning), it will print a
+succinct <code>?</code>.  You can get more information using the command <code>h</code>.
+</p>
+
+{% call codeblock() %}
+$ ed
+u
+?
+h
+Nothing to undo
+{% endcall %}
+</section>
+
+<section>
+<h1>Editing files</h1>
+
+<p>
+ed edits files by keeping a buffer that is then written to the respective
+file after modification.  This is how all text editors work, but it's simple to
+conceptualize with ed:
+</p>
+
+{% call codeblock() %}
+        read       ed      modify             save
+( file ------> ) buffer ( --------> buffer ) ------> file
+{% endcall %}
+
+<p>
+When you run <code>ed filename</code>, you tell ed to edit the given file.  That means
+that ed will read the text in the file into its buffer and set its default
+filename to the one you gave it, so that ed will save the buffer back to that
+file by default.  The edit command is <code>e</code>, so <code>ed filename</code> is equivalent to:
+</p>
+
+{% call codeblock() %}
+$ ed
+e filename
+{% endcall %}
+
+<p>
+ed prints out the number of bytes it read whenever it reads in a file:
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+{% endcall %}
+</section>
+
+<section>
+<h1>Printing, moving around, scrolling</h1>
+
+<p>
+The <code>p</code> command is used for printing lines.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+p
+"without pictures or conversations?"
+{% endcall %}
+
+<p>
+By default, <code>p</code> prints the current line, which is set to the last line after ed
+reads in a file.  You can also print a specific line by number, or a range of
+lines.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1p
+ALICE was beginning to get very tired of sitting by her
+2p
+sister on the bank, and of having nothing to do: once or twice she had
+1,2p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+{% endcall %}
+
+<p>
+Note that the current line is set to the last line printed after every <code>p</code>
+command.  As a general rule, ed will set the current line to the last line
+affected by each command.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+p
+"without pictures or conversations?"
+3p
+peeped into the book her sister was reading, but it had no pictures or
+p
+peeped into the book her sister was reading, but it had no pictures or
+{% endcall %}
+
+<p>
+You can use <code>.</code> to refer to the current line, <code>$</code> to refer to the last line in
+the buffer, and <code>,</code> as a shorthand for <code>1,$</code>, i.e., the whole buffer.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+.p
+"without pictures or conversations?"
+1p
+ALICE was beginning to get very tired of sitting by her
+$p
+"without pictures or conversations?"
+1,$p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+,p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+{% endcall %}
+
+<p>
+You can also address lines relative to other lines.  For example, <code>.-</code> or <code>.-1</code>
+means the line before the current line, <code>.--</code> or <code>.-2</code> means the line before
+that, <code>.+</code> or <code>.+1</code> means the line after the current line, and <code>.++</code> or <code>.+2</code>
+means the line after that.  Here are some more examples: <code>$---</code> means the line
+three before the last line, and <code>30+5</code> means the fifth line after the 30th
+line, or the 35th line line.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+# Typing a line address by itself is the same as a print: ed will print
+# that line and set it as the current line.
+3
+peeped into the book her sister was reading, but it had no pictures or
+# Print the range of lines starting from the line before the current line
+# to the line after the current line.
+-,+p
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+{% endcall %}
+
+<p>
+Thus, you can move around the file using <code>-</code> and <code>+</code>.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+-
+conversations in it, "and what is the use of a book," thought Alice,
+-
+peeped into the book her sister was reading, but it had no pictures or
+-
+sister on the bank, and of having nothing to do: once or twice she had
++
+peeped into the book her sister was reading, but it had no pictures or
++
+conversations in it, "and what is the use of a book," thought Alice,
+{% endcall %}
+
+<p>
+ed also provides the <code>z</code> command for scrolling through lines (I use a longer
+text here for demonstration).
+</p>
+
+{% call codeblock() %}
+$ ed alice2.txt
+1677
+1
+ALICE was beginning to get very tired of sitting by her
+z1
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+z2
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+
+z3
+So she was considering in her own mind (as well as she could, for the
+hot day made her feel very sleepy and stupid) whether the pleasure of
+making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+z4
+close by her.
+
+There was nothing so _very_ remarkable in that; nor did Alice think it
+so _very_ much out of the way to hear the Rabbit say to itself, "Oh
+dear! Oh dear! I shall be too late!" (when she thought it over
+z5
+afterwards, it occurred to her that she ought to have wondered at this,
+but at the time it all seemed quite natural); but when the Rabbit
+actually _took a watch out of its waistcoat-pocket_, and looked at it,
+and then hurried on, Alice started to her feet, for it flashed across
+her mind that she had never before seen a rabbit with either a
+waistcoat-pocket, or a watch to take out of it, and burning with
+{% endcall %}
+
+<p>
+You can see this makes scrolling through a file much easier.  By default, <code>z</code>
+prints as many lines as can fit in your window, which may be impractical if
+your window is very tall.
+</p>
+</section>
+
+<section>
+<h1>Inserting lines, changing lines</h1>
+
+<p>
+The <code>a</code> command lets us append new lines.  After invoking the command, you can
+type lines for ed to add, followed by a single period on its own line to tell
+ed you're finished.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+,p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+a
+
+You can use it as a doorstop.
+.
+,p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+
+You can use it as a doorstop.
+{% endcall %}
+
+<p>
+By default, <code>a</code> adds the lines after the current line, but you can give ed a
+different line.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1a
+We interrupt this story for no reason.
+.
+,p
+ALICE was beginning to get very tired of sitting by her
+We interrupt this story for no reason.
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+{% endcall %}
+
+<p>
+There's a complementary <code>i</code> command that inserts lines before instead of after.
+It exists only for convenience.
+</p>
+
+<p>
+Similarly, there's the <code>d</code> command for deleting lines.  By default it deletes
+the current line, but you can give it a specific line or range of lines.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+d
+,p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+2,3d
+,p
+ALICE was beginning to get very tired of sitting by her
+conversations in it, "and what is the use of a book," thought Alice,
+{% endcall %}
+
+<p>
+Knowing <code>a</code>, <code>d</code>, and <code>p</code> is enough to use ed to make any changes you want.
+Often, though, you will want to change existing lines, and repeatedly typing
+<code>d</code> and <code>i</code> gets old fast.  ed provides the <code>c</code> command to make changing lines
+easier.  Functionally, it's identical to the <code>d</code> and <code>i</code> commands chained
+together.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1p
+ALICE was beginning to get very tired of sitting by her
+c
+Alice was beginning to get very tired of sitting by her
+.
+p
+Alice was beginning to get very tired of sitting by her
+{% endcall %}
+
+<p>
+Another convenience command is <code>j</code>, which joins lines together.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1,2c
+Here's my version of Alice.
+It's not very interesting.
+Oops, I didn't mean to break those up.
+.
+,p
+Here's my version of Alice.
+It's not very interesting.
+Oops, I didn't mean to break those up.
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+1,2j
+,p
+Here's my version of Alice.It's not very interesting.
+Oops, I didn't mean to break those up.
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+{% endcall %}
+
+<p>
+Notice that <code>j</code> doesn't insert any spaces.  We could fix that mistake using
+<code>c</code>, but retyping all of that is no fun.  As you may have noticed, ed deals
+strictly with lines of text, so fixing errors within a line is difficult.
+However, ed provides the <code>s</code> command to substitute text within lines.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1p
+ALICE was beginning to get very tired of sitting by her
+s/ALICE/Alice/
+p
+Alice was beginning to get very tired of sitting by her
+{% endcall %}
+
+<p>
+ed uses regular expressions, which are a different topic entirely so I won't
+cover it here.  If you aren't familiar with them, think of regular expressions
+as rules to match different patterns of strings.
+</p>
+
+<p>
+By default, <code>s</code> only works on the first match in the line.  You can add a <code>g</code>
+suffix to work on all matches, or a number to work on only the given match.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+1p
+ALICE was beginning to get very tired of sitting by her
+# Capitalize the second lowercase "t"
+s/t/T/2
+p
+ALICE was beginning to geT very tired of sitting by her
+# Capitalize all lowercase "t"s
+s/t/T/g
+p
+ALICE was beginning To geT very Tired of siTTing by her
+{% endcall %}
+</section>
+
+<section>
+<h1>Writing</h1>
+
+<p>
+So far we've covered making changes, but make sure to write them to a file
+before quitting.  If you try to do so, ed will helpfully warn you:
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+d
+q
+?
+h
+Warning: buffer modified
+{% endcall %}
+
+<p>
+Use the <code>w</code> command to write the buffer to a file.  By default it will write to
+the default filename (refer back to editing files for a reminder), but you can
+supply it with a filename as well.  Like when it reads a file, ed will print
+the number of bytes written afterward.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+d
+w tmp
+267
+{% endcall %}
+
+<p>
+<code>w</code> will set the default filename to the one you've given it only if it wasn't
+set before.  You can set the default filename manually using <code>f</code>.
+</p>
+
+<p>
+If you want to quit without writing, you can use <code>Q</code>, or invoke <code>q</code> twice in a
+row to silence ed's protests:
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+d
+q
+?
+q
+$
+{% endcall %}
+</section>
+
+<section>
+<h1>Global command and shell interaction</h1>
+
+<p>
+ed has quite a few more features; I won't mention them, as they aren't
+necessary to gain an understanding of basic ed usage.  There are two that are
+important, however.
+</p>
+
+<p>
+ed has four commands for running other commands on all of the lines that match
+(or don't match) a pattern: <code>g</code>, <code>G</code>, <code>v</code>, and <code>V</code>.  These commands can be used
+in a huge variety of ways limited only by your imagination; naturally, I won't
+try to show them all.  One common way it is used is to print every line that
+matches a pattern:
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+# Print every line that contains "re"
+g/re/p
+ALICE was beginning to get very tired of sitting by her
+peeped into the book her sister was reading, but it had no pictures or
+"without pictures or conversations?"
+{% endcall %}
+
+<p>
+This is in fact where the name for grep comes from; the "re" stands for
+"regular expression".
+</p>
+
+<p>
+Another important feature is shell interaction.  ed is UNIX's standard text
+editor; it works together with the rest of UNIX to provide all the features of
+a development environment or of more advanced editors.
+</p>
+
+<p>
+You can run a shell command within ed using <code>!</code>.  ed will print output from the
+command; when the command terminates, ed prints a single <code>!</code>.
+</p>
+
+{% call codeblock() %}
+$ ed
+!date
+Sun Feb 22 02:17:21 EST 2015
+!
+{% endcall %}
+
+<p>
+You can also read output from a shell command into the buffer or write lines
+from the buffer to the input of a shell command.  All of this is consistent
+with the UNIX philosophy of letting other tools do the work instead of adding
+the same features to every single program.
+</p>
+
+{% call codeblock() %}
+$ ed alice.txt
+304
+# We read the output of the date program into the buffer.  The "r" command
+# tells us how many bytes it read.
+r !date
+29
+,p
+ALICE was beginning to get very tired of sitting by her
+sister on the bank, and of having nothing to do: once or twice she had
+peeped into the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book," thought Alice,
+"without pictures or conversations?"
+Sun Feb 22 02:20:51 EST 2015
+# We sort the lines in the file using the sort program.  It prints them
+# out, followed by the number of bytes written, similar to "r".
+w !sort
+"without pictures or conversations?"
+ALICE was beginning to get very tired of sitting by her
+Sun Feb 22 02:20:51 EST 2015
+conversations in it, "and what is the use of a book," thought Alice,
+peeped into the book her sister was reading, but it had no pictures or
+sister on the bank, and of having nothing to do: once or twice she had
+333
+# We can write the sorted lines to a file and then read them back.
+w !sort > tmp
+333
+,d
+r tmp
+333
+,p
+"without pictures or conversations?"
+ALICE was beginning to get very tired of sitting by her
+Sun Feb 22 02:20:51 EST 2015
+conversations in it, "and what is the use of a book," thought Alice,
+peeped into the book her sister was reading, but it had no pictures or
+sister on the bank, and of having nothing to do: once or twice she had
+{% endcall %}
+</section>
+</section>
+
+<section>
+<h1>Conclusion</h1>
+
+<p>
+Thus concludes this introduction to ed.  I hope it was of use to you, dear
+reader.
+</p>
+</section>

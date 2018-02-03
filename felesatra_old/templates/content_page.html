@@ -13,7 +13,18 @@
       <dt>Last modified</dt>
       <dd>{{ modified }}</dd>
       {% endif %}
+      {% if category %}
+      <dt>Category</dt>
+      <dd>{{ category }}</dd>
+      {% endif %}
     </dl>
+    {% if tags %}
+    <dl>
+      <dt>Tags</dt>
+      {% for tag in tags %}
+      <dd>{{ tag }}</dd>
+      {% endfor %}
+    {% endif %}
   </header>
 
   {% block content %}

@@ -1,0 +1,84 @@
+title: Simple HTML templating
+template: content_page.html
+---
+{%- from "macros.html" import code, codeblock -%}
+
+<p>
+In this age of booming web development, there are web frameworks available
+for pushing out a web application as quickly as possible.  However, sometimes
+that's too much and all you need is a static site, so you pick from one of the
+  many <a href="https://www.staticgen.com/">static site generators</a> and start building
+your site.
+</p>
+
+{{ code('<test>test</test>') }}
+
+<p>
+  Sometimes even that's too much. You need to write a few HTML pages, and all you
+  want is a simple HTML templating tool so you don't have to type {{ code('<!DOCTYPE
+html>') }} a dozen times.
+</p>
+
+<p>
+In the modern app-driven world, you would be hard-pressed to find such a tool
+("simple" isn't in the vocabulary), but the old UNIX world offers a solution:
+M4.
+</p>
+
+<p>
+M4 is a general text preprocessing tool and works nicely for templating HTML.
+Make header and footer templates:
+</p>
+
+{% call codeblock() %}
+m4_dnl header.m4
+m4_dnl These lines can be used as comments.
+m4_dnl "dnl" means "delete to newline".
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>TITLE</title>
+m4_dnl This placeholder TITLE will be replaced later.
+  </head>
+  <body>
+
+m4_dnl footer.m4
+  </body>
+</html>
+{% endcall %}
+
+<p>
+Write your content:
+</p>
+
+{% call codeblock() %}
+m4_dnl index.m4
+m4_define(TITLE, My home page)m4_dnl
+m4_dnl The m4_define here defines a macro.
+m4_dnl "TITLE" will now be replaced with "My home page".
+m4_dnl That includes the "TITLE" in our header template.
+m4_dnl The "m4_dnl" after the "m4_define" removes the newline.
+m4_dnl It's only needed if you care about blank lines in the output.
+m4_include(header.m4)m4_dnl
+m4_dnl Here we include our header template.
+<h1>My home page</h1>
+
+<p>Hello World!</p>
+m4_include(footer.m4)m4_dnl
+m4_dnl Here we include our footer template.
+{% endcall %}
+
+<p>
+Then run:
+</p>
+
+{% call codeblock() %}
+$ m4 -P index.m4 > index.html
+{% endcall %}
+
+<p>
+It's as simple as that.  M4 offers other functions as well, so if you don't need
+a full static site generator, M4 should be able to fulfill any specific demands
+you have.
+</p>

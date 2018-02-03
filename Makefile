@@ -1,31 +1,22 @@
+srcdir = $(CURDIR)
+static_files = $(patsubst $(srcdir)/static/%,www/%,$(shell find $(srcdir)/static -type f))
+pages = $(patsubst $(srcdir)/pages/%,www/%,$(shell find $(srcdir)/pages -type f))
+
 .PHONY: all
-all: clean build_local
+all: $(static_files) $(pages)
 
-BUILD_DIR=build
-LOCAL_BUILD_DIR=build_local
-
-.PHONY: build
-build:
-	python -m felesatra ${BUILD_DIR}
-
-SSH_HOST=www.felesatra.moe
-SSH_PORT=22
-SSH_USER=root
-SSH_DIR=/srv/www
-
-.PHONY: upload
-upload: clean build
-	rsync -e "ssh -p $(SSH_PORT)" -P -rvzc --delete $(BUILD_DIR)/ $(SSH_USER)@$(SSH_HOST):$(SSH_DIR) --cvs-exclude
-
-.PHONY: build_local
-build_local:
-	python -m felesatra --site-url 'http://localhost:8080' ${LOCAL_BUILD_DIR}
+.PHONY: deploy
+deploy: all
+	gcloud app deploy
 
 .PHONY: clean
 clean:
-	rm -rf ${BUILD_DIR}
-	rm -rf ${LOCAL_BUILD_DIR}
+	rm -rf www
 
-.PHONY: watch
-watch:
-	bin/watch
+$(static_files): www/%: static/%
+	mkdir -p $(dir $@)
+	cp $< $@
+
+$(pages): www/%: pages/%
+	mkdir -p $(dir $@)
+	PYTHONPATH=$(srcdir) pipenv run python -m felesatra.cmd.render $< $@
