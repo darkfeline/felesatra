@@ -7,6 +7,18 @@ handlers:
   static_files: www/index.html
   upload: www/index.html
 
-- url: /(.*)
+- url: /css/(.*)
   static_files: www/\1
+  upload: www/css/(.*)
+
+- url: /img/(.*)
+  static_files: www/\1
+  upload: www/img/(.*)
+
+- url: /files/(.*)
+  static_files: www/\1
+  upload: www/files/(.*)
+
+- url: /(.*)
+  static_files: www/\1.html
   upload: www/(.*)
