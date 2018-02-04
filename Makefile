@@ -6,7 +6,7 @@ pages = $(patsubst $(pagesrcdir)/%,$(pagedestdir)/%,$(shell find $(pagesrcdir) -
 PYTHON = PYTHONPATH=$(srcdir) pipenv run python
 
 .PHONY: all
-all: $(static_files) $(pages)
+all: $(pages)
 
 .PHONY: deploy
 deploy: all

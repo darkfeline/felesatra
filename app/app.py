@@ -1,8 +1,10 @@
-import flask
-
 import os
 
+import flask
+from google.appengine.api.app_logging import AppLogsHandler
+
 app = flask.Flask(__name__)
+app.logger.addHandler(AppLogsHandler())
 
 
 @app.route("/")
@@ -29,6 +31,6 @@ def page_not_found(e):
 
 
 def _load_page(path):
-    path = os.path.join(__file__, '%s.html' % path)
+    path = os.path.join(__file__, 'pages', '%s.html' % path)
     with open(path) as f:
         return f.read()
