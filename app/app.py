@@ -18,7 +18,7 @@ def index():
 def default(path):
     try:
         return _load_page(path)
-    except OSError:
+    except IOError:
         flask.abort(404)
 
 
