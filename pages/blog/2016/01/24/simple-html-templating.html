@@ -1,7 +1,5 @@
 title: Simple HTML templating
 ---
-{%- from "macros.html" import code, codeblock -%}
-
 <p>
 In this age of booming web development, there are web frameworks available
 for pushing out a web application as quickly as possible.  However, sometimes
@@ -29,7 +27,7 @@ M4 is a general text preprocessing tool and works nicely for templating HTML.
 Make header and footer templates:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 m4_dnl header.m4
 m4_dnl These lines can be used as comments.
 m4_dnl "dnl" means "delete to newline".
@@ -45,13 +43,13 @@ m4_dnl This placeholder TITLE will be replaced later.
 m4_dnl footer.m4
   </body>
 </html>
-{% endcall %}
+</code></pre>
 
 <p>
 Write your content:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 m4_dnl index.m4
 m4_define(TITLE, My home page)m4_dnl
 m4_dnl The m4_define here defines a macro.
@@ -66,15 +64,15 @@ m4_dnl Here we include our header template.
 <p>Hello World!</p>
 m4_include(footer.m4)m4_dnl
 m4_dnl Here we include our footer template.
-{% endcall %}
+</code></pre>
 
 <p>
 Then run:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ m4 -P index.m4 > index.html
-{% endcall %}
+</code></pre>
 
 <p>
 It's as simple as that.  M4 offers other functions as well, so if you don't need

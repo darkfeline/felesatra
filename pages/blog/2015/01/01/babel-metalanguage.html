@@ -1,6 +1,5 @@
 title: The Babel meta-language
 ---
-{%- from "macros.html" import codeblock -%}
 
 <p>
 Inspired by the passion of the creators behind the EXA_PICO universe, I
@@ -31,11 +30,11 @@ meta-language in the truest sense of the word.
 First, Babel presents a way to import other languages as a language object:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (import english)
 (import japanese)
 (import hymmnos)
-{% endcall %}
+</code></pre>
 
 <p>
   (I'll be borrowing some
@@ -59,10 +58,10 @@ values generally correspond to words or complete phrases.  The main contrast is
 with semantic forms which we'll see next.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (val english "apple")
 (val japanese "弁当")
-{% endcall %}
+</code></pre>
 
 <p>
 Every time we want to use the semantic value for the English word "apple", we
@@ -72,10 +71,10 @@ objects to symbols in a straightforward manner:
 </p>
 
 
-{% call codeblock() %}
+<pre><code>
 (def apple (val english "apple"))
 (def bentou (val japanese "弁当"))
-{% endcall %}
+</code></pre>
 
 <p>
 Next are semantic forms, which define compositions of semantic values.  If
@@ -84,7 +83,7 @@ nouns as forms are to verbs, although keep in mind that verbs can be bound as
 either values or forms.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (def subject (class english "subject"))
 (def predicate (class english "predicate"))
 ; (sentence x y) -> x y .
@@ -94,7 +93,7 @@ either values or forms.
   ((subject x)
   (predicate y))
   x y (val english ".")))
-{% endcall %}
+</code></pre>
 
 <p>
 Here we also see classes being used to help define a semantic form.  We can
@@ -102,21 +101,21 @@ then apply that form to values that belong to the given classes to complete the
 form, in this case, a sentence, like so:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (def me (val english "I"))
 (def object (class english "object"))
 (def eat
   ((object x))
   (val english "eat") x)
 (sentence me (eat apple))  ; I eat (a/the) apple.
-{% endcall %}
+</code></pre>
 
 <p>
 Here we use "eat" by binding it as a semantic form, but we can use it as a
 value as well:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (def eat (val english "eat"))
 (def verb1 (class english "verb1"))  ; verb taking one direct object
 (def do-verb1
@@ -124,7 +123,7 @@ value as well:
    (object y))
   x y)
 (sentence me (do-verb1 eat apple))
-{% endcall %}
+</code></pre>
 
 <p>
 That's all you need from Babel to say anything in any language you want.  But
@@ -202,7 +201,7 @@ I am happy to change myself into a song.
 Using Babel, we can use this semantic form in English:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 (def level1 (class hymmnos "emotion level 1"))
 (def level2 (class hymmnos "emotion level 2"))
 (def level3 (class hymmnos "emotion level 3"))
@@ -218,7 +217,7 @@ Using Babel, we can use this semantic form in English:
 (def ki (val hymmnos "ki"))  ; concentration
 (def ga (val hymmnos "ga"))  ; I want this to end soon
 (hymmnos-emote was ki ga (sentence me (eat bentou)))
-{% endcall %}
+</code></pre>
 
 <p>
 We might render this directly as

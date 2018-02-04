@@ -1,7 +1,5 @@
 title: Introduction to ed
 ---
-{%- from "macros.html" import codeblock -%}
-
 <section>
 <h1>What is ed?</h1>
 
@@ -55,7 +53,7 @@ a strong example of good UNIX design.
 Finally, if you ever accidentally run ed, you will know how to exit it:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 golem$ ed
 
 ?
@@ -79,7 +77,7 @@ eat flaming death
 ?
 ^D
 ?
-{% endcall %}
+</code></pre>
 
 <p>
   (Taken from <a href="http://www.gnu.org/fun/jokes/ed.msg.html">ed humor</a>.)
@@ -112,13 +110,13 @@ For the purposes of this tutorial, I will use the following passage from
 </p>
 
 
-{% call codeblock() %}
+<pre><code>
 ALICE was beginning to get very tired of sitting by her
 sister on the bank, and of having nothing to do: once or twice she had
 peeped into the book her sister was reading, but it had no pictures or
 conversations in it, "and what is the use of a book," thought Alice,
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <section>
 <h1>Starting ed</h1>
@@ -127,9 +125,9 @@ conversations in it, "and what is the use of a book," thought Alice,
 Starting ed is simple.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed
-{% endcall %}
+</code></pre>
 
 <p>
 Notice that ed does not print anything.  This is an example of <code>ed</code>'s
@@ -144,24 +142,24 @@ The command to quit is also simple: <code>q</code>.  ed works similar to all com
 line interfaces; you press Enter or Return after each command.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed
 q
 $
-{% endcall %}
+</code></pre>
 
 <p>
 Whenever ed becomes unhappy (it reports an error or warning), it will print a
 succinct <code>?</code>.  You can get more information using the command <code>h</code>.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed
 u
 ?
 h
 Nothing to undo
-{% endcall %}
+</code></pre>
 </section>
 
 <section>
@@ -173,10 +171,10 @@ file after modification.  This is how all text editors work, but it's simple to
 conceptualize with ed:
 </p>
 
-{% call codeblock() %}
+<pre><code>
         read       ed      modify             save
 ( file ------> ) buffer ( --------> buffer ) ------> file
-{% endcall %}
+</code></pre>
 
 <p>
 When you run <code>ed filename</code>, you tell ed to edit the given file.  That means
@@ -185,19 +183,19 @@ filename to the one you gave it, so that ed will save the buffer back to that
 file by default.  The edit command is <code>e</code>, so <code>ed filename</code> is equivalent to:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed
 e filename
-{% endcall %}
+</code></pre>
 
 <p>
 ed prints out the number of bytes it read whenever it reads in a file:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
-{% endcall %}
+</code></pre>
 </section>
 
 <section>
@@ -207,12 +205,12 @@ $ ed alice.txt
 The <code>p</code> command is used for printing lines.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 p
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <p>
 By default, <code>p</code> prints the current line, which is set to the last line after ed
@@ -220,7 +218,7 @@ reads in a file.  You can also print a specific line by number, or a range of
 lines.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1p
@@ -230,7 +228,7 @@ sister on the bank, and of having nothing to do: once or twice she had
 1,2p
 ALICE was beginning to get very tired of sitting by her
 sister on the bank, and of having nothing to do: once or twice she had
-{% endcall %}
+</code></pre>
 
 <p>
 Note that the current line is set to the last line printed after every <code>p</code>
@@ -238,7 +236,7 @@ command.  As a general rule, ed will set the current line to the last line
 affected by each command.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 p
@@ -247,14 +245,14 @@ p
 peeped into the book her sister was reading, but it had no pictures or
 p
 peeped into the book her sister was reading, but it had no pictures or
-{% endcall %}
+</code></pre>
 
 <p>
 You can use <code>.</code> to refer to the current line, <code>$</code> to refer to the last line in
 the buffer, and <code>,</code> as a shorthand for <code>1,$</code>, i.e., the whole buffer.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 .p
@@ -275,7 +273,7 @@ sister on the bank, and of having nothing to do: once or twice she had
 peeped into the book her sister was reading, but it had no pictures or
 conversations in it, "and what is the use of a book," thought Alice,
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <p>
 You can also address lines relative to other lines.  For example, <code>.-</code> or <code>.-1</code>
@@ -286,7 +284,7 @@ three before the last line, and <code>30+5</code> means the fifth line after the
 line, or the 35th line line.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 # Typing a line address by itself is the same as a print: ed will print
@@ -299,13 +297,13 @@ peeped into the book her sister was reading, but it had no pictures or
 sister on the bank, and of having nothing to do: once or twice she had
 peeped into the book her sister was reading, but it had no pictures or
 conversations in it, "and what is the use of a book," thought Alice,
-{% endcall %}
+</code></pre>
 
 <p>
 Thus, you can move around the file using <code>-</code> and <code>+</code>.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 -
@@ -318,14 +316,14 @@ sister on the bank, and of having nothing to do: once or twice she had
 peeped into the book her sister was reading, but it had no pictures or
 +
 conversations in it, "and what is the use of a book," thought Alice,
-{% endcall %}
+</code></pre>
 
 <p>
 ed also provides the <code>z</code> command for scrolling through lines (I use a longer
 text here for demonstration).
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice2.txt
 1677
 1
@@ -355,7 +353,7 @@ actually _took a watch out of its waistcoat-pocket_, and looked at it,
 and then hurried on, Alice started to her feet, for it flashed across
 her mind that she had never before seen a rabbit with either a
 waistcoat-pocket, or a watch to take out of it, and burning with
-{% endcall %}
+</code></pre>
 
 <p>
 You can see this makes scrolling through a file much easier.  By default, <code>z</code>
@@ -373,7 +371,7 @@ type lines for ed to add, followed by a single period on its own line to tell
 ed you're finished.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 ,p
@@ -394,14 +392,14 @@ conversations in it, "and what is the use of a book," thought Alice,
 "without pictures or conversations?"
 
 You can use it as a doorstop.
-{% endcall %}
+</code></pre>
 
 <p>
 By default, <code>a</code> adds the lines after the current line, but you can give ed a
 different line.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1a
@@ -414,7 +412,7 @@ sister on the bank, and of having nothing to do: once or twice she had
 peeped into the book her sister was reading, but it had no pictures or
 conversations in it, "and what is the use of a book," thought Alice,
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <p>
 There's a complementary <code>i</code> command that inserts lines before instead of after.
@@ -426,7 +424,7 @@ Similarly, there's the <code>d</code> command for deleting lines.  By default it
 the current line, but you can give it a specific line or range of lines.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 d
@@ -439,7 +437,7 @@ conversations in it, "and what is the use of a book," thought Alice,
 ,p
 ALICE was beginning to get very tired of sitting by her
 conversations in it, "and what is the use of a book," thought Alice,
-{% endcall %}
+</code></pre>
 
 <p>
 Knowing <code>a</code>, <code>d</code>, and <code>p</code> is enough to use ed to make any changes you want.
@@ -449,7 +447,7 @@ easier.  Functionally, it's identical to the <code>d</code> and <code>i</code> c
 together.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1p
@@ -459,13 +457,13 @@ Alice was beginning to get very tired of sitting by her
 .
 p
 Alice was beginning to get very tired of sitting by her
-{% endcall %}
+</code></pre>
 
 <p>
 Another convenience command is <code>j</code>, which joins lines together.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1,2c
@@ -487,7 +485,7 @@ Oops, I didn't mean to break those up.
 peeped into the book her sister was reading, but it had no pictures or
 conversations in it, "and what is the use of a book," thought Alice,
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <p>
 Notice that <code>j</code> doesn't insert any spaces.  We could fix that mistake using
@@ -496,7 +494,7 @@ strictly with lines of text, so fixing errors within a line is difficult.
 However, ed provides the <code>s</code> command to substitute text within lines.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1p
@@ -504,7 +502,7 @@ ALICE was beginning to get very tired of sitting by her
 s/ALICE/Alice/
 p
 Alice was beginning to get very tired of sitting by her
-{% endcall %}
+</code></pre>
 
 <p>
 ed uses regular expressions, which are a different topic entirely so I won't
@@ -517,7 +515,7 @@ By default, <code>s</code> only works on the first match in the line.  You can a
 suffix to work on all matches, or a number to work on only the given match.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 1p
@@ -530,7 +528,7 @@ ALICE was beginning to geT very tired of sitting by her
 s/t/T/g
 p
 ALICE was beginning To geT very Tired of siTTing by her
-{% endcall %}
+</code></pre>
 </section>
 
 <section>
@@ -541,7 +539,7 @@ So far we've covered making changes, but make sure to write them to a file
 before quitting.  If you try to do so, ed will helpfully warn you:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 d
@@ -549,7 +547,7 @@ q
 ?
 h
 Warning: buffer modified
-{% endcall %}
+</code></pre>
 
 <p>
 Use the <code>w</code> command to write the buffer to a file.  By default it will write to
@@ -558,13 +556,13 @@ supply it with a filename as well.  Like when it reads a file, ed will print
 the number of bytes written afterward.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 d
 w tmp
 267
-{% endcall %}
+</code></pre>
 
 <p>
 <code>w</code> will set the default filename to the one you've given it only if it wasn't
@@ -576,7 +574,7 @@ If you want to quit without writing, you can use <code>Q</code>, or invoke <code
 row to silence ed's protests:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 d
@@ -584,7 +582,7 @@ q
 ?
 q
 $
-{% endcall %}
+</code></pre>
 </section>
 
 <section>
@@ -604,7 +602,7 @@ try to show them all.  One common way it is used is to print every line that
 matches a pattern:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 # Print every line that contains "re"
@@ -612,7 +610,7 @@ g/re/p
 ALICE was beginning to get very tired of sitting by her
 peeped into the book her sister was reading, but it had no pictures or
 "without pictures or conversations?"
-{% endcall %}
+</code></pre>
 
 <p>
 This is in fact where the name for grep comes from; the "re" stands for
@@ -630,12 +628,12 @@ You can run a shell command within ed using <code>!</code>.  ed will print outpu
 command; when the command terminates, ed prints a single <code>!</code>.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed
 !date
 Sun Feb 22 02:17:21 EST 2015
 !
-{% endcall %}
+</code></pre>
 
 <p>
 You can also read output from a shell command into the buffer or write lines
@@ -644,7 +642,7 @@ with the UNIX philosophy of letting other tools do the work instead of adding
 the same features to every single program.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 $ ed alice.txt
 304
 # We read the output of the date program into the buffer.  The "r" command
@@ -681,7 +679,7 @@ Sun Feb 22 02:20:51 EST 2015
 conversations in it, "and what is the use of a book," thought Alice,
 peeped into the book her sister was reading, but it had no pictures or
 sister on the bank, and of having nothing to do: once or twice she had
-{% endcall %}
+</code></pre>
 </section>
 </section>
 

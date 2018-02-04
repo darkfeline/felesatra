@@ -1,7 +1,5 @@
 title: Python, super(), and multiple inheritance
 ---
-{%- from "macros.html" import codeblock -%}
-
 <section>
 <h1>The Situation</h1>
 
@@ -63,19 +61,19 @@ arguments.  You can certainly get by taking this approach when using
 Allow me to illustrate using the classic ABCD diamond.
 </p>
 
-{% call codeblock() %}
+<pre><code>
   A
  / \
 B   C
  \ /
   D
-{% endcall %}
+</code></pre>
 
 <p>
 Here we have the MRO's
 </p>
 
-{% call codeblock() %}
+<pre><code>
 A: [A, object]
 # A inherits from object (object is Python's base class)
 B(A): [B, A, object]
@@ -84,19 +82,19 @@ C(A): [C, A, object]
 # C inherits from A, A inherits from object
 D(B, C): [D, B, C, A, object]
 # D inherits from B, B inherits from C, C inherits from A, A inherits from object
-{% endcall %}
+</code></pre>
 
 <p>
 Anyone with some degree of familiarity with OOP should immediately see
 an issue with that last one.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 D(B, C): [D, B, C, A, object]
 # D inherits from B, B inherits from C, C inherits from A, A inherits from object
 D(C, B): [D, C, B, A, object]
 # D inherits from C, C inherits from B, B inherits from A, A inherits from object
-{% endcall %}
+</code></pre>
 
 <p>
 Oh, god.  What's happening?
@@ -143,20 +141,20 @@ subsequent classes will not get called.  Generally, these will be found
 at the end of the MRO, just before object.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 Notation:
 A()  # A is a base class
-{% endcall %}
+</code></pre>
 
 <p>
 Closed transitive classes resemble traditional subclasses; they may only
 subclass a certain class or abstract class/interface type.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 Notation:
 A(B)  # A is closed transitive B
-{% endcall %}
+</code></pre>
 
 <p>
 Open transitive classes resemble what Raymond describes in his article,
@@ -167,16 +165,16 @@ possible to have closed transitive classes that accept an open
 transitive class after them.
 </p>
 
-{% call codeblock() %}
+<pre><code>
 Notation:
 A(*)  # A is open transitive
-{% endcall %}
+</code></pre>
 
 <p>
 Take, for example
 </p>
 
-{% call codeblock() %}
+<pre><code>
 from abc import *
 
 class Rect:
@@ -224,13 +222,13 @@ class PosSquareA(Square, PosRect):
 class PosSquareB(Position, Square, PosRect):
     def __init__(self, x, y, s):
         super().__init__(x, y, s)
-{% endcall %}
+</code></pre>
 
 <p>
 The class diagrams:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 Rect := [Rect(), object()]  # Rect is a base class, so we ignore object's __init__
 Square := [Square(Rect), Rect(), object()]  # okay
 Long := [Long(Rect), Rect(), object()]  # okay
@@ -243,7 +241,7 @@ PosSquareA := [Square(Rect), PosRect(Rect), Position(*), Rect(), object()]
 #                          ^ NOT okay
 PosSquareB := [Position(*), Square(Rect), PosRect(Rect), Rect(), object()]
 #                                       ^ still NOT okay
-{% endcall %}
+</code></pre>
 
 
 <p>

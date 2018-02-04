@@ -1,7 +1,5 @@
 title: Moving away from Google Analytics
 ---
-{%- from "macros.html" import codeblock -%}
-
 <p>
 I am proud of the fact that this website uses very little JavaScript.  None of
 it is essential, and the JavaScript that is used exists to provide supplementary
@@ -94,13 +92,13 @@ Both work well.
 After playing with both, I settled on a short script for generating reports:
 </p>
 
-{% call codeblock() %}
+<pre><code>
 #!/bin/bash
 
 scp -r user@server.example.com:/var/log/webserver logs
 find logs -name "*.gz" | parallel gunzip
 cat logs/* | goaccess -p ~/.goaccessrc -a > report.html
-{% endcall %}
+</code></pre>
 </section>
 
 <section>
