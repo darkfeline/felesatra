@@ -3,6 +3,8 @@ import os
 import flask
 from google.appengine.api.app_logging import AppLogsHandler
 
+_PAGEDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'pages')
+
 app = flask.Flask(__name__)
 app.logger.addHandler(AppLogsHandler())
 
@@ -31,6 +33,6 @@ def page_not_found(e):
 
 
 def _load_page(path):
-    path = os.path.join(__file__, 'pages', '%s.html' % path)
+    path = os.path.join(_PAGEDIR, '%s.html' % path)
     with open(path) as f:
         return f.read()
