@@ -1,5 +1,9 @@
 srcdir = $(CURDIR)
-pages = $(patsubst $(srcdir)/pages/%,www/%,$(shell find $(srcdir)/pages -type f))
+pagedestdir = app/pages
+pagesrcdir = $(srcdir)/pages
+pages = $(patsubst $(pagesrcdir)/%,$(pagedestdir)/%,$(shell find $(pagesrcdir) -type f))
+
+PYTHON = PYTHONPATH=$(srcdir) pipenv run python
 
 .PHONY: all
 all: $(static_files) $(pages)
@@ -10,8 +14,8 @@ deploy: all
 
 .PHONY: clean
 clean:
-	rm -rf www
+	rm -rf $(pagedestdir)
 
-$(pages): www/%: pages/%
+$(pages): $(pagedestdir)/%: $(pagesrcdir)/%
 	mkdir -p $(dir $@)
-	PYTHONPATH=$(srcdir) pipenv run python -m felesatra.cmd.render $< $@
+	$(PYTHON) -m felesatra.cmd.render $< $@
