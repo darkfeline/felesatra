@@ -13,5 +13,9 @@ handlers:
   static_files: static/\1/\2
   upload: static/(css|img|files)/(.*)
 
+- url: /(.*\.txt)
+  static_files: static/\1
+  upload: static/\1
+
 - url: /.*
   script: app.app.app
