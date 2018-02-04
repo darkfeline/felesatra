@@ -2,23 +2,16 @@ runtime: python27
 api_version: 1
 threadsafe: true
 
+libraries:
+- name: yaml
+  version: "3.10"
+- name: flask
+  version: "0.12"
+
 handlers:
-- url: /
-  static_files: www/index.html
-  upload: www/index.html
+- url: /(css|img|files)/(.*)
+  static_files: static/\1/\2
+  upload: static/(css|img|files)/(.*)
 
-- url: /css/(.*)
-  static_files: www/\1
-  upload: www/css/(.*)
-
-- url: /img/(.*)
-  static_files: www/\1
-  upload: www/img/(.*)
-
-- url: /files/(.*)
-  static_files: www/\1
-  upload: www/files/(.*)
-
-- url: /(.*)
-  static_files: www/\1.html
-  upload: www/(.*)
+- url: /.*
+  script: felesatra.app
