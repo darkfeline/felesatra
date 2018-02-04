@@ -19,7 +19,3 @@ clean:
 
 $(subst .html,%,$(pages)): $(subst .html,%,$(patsubst $(pagedestdir)%,$(pagesrcdir)%,$(pages))) $(felesatra)
 	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedestdir)
-
-# $(pages): $(pagedestdir)/%: $(pagesrcdir)/% $(felesatra)
-# 	mkdir -p $(dir $@)
-# 	$(PYTHON) -m felesatra.cmd.render $< $@
