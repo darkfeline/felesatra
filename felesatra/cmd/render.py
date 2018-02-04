@@ -14,15 +14,19 @@ def main(argv):
     parser.add_argument('src')
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])
+    _render_document(args.src, args.dst)
+    return 0
+
+
+def _render_document(src, dst):
     env = _make_env()
-    with open(args.src) as f:
+    with open(src) as f:
         document = enja.load(f)
     template = _document_template(env, document)
     context = _document_context(document)
     html = template.render(context)
-    with open(args.dst, 'w') as f:
+    with open(dst, 'w') as f:
         f.write(html)
-    return 0
 
 
 def _make_env():
