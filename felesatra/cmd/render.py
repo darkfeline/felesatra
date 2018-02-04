@@ -2,6 +2,8 @@
 
 import argparse
 import datetime
+import logging
+import os
 import pathlib
 import sys
 
@@ -9,19 +11,33 @@ import jinja2
 
 from felesatra import enja
 
+logger = logging.getLogger(__name__)
+
 
 def main(argv):
+    logging.basicConfig(level='INFO')
     parser = argparse.ArgumentParser(prog=argv[0],
                                      description=__doc__)
     parser.add_argument('src')
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])
-    _render_document(args.src, args.dst)
+    _render_recursively(args.src, args.dst)
     return 0
 
 
-def _render_document(src: str, dst: str):
+def _render_recursively(src: str, dst: str):
     env = _make_env()
+    for root, dirs, files in os.walk(src):
+        for file in files:
+            srcfile = os.path.join(root, file)
+            relpath = os.path.relpath(srcfile, src)
+            dstfile = os.path.join(dst, relpath)
+            logger.info('Rendering %s to %s', srcfile, dstfile)
+            os.makedirs(os.path.dirname(dstfile), exist_ok=True)
+            _render_document(env, srcfile, dstfile)
+
+
+def _render_document(env, src: str, dst: str):
     with open(src) as f:
         document = enja.load(f)
     template = _document_template(env, document)

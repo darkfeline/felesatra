@@ -2,7 +2,7 @@ srcdir = $(CURDIR)
 pagedestdir = app/pages
 pagesrcdir = $(srcdir)/pages
 pages = $(patsubst $(pagesrcdir)/%,$(pagedestdir)/%,$(shell find $(pagesrcdir) -type f))
-felesatra = $(shell find felesatra -name __pycache__ -prune , -type f)
+felesatra = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
 
 PYTHON = PYTHONPATH=$(srcdir) pipenv run python
 
@@ -17,6 +17,9 @@ deploy: all
 clean:
 	rm -rf $(pagedestdir)
 
-$(pages): $(pagedestdir)/%: $(pagesrcdir)/% $(felesatra)
-	mkdir -p $(dir $@)
-	$(PYTHON) -m felesatra.cmd.render $< $@
+$(subst .html,%,$(pages)): $(subst .html,%,$(patsubst $(pagedestdir)%,$(pagesrcdir)%,$(pages))) $(felesatra)
+	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedestdir)
+
+# $(pages): $(pagedestdir)/%: $(pagesrcdir)/% $(felesatra)
+# 	mkdir -p $(dir $@)
+# 	$(PYTHON) -m felesatra.cmd.render $< $@
