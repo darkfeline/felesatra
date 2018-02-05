@@ -1,14 +1,8 @@
 srcdir = $(CURDIR)
-wwwdir = app/www
 felesatra = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
 
-staticsrcdir = $(srcdir)/static
-staticdstdir = $(wwwdir)
-staticsrc = $(shell find $(staticsrcdir) -type f)
-staticdst = $(patsubst $(staticsrcdir)/%,$(staticdstdir)/%,$(staticsrc))
-
 pagesrcdir = $(srcdir)/pages
-pagedstdir = $(wwwdir)
+pagedstdir = app/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
@@ -24,11 +18,6 @@ deploy: all
 .PHONY: clean
 clean:
 	rm -rf $(pagedstdir) page_index
-
-# static
-$(staticdst): $(staticdstdir)/%: $(staticsrcdir)/%
-	mkdir -p $(dir $@)
-	cp $< $@
 
 # pages
 $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra)
