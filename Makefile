@@ -9,7 +9,7 @@ dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 PYTHON = PYTHONPATH=$(srcdir) pipenv run python
 
 .PHONY: all
-all: $(dstpages) $(staticdst)
+all: $(dstpages) sitemap.xml
 
 .PHONY: deploy
 deploy: all
@@ -27,3 +27,7 @@ $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra)
 clean += page_index
 page_index: $(srcpages) $(felesatra)
 	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
+
+clean += sitemap.xml
+sitemap.xml: page_index $(felesatra)
+	$(PYTHON) -m felesatra.cmd.make_sitemap --prefix "https://www.felesatra.moe/" $< $@

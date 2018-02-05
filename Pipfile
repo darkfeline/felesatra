@@ -6,6 +6,6 @@ name = "pypi"
 [packages]
 "jinja2" = "~=2.10"
 "PyYAML" = "~=3.12"
-"mir.sitemap" = "~=1.0"
+"mir.sitemap" = "~=1.1"
 
 [dev-packages]

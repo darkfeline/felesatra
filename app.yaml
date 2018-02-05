@@ -17,6 +17,11 @@ handlers:
   upload: static/(.*\.txt)
   secure: always
 
+- url: /(sitemap\.xml)
+  static_files: \1
+  upload: (sitemap\.xml)
+  secure: always
+
 - url: /.*
   script: app.app.app
   secure: always

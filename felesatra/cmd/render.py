@@ -14,8 +14,7 @@ logger = logging.getLogger(__name__)
 
 def main(argv):
     logging.basicConfig(level='INFO')
-    parser = argparse.ArgumentParser(prog=argv[0],
-                                     description=__doc__)
+    parser = argparse.ArgumentParser(prog=argv[0], description=__doc__)
     parser.add_argument('src')
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])

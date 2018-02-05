@@ -13,8 +13,7 @@ logger = logging.getLogger(__name__)
 
 def main(argv):
     logging.basicConfig(level='INFO')
-    parser = argparse.ArgumentParser(prog=argv[0],
-                                     description=__doc__)
+    parser = argparse.ArgumentParser(prog=argv[0], description=__doc__)
     parser.add_argument('src')
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])
@@ -33,8 +32,9 @@ def _index_recursively(src: str):
             with open(srcfile) as f:
                 document = enja.load(f)
             context = enja.context(document, srcfile)
+            entry_path = os.path.relpath(os.path.splitext(srcfile)[0], src)
             entries.append(indexing.Entry(
-                path=os.path.splitext(srcfile)[0],
+                path=entry_path,
                 title=context['title'],
                 published=context['published'],
                 modified=context['modified'],
