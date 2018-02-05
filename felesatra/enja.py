@@ -18,6 +18,7 @@ import pathlib
 import yaml
 
 _DIVIDER = '---\n'
+_MIN = datetime.date.min
 
 
 class Document:
@@ -66,13 +67,13 @@ def context(document, src: str):
 def _parse_published(path: str):
     path = pathlib.PurePath(path)
     try:
-        y, m, d = path.parts[-3:]
+        y, m, d = path.parts[-4:-1]
     except ValueError:
-        return datetime.datetime.min
+        return _MIN
     try:
         return datetime.date(int(y), int(m), int(d))
     except ValueError:
-        return datetime.datetime.min
+        return _MIN
 
 
 def _create_header_stream(file):

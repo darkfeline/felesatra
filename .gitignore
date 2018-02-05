@@ -1,4 +1,5 @@
-/www/
+/app/pages
+/page_index
 
 __pycache__/
 *.pyc
