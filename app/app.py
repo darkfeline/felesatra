@@ -20,7 +20,8 @@ def default(path):
         path = path + '.html'
     try:
         return _load_page(path)
-    except IOError:
+    except IOError as e:
+        app.logger.error('Error loading %s: %s', path, e)
         flask.abort(404)
 
 
