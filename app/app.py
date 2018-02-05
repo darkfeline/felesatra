@@ -3,7 +3,7 @@ import os
 import flask
 from google.appengine.api.app_logging import AppLogsHandler
 
-_WWWDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'www')
+_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'pages')
 
 app = flask.Flask(__name__)
 app.logger.addHandler(AppLogsHandler())
@@ -11,13 +11,11 @@ app.logger.addHandler(AppLogsHandler())
 
 @app.route("/")
 def index():
-    return _load_page('index.html')
+    return _load_page('index')
 
 
 @app.route('/<string:path>')
 def default(path):
-    if not os.path.splitext(path)[1]:
-        path = path + '.html'
     try:
         return _load_page(path)
     except IOError as e:
@@ -32,10 +30,10 @@ def trailing_slash(path):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return (_load_page('404.html'), 404)
+    return (_load_page('404'), 404)
 
 
 def _load_page(path):
-    path = os.path.join(_WWWDIR, path)
+    path = os.path.join(_DIR, path + '.html')
     with open(path) as f:
         return f.read()
