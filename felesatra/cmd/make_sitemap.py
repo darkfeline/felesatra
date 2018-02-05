@@ -16,7 +16,8 @@ def main(argv):
         entries = indexing.load(f)
         urls = [
             sitemap.URL(
-                loc=args.prefix + entry.path
+                loc=args.prefix + entry.path,
+                lastmod=entry.modified,
             )
             for entry in entries
         ]
