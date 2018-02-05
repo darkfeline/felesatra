@@ -1,4 +1,4 @@
-"""Render a webpage from an Enja document."""
+"""Render webpages."""
 
 import argparse
 import logging
