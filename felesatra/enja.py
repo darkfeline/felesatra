@@ -11,7 +11,9 @@ An Enja file is a text file that contains:
 - the document body
 """
 
+import datetime
 import io
+import pathlib
 
 import yaml
 
@@ -49,6 +51,28 @@ def load(file):
     document = Document(body)
     document.header = header
     return document
+
+
+def context(document, src: str):
+    context = document.header.copy()
+    context['content'] = document.body
+    if 'published' not in context:
+        context['published'] = _parse_published(src)
+    if 'modified' not in context:
+        context['modified'] = context['published']
+    return context
+
+
+def _parse_published(path: str):
+    path = pathlib.PurePath(path)
+    try:
+        y, m, d = path.parts[-3:]
+    except ValueError:
+        return datetime.datetime.min
+    try:
+        return datetime.date(int(y), int(m), int(d))
+    except ValueError:
+        return datetime.datetime.min
 
 
 def _create_header_stream(file):
