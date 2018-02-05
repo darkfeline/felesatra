@@ -17,11 +17,13 @@ deploy: all
 
 .PHONY: clean
 clean:
-	rm -rf $(pagedstdir) page_index
+	rm -rf $(clean)
 
 # pages
+clean += $(pagedstdir)
 $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra)
 	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedstdir)
 
+clean += page_index
 page_index: $(srcpages) $(felesatra)
 	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
