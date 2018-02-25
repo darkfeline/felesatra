@@ -1,12 +1,13 @@
 srcdir = $(CURDIR)
+
+PYTHON = PYTHONPATH=$(srcdir) pipenv run python
+
 felesatra_sources = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
 
 pagesrcdir = $(srcdir)/pages
 pagedstdir = app/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
-
-PYTHON = PYTHONPATH=$(srcdir) pipenv run python
 
 .PHONY: all
 all: $(dstpages) sitemap.xml
