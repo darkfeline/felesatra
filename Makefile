@@ -10,7 +10,7 @@ srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
 .PHONY: all
-all: $(dstpages) sitemap.xml
+all: $(dstpages) $(pagedstdir)/index.html sitemap.xml
 
 .PHONY: deploy
 deploy: all
@@ -25,10 +25,18 @@ clean += $(pagedstdir)
 $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedstdir)
 
-clean += page_index
-page_index: $(srcpages) $(felesatra_sources)
-	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
+$(pagedstdir)/index.html: genpages/index-enja.html
+	$(PYTHON) -m felesatra.cmd.render_single $< $@
+
+clean += genpages
+genpages/index-enja.html: index-template.html page_index
+	mkdir -p $(dir $@)
+	$(PYTHON) -m felesatra.cmd.generate_index_page $^ >$@
 
 clean += sitemap.xml
 sitemap.xml: page_index $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.make_sitemap --prefix "https://www.felesatra.moe/" $< $@
+
+clean += page_index
+page_index: $(srcpages) $(felesatra_sources)
+	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
