@@ -25,13 +25,13 @@ clean += $(pagedstdir)
 $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedstdir)
 
-$(pagedstdir)/index.html: genpages/index-enja.html
+$(pagedstdir)/index.html: genpages/index-enja.html $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.render_single $< $@
 
 clean += genpages
-genpages/index-enja.html: index-template.html page_index
+genpages/index-enja.html: index-template.html page_index $(felesatra_sources)
 	mkdir -p $(dir $@)
-	$(PYTHON) -m felesatra.cmd.generate_index_page $^ >$@
+	$(PYTHON) -m felesatra.cmd.generate_index_page index-template.html page_index >$@
 
 clean += sitemap.xml
 sitemap.xml: page_index $(felesatra_sources)
