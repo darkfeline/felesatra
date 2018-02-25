@@ -28,17 +28,21 @@ def _index_recursively(src: str):
         for file in files:
             srcfile = os.path.join(root, file)
             logger.info('Indexing %s', srcfile)
-            with open(srcfile) as f:
-                document = enja.load(f)
-            context = enja.context(document, srcfile)
-            entry_path = os.path.relpath(os.path.splitext(srcfile)[0], src)
-            entries.append(indexing.Entry(
-                path=entry_path,
-                title=context['title'],
-                published=context['published'],
-                modified=context['modified'],
-            ))
+            entries.append(_make_entry(src, srcfile))
     return entries
+
+
+def _make_entry(basedir: str, srcfile: str):
+    with open(srcfile) as f:
+        document = enja.load(f)
+    context = enja.context(document, srcfile)
+    entry_path = os.path.relpath(os.path.splitext(srcfile)[0], basedir)
+    return indexing.Entry(
+        path=entry_path,
+        title=context['title'],
+        published=context['published'],
+        modified=context['modified'],
+    )
 
 
 if __name__ == '__main__':
