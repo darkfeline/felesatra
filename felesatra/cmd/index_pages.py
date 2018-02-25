@@ -18,7 +18,7 @@ def main(argv):
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])
     entries = _index_recursively(args.src)
-    with open(args.dst, 'w', newline='') as f:
+    with open(args.dst, 'w') as f:
         indexing.dump(entries, f)
 
 

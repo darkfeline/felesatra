@@ -12,7 +12,7 @@ def main(argv):
     parser.add_argument('dst')
     parser.add_argument('--prefix', default='https://example.com/')
     args = parser.parse_args(argv[1:])
-    with open(args.src, newline='') as f:
+    with open(args.src) as f:
         entries = indexing.load(f)
         urls = [
             sitemap.URL(
