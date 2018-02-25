@@ -105,12 +105,3 @@ nav#generated-toc p {
     margin-top: 2px;
     margin-bottom: 2px;
 }
-
-/* tablesorter.js */
-th.headerSortUp:after {
-    content: "▲";
-}
-
-th.headerSortDown:after {
-    content: "▼";
-}
