@@ -23,7 +23,6 @@ def main(argv):
         ]
     with open(args.dst, 'w') as f:
         sitemap.write_urlset(f, urls)
-    return 0
 
 
 if __name__ == '__main__':

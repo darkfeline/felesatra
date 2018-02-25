@@ -20,7 +20,6 @@ def main(argv):
     entries = _index_recursively(args.src)
     with open(args.dst, 'w', newline='') as f:
         indexing.dump(entries, f)
-    return 0
 
 
 def _index_recursively(src: str):

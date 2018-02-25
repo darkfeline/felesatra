@@ -19,7 +19,6 @@ def main(argv):
     parser.add_argument('dst')
     args = parser.parse_args(argv[1:])
     _render_recursively(args.src, args.dst)
-    return 0
 
 
 def _render_recursively(src: str, dst: str):
