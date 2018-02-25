@@ -54,7 +54,7 @@ def _make_env():
 
 
 def _document_template(env, document):
-    return env.get_template(document.header.get('template', 'content_page.html'))
+    return env.get_template(document.header.get('template', 'site_content.html'))
 
 
 if __name__ == '__main__':
