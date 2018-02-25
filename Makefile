@@ -1,6 +1,6 @@
 srcdir = $(CURDIR)
 
-PYTHON = PYTHONPATH=$(srcdir) pipenv run python
+PYTHON = env PYTHONPATH=$(srcdir) python
 
 felesatra_sources = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
 
