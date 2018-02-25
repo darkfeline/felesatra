@@ -24,9 +24,14 @@ def _generate(template: str, page_index: str):
     with open(template) as f:
         template = env.from_string(f.read())
     with open(page_index) as f:
-        entries = sorted(indexing.load(f), key=lambda e: e.path)
+        entries = list(indexing.load(f))
+    page_entries = sorted((e for e in entries if not e.path.startswith('blog/')),
+                          key=lambda e: e.path)
+    blog_entries = sorted((e for e in entries if e.path.startswith('blog/')),
+                          key=lambda e: e.path,
+                          reverse=True)
     print(template.render({
-        'pages': entries,
+        'pages': page_entries + blog_entries,
     }))
 
 
