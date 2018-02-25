@@ -18,12 +18,9 @@ def index():
 
 @app.route('/<path:path>')
 def default(path):
+    if path.endswith('/'):
+        return flask.redirect('/' + path.rstrip('/'))
     return _load_page(path)
-
-
-@app.route('/<path:path>/')
-def trailing_slash(path):
-    return flask.redirect('/' + path)
 
 
 @app.errorhandler(404)
