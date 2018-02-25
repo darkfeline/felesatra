@@ -28,7 +28,10 @@ def _index_recursively(src: str):
         for file in files:
             srcfile = os.path.join(root, file)
             logger.info('Indexing %s', srcfile)
-            entries.append(_make_entry(src, srcfile))
+            entry = _make_entry(src, srcfile)
+            if entry.path == '404':
+                continue
+            entries.append(entry)
     return entries
 
 
