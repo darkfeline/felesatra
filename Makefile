@@ -1,5 +1,5 @@
 srcdir = $(CURDIR)
-felesatra = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
+felesatra_sources = $(shell find $(srcdir)/felesatra -name __pycache__ -prune , -type f)
 
 pagesrcdir = $(srcdir)/pages
 pagedstdir = app/pages
@@ -21,13 +21,13 @@ clean:
 
 # pages
 clean += $(pagedstdir)
-$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra)
+$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedstdir)
 
 clean += page_index
-page_index: $(srcpages) $(felesatra)
+page_index: $(srcpages) $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
 
 clean += sitemap.xml
-sitemap.xml: page_index $(felesatra)
+sitemap.xml: page_index $(felesatra_sources)
 	$(PYTHON) -m felesatra.cmd.make_sitemap --prefix "https://www.felesatra.moe/" $< $@
