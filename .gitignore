@@ -1,6 +1,4 @@
-/app/pages
-/genpages
-/sitemap.xml
+/genpages/
 /page_index
 
 __pycache__/
