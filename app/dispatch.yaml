@@ -1,0 +1,3 @@
+dispatch:
+  - url: "go.felesatra.moe/*"
+    service: go
