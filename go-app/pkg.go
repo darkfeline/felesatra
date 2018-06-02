@@ -8,6 +8,7 @@ import (
 var pkgs = []Package{
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
+	{"/subcommands", Git, "https://github.com/darkfeline/subcommands-go"},
 	{"/xdg", Git, "https://github.com/darkfeline/xdg-go"},
 }
 
