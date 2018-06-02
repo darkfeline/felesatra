@@ -4,8 +4,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"path"
-	"strings"
 
 	"google.golang.org/appengine"
 )
@@ -13,18 +11,6 @@ import (
 func main() {
 	http.HandleFunc("/", handle)
 	appengine.Main()
-}
-
-type Method string
-
-const (
-	Git Method = "git"
-)
-
-type Package struct {
-	Path   string
-	Method Method
-	URL    string
 }
 
 var temp = template.Must(template.New("go").Parse(
@@ -36,14 +22,10 @@ var temp = template.Must(template.New("go").Parse(
     <title>{{.Path}}</title>
   </head>
   <body>
-    <a href="https://godoc.org/{{$s}}{{.Path}}">{{$s}}{{.Path}}</a>
+    <a href="{{.URL}}">{{$s}}{{.Path}}</a> (<a href="https://godoc.org/{{$s}}{{.Path}}">docs</a>)
   </body>
 </html>
 `))
-
-var pkgs = map[string]*Package{
-	"/felesatra": &Package{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
-}
 
 func handle(w http.ResponseWriter, r *http.Request) {
 	p, ok := findPackage(r.URL.Path)
@@ -57,17 +39,6 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		serverError(w)
 		return
 	}
-}
-
-func findPackage(pp string) (p *Package, ok bool) {
-	for ; pp != "/"; pp, _ = path.Split(pp) {
-		pp = strings.TrimRight(pp, "/")
-		p, ok := pkgs[pp]
-		if ok {
-			return p, true
-		}
-	}
-	return nil, false
 }
 
 // write404 writes a 404 response.

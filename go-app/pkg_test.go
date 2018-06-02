@@ -10,8 +10,9 @@ func TestFindPackageExact(t *testing.T) {
 	if !ok {
 		t.Errorf("Unexpected ok = %t", ok)
 	}
-	if p != pkgs["/felesatra"] {
-		t.Errorf("Expected %+v, got %+v", pkgs["/felesatra"], p)
+	exp := pkgMap["/felesatra"]
+	if p != exp {
+		t.Errorf("Expected %+v, got %+v", exp, p)
 	}
 }
 
@@ -21,8 +22,9 @@ func TestFindPackageSub(t *testing.T) {
 	if !ok {
 		t.Errorf("Unexpected ok = %t", ok)
 	}
-	if p != pkgs["/felesatra"] {
-		t.Errorf("Expected %+v, got %+v", pkgs["/felesatra"], p)
+	exp := pkgMap["/felesatra"]
+	if p != exp {
+		t.Errorf("Expected %+v, got %+v", exp, p)
 	}
 }
 
