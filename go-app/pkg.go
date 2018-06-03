@@ -6,6 +6,7 @@ import (
 )
 
 var pkgs = []Package{
+	{"/booru/dl", Git, "https://github.com/darkfeline/booru-dl-go"},
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
 	{"/subcommands", Git, "https://github.com/darkfeline/subcommands-go"},
