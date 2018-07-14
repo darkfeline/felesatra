@@ -13,6 +13,11 @@ dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 .PHONY: all
 all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml gen
 
+.PHONY: gentest
+gentest:
+	go vet ./generator/...
+	go test ./generator/...
+
 gen: $(shell find generator -name "*.go")
 	go build -o gen ./generator
 
