@@ -11,7 +11,10 @@ srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
 .PHONY: all
-all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
+all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml gen
+
+gen: $(shell find generator -name "*.go")
+	go build -o gen ./generator
 
 .PHONY: clean
 clean:
