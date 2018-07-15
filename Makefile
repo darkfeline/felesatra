@@ -19,6 +19,7 @@ gentest:
 	go vet ./generator/...
 	go test ./generator/...
 
+clean += gen
 gen: $(shell find generator -name "*.go")
 	go build -o gen ./generator
 
