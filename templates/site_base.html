@@ -1,0 +1,52 @@
+{# Base template for all site pages. #}
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113481431-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113481431-1');
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+<link rel="icon" type="image/png" href="/img/site/favicon.png">
+{% endblock head %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<header id="site-header">
+  <h1 id="site-title"><a href="/">Feles Atra</a></h1>
+</header>
+
+{% block base_content %}
+{{ content }}
+{% endblock %}
+
+<footer id="site-footer">
+  <address>
+    <a href="https://sks-keyservers.net/pks/lookup?op=get&search=0x871AC6C82D45F74D">Webmaster</a>
+  </address>
+  <div id="site-copyright">
+    <p>
+    <span xmlns:dct="https://purl.org/dc/terms/" property="dct:title">Feles Atra</span> by
+    <a xmlns:cc="https://creativecommons.org/ns#"
+       href="https://www.felesatra.moe" property="cc:attributionName"
+       rel="cc:attributionURL">Allen Li</a> is licensed under a
+    <a rel="license"
+       href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+      Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+    <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">
+      <img alt="Creative Commons License" class="centered"
+           src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png">
+    </a>
+  </div>
+</footer>
+{% endblock body %}
