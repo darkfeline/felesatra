@@ -32,7 +32,7 @@ $(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
 	./gen render $< $@
 
 # sitemap.xml
-clean += sitemap.xml
+clean += app/sitemap.xml
 app/sitemap.xml: page_index gen $(templates)
 	./gen sitemap $< >$@
 
