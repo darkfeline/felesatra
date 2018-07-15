@@ -33,7 +33,7 @@ func RenderEnjaFile(t *template.Template, src, dst string) error {
 	if err != nil {
 		return errors.Wrap(err, "decode enja")
 	}
-	f2, err := os.Create(dst, 0666)
+	f2, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
