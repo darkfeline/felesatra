@@ -29,12 +29,12 @@ clean:
 # Built targets
 # Pages
 clean += $(pagedstdir)
-$(subst .html,%,$(dstpages)): gen $(subst .html,%,$(srcpages)) $(templates)
+$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) gen $(templates)
 	./gen rendermany $(pagesrcdir) $(pagedstdir)
 
 # index.html
-$(pagedstdir)/index.html: genpages/index-enja.html $(felesatra_sources)
-	$(PYTHON) -m felesatra.cmd.render_single $< $@
+$(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
+	./gen render $< $@
 
 # sitemap.xml
 clean += sitemap.xml
