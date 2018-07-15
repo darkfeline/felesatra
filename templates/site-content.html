@@ -1,21 +1,20 @@
-{{define "base-content"}}
+{{ define "base-content" -}}
 <section>
   <header class="content-header">
     <h1>{{.title}}</h1>
     <dl>
-      {{if .published}}
+      {{- if .published}}
       <dt>Published</dt>
       <dd>{{.published}}</dd>
-      {{end}}
-      {{if .modified}}
+      {{ end -}}
+      {{- if .modified}}
       <dt>Last modified</dt>
       <dd>{{.modified}}</dd>
-      {{end}}
+      {{ end -}}
     </dl>
   </header>
-
   {{.body}}
 </section>
-{{end}}
+{{- end -}}
 
 {{template "site-base.html" .}}
