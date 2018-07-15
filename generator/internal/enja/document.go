@@ -9,6 +9,8 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// Document is the structure for an Enja document.  The encoded form
+// is described in the package description.
 type Document struct {
 	Header map[string]interface{}
 	Body   []byte
@@ -18,6 +20,7 @@ const (
 	divider = "---\n"
 )
 
+// Encode encodes the Document to the Writer.
 func Encode(w io.Writer, d *Document) error {
 	bw := bufio.NewWriter(w)
 	data, err := yaml.Marshal(d.Header)
@@ -30,6 +33,7 @@ func Encode(w io.Writer, d *Document) error {
 	return bw.Flush()
 }
 
+// Decode decodes and returns the Document from the Reader.
 func Decode(r io.Reader) (*Document, error) {
 	var b bytes.Buffer
 	br := bufio.NewReader(r)
