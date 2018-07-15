@@ -9,9 +9,10 @@ pagesrcdir = pages
 pagedstdir = $(dstdir)/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
+templates = $(shell find templates -type f)
 
 .PHONY: all
-all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml gentest gen
+all: gentest gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
 
 .PHONY: gentest
 gentest:
@@ -28,8 +29,8 @@ clean:
 # Built targets
 # Pages
 clean += $(pagedstdir)
-$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) $(felesatra_sources)
-	$(PYTHON) -m felesatra.cmd.render $(pagesrcdir) $(pagedstdir)
+$(subst .html,%,$(dstpages)): gen $(subst .html,%,$(srcpages)) $(templates)
+	./gen rendermany $(pagesrcdir) $(pagedstdir)
 
 # index.html
 $(pagedstdir)/index.html: genpages/index-enja.html $(felesatra_sources)

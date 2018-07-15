@@ -9,13 +9,13 @@
     {{end}}
     {{if .lastmod}}
     <lastmod>{{.lastmod}}</lastmod>
-    {{endif}}
+    {{end}}
     {{if .changefreq}}
     <changefreq>{{.changefreq}}</changefreq>
-    {{endif}}
+    {{end}}
     {{if .priority}}
     <priority>{{.priority}}</priority>
-    {{endif}}
+    {{end}}
   </url>
   {{end}}
 </urlset>

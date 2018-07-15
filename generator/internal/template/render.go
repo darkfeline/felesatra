@@ -19,7 +19,7 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 	for k, v := range d.Header {
 		h[k] = v
 	}
-	h["body"] = d.Body
+	h["body"] = string(d.Body)
 	return t.ExecuteTemplate(w, "site-content.html", h)
 }
 
