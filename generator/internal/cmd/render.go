@@ -8,10 +8,12 @@ import (
 	"path/filepath"
 
 	"github.com/google/subcommands"
-	"go.felesatra.moe/felesatra/generator/internal/enja"
+
+	"go.felesatra.moe/felesatra/generator/internal/template"
 )
 
 type Render struct {
+	templateDir string
 }
 
 func (*Render) Name() string     { return "render" }
@@ -23,6 +25,8 @@ func (*Render) Usage() string {
 }
 
 func (c *Render) SetFlags(f *flag.FlagSet) {
+	f.StringVar(&c.templateDir, "templates", "templates",
+		"Templates directory")
 }
 
 func (c *Render) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -32,11 +36,16 @@ func (c *Render) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 	}
 	src := f.Arg(0)
 	dst := f.Arg(1)
+	t, err := template.Load(c.templateDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s: error loading templates: %s", os.Args[0], err)
+		return subcommands.ExitFailure
+	}
 	if err := os.MkdirAll(filepath.Dir(dst), 0777); err != nil {
 		fmt.Fprintf(os.Stderr, "%s: %s", os.Args[0], err)
 		return subcommands.ExitFailure
 	}
-	if err := enja.Render(src, dst); err != nil {
+	if err := template.RenderEnjaFile(t, src, dst); err != nil {
 		fmt.Fprintf(os.Stderr, "%s: %s", os.Args[0], err)
 		return subcommands.ExitFailure
 	}

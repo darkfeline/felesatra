@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestRead(t *testing.T) {
+func TestEncode(t *testing.T) {
 	t.Parallel()
 	d := Document{
 		Header: map[string]interface{}{
@@ -16,8 +16,8 @@ func TestRead(t *testing.T) {
 		Body: []byte("amadeus\n"),
 	}
 	var b bytes.Buffer
-	if err := Write(&b, &d); err != nil {
-		t.Fatalf("Write returned error: %s", err)
+	if err := Encode(&b, &d); err != nil {
+		t.Fatalf("Encode returned error: %s", err)
 	}
 	exp := `kouka: lacia
 ---
@@ -28,15 +28,15 @@ amadeus
 	}
 }
 
-func TestWrite(t *testing.T) {
+func TestDecode(t *testing.T) {
 	t.Parallel()
 	s := `kouka: lacia
 ---
 amadeus
 `
-	d, err := Read(strings.NewReader(s))
+	d, err := Decode(strings.NewReader(s))
 	if err != nil {
-		t.Fatalf("Read returned error: %s", err)
+		t.Fatalf("Decode returned error: %s", err)
 	}
 	exp := Document{
 		Header: map[string]interface{}{

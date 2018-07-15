@@ -3,8 +3,10 @@ package template
 import (
 	"fmt"
 	"io"
+	"os"
 	"text/template"
 
+	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
 )
 
@@ -21,6 +23,26 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 	return t.ExecuteTemplate(w, "site_content.html", h)
 }
 
-func RenderEnjaFile(src, dst string) error {
+func RenderEnjaFile(t *template.Template, src, dst string) error {
+	f, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	d, err := enja.Decode(f)
+	if err != nil {
+		return errors.Wrap(err, "decode enja")
+	}
+	f2, err := os.Create(dst, 0666)
+	if err != nil {
+		return err
+	}
+	defer f2.Close()
+	if err := RenderEnja(t, f2, d); err != nil {
+		return errors.Wrap(err, "render enja")
+	}
+	if err := f2.Close(); err != nil {
+		return err
+	}
 	return nil
 }

@@ -19,7 +19,7 @@ const (
 	dividerN = "---\n"
 )
 
-func Write(w io.Writer, d *Document) error {
+func Encode(w io.Writer, d *Document) error {
 	bw := bufio.NewWriter(w)
 	data, err := yaml.Marshal(d.Header)
 	if err != nil {
@@ -31,7 +31,7 @@ func Write(w io.Writer, d *Document) error {
 	return bw.Flush()
 }
 
-func Read(r io.Reader) (*Document, error) {
+func Decode(r io.Reader) (*Document, error) {
 	var b bytes.Buffer
 	s := bufio.NewScanner(r)
 	for s.Scan() {
