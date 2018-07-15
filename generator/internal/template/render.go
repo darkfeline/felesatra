@@ -20,7 +20,7 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 		h[k] = v
 	}
 	h["body"] = d.Body
-	return t.ExecuteTemplate(w, "site_content.html", h)
+	return t.ExecuteTemplate(w, "site-content.html", h)
 }
 
 func RenderEnjaFile(t *template.Template, src, dst string) error {

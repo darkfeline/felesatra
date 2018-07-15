@@ -1,14 +1,11 @@
-{# Most basic HTML page template. #}
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    {% block head %}
-    {% endblock %}
-    <title>{% block title %}{% endblock %}</title>
+    {{block "head" .}}{{end}}
+    <title>{{.title}}</title>
   </head>
   <body>
-    {% block body %}
-    {% endblock %}
+    {{block "body" .}}{{end}}
   </body>
 </html>

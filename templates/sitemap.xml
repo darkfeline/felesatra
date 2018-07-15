@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  {% for url in sitemap %}
+  {{range .sitemap}}
   <url>
-    {% if url.loc %}
-    <loc>{{ url.loc }}</loc>
-    {% endif %}
-    {% if url.lastmod %}
-    <lastmod>{{ url.lastmod }}</lastmod>
-    {% endif %}
-    {% if url.changefreq %}
-    <changefreq>{{ url.changefreq }}</changefreq>
-    {% endif %}
-    {% if url.priority %}
-    <priority>{{ url.priority }}</priority>
-    {% endif %}
+    {{if .loc}}
+    <loc>{{.loc}}</loc>
+    {{end}}
+    {{if .lastmod}}
+    <lastmod>{{.lastmod}}</lastmod>
+    {{endif}}
+    {{if .changefreq}}
+    <changefreq>{{.changefreq}}</changefreq>
+    {{endif}}
+    {{if .priority}}
+    <priority>{{.priority}}</priority>
+    {{endif}}
   </url>
-  {% endfor %}
+  {{end}}
 </urlset>
