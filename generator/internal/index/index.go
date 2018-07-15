@@ -37,7 +37,8 @@ func IndexDir(dir string) ([]Entry, error) {
 		if err != nil {
 			return err
 		}
-		en.Path = path[len(dir)+1:]
+		ext := filepath.Ext(path)
+		en.Path = path[len(dir)+1 : len(path)-len(ext)]
 		e = append(e, en)
 		return nil
 	}

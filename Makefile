@@ -1,9 +1,3 @@
-export PYTHONPATH := $(CURDIR)
-
-PYTHON = python
-
-felesatra_sources = $(shell find felesatra -name __pycache__ -prune , -type f)
-
 dstdir = app
 pagesrcdir = pages
 pagedstdir = $(dstdir)/pages
@@ -39,17 +33,17 @@ $(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
 
 # sitemap.xml
 clean += sitemap.xml
-app/sitemap.xml: page_index $(felesatra_sources)
-	$(PYTHON) -m felesatra.cmd.make_sitemap --prefix "https://www.felesatra.moe/" $< $@
+app/sitemap.xml: page_index gen $(templates)
+	./gen sitemap $< >$@
 
 # Generated artifacts
 # Generated pages
 clean += genpages
-genpages/index-enja.html: index-template.html page_index $(felesatra_sources)
+genpages/index-enja.html: page_index gen $(templates)
 	mkdir -p $(dir $@)
-	$(PYTHON) -m felesatra.cmd.generate_index_page index-template.html page_index >$@
+	./gen indexpage $< >$@
 
 # Page index
 clean += page_index
-page_index: $(srcpages) $(felesatra_sources)
-	$(PYTHON) -m felesatra.cmd.index_pages $(pagesrcdir) $@
+page_index: $(srcpages) gen
+	./gen index $@ $(pagesrcdir)

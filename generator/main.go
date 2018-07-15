@@ -14,8 +14,10 @@ func main() {
 	subcommands.Register(subcommands.FlagsCommand(), "")
 	subcommands.Register(subcommands.CommandsCommand(), "")
 	subcommands.Register(&cmd.Index{}, "")
+	subcommands.Register(&cmd.IndexPage{}, "")
 	subcommands.Register(&cmd.Render{}, "")
 	subcommands.Register(&cmd.RenderMany{}, "")
+	subcommands.Register(&cmd.Sitemap{}, "")
 
 	flag.Parse()
 	ctx := context.Background()

@@ -7,6 +7,7 @@ import (
 )
 
 func TestReadAndWrite(t *testing.T) {
+	t.Parallel()
 	var b bytes.Buffer
 	e := []Entry{
 		{"blog/2000/01/01/plachta", "Plachta", "2000-01-01", "2000-01-02"},

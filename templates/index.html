@@ -7,7 +7,7 @@ modified: 2018-02-24
 <p>This page is <code>index.html</code>.  Therefore, the site index can be found here.</p>
 
 <ul>
-  {% for page in pages %}
-  <li><a href="{{ page.path }}">{{ page.title }}</a></li>
-  {% endfor %}
+  {{- range .Pages}}
+  <li><a href="{{.Path}}">{{.Title}}</a></li>
+  {{- end}}
 <ul>

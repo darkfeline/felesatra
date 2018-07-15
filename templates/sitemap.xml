@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  {{range .sitemap}}
+  {{- range .}}
   <url>
-    {{if .loc}}
-    <loc>{{.loc}}</loc>
-    {{end}}
-    {{if .lastmod}}
-    <lastmod>{{.lastmod}}</lastmod>
-    {{end}}
-    {{if .changefreq}}
-    <changefreq>{{.changefreq}}</changefreq>
-    {{end}}
-    {{if .priority}}
-    <priority>{{.priority}}</priority>
-    {{end}}
+    {{- if .Loc}}
+    <loc>{{.Loc}}</loc>
+    {{- end}}
+    {{- if .LastMod}}
+    <lastmod>{{.LastMod}}</lastmod>
+    {{- end}}
+    {{- if .ChangeFreq}}
+    <changefreq>{{.ChangeFreq}}</changefreq>
+    {{- end}}
+    {{- if .Priority}}
+    <priority>{{.Priority}}</priority>
+    {{- end}}
   </url>
-  {{end}}
+  {{- end}}
 </urlset>
