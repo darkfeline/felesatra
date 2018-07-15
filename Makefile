@@ -11,7 +11,7 @@ srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
 .PHONY: all
-all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml gen
+all: $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml gentest gen
 
 .PHONY: gentest
 gentest:
