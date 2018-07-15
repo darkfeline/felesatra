@@ -34,7 +34,7 @@ func (c *RenderMany) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{
 		eprintln("must provide two arguments")
 		return subcommands.ExitUsageError
 	}
-	srcdir := f.Arg(0)
+	srcdir := filepath.Clean(f.Arg(0))
 	dstdir := f.Arg(1)
 	t, err := template.Load(c.templateDir)
 	if err != nil {
@@ -50,7 +50,7 @@ func (c *RenderMany) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{
 			return nil
 		}
 		src := path
-		rel := src[len(srcdir):]
+		rel := src[len(srcdir)+1:]
 		dst := filepath.Join(dstdir, rel)
 		if err := os.MkdirAll(filepath.Dir(dst), 0777); err != nil {
 			eprintln(err)

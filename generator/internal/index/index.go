@@ -20,6 +20,7 @@ type Entry struct {
 }
 
 func IndexDir(dir string) ([]Entry, error) {
+	dir = filepath.Clean(dir)
 	var e []Entry
 	wf := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -36,7 +37,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		if err != nil {
 			return err
 		}
-		en.Path = path[len(dir):]
+		en.Path = path[len(dir)+1:]
 		e = append(e, en)
 		return nil
 	}
