@@ -15,8 +15,7 @@ type Document struct {
 }
 
 const (
-	divider  = "---"
-	dividerN = "---\n"
+	divider = "---\n"
 )
 
 func Encode(w io.Writer, d *Document) error {
@@ -26,28 +25,29 @@ func Encode(w io.Writer, d *Document) error {
 		return err
 	}
 	bw.Write(data)
-	bw.Write([]byte(dividerN))
+	bw.Write([]byte(divider))
 	bw.Write(d.Body)
 	return bw.Flush()
 }
 
 func Decode(r io.Reader) (*Document, error) {
 	var b bytes.Buffer
-	s := bufio.NewScanner(r)
-	for s.Scan() {
-		if s.Text() == divider {
+	br := bufio.NewReader(r)
+	for {
+		l, err := br.ReadBytes('\n')
+		if err != nil {
+			return nil, err
+		}
+		if string(l) == divider {
 			break
 		}
-		io.WriteString(&b, s.Text())
-	}
-	if err := s.Err(); err != nil {
-		return nil, err
+		b.Write(l)
 	}
 	h := make(map[string]interface{})
 	if err := yaml.Unmarshal(b.Bytes(), h); err != nil {
 		return nil, err
 	}
-	bd, err := ioutil.ReadAll(r)
+	bd, err := ioutil.ReadAll(br)
 	if err != nil {
 		return nil, err
 	}
