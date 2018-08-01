@@ -10,8 +10,8 @@ import (
 func TestProcessIndexEntries(t *testing.T) {
 	t.Parallel()
 	e := []index.Entry{
-		{Path: "blog/z"},
 		{Path: "blog/a"},
+		{Path: "blog/z"},
 		{Path: "404"},
 		{Path: "plachta"},
 		{Path: "lacia"},
@@ -20,8 +20,8 @@ func TestProcessIndexEntries(t *testing.T) {
 	exp := []index.Entry{
 		{Path: "lacia"},
 		{Path: "plachta"},
-		{Path: "blog/a"},
 		{Path: "blog/z"},
+		{Path: "blog/a"},
 	}
 	if !reflect.DeepEqual(got, exp) {
 		t.Errorf("Expected %#v, got %#v", exp, got)
