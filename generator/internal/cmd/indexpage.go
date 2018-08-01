@@ -95,7 +95,7 @@ func processIndexEntries(e []index.Entry) []index.Entry {
 		}
 	}
 	sort.Sort(pages)
-	sort.Sort(blog)
+	sort.Sort(sort.Reverse(blog))
 	n := make([]index.Entry, len(pages)+len(blog))
 	for i, v := range pages {
 		n[i] = v
