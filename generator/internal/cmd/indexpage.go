@@ -70,23 +70,9 @@ func readIndex(path string) ([]index.Entry, error) {
 	return e, nil
 }
 
-type entries []index.Entry
-
-func (e entries) Len() int {
-	return len(e)
-}
-
-func (e entries) Less(i, j int) bool {
-	return e[i].Path < e[j].Path
-}
-
-func (e entries) Swap(i, j int) {
-	e[i], e[j] = e[j], e[i]
-}
-
 func processIndexEntries(e []index.Entry) []index.Entry {
-	pages := make(entries, 0, len(e))
-	blog := make(entries, 0, len(e))
+	pages := make([]index.Entry, 0, len(e))
+	blog := make([]index.Entry, 0, len(e))
 	for _, e := range e {
 		if isBlog(e) {
 			blog = append(blog, e)
@@ -94,8 +80,8 @@ func processIndexEntries(e []index.Entry) []index.Entry {
 			pages = append(pages, e)
 		}
 	}
-	sort.Sort(pages)
-	sort.Sort(sort.Reverse(blog))
+	sort.Slice(pages, func(i, j int) bool { return pages[i].Path < pages[j].Path })
+	sort.Slice(blog, func(i, j int) bool { return blog[i].Path >= blog[j].Path })
 	n := make([]index.Entry, len(pages)+len(blog))
 	for i, v := range pages {
 		n[i] = v
