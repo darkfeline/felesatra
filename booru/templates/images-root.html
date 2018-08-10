@@ -1,0 +1,19 @@
+{{define "title" -}}
+Images
+{{- end -}}
+
+{{define "body"}}
+<section>
+  <h1>Images</h1>
+
+  <section>
+    <h1>Post</h1>
+    <form enctype="multipart/form-data" method="post">
+      <input name="file" type="file" />
+      <input type="submit" value="submit" />
+    </form>
+  </section>
+</section>
+{{- end -}}
+
+{{template "base.html" . -}}

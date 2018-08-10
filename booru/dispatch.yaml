@@ -1,0 +1,3 @@
+dispatch:
+  - url: "booru.felesatra.moe/*"
+    service: go
