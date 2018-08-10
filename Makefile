@@ -1,4 +1,4 @@
-dstdir = app
+dstdir = www
 pagesrcdir = pages
 pagedstdir = $(dstdir)/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
@@ -32,8 +32,8 @@ $(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
 	./gen render $< $@
 
 # sitemap.xml
-clean += app/sitemap.xml
-app/sitemap.xml: page_index gen $(templates)
+clean += $(dstdir)/sitemap.xml
+$(dstdir)/sitemap.xml: page_index gen $(templates)
 	./gen sitemap $< >$@
 
 # Generated artifacts
