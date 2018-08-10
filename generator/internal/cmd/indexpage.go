@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/subcommands"
 	"go.felesatra.moe/felesatra/generator/internal/index"
-	"go.felesatra.moe/felesatra/generator/internal/template"
+	"go.felesatra.moe/felesatra/generator/internal/templates"
 )
 
 type IndexPage struct {
@@ -35,9 +35,9 @@ func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		return subcommands.ExitUsageError
 	}
 	p := f.Arg(0)
-	t, err := template.Load(c.templateDir)
+	t, err := templates.LoadIndexTemplate(c.templateDir)
 	if err != nil {
-		eprintln("error loading templates:", err)
+		eprintln("error loading template:", err)
 		return subcommands.ExitFailure
 	}
 	e, err := readIndex(p)
@@ -50,7 +50,7 @@ func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 	}{
 		Pages: processIndexEntries(e),
 	}
-	if err := t.ExecuteTemplate(os.Stdout, "index.html", d); err != nil {
+	if err := t.Execute(os.Stdout, d); err != nil {
 		eprintln(err)
 		return subcommands.ExitFailure
 	}

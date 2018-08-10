@@ -1,7 +1,6 @@
-package template
+package render
 
 import (
-	"fmt"
 	"io"
 	"os"
 	"text/template"
@@ -9,11 +8,6 @@ import (
 	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
 )
-
-// Load loads the Template to be used by RenderEnja.
-func Load(dir string) (*template.Template, error) {
-	return template.ParseGlob(fmt.Sprintf("%s/*", dir))
-}
 
 // RenderEnja renders the Enja document using the Template and writes
 // it to the Writer.
@@ -23,7 +17,7 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 		h[k] = v
 	}
 	h["body"] = string(d.Body)
-	return t.ExecuteTemplate(w, "site-content.html", h)
+	return t.Execute(w, h)
 }
 
 func RenderEnjaFile(t *template.Template, src, dst string) error {

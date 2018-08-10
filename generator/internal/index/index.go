@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
-	"go.felesatra.moe/felesatra/generator/internal/template"
+	"go.felesatra.moe/felesatra/generator/internal/render"
 )
 
 type Entry struct {
@@ -29,7 +29,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		if info.IsDir() {
 			return nil
 		}
-		d, err := template.ReadEnjaFile(path)
+		d, err := render.ReadEnjaFile(path)
 		if err != nil {
 			return errors.Wrap(err, "read enja file")
 		}

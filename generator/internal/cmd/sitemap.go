@@ -8,7 +8,7 @@ import (
 	"github.com/google/subcommands"
 	"go.felesatra.moe/felesatra/generator/internal/index"
 	"go.felesatra.moe/felesatra/generator/internal/sitemap"
-	"go.felesatra.moe/felesatra/generator/internal/template"
+	"go.felesatra.moe/felesatra/generator/internal/templates"
 )
 
 type Sitemap struct {
@@ -37,9 +37,9 @@ func (c *Sitemap) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) 
 		return subcommands.ExitUsageError
 	}
 	p := f.Arg(0)
-	t, err := template.Load(c.templateDir)
+	t, err := templates.LoadSitemapTemplate(c.templateDir)
 	if err != nil {
-		eprintln("error loading templates:", err)
+		eprintln("error loading template:", err)
 		return subcommands.ExitFailure
 	}
 	e, err := readIndex(p)
@@ -49,7 +49,7 @@ func (c *Sitemap) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) 
 	}
 	e = processIndexEntries(e)
 	e2 := sitemapFromIndex(c.prefix, e)
-	if err := t.ExecuteTemplate(os.Stdout, "sitemap.xml", e2); err != nil {
+	if err := t.Execute(os.Stdout, e2); err != nil {
 		eprintln(err)
 		return subcommands.ExitFailure
 	}

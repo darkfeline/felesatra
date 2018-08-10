@@ -1,25 +1,7 @@
-{{define "head"}}
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="/css/base.css">
-<link rel="stylesheet" type="text/css" href="/css/site.css">
-<link rel="icon" type="image/png" href="/img/site/favicon.png">
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113481431-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-113481431-1');
-</script>
-{{- end -}}
-
-{{define "body"}}
 <header id="site-header">
   <h1 id="site-title"><a href="/">Feles Atra</a></h1>
 </header>
-{{block "base-content" .}}{{end}}
+{{block "content.html" .}}{{end}}
 
 <footer id="site-footer">
   <address>
@@ -41,6 +23,3 @@
     </a>
   </div>
 </footer>
-{{- end -}}
-
-{{template "base.html" . -}}

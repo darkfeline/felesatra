@@ -8,7 +8,8 @@ import (
 
 	"github.com/google/subcommands"
 
-	"go.felesatra.moe/felesatra/generator/internal/template"
+	"go.felesatra.moe/felesatra/generator/internal/render"
+	"go.felesatra.moe/felesatra/generator/internal/templates"
 )
 
 type Render struct {
@@ -35,16 +36,16 @@ func (c *Render) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) s
 	}
 	src := f.Arg(0)
 	dst := f.Arg(1)
-	t, err := template.Load(c.templateDir)
+	t, err := templates.LoadPageTemplate(c.templateDir)
 	if err != nil {
-		eprintln("error loading templates:", err)
+		eprintln("error loading template:", err)
 		return subcommands.ExitFailure
 	}
 	if err := os.MkdirAll(filepath.Dir(dst), 0777); err != nil {
 		eprintln(err)
 		return subcommands.ExitFailure
 	}
-	if err := template.RenderEnjaFile(t, src, dst); err != nil {
+	if err := render.RenderEnjaFile(t, src, dst); err != nil {
 		eprintln(err)
 		return subcommands.ExitFailure
 	}
