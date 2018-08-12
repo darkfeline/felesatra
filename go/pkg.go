@@ -7,6 +7,7 @@ import (
 
 var pkgs = []Package{
 	{"/anidb", Git, "https://github.com/darkfeline/anidb-go"},
+	{"/animanager", Git, "https://github.com/darkfeline/animanager-go"},
 	{"/booru/dl", Git, "https://github.com/darkfeline/booru-dl-go"},
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
