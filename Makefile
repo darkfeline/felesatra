@@ -28,6 +28,7 @@ $(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) gen $(templates)
 	./gen rendermany $(pagesrcdir) $(pagedstdir)
 
 # index.html
+clean += $(pagedstdir)/index.html
 $(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
 	./gen render $< $@
 
