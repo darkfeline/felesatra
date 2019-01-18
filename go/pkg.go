@@ -13,6 +13,7 @@ var pkgs = []Package{
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
 	{"/go2/errors", Git, "https://github.com/darkfeline/go2-errors"},
 	{"/orbis", Git, "https://github.com/darkfeline/orbis-go"},
+	{"/pwnck", Git, "https://github.com/darkfeline/pwnck"},
 	{"/qualia", Git, "https://github.com/darkfeline/qualia-go"},
 	{"/subcommands", Git, "https://github.com/darkfeline/subcommands-go"},
 	{"/xdg", Git, "https://github.com/darkfeline/xdg-go"},
