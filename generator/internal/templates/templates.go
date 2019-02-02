@@ -12,15 +12,7 @@ type Templates struct {
 }
 
 func LoadPageTemplate(dir string) (*template.Template, error) {
-	t, err := template.ParseFiles(filepath.Join(dir, "base.html"))
-	if err != nil {
-		return nil, err
-	}
-	_, err = t.ParseGlob(filepath.Join(dir, "site", "*"))
-	if err != nil {
-		return nil, err
-	}
-	return t, nil
+	return template.ParseFiles(filepath.Join(dir, "base.html"))
 }
 
 func LoadIndexTemplate(dir string) (*template.Template, error) {
