@@ -19,14 +19,12 @@ type IndexPage struct {
 func (*IndexPage) Name() string     { return "indexpage" }
 func (*IndexPage) Synopsis() string { return "Render an index page." }
 func (*IndexPage) Usage() string {
-	return `indexpage [-templates DIR] INDEX:
+	return `indexpage INDEX:
   Render an index page.
 `
 }
 
 func (c *IndexPage) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&c.templateDir, "templates", "templates",
-		"Templates directory")
 }
 
 func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -35,11 +33,7 @@ func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		return subcommands.ExitUsageError
 	}
 	p := f.Arg(0)
-	t, err := templates.LoadIndexTemplate(c.templateDir)
-	if err != nil {
-		eprintln("error loading template:", err)
-		return subcommands.ExitFailure
-	}
+	t := templates.LoadIndexTemplate()
 	e, err := readIndex(p)
 	if err != nil {
 		eprintln("error loading index", err)

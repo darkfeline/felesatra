@@ -1,24 +1,21 @@
 package templates
 
 import (
-	"path/filepath"
 	"text/template"
 )
 
-type Templates struct {
-	Page    *template.Template
-	Index   *template.Template
-	Sitemap *template.Template
+//go:generate binpack -var baseTemplate base.html
+//go:generate binpack -var sitemapTemplate sitemap.xml
+//go:generate binpack -var indexTemplate index.html
+
+func LoadPageTemplate() *template.Template {
+	return template.Must(template.New("base.html").Parse(baseTemplate))
 }
 
-func LoadPageTemplate(dir string) (*template.Template, error) {
-	return template.ParseFiles(filepath.Join(dir, "base.html"))
+func LoadIndexTemplate() *template.Template {
+	return template.Must(template.New("index.html").Parse(indexTemplate))
 }
 
-func LoadIndexTemplate(dir string) (*template.Template, error) {
-	return template.ParseFiles(filepath.Join(dir, "index.html"))
-}
-
-func LoadSitemapTemplate(dir string) (*template.Template, error) {
-	return template.ParseFiles(filepath.Join(dir, "sitemap.xml"))
+func LoadSitemapTemplate() *template.Template {
+	return template.Must(template.New("sitemap.xml").Parse(sitemapTemplate))
 }

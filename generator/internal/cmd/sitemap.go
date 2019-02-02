@@ -19,14 +19,12 @@ type Sitemap struct {
 func (*Sitemap) Name() string     { return "sitemap" }
 func (*Sitemap) Synopsis() string { return "Render a sitemap." }
 func (*Sitemap) Usage() string {
-	return `sitemap [-templates DIR] [-prefix PREFIX] INDEX:
+	return `sitemap [-prefix PREFIX] INDEX:
   Render a sitemap.
 `
 }
 
 func (c *Sitemap) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&c.templateDir, "templates", "templates",
-		"Templates directory")
 	f.StringVar(&c.prefix, "prefix", "https://www.felesatra.moe/",
 		"URL prefix")
 }
@@ -37,11 +35,7 @@ func (c *Sitemap) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) 
 		return subcommands.ExitUsageError
 	}
 	p := f.Arg(0)
-	t, err := templates.LoadSitemapTemplate(c.templateDir)
-	if err != nil {
-		eprintln("error loading template:", err)
-		return subcommands.ExitFailure
-	}
+	t := templates.LoadSitemapTemplate()
 	e, err := readIndex(p)
 	if err != nil {
 		eprintln("error loading index", err)

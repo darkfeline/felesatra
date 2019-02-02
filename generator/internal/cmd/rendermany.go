@@ -20,14 +20,12 @@ type RenderMany struct {
 func (*RenderMany) Name() string     { return "rendermany" }
 func (*RenderMany) Synopsis() string { return "Render multiple pages." }
 func (*RenderMany) Usage() string {
-	return `rendermany [-templates DIR] SRC DST:
+	return `rendermany SRC DST:
   Render multiple pages.
 `
 }
 
 func (c *RenderMany) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&c.templateDir, "templates", "templates",
-		"Templates directory")
 }
 
 func (c *RenderMany) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -37,11 +35,7 @@ func (c *RenderMany) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{
 	}
 	srcdir := filepath.Clean(f.Arg(0))
 	dstdir := f.Arg(1)
-	t, err := templates.LoadPageTemplate(c.templateDir)
-	if err != nil {
-		eprintln("error loading template:", err)
-		return subcommands.ExitFailure
-	}
+	t := templates.LoadPageTemplate()
 	wf := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%s: error walking to %s: %s", os.Args[0], path, err)
