@@ -6,15 +6,19 @@ dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 templates = $(shell find templates -type f)
 
 .PHONY: all
-all: gentest gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
+all: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
 
-.PHONY: gentest
-gentest:
-	go vet ./generator/...
+.PHONY: go_generate
+go_generate:
+	go generate ./generator/...
+
+.PHONY: go_test
+go_test: go_generate
+	go vet -all ./generator/...
 	go test ./generator/...
 
 clean += gen
-gen: $(shell find generator -name "*.go")
+gen: go_generate $(shell find generator -name "*.go")
 	go build -o gen ./generator
 
 .PHONY: clean
