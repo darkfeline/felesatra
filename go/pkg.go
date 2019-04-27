@@ -16,6 +16,7 @@ var pkgs = []Package{
 	{"/orbis", Git, "https://github.com/darkfeline/orbis-go"},
 	{"/pwnck", Git, "https://github.com/darkfeline/pwnck"},
 	{"/qualia", Git, "https://github.com/darkfeline/qualia-go"},
+	{"/sitemap", Git, "https://github.com/darkfeline/sitemap-go"},
 	{"/subcommands", Git, "https://github.com/darkfeline/subcommands-go"},
 	{"/xdg", Git, "https://github.com/darkfeline/xdg-go"},
 }
