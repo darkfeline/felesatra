@@ -5,7 +5,6 @@ import (
 )
 
 //go:generate binpack -name baseTemplate base.html
-//go:generate binpack -name sitemapTemplate sitemap.xml
 //go:generate binpack -name indexTemplate index.html
 
 func LoadPageTemplate() *template.Template {
@@ -14,8 +13,4 @@ func LoadPageTemplate() *template.Template {
 
 func LoadIndexTemplate() *template.Template {
 	return template.Must(template.New("index.html").Parse(indexTemplate))
-}
-
-func LoadSitemapTemplate() *template.Template {
-	return template.Must(template.New("sitemap.xml").Parse(sitemapTemplate))
 }
