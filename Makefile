@@ -3,7 +3,6 @@ pagesrcdir = pages
 pagedstdir = $(dstdir)/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
-templates = $(shell find templates -type f)
 
 .PHONY: all
 all: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
@@ -17,34 +16,37 @@ go_test: go_generate
 	go vet -all ./generator/...
 	go test ./generator/...
 
-clean += gen
-gen: go_generate $(shell find generator -name "*.go")
-	go build -o gen ./generator
-
 .PHONY: clean
 clean:
 	rm -rf $(clean)
 
-# Built targets
+
+# Build targets
+# generator tool
+clean += gen
+gen: go_generate $(shell find generator -name "*.go")
+	go build -o gen ./generator
+
 # Pages
 clean += $(pagedstdir)
-$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) gen $(templates)
+$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) gen
 	./gen rendermany $(pagesrcdir) $(pagedstdir)
 
 # index.html
 clean += $(pagedstdir)/index.html
-$(pagedstdir)/index.html: genpages/index-enja.html gen $(templates)
+$(pagedstdir)/index.html: genpages/index-enja.html gen
 	./gen render $< $@
 
 # sitemap.xml
 clean += $(dstdir)/sitemap.xml
-$(dstdir)/sitemap.xml: page_index gen $(templates)
+$(dstdir)/sitemap.xml: page_index gen
 	./gen sitemap $< >$@
 
+
 # Generated artifacts
 # Generated pages
 clean += genpages
-genpages/index-enja.html: page_index gen $(templates)
+genpages/index-enja.html: page_index gen
 	mkdir -p $(dir $@)
 	./gen indexpage $< >$@
 
