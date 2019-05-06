@@ -1,43 +1,30 @@
-package cmd
+package main
 
 import (
-	"context"
-	"flag"
 	"os"
 	"sort"
 	"strings"
 
-	"github.com/google/subcommands"
 	"go.felesatra.moe/felesatra/generator/internal/index"
 	"go.felesatra.moe/felesatra/generator/internal/templates"
+	"golang.org/x/xerrors"
 )
 
-type IndexPage struct {
-	templateDir string
+func init() {
+	subcommands["indexpage"] = indexpageCommand
 }
 
-func (*IndexPage) Name() string     { return "indexpage" }
-func (*IndexPage) Synopsis() string { return "Render an index page." }
-func (*IndexPage) Usage() string {
-	return `indexpage INDEX:
-  Render an index page.
-`
-}
-
-func (c *IndexPage) SetFlags(f *flag.FlagSet) {
-}
-
-func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	if f.NArg() != 1 {
-		eprintln("must provide one argument")
-		return subcommands.ExitUsageError
+// Usage: indexpage INDEX
+func indexpageCommand() error {
+	args := os.Args[2:]
+	if len(args) != 1 {
+		return xerrors.New("must provide one argument")
 	}
-	p := f.Arg(0)
+	p := args[0]
 	t := templates.LoadIndexTemplate()
 	e, err := readIndex(p)
 	if err != nil {
-		eprintln("error loading index", err)
-		return subcommands.ExitFailure
+		return err
 	}
 	d := struct {
 		Pages []index.Entry
@@ -45,10 +32,9 @@ func (c *IndexPage) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 		Pages: processIndexEntries(e),
 	}
 	if err := t.Execute(os.Stdout, d); err != nil {
-		eprintln(err)
-		return subcommands.ExitFailure
+		return err
 	}
-	return subcommands.ExitSuccess
+	return nil
 }
 
 func readIndex(path string) ([]index.Entry, error) {

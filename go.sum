@@ -1,7 +1,5 @@
 github.com/golang/protobuf v1.2.0 h1:P3YflyNX/ehuJFLhxviNdFxQPkGK5cDcApsge1SqnvM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
-github.com/google/subcommands v0.0.0-20180618214453-5bae204cdfb2 h1:xT8XvBDdhTRgh/lZ94y4WLPjbIMh4Gsxcho5SyBMIaM=
-github.com/google/subcommands v0.0.0-20180618214453-5bae204cdfb2/go.mod h1:ZjhPrFU+Olkh9WazFPsl27BQ4UPiG37m3yTrtFlrHVk=
 go.felesatra.moe/sitemap v1.0.1 h1:hcKNdpWUb4kDcICHXWqwQFnxKvDymTIdWdhc79jDxMY=
 go.felesatra.moe/sitemap v1.0.1/go.mod h1:II49+cDoKMaBwG/qwujI71FZmeqPROuDNCZkW+kwIcI=
 golang.org/x/net v0.0.0-20180911220305-26e67e76b6c3 h1:czFLhve3vsQetD6JOJ8NZZvGQIXlnN3/yXxbT6/awxI=

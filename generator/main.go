@@ -1,25 +1,27 @@
 package main
 
 import (
-	"context"
-	"flag"
+	"log"
 	"os"
 
-	"github.com/google/subcommands"
-	"go.felesatra.moe/felesatra/generator/internal/cmd"
+	"golang.org/x/xerrors"
 )
 
 func main() {
-	subcommands.Register(subcommands.HelpCommand(), "")
-	subcommands.Register(subcommands.FlagsCommand(), "")
-	subcommands.Register(subcommands.CommandsCommand(), "")
-	subcommands.Register(&cmd.Index{}, "")
-	subcommands.Register(&cmd.IndexPage{}, "")
-	subcommands.Register(&cmd.Render{}, "")
-	subcommands.Register(&cmd.RenderMany{}, "")
-	subcommands.Register(&cmd.Sitemap{}, "")
+	log.SetPrefix("gen: ")
+	if err := innerMain(); err != nil {
+		log.Fatal(err)
+	}
+}
 
-	flag.Parse()
-	ctx := context.Background()
-	os.Exit(int(subcommands.Execute(ctx)))
+type subcommand func() error
+
+var subcommands = make(map[string]subcommand)
+
+func innerMain() error {
+	c, ok := subcommands[os.Args[1]]
+	if !ok {
+		return xerrors.Errorf("unknown command %s", os.Args[1])
+	}
+	return c()
 }
