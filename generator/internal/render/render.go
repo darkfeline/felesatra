@@ -23,7 +23,7 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 // RenderEnjaFile renders the Enja document in the source file using
 // the template and writes it to the dest file.
 func RenderEnjaFile(t *template.Template, src, dst string) error {
-	d, err := ReadEnjaFile(src)
+	d, err := enja.LoadPath(src)
 	if err != nil {
 		return xerrors.Errorf("render enja file: %w", err)
 	}

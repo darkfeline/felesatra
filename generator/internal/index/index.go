@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 
 	"go.felesatra.moe/felesatra/generator/internal/enja"
-	"go.felesatra.moe/felesatra/generator/internal/render"
 	"golang.org/x/xerrors"
 )
 
@@ -29,7 +28,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		if info.IsDir() {
 			return nil
 		}
-		d, err := render.ReadEnjaFile(path)
+		d, err := enja.LoadPath(path)
 		if err != nil {
 			return xerrors.Errorf("index dir: %w", err)
 		}

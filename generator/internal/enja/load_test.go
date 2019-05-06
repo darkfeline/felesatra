@@ -1,14 +1,12 @@
-package render
+package enja
 
 import (
 	"testing"
-
-	"go.felesatra.moe/felesatra/generator/internal/enja"
 )
 
 func TestSetMissingHeaders(t *testing.T) {
 	t.Parallel()
-	d := enja.Document{
+	d := Document{
 		Header: map[string]interface{}{},
 	}
 	setMissingHeaders(&d, "blog/2016/01/02/some-page")

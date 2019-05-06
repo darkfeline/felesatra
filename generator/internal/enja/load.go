@@ -1,23 +1,22 @@
-package render
+package enja
 
 import (
 	"fmt"
 	"os"
 	"strings"
 
-	"go.felesatra.moe/felesatra/generator/internal/enja"
 	"golang.org/x/xerrors"
 )
 
-// ReadEnjaFile reads and returns an Enja document from the file.
+// LoadPath reads and returns an Enja document from the file.
 // This function also populates missing headers based on the path.
-func ReadEnjaFile(path string) (*enja.Document, error) {
+func LoadPath(path string) (*Document, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
-	d, err := enja.Decode(f)
+	d, err := Decode(f)
 	if err != nil {
 		return nil, xerrors.Errorf("read enja file: %w", err)
 	}
@@ -27,7 +26,7 @@ func ReadEnjaFile(path string) (*enja.Document, error) {
 
 const minDate = "0000-00-00"
 
-func setMissingHeaders(d *enja.Document, path string) {
+func setMissingHeaders(d *Document, path string) {
 	if _, ok := d.Header["published"]; !ok {
 		d.Header["published"] = dateFromPath(path)
 	}
