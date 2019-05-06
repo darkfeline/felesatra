@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
+	"golang.org/x/xerrors"
 )
 
 // ReadEnjaFile reads and returns an Enja document from the file.
@@ -19,7 +19,7 @@ func ReadEnjaFile(path string) (*enja.Document, error) {
 	defer f.Close()
 	d, err := enja.Decode(f)
 	if err != nil {
-		return nil, errors.Wrap(err, "decode enja")
+		return nil, xerrors.Errorf("read enja file: %w", err)
 	}
 	setMissingHeaders(d, path)
 	return d, nil

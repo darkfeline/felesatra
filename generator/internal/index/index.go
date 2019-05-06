@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
 	"go.felesatra.moe/felesatra/generator/internal/render"
+	"golang.org/x/xerrors"
 )
 
 type Entry struct {
@@ -31,7 +31,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		}
 		d, err := render.ReadEnjaFile(path)
 		if err != nil {
-			return errors.Wrap(err, "read enja file")
+			return xerrors.Errorf("index dir: %w", err)
 		}
 		en, err := docEntry(d)
 		if err != nil {
@@ -55,7 +55,7 @@ func docEntry(d *enja.Document) (e Entry, err error) {
 			case error:
 				err = r
 			default:
-				err = errors.Errorf("panic in docEntry: %v", r)
+				err = xerrors.Errorf("panic in docEntry: %v", r)
 			}
 		}
 	}()
