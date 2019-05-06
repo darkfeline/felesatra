@@ -5,8 +5,8 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/pkg/errors"
 	"go.felesatra.moe/felesatra/generator/internal/enja"
+	"golang.org/x/xerrors"
 )
 
 // RenderEnja renders the Enja document using the Template and writes
@@ -20,10 +20,12 @@ func RenderEnja(t *template.Template, w io.Writer, d *enja.Document) error {
 	return t.Execute(w, h)
 }
 
+// RenderEnjaFile renders the Enja document in the source file using
+// the template and writes it to the dest file.
 func RenderEnjaFile(t *template.Template, src, dst string) error {
 	d, err := ReadEnjaFile(src)
 	if err != nil {
-		return errors.Wrap(err, "decode enja")
+		return xerrors.Errorf("render enja file: %w", err)
 	}
 	f2, err := os.Create(dst)
 	if err != nil {
@@ -31,10 +33,10 @@ func RenderEnjaFile(t *template.Template, src, dst string) error {
 	}
 	defer f2.Close()
 	if err := RenderEnja(t, f2, d); err != nil {
-		return errors.Wrap(err, "render enja")
+		return xerrors.Errorf("render enja file: %w", err)
 	}
 	if err := f2.Close(); err != nil {
-		return err
+		return xerrors.Errorf("render enja file: %w", err)
 	}
 	return nil
 }
