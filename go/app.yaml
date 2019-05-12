@@ -1,8 +1,7 @@
-runtime: go
-api_version: go1.11
+runtime: go111
 service: go
 
 handlers:
 - url: /.*
-  script: _go_app
+  script: auto
   secure: always

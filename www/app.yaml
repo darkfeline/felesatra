@@ -1,5 +1,4 @@
-runtime: go
-api_version: go1.11
+runtime: go111
 
 handlers:
 - url: /(css|img|files)/(.*)
@@ -18,5 +17,5 @@ handlers:
   secure: always
 
 - url: /.*
-  script: _go_app
+  script: auto
   secure: always
