@@ -27,15 +27,15 @@ func RenderEnjaFile(t *template.Template, src, dst string) error {
 	if err != nil {
 		return xerrors.Errorf("render enja file: %w", err)
 	}
-	f2, err := os.Create(dst)
+	f, err := os.Create(dst)
 	if err != nil {
 		return err
 	}
-	defer f2.Close()
-	if err := RenderEnja(t, f2, d); err != nil {
+	defer f.Close()
+	if err := RenderEnja(t, f, d); err != nil {
 		return xerrors.Errorf("render enja file: %w", err)
 	}
-	if err := f2.Close(); err != nil {
+	if err := f.Close(); err != nil {
 		return xerrors.Errorf("render enja file: %w", err)
 	}
 	return nil
