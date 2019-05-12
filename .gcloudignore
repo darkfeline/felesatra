@@ -1,0 +1,9 @@
+.gcloudignore
+.git
+.gitignore
+
+/generator
+/genpages
+/Makefile
+/page_index
+/pages

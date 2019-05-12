@@ -2,18 +2,18 @@ runtime: go111
 
 handlers:
 - url: /(css|img|files)/(.*)
-  static_files: static/\1/\2
-  upload: static/(css|img|files)/(.*)
+  static_files: www/static/\1/\2
+  upload: www/static/(css|img|files)/(.*)
   secure: always
 
 - url: /(.*\.txt)
-  static_files: static/\1
-  upload: static/(.*\.txt)
+  static_files: www/static/\1
+  upload: www/static/(.*\.txt)
   secure: always
 
 - url: /(sitemap\.xml)
-  static_files: \1
-  upload: (sitemap\.xml)
+  static_files: www/\1
+  upload: www/(sitemap\.xml)
   secure: always
 
 - url: /.*
