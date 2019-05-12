@@ -2,8 +2,9 @@
 .git
 .gitignore
 
-/generator
-/genpages
+/gen
+/generator/
+/genpages/
 /Makefile
 /page_index
-/pages
+/pages/
