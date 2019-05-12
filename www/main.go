@@ -7,13 +7,17 @@ import (
 	"net/http"
 	"os"
 	"strings"
-
-	"google.golang.org/appengine"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+	log.Printf("Listening on port %s", port)
 	http.HandleFunc("/", handle)
-	appengine.Main()
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
