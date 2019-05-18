@@ -1,3 +1,5 @@
 dispatch:
   - url: "go.felesatra.moe/*"
     service: go
+  - url: "goproxy.felesatra.moe/*"
+    service: goproxy

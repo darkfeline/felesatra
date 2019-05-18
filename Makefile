@@ -5,7 +5,12 @@ srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
 .PHONY: all
-all: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
+all: build_goproxy go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
+
+.PHONY: build_goproxy
+clean += goproxy_src goproxy/static
+build_goproxy:
+	python3 build_goproxy.py goproxy_src goproxy/static
 
 .PHONY: go_generate
 go_generate:
