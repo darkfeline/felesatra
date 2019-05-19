@@ -7,6 +7,7 @@ import logging
 from pathlib import Path
 import re
 import subprocess
+from subprocess import DEVNULL
 
 
 @dataclass
@@ -49,22 +50,23 @@ def main():
 def build_module(workdir: Path, outdir: Path, module: Module):
     checkout = Path(workdir, module.name)
     if checkout.exists():
-        subprocess.run(['git', '-C', checkout, 'fetch'], check=True)
+        subprocess.run(['git', '-C', checkout, 'fetch'],
+                       stdout=DEVNULL, stderr=DEVNULL, check=True)
     else:
         checkout.parent.mkdir(parents=True, exist_ok=True)
-        subprocess.run(['git', 'clone', module.repo, checkout], check=True)
+        subprocess.run(['git', 'clone', module.repo, checkout],
+                       stdout=DEVNULL, stderr=DEVNULL, check=True)
     versions = get_versions(checkout)
     logging.info(f'Got versions for module {module.name}: {versions}')
     base_path(outdir, module.name).mkdir(parents=True, exist_ok=True)
     good_versions = []
     for version in versions:
+        if not has_mod_file(checkout, version):
+            logging.warning(f'Module {module.name} version {version} missing mod file; skipping')
+            continue
         logging.info(f'Building module {module.name} version {version}')
-        try:
-            build_module_version(checkout, outdir, module.name, version)
-        except Exception as e:
-            logging.warning(f'Skipping module {module.name} version {version}: {e}')
-        else:
-            good_versions.append(version)
+        build_module_version(checkout, outdir, module.name, version)
+        good_versions.append(version)
     write_module_version_list(outdir, module.name, good_versions)
 
 
@@ -97,6 +99,12 @@ def get_commit_time(checkout: Path, ref: str) -> str:
     p = subprocess.run(['git', '-C', checkout, 'show', '-s', '--format=%cI', ref],
                        capture_output=True, check=True)
     return p.stdout.decode().strip()
+
+
+def has_mod_file(checkout: Path, ref: str) -> str:
+    p = subprocess.run(['git', '-C', checkout, 'show', f'{ref}:go.mod'],
+                       stdout=DEVNULL, stderr=DEVNULL)
+    return p.returncode == 0
 
 
 def get_mod_file(checkout: Path, ref: str) -> str:
