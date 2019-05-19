@@ -57,7 +57,8 @@ def build_module_version(checkout: Path, outdir: Path, module_name: str, version
     info_path(outdir, module_name, version).write_text(json.dumps(info))
     mod_path(outdir, module_name, version).write_text(get_mod_file(checkout, version))
     with zip_path(outdir, module_name, version).open('wb') as f:
-        subprocess.run(['git', '-C', checkout, 'archive', '--format=zip', version],
+        subprocess.run(['git', '-C', checkout, 'archive', '--format=zip',
+                        f'--prefix={module_name}@{version}/', version],
                        check=True, stdout=f)
 
 
