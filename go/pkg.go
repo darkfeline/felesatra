@@ -10,7 +10,7 @@ var pkgs = []Package{
 	{"/animanager", Git, "https://github.com/darkfeline/animanager-go"},
 	{"/binpack", Git, "https://github.com/darkfeline/binpack"},
 	{"/booru/dl", Git, "https://github.com/darkfeline/booru-dl-go"},
-	{"/danbooru", Git, "https://github.com/darkfeline/danbooru-go"},
+	{"/danbooru", Mod, "https://goproxy.felesatra.moe/"},
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
 	{"/go2/errors", Git, "https://github.com/darkfeline/go2-errors"},
@@ -33,6 +33,7 @@ type Package struct {
 type Method string
 
 const (
+	Mod Method = "mod"
 	Git Method = "git"
 )
 
