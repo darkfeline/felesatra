@@ -1,8 +1,7 @@
-runtime: go111
+runtime: go112
 service: goproxy
 
 handlers:
-- url: /.*
-  static_files: goproxy/static/\1
-  upload: goproxy/static/(.*)
+- url: /
+  static_dir: goproxy/static
   secure: always

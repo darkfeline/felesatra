@@ -1,9 +1,16 @@
-runtime: go111
+runtime: go112
 
 handlers:
-- url: /(css|img|files)/(.*)
-  static_files: www/static/\1/\2
-  upload: www/static/(css|img|files)/(.*)
+- url: /css
+  static_dir: www/static/css
+  secure: always
+
+- url: /img
+  static_dir: www/static/img
+  secure: always
+
+- url: /files
+  static_dir: www/static/files
   secure: always
 
 - url: /(.*\.txt)

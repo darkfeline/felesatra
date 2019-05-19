@@ -2,6 +2,8 @@
 .git
 .gitignore
 
+*~
+
 /gen
 /generator/
 /genpages/
@@ -9,3 +11,4 @@
 /page_index
 /pages/
 /goproxy_src/
+/build_goproxy.py

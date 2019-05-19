@@ -16,8 +16,7 @@ class Module:
 
 
 MODULES = [
-    Module(name="go.felesatra.moe/danbooru",
-           repo="https://github.com/darkfeline/danbooru-go"),
+    Module(name="go.felesatra.moe/danbooru", repo="https://github.com/darkfeline/danbooru-go"),
 ]
 
 
