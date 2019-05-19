@@ -17,12 +17,11 @@ class Module:
 
 
 MODULES = [
-    Module(name="go.felesatra.moe/danbooru", repo="https://github.com/darkfeline/danbooru-go"),
     Module(name='go.felesatra.moe/anidb', repo='https://github.com/darkfeline/anidb-go'),
     Module(name='go.felesatra.moe/animanager', repo='https://github.com/darkfeline/animanager-go'),
     Module(name='go.felesatra.moe/binpack', repo='https://github.com/darkfeline/binpack'),
     Module(name='go.felesatra.moe/booru/dl', repo='https://github.com/darkfeline/booru-dl-go'),
-    Module(name='go.felesatra.moe/danbooru', repo='https://goproxy.felesatra.moe/'),
+    Module(name='go.felesatra.moe/danbooru', repo='https://github.com/darkfeline/danbooru-go'),
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/felesatra', repo='https://github.com/darkfeline/felesatra'),
     Module(name='go.felesatra.moe/go2/errors', repo='https://github.com/darkfeline/go2-errors'),
