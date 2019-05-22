@@ -14,6 +14,7 @@ var pkgs = []Package{
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
 	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
 	{"/go2/errors", Git, "https://github.com/darkfeline/go2-errors"},
+	{"/linelist", Git, "https://github.com/darkfeline/go-linelist"},
 	{"/orbis", Git, "https://github.com/darkfeline/orbis-go"},
 	{"/pwnck", Git, "https://github.com/darkfeline/pwnck"},
 	{"/qualia", Git, "https://github.com/darkfeline/qualia-go"},
