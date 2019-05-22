@@ -25,6 +25,7 @@ MODULES = [
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/felesatra', repo='https://github.com/darkfeline/felesatra'),
     Module(name='go.felesatra.moe/go2/errors', repo='https://github.com/darkfeline/go2-errors'),
+    Module(name='go.felesatra.moe/linelist', repo='https://github.com/darkfeline/go-linelist'),
     Module(name='go.felesatra.moe/orbis', repo='https://github.com/darkfeline/orbis-go'),
     Module(name='go.felesatra.moe/pwnck', repo='https://github.com/darkfeline/pwnck'),
     Module(name='go.felesatra.moe/qualia', repo='https://github.com/darkfeline/qualia-go'),
