@@ -37,6 +37,7 @@ func indexpageCommand() error {
 	return nil
 }
 
+// readIndex reads in the index file.
 func readIndex(path string) ([]index.Entry, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -50,6 +51,8 @@ func readIndex(path string) ([]index.Entry, error) {
 	return e, nil
 }
 
+// processIndexEntries sorts the index entries.  Pages come first,
+// followed by blog posts in reverse chronological order.
 func processIndexEntries(e []index.Entry) []index.Entry {
 	pages := make([]index.Entry, 0, len(e))
 	blog := make([]index.Entry, 0, len(e))

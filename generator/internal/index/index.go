@@ -11,6 +11,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
+// Entry is an index entry.
 type Entry struct {
 	Path      string
 	Title     string
@@ -18,6 +19,8 @@ type Entry struct {
 	Modified  string
 }
 
+// IndexDir creates index entries for the enja documents in a
+// directory recursively.
 func IndexDir(dir string) ([]Entry, error) {
 	dir = filepath.Clean(dir)
 	var e []Entry
@@ -47,6 +50,7 @@ func IndexDir(dir string) ([]Entry, error) {
 	return e, nil
 }
 
+// docEntry creates an index entry for the document.
 func docEntry(d *enja.Document) (e Entry, err error) {
 	defer func() {
 		if r := recover(); r != nil {
