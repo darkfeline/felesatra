@@ -29,7 +29,7 @@ func indexpageCommand() error {
 	d := struct {
 		Pages []index.Entry
 	}{
-		Pages: processIndexEntries(e),
+		Pages: sortIndexEntries(e),
 	}
 	if err := t.Execute(os.Stdout, d); err != nil {
 		return err
@@ -51,9 +51,9 @@ func readIndex(path string) ([]index.Entry, error) {
 	return e, nil
 }
 
-// processIndexEntries sorts the index entries.  Pages come first,
+// sortIndexEntries sorts the index entries.  Pages come first,
 // followed by blog posts in reverse chronological order.
-func processIndexEntries(e []index.Entry) []index.Entry {
+func sortIndexEntries(e []index.Entry) []index.Entry {
 	pages := make([]index.Entry, 0, len(e))
 	blog := make([]index.Entry, 0, len(e))
 	for _, e := range e {

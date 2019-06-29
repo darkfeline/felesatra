@@ -16,7 +16,7 @@ func TestProcessIndexEntries(t *testing.T) {
 		{Path: "plachta"},
 		{Path: "lacia"},
 	}
-	got := processIndexEntries(e)
+	got := sortIndexEntries(e)
 	exp := []index.Entry{
 		{Path: "lacia"},
 		{Path: "plachta"},

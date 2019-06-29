@@ -26,7 +26,7 @@ func sitemapCommand() error {
 	if err != nil {
 		return err
 	}
-	e = processIndexEntries(e)
+	e = sortIndexEntries(e)
 	u := sitemap.URLSet{
 		URLs: urlsFromIndex(sitePrefix, e),
 	}
