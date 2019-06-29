@@ -4,8 +4,11 @@ pagedstdir = $(dstdir)/pages
 srcpages = $(shell find $(pagesrcdir) -type f)
 dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 
-.PHONY: all
-all: build_goproxy go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml
+.PHONY: all_quick
+all_quick: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml $(dstdir)/atom.xml
+
+.PHONY: all_slow
+all: build_goproxy all_quick
 
 .PHONY: build_goproxy
 clean += goproxy_src goproxy/static
@@ -46,6 +49,11 @@ $(pagedstdir)/index.html: genpages/index-enja.html gen
 clean += $(dstdir)/sitemap.xml
 $(dstdir)/sitemap.xml: page_index gen
 	./gen sitemap $< >$@
+
+# atom.xml
+clean += $(dstdir)/atom.xml
+$(dstdir)/atom.xml: page_index gen
+	./gen atom $< >$@
 
 
 # Generated artifacts

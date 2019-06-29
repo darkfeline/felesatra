@@ -18,6 +18,11 @@ handlers:
   upload: www/static/(.*\.txt)
   secure: always
 
+- url: /(atom\.xml)
+  static_files: www/\1
+  upload: www/(atom\.xml)
+  secure: always
+
 - url: /(sitemap\.xml)
   static_files: www/\1
   upload: www/(sitemap\.xml)
