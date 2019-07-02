@@ -7,7 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"go.felesatra.moe/felesatra/generator/internal/enja"
+	"generator/internal/enja"
+
 	"golang.org/x/xerrors"
 )
 

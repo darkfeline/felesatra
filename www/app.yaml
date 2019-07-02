@@ -2,30 +2,30 @@ runtime: go112
 
 handlers:
 - url: /css
-  static_dir: www/static/css
+  static_dir: static/css
   secure: always
 
 - url: /img
-  static_dir: www/static/img
+  static_dir: static/img
   secure: always
 
 - url: /files
-  static_dir: www/static/files
+  static_dir: static/files
   secure: always
 
 - url: /(.*\.txt)
-  static_files: www/static/\1
-  upload: www/static/(.*\.txt)
+  static_files: static/\1
+  upload: static/(.*\.txt)
   secure: always
 
 - url: /(atom\.xml)
-  static_files: www/\1
-  upload: www/(atom\.xml)
+  static_files: \1
+  upload: (atom\.xml)
   secure: always
 
 - url: /(sitemap\.xml)
-  static_files: www/\1
-  upload: www/(sitemap\.xml)
+  static_files: \1
+  upload: (sitemap\.xml)
   secure: always
 
 - url: /.*

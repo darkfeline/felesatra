@@ -12,7 +12,6 @@ var pkgs = []Package{
 	{"/booru/dl", Git, "https://github.com/darkfeline/booru-dl-go"},
 	{"/danbooru", Git, "https://github.com/darkfeline/danbooru-go"},
 	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
-	{"/felesatra", Git, "https://github.com/darkfeline/felesatra"},
 	{"/go2/errors", Git, "https://github.com/darkfeline/go2-errors"},
 	{"/linelist", Git, "https://github.com/darkfeline/go-linelist"},
 	{"/orbis", Git, "https://github.com/darkfeline/orbis-go"},

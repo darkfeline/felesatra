@@ -6,7 +6,7 @@ import (
 	"go.felesatra.moe/sitemap"
 	"golang.org/x/xerrors"
 
-	"go.felesatra.moe/felesatra/generator/internal/index"
+	"generator/internal/index"
 )
 
 func init() {

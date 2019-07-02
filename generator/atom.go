@@ -6,7 +6,8 @@ import (
 	"os"
 	"time"
 
-	"go.felesatra.moe/felesatra/generator/internal/index"
+	"generator/internal/index"
+
 	"golang.org/x/tools/blog/atom"
 	"golang.org/x/xerrors"
 )

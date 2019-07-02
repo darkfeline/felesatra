@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/xerrors"
 
-	"go.felesatra.moe/felesatra/generator/internal/render"
-	"go.felesatra.moe/felesatra/generator/internal/templates"
+	"generator/internal/render"
+	"generator/internal/templates"
 )
 
 func init() {

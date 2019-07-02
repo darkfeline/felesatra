@@ -3,7 +3,8 @@ package main
 import (
 	"os"
 
-	"go.felesatra.moe/felesatra/generator/internal/index"
+	"generator/internal/index"
+
 	"golang.org/x/xerrors"
 )
 

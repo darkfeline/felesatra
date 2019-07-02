@@ -80,5 +80,5 @@ func readPage(p string) ([]byte, error) {
 }
 
 func page(p string) string {
-	return fmt.Sprintf("www/pages/%s.html", p)
+	return fmt.Sprintf("pages/%s.html", p)
 }

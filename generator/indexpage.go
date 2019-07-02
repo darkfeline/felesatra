@@ -5,8 +5,9 @@ import (
 	"sort"
 	"strings"
 
-	"go.felesatra.moe/felesatra/generator/internal/index"
-	"go.felesatra.moe/felesatra/generator/internal/templates"
+	"generator/internal/index"
+	"generator/internal/templates"
+
 	"golang.org/x/xerrors"
 )
 

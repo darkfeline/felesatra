@@ -3,5 +3,5 @@ service: goproxy
 
 handlers:
 - url: /
-  static_dir: goproxy/static
+  static_dir: static
   secure: always

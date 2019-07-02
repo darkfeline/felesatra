@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"go.felesatra.moe/felesatra/generator/internal/index"
+	"generator/internal/index"
 )
 
 func TestProcessIndexEntries(t *testing.T) {

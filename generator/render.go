@@ -4,8 +4,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"go.felesatra.moe/felesatra/generator/internal/render"
-	"go.felesatra.moe/felesatra/generator/internal/templates"
+	"generator/internal/render"
+	"generator/internal/templates"
+
 	"golang.org/x/xerrors"
 )
 
