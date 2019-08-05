@@ -1,0 +1,87 @@
+title: Emacs undo
+---
+
+<p>
+  The ability to undo changes is relatively new.  Undo didn't exist
+  before digital text editing, and it is now present in even the most
+  basic text editing software along with cut, copy, and paste (which
+  are conveniently bound to Ctrl-Z, X, C, V in most programs).
+</p>
+
+<p>
+  The earliest programs to support undo only allowed the user to undo
+  the last change, due to the limitations of computers at the time.
+  You could undo a single change, and if you wanted to redo the
+  change, you could undo again.
+</p>
+
+<p>
+  As computers grew more powerful, multi-level undo emerged naturally.
+  The most common way this is implemented is as a partial linear
+  history.  After making some changes, you can undo those changes one
+  at a time, and also redo them one at a time.  However, if you undo
+  some changes and then make a new change, all of the changes you
+  undid are thrown away and your new change is put at the top of the
+  history.  This has the unfortunate side effect of making it possible
+  to lose changes that you want to restore later, but it works well
+  enough most of the time and it's easy to understand.
+</p>
+
+<p>
+  Another way to implement multi-level undo is using a tree.  This is
+  less common; one program that does this is Vim.  Like with partial
+  linear history, you can undo and redo changes.  Where tree undo
+  differs from partial linear history is when you undo and then make a
+  new change.  Instead of throwing away the undid changes, Vim will
+  create another branch in the undo tree.  This makes it possible to
+  restore those changes later on, but you need to use obscure commands
+  to jump across undo tree branches or use a visualization tool.
+</p>
+
+<p>
+  Undo trees can be used like partial linear history by ignoring the
+  other branches of the undo tree, and the basic usage is easy to
+  understand.  Taking advantage of the other branches of the undo tree
+  is possible but harder to do and understand; it's out of reach of
+  the casual user.
+</p>
+
+<p>
+  Emacs has a different, unique implementation of undo.  Changes are
+  put onto a linear history, and when you undo, the undid changes are
+  also put onto the undo history.  Therefore, you can redo undid
+  changes simply by undoing again.
+</p>
+
+<p>
+  This is how undo in Emacs is usually explained, and it sounds more
+  complicated than it really is.  Basically, undoing in Emacs lets you
+  return the text to a previous state, no matter what sequence of
+  undos, redos, and other changes led to and away from that state.
+  Undo in Emacs shares the advantage of undo trees of not throwing
+  away history without requiring the user to recall the exact series
+  of steps the user made, in order to jump back to the right branch of
+  the undo tree.
+</p>
+
+<p>
+  The way undo works in Emacs also makes it easy to do things like
+  undo changes within a specific region of text.  In partial linear
+  undo and undo tree, implementing undoing within a region is
+  difficult: does that count as an undo?  What happens if you redo or
+  make new changes?  What happens if you undo again?  But in Emacs it
+  is trivial.  Any time the text changes, that becomes a point on the
+  undo history that you can return to.
+</p>
+
+<p>
+  As digital information grows more and more pervasive, information is
+  becoming easier to copy, modify, restore, and destroy.  Undo was
+  critical when people first began to adopt computers, for it is all
+  too easy for a novice to delete pages of text with a single movement
+  of a finger.  Even now, it is not uncommon for users to
+  inadvertently destroy data in a way that undo and other backup
+  mechanisms cannot help them recover.  Emacs's implementation of undo
+  is a small oasis of comfort; if you keep pressing undo, you can
+  always get back to what you had before.
+</p>
