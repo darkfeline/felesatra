@@ -7,7 +7,7 @@ dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
 .PHONY: all_quick
 all_quick: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml $(dstdir)/atom.xml
 
-.PHONY: all_slow
+.PHONY: all
 all: build_goproxy all_quick
 
 .PHONY: build_goproxy
