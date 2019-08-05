@@ -32,6 +32,9 @@ func IndexDir(dir string) ([]Entry, error) {
 		if info.IsDir() {
 			return nil
 		}
+		if path[len(path)-1] == '~' {
+			return nil
+		}
 		d, err := enja.LoadPath(path)
 		if err != nil {
 			return xerrors.Errorf("index dir: %w", err)
