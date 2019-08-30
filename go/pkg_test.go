@@ -7,21 +7,21 @@ import (
 func TestFindPackage(t *testing.T) {
 	t.Run("exact match", func(t *testing.T) {
 		t.Parallel()
-		p, ok := findPackage("/felesatra")
+		p, ok := findPackage("/animanager")
 		if !ok {
 			t.Fatalf("Package not found")
 		}
-		if p.Path != "/felesatra" {
+		if p.Path != "/animanager" {
 			t.Errorf("Got unexpected package %#v", p)
 		}
 	})
 	t.Run("subpath match", func(t *testing.T) {
 		t.Parallel()
-		p, ok := findPackage("/felesatra/foo")
+		p, ok := findPackage("/animanager/foo")
 		if !ok {
 			t.Fatalf("Package not found")
 		}
-		if p.Path != "/felesatra" {
+		if p.Path != "/animanager" {
 			t.Errorf("Got unexpected package %#v", p)
 		}
 	})
