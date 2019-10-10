@@ -1,11 +1,10 @@
 package main
 
 import (
+	"errors"
 	"os"
 
 	"generator/internal/index"
-
-	"golang.org/x/xerrors"
 )
 
 func init() {
@@ -16,7 +15,7 @@ func init() {
 func indexCommand() error {
 	args := os.Args[2:]
 	if len(args) != 2 {
-		return xerrors.New("must provide two arguments")
+		return errors.New("must provide two arguments")
 	}
 	out := args[0]
 	dir := args[1]

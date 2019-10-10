@@ -1,10 +1,10 @@
 package main
 
 import (
+	"errors"
 	"os"
 
 	"go.felesatra.moe/sitemap"
-	"golang.org/x/xerrors"
 
 	"generator/internal/index"
 )
@@ -19,7 +19,7 @@ const sitePrefix = "https://www.felesatra.moe/"
 func sitemapCommand() error {
 	args := os.Args[2:]
 	if len(args) != 1 {
-		return xerrors.New("must provide one argument")
+		return errors.New("must provide one argument")
 	}
 	path := args[0]
 	e, err := readIndex(path)

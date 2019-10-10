@@ -1,10 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
-
-	"golang.org/x/xerrors"
 )
 
 func main() {
@@ -21,7 +20,7 @@ var subcommands = make(map[string]subcommand)
 func innerMain() error {
 	c, ok := subcommands[os.Args[1]]
 	if !ok {
-		return xerrors.Errorf("unknown command %s", os.Args[1])
+		return fmt.Errorf("unknown command %s", os.Args[1])
 	}
 	return c()
 }

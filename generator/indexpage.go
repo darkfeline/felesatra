@@ -1,14 +1,13 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"sort"
 	"strings"
 
 	"generator/internal/index"
 	"generator/internal/templates"
-
-	"golang.org/x/xerrors"
 )
 
 func init() {
@@ -19,7 +18,7 @@ func init() {
 func indexpageCommand() error {
 	args := os.Args[2:]
 	if len(args) != 1 {
-		return xerrors.New("must provide one argument")
+		return errors.New("must provide one argument")
 	}
 	p := args[0]
 	t := templates.LoadIndexTemplate()

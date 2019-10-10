@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	"golang.org/x/xerrors"
 )
 
 // LoadPath reads and returns an Enja document from the file.
@@ -18,7 +16,7 @@ func LoadPath(path string) (*Document, error) {
 	defer f.Close()
 	d, err := Decode(f)
 	if err != nil {
-		return nil, xerrors.Errorf("read enja file: %w", err)
+		return nil, fmt.Errorf("read enja file: %w", err)
 	}
 	setMissingHeaders(d, path)
 	return d, nil

@@ -1,10 +1,9 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
-
-	"golang.org/x/xerrors"
 
 	"generator/internal/render"
 	"generator/internal/templates"
@@ -18,7 +17,7 @@ func init() {
 func rendermanyCommand() error {
 	args := os.Args[2:]
 	if len(args) != 2 {
-		return xerrors.New("must provide two arguments")
+		return errors.New("must provide two arguments")
 	}
 	srcdir := filepath.Clean(args[0])
 	dstdir := args[1]

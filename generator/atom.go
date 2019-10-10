@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -9,7 +10,6 @@ import (
 	"generator/internal/index"
 
 	"golang.org/x/tools/blog/atom"
-	"golang.org/x/xerrors"
 )
 
 func init() {
@@ -20,7 +20,7 @@ func init() {
 func atomCommand() error {
 	args := os.Args[2:]
 	if len(args) != 1 {
-		return xerrors.New("must provide one argument")
+		return errors.New("must provide one argument")
 	}
 	path := args[0]
 	e, err := readIndex(path)
@@ -59,11 +59,11 @@ func atomCommand() error {
 func convertEntryToAtom(e index.Entry) (*atom.Entry, error) {
 	pt, err := convertTimeToAtom(e.Published)
 	if err != nil {
-		return nil, xerrors.Errorf("convert entry %#v to atom: %v", e, err)
+		return nil, fmt.Errorf("convert entry %#v to atom: %v", e, err)
 	}
 	mt, err := convertTimeToAtom(e.Modified)
 	if err != nil {
-		return nil, xerrors.Errorf("convert entry %#v to atom: %v", e, err)
+		return nil, fmt.Errorf("convert entry %#v to atom: %v", e, err)
 	}
 	return &atom.Entry{
 		ID:    sitePrefix + e.Path,
@@ -81,7 +81,7 @@ func convertEntryToAtom(e index.Entry) (*atom.Entry, error) {
 func convertTimeToAtom(ts string) (atom.TimeStr, error) {
 	t, err := time.Parse("2006-01-02", ts)
 	if err != nil {
-		return "", xerrors.Errorf("convert time %v to atom: %v", ts, err)
+		return "", fmt.Errorf("convert time %v to atom: %v", ts, err)
 	}
 	return atom.Time(t), nil
 }

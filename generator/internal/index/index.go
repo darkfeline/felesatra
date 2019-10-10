@@ -3,13 +3,12 @@ package index
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 
 	"generator/internal/enja"
-
-	"golang.org/x/xerrors"
 )
 
 // Entry is an index entry.
@@ -37,7 +36,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		}
 		d, err := enja.LoadPath(path)
 		if err != nil {
-			return xerrors.Errorf("index dir: %w", err)
+			return fmt.Errorf("index dir: %w", err)
 		}
 		en, err := docEntry(d)
 		if err != nil {
@@ -62,7 +61,7 @@ func docEntry(d *enja.Document) (e Entry, err error) {
 			case error:
 				err = r
 			default:
-				err = xerrors.Errorf("panic in docEntry: %v", r)
+				err = fmt.Errorf("panic in docEntry: %v", r)
 			}
 		}
 	}()

@@ -1,13 +1,12 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 
 	"generator/internal/render"
 	"generator/internal/templates"
-
-	"golang.org/x/xerrors"
 )
 
 func init() {
@@ -18,7 +17,7 @@ func init() {
 func renderCommand() error {
 	args := os.Args[2:]
 	if len(args) != 2 {
-		return xerrors.New("must provide two arguments")
+		return errors.New("must provide two arguments")
 	}
 	src := args[0]
 	dst := args[1]
