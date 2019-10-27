@@ -21,6 +21,7 @@ code {
 }
 
 pre {
+    overflow: auto;
     margin-left: 10px;
     border-left: 3px solid;
     padding-left: 5px;
