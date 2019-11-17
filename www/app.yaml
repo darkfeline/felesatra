@@ -30,4 +30,5 @@ handlers:
 
 - url: /.*
   script: auto
+  upload: private/.*
   secure: always
