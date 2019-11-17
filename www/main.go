@@ -51,7 +51,8 @@ func handlePrivate(w http.ResponseWriter, r *http.Request) error {
 	if !checkAuth(u, pw) {
 		return writeBasicAuth(w)
 	}
-	d, err := readPrivatePage(r.URL.Path)
+	p := strings.TrimPrefix(r.URL.Path, "/private/")
+	d, err := readPrivatePage(p)
 	if err != nil {
 		http.Error(w, "Not Found", 404)
 		return nil
