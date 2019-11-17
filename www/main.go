@@ -17,7 +17,7 @@ func main() {
 	}
 	log.Printf("Listening on port %s", port)
 	http.HandleFunc("/", wrapError(handlePublic))
-	http.HandleFunc("/private/", wrapError(handlePrivate))
+	http.Handle("/private/", http.StripPrefix("/private/", newPrivateFileServer()))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
@@ -40,31 +40,6 @@ func handlePublic(w http.ResponseWriter, r *http.Request) error {
 		return fmt.Errorf("Error reading page: %s", err)
 	}
 	w.Write(d)
-	return nil
-}
-
-func handlePrivate(w http.ResponseWriter, r *http.Request) error {
-	u, pw, ok := r.BasicAuth()
-	if !ok {
-		return writeBasicAuth(w)
-	}
-	if !checkAuth(u, pw) {
-		return writeBasicAuth(w)
-	}
-	p := strings.TrimPrefix(r.URL.Path, "/private/")
-	d, err := readPrivatePage(p)
-	if err != nil {
-		http.Error(w, "Not Found", 404)
-		return nil
-	}
-	w.Write(d)
-	return nil
-}
-
-func writeBasicAuth(w http.ResponseWriter) error {
-	h := w.Header()
-	h["WWW-Authenticate"] = []string{"Basic realm=\"yggdrasil\""}
-	w.WriteHeader(401)
 	return nil
 }
 
@@ -95,6 +70,32 @@ func readPage(p string) ([]byte, error) {
 	return ioutil.ReadFile(fmt.Sprintf("pages/%s.html", p))
 }
 
-func readPrivatePage(p string) ([]byte, error) {
-	return ioutil.ReadFile(fmt.Sprintf("private/%s", p))
+func newPrivateFileServer() authHandler {
+	return authHandler{
+		h: http.FileServer(http.Dir("private")),
+	}
+}
+
+type authHandler struct {
+	h http.Handler
+}
+
+func (s authHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	u, pw, ok := r.BasicAuth()
+	if !ok {
+		writeBasicAuth(w)
+		return
+	}
+	if !checkAuth(u, pw) {
+		writeBasicAuth(w)
+		return
+	}
+	s.h.ServeHTTP(w, r)
+	return
+}
+
+func writeBasicAuth(w http.ResponseWriter) {
+	h := w.Header()
+	h["WWW-Authenticate"] = []string{"Basic realm=\"yggdrasil\""}
+	w.WriteHeader(401)
 }
