@@ -16,11 +16,12 @@ func main() {
 		log.Printf("Defaulting to port %s", port)
 	}
 	log.Printf("Listening on port %s", port)
-	http.HandleFunc("/", handle)
+	http.HandleFunc("/", wrapError(handlePublic))
+	http.HandleFunc("/private/", wrapError(handlePrivate))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
-func handle(w http.ResponseWriter, r *http.Request) {
+func handlePublic(w http.ResponseWriter, r *http.Request) error {
 	p := r.URL.Path
 	if p == "/" {
 		p = "index"
@@ -29,56 +30,70 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		h := w.Header()
 		h["Location"] = []string{strings.TrimRight(p, "/")}
 		w.WriteHeader(301)
-		return
+		return nil
 	}
 	d, err := readPage(p)
 	if err != nil {
 		if os.IsNotExist(err) {
-			write404(w)
-			return
+			return write404(w)
 		}
-		log.Printf("Error reading page: %s", err)
-		serverError(w)
-		return
+		return fmt.Errorf("Error reading page: %s", err)
 	}
-	_, err = w.Write(d)
+	w.Write(d)
+	return nil
+}
+
+func handlePrivate(w http.ResponseWriter, r *http.Request) error {
+	u, pw, ok := r.BasicAuth()
+	if !ok {
+		return writeBasicAuth(w)
+	}
+	if !checkAuth(u, pw) {
+		return writeBasicAuth(w)
+	}
+	d, err := readPrivatePage(r.URL.Path)
 	if err != nil {
-		log.Printf("Error writing response: %s", err)
-		serverError(w)
-		return
+		http.Error(w, "Not Found", 404)
+		return nil
 	}
+	w.Write(d)
+	return nil
+}
+
+func writeBasicAuth(w http.ResponseWriter) error {
+	h := w.Header()
+	h["WWW-Authenticate"] = []string{"Basic realm=\"yggdrasil\""}
+	w.WriteHeader(401)
+	return nil
 }
 
 // write404 writes a 404 response.
-func write404(w http.ResponseWriter) {
+func write404(w http.ResponseWriter) error {
 	d, err := readPage("404")
 	if err != nil {
-		log.Printf("Error reading 404 page: %s", err)
-		serverError(w)
-		return
+		return fmt.Errorf("Error reading 404 page: %s", err)
 	}
 	w.WriteHeader(404)
-	_, err = w.Write(d)
-	if err != nil {
-		log.Printf("Error writing 404 response: %s", err)
-		serverError(w)
-		return
-	}
+	w.Write(d)
+	return nil
 }
 
-// serverError writes a generic 500 response.
-func serverError(w http.ResponseWriter) {
-	w.WriteHeader(500)
-	_, err := w.Write([]byte("Error"))
-	if err != nil {
-		log.Printf("Error sending server error: %s", err)
+type handlerFunc func(http.ResponseWriter, *http.Request)
+type handlerFuncE func(http.ResponseWriter, *http.Request) error
+
+func wrapError(f handlerFuncE) handlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if err := f(w, r); err != nil {
+			log.Printf("Handler error: %s", err)
+			http.Error(w, "Server Error", 500)
+		}
 	}
 }
 
 func readPage(p string) ([]byte, error) {
-	return ioutil.ReadFile(page(p))
+	return ioutil.ReadFile(fmt.Sprintf("pages/%s.html", p))
 }
 
-func page(p string) string {
-	return fmt.Sprintf("pages/%s.html", p)
+func readPrivatePage(p string) ([]byte, error) {
+	return ioutil.ReadFile(fmt.Sprintf("private/%s", p))
 }

@@ -1,3 +1,6 @@
 /pages/
 /atom.xml
 /sitemap.xml
+
+/auth.go
+/private/
