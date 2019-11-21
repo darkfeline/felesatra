@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -16,9 +17,17 @@ func main() {
 		log.Printf("Defaulting to port %s", port)
 	}
 	log.Printf("Listening on port %s", port)
-	http.HandleFunc("/", wrapError(handlePublic))
-	http.Handle("/private/", http.StripPrefix("/private/", newPrivateFileServer()))
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+	m := http.NewServeMux()
+	m.HandleFunc("/", wrapError(handlePublic))
+	m.Handle("/private/", http.StripPrefix("/private/", newPrivateFileServer()))
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%s", port),
+		Handler:        m,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 18, // 256 KiB
+	}
+	log.Fatal(s.ListenAndServe())
 }
 
 func handlePublic(w http.ResponseWriter, r *http.Request) error {
