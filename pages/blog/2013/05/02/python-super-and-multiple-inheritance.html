@@ -61,8 +61,7 @@ arguments.  You can certainly get by taking this approach when using
 Allow me to illustrate using the classic ABCD diamond.
 </p>
 
-<pre><code>
-  A
+<pre><code>  A
  / \
 B   C
  \ /
@@ -73,8 +72,7 @@ B   C
 Here we have the MRO's
 </p>
 
-<pre><code>
-A: [A, object]
+<pre><code>A: [A, object]
 # A inherits from object (object is Python's base class)
 B(A): [B, A, object]
 # B inherits from A, A inherits from object
@@ -89,8 +87,7 @@ Anyone with some degree of familiarity with OOP should immediately see
 an issue with that last one.
 </p>
 
-<pre><code>
-D(B, C): [D, B, C, A, object]
+<pre><code>D(B, C): [D, B, C, A, object]
 # D inherits from B, B inherits from C, C inherits from A, A inherits from object
 D(C, B): [D, C, B, A, object]
 # D inherits from C, C inherits from B, B inherits from A, A inherits from object
@@ -141,8 +138,7 @@ subsequent classes will not get called.  Generally, these will be found
 at the end of the MRO, just before object.
 </p>
 
-<pre><code>
-Notation:
+<pre><code>Notation:
 A()  # A is a base class
 </code></pre>
 
@@ -151,8 +147,7 @@ Closed transitive classes resemble traditional subclasses; they may only
 subclass a certain class or abstract class/interface type.
 </p>
 
-<pre><code>
-Notation:
+<pre><code>Notation:
 A(B)  # A is closed transitive B
 </code></pre>
 
@@ -165,8 +160,7 @@ possible to have closed transitive classes that accept an open
 transitive class after them.
 </p>
 
-<pre><code>
-Notation:
+<pre><code>Notation:
 A(*)  # A is open transitive
 </code></pre>
 
@@ -174,8 +168,7 @@ A(*)  # A is open transitive
 Take, for example
 </p>
 
-<pre><code>
-from abc import *
+<pre><code>from abc import *
 
 class Rect:
     def __init__(self, w, h):
@@ -228,8 +221,7 @@ class PosSquareB(Position, Square, PosRect):
 The class diagrams:
 </p>
 
-<pre><code>
-Rect := [Rect(), object()]  # Rect is a base class, so we ignore object's __init__
+<pre><code>Rect := [Rect(), object()]  # Rect is a base class, so we ignore object's __init__
 Square := [Square(Rect), Rect(), object()]  # okay
 Long := [Long(Rect), Rect(), object()]  # okay
 Foo := [Foo(SpecialRect), Square(Rect), Long(Rect), Rect(), object()]

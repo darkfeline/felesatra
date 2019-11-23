@@ -92,8 +92,7 @@ Both work well.
 After playing with both, I settled on a short script for generating reports:
 </p>
 
-<pre><code>
-#!/bin/bash
+<pre><code>#!/bin/bash
 
 scp -r user@server.example.com:/var/log/webserver logs
 find logs -name "*.gz" | parallel gunzip

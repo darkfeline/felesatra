@@ -30,8 +30,7 @@ meta-language in the truest sense of the word.
 First, Babel presents a way to import other languages as a language object:
 </p>
 
-<pre><code>
-(import english)
+<pre><code>(import english)
 (import japanese)
 (import hymmnos)
 </code></pre>
@@ -58,8 +57,7 @@ values generally correspond to words or complete phrases.  The main contrast is
 with semantic forms which we'll see next.
 </p>
 
-<pre><code>
-(val english "apple")
+<pre><code>(val english "apple")
 (val japanese "弁当")
 </code></pre>
 
@@ -71,8 +69,7 @@ objects to symbols in a straightforward manner:
 </p>
 
 
-<pre><code>
-(def apple (val english "apple"))
+<pre><code>(def apple (val english "apple"))
 (def bentou (val japanese "弁当"))
 </code></pre>
 
@@ -83,8 +80,7 @@ nouns as forms are to verbs, although keep in mind that verbs can be bound as
 either values or forms.
 </p>
 
-<pre><code>
-(def subject (class english "subject"))
+<pre><code>(def subject (class english "subject"))
 (def predicate (class english "predicate"))
 ; (sentence x y) -> x y .
 ; e.g. (sentence (I) (eat apple)) -> I eat apple.
@@ -101,8 +97,7 @@ then apply that form to values that belong to the given classes to complete the
 form, in this case, a sentence, like so:
 </p>
 
-<pre><code>
-(def me (val english "I"))
+<pre><code>(def me (val english "I"))
 (def object (class english "object"))
 (def eat
   ((object x))
@@ -115,8 +110,7 @@ Here we use "eat" by binding it as a semantic form, but we can use it as a
 value as well:
 </p>
 
-<pre><code>
-(def eat (val english "eat"))
+<pre><code>(def eat (val english "eat"))
 (def verb1 (class english "verb1"))  ; verb taking one direct object
 (def do-verb1
   ((verb1 x)
@@ -201,8 +195,7 @@ I am happy to change myself into a song.
 Using Babel, we can use this semantic form in English:
 </p>
 
-<pre><code>
-(def level1 (class hymmnos "emotion level 1"))
+<pre><code>(def level1 (class hymmnos "emotion level 1"))
 (def level2 (class hymmnos "emotion level 2"))
 (def level3 (class hymmnos "emotion level 3"))
 (def predicate (class hymmnos "predicate"))

@@ -16,15 +16,14 @@ they are said or sung simultaneously.  Here's an example shamelessly pulled from
 the link above:
 </p>
 
-{% call codeblock() %}
-=> RRHA RRHA GUWO Ax GAx PEx GIS A GAx TIE INNx
+<pre><code>=> RRHA RRHA GUWO Ax GAx PEx GIS A GAx TIE INNx
 GIS NA GRAN GAx PAUL NOx TYUNY INI SAASH AR YANJE
 CIEL EN INI LA ZAx AR HHA CIEL RRHA RRHA Ax GUWO
 GA PEx GAx A TYUNY RA HARx AR CIEL
 TES EN YORA INI CHYET WAx SOR GAx LAx TYUNx SYE LA
 FORx GANx ART SA DAL FAYx WASSA RA CIEL
 EXEC hymme 2x1/0>>01101010
-{% endcall %}
+</code></pre>
 
 <p>
   The text is decoded using the pattern provided at the very end: <code>01101010</code>.
@@ -34,8 +33,7 @@ EXEC hymme 2x1/0>>01101010
   joined with the next word fragment in that line to form a complete word.
 </p>
 
-{% call codeblock() %}
-RRHA           Ax     PEx     A GAx
+<pre><code>RRHA           Ax     PEx     A GAx
 0    1    1    0  1   0   1   0/0   1   1
      RRHA GUWO    GAx     GIS       TIE INNx
 --------------------------------------------------
@@ -76,7 +74,7 @@ FORx GANx        DAL      WASSA    CIEL
 --------------------------------------------------
 FORx GANx DAL WASSA CIEL
 ART SA FAYx RA
-{% endcall %}
+</code></pre>
 
 <p>
 Then we join up all of the lines and combine word fragments.
@@ -86,8 +84,7 @@ Then we join up all of the lines and combine word fragments.
 The first chorus:
 </p>
 
-{% call codeblock() %}
-RRHA Ax PEx A GAx
+<pre><code>RRHA Ax PEx A GAx
 GIS GRAN PAUL NOx SAASH YANJE
 EN INI AR CIEL RRHA Ax
 PEx A RA HARx
@@ -101,14 +98,13 @@ In this delightful trance, I feel that the way will be opened, for the
 goddess to purify this world forever.
 In the midst of this trance of delight, I will love your special persons,
 because of the festival of the world.
-{% endcall %}
+</code></pre>
 
 <p>
 The second chorus:
 </p>
 
-{% call codeblock() %}
-RRHA GUWO GAx GIS TIE INNx
+<pre><code>RRHA GUWO GAx GIS TIE INNx
 NA GAx TYUNY INI AR
 CIEL LA ZAx HHA RRHA GUWO
 GA GAx TYUNY AR CIEL
@@ -122,7 +118,7 @@ In this trance of hatred, I shall tie this curse to the inside of my mind,
 and then, I shall purify and make advance this world.
 In this transient anger, I shall purify this accursed world through the
 flames of the hell.
-{% endcall %}
+</code></pre>
 
 <p>
 Note that these two choruses are being sung simultaneously, which in this case
@@ -143,8 +139,7 @@ is more powerful than a single line of lyric.
   look at <a href="/blog/2015/01/01/babel-metalanguage">Babel</a>):
 </p>
 
-{% call codeblock() %}
-=> BIx RDS THE YELLx OW SIx NG FLOx THEx WERS
+<pre><code>=> BIx RDS THE YELLx OW SIx NG FLOx THEx WERS
 IR JOY SWx AY IN TO THE THE SKY WIND
 EXEC hymme 2x1/0>>1100011010
 
@@ -169,7 +164,7 @@ The yellow flowers sway in the wind.
 BIx RDS SIx NG THEx IR JOY TO THE SKY
 ------------------------------------------
 Birds sing their joy to the sky.
-{% endcall %}
+</code></pre>
 
 <p>
 As a programmer, the Binasphere syntax is extremely attractive, and as a
@@ -178,10 +173,9 @@ Quatrasphere syntax which combines four lines into one.  First, though, we have
 to break down the syntax to make sure we know how it works.
 </p>
 
-{% call codeblock() %}
-=> *text*
+<pre><code>=> *text*
 EXEC hymme 2x1/0>>*pattern*
-{% endcall %}
+</code></pre>
 
 <p>
   It's easy to see that <code>=></code> is a beginning marker.
@@ -224,8 +218,7 @@ wasara dor en xest eazas yanyaue yor, xest 1x1101101001100110111000 >> syec
 mea."), but here it doesn't look very much like the one in Binasphere.
 </aside>
 
-{% call codeblock() %}
-# 4 lines/base 4, digits ranging from 3 to 0, base 4 data
+<pre><code># 4 lines/base 4, digits ranging from 3 to 0, base 4 data
 4x3/0>>01230123
 
 # 4 lines/base 4, assign patterns, base 4 data
@@ -254,7 +247,7 @@ mea."), but here it doesn't look very much like the one in Binasphere.
 
 # binary data, assign patterns
 2x11/10/01/00>>0001101100011011
-{% endcall %}
+</code></pre>
 
 <p>
 I think it's very likely that the data itself is in binary, as Hymmnos sticks
@@ -266,10 +259,9 @@ second field indicates the range of values to use.  The grammar then looks like
 this:
 </p>
 
-{% call codeblock() %}
-=> *text*
+<pre><code>=> *text*
 EXEC hymme 4x11/0>>*pattern*
-{% endcall %}
+</code></pre>
 
 <aside>
   One exception I can think of is METHOD_HYMMELI/., which uses the New
@@ -286,17 +278,13 @@ EXEC hymme 4x11/0>>*pattern*
   something like
 </p>
 
-{% call codeblock() %}
-EXEC hymme 8x111/0>>000001010011100101110111
-{% endcall %}
+<pre><code>EXEC hymme 8x111/0>>000001010011100101110111</code></pre>
 
 <p>
 and Sextasphere:
 </p>
 
-{% call codeblock() %}
-EXEC hymme 6x100/0>>000001010011100
-{% endcall %}
+<pre><code>EXEC hymme 6x100/0>>000001010011100</code></pre>
 
 <p>
   Before I wrap this up with an example of Quatrasphere in action, I should
@@ -318,8 +306,7 @@ songs that they sing.
 And now I present to you an epic linguistic treat; I hope you enjoy it.
 </p>
 
-{% call codeblock() %}
-=> WAS HEMx CEZx LYE WAx S LYEMx GRANx YEA AR
+<pre><code>=> WAS HEMx CEZx LYE WAx S LYEMx GRANx YEA AR
 ME RA AEx SPHAEx LA ERRx A JE CHS HYMx AG CEx ME
 MATx ARx HOU CET MEA YAx EN AR YLYAx GRANx
 CIx YA ALE MEA DUS AR DOOx CIEx EL DU L
@@ -334,4 +321,4 @@ Chorus 1: I happily sing to create our planet.
 Chorus 2: I shall become a shield and protect the planet.
 Chorus 3: I happily sing my feeling to create the earth.
 Chorus 4: I am glad to become the sound of hope for the world.
-{% endcall %}
+</code></pre>
