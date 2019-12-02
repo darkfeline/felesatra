@@ -1,0 +1,117 @@
+title: Transiting API Boundaries
+---
+
+<p>
+  The <a href="https://blog.golang.org/context">context</a> package was
+  added to Go in 2014.  It's generally agreed that context is kind of
+  ugly and unwieldy, but it solves some practical problems.
+</p>
+
+<p>
+  One of the problems that context solves is cancellation.  While the Go
+  language makes concurrency easy with goroutines and channels, if you
+  want to communicate with a goroutine to cancel it, before context, you
+  would have had to implement it yourself.  It's not hard to do, but
+  making sure that cancellation propagates properly is a chore.
+</p>
+
+<p>
+  The other thing that context solves is transiting API boundaries.
+  Arbitrary values can be attached to contexts, and at first glance this
+  seems like a incomprehensible, horrible thing to do.  Why use this
+  instead of passing in regular arguments to a function?
+</p>
+
+<p>
+  Go's http package provides a classic example.  http.Handler is an
+  interface containing the method:
+</p>
+
+<pre><code>ServeHTTP(ResponseWriter, *Request)</code></pre>
+
+<p>
+  Anything that implements this method can be used to easily run an
+  HTTP server.  Since Handler is an interface, it's easy to write
+  middleware, wrappers that take a Handler and return a Handler, like the
+  standard StripPrefix function.  You can write middleware that makes
+  sure the user is logged in and checks whether the user has the right
+  authorization to access a certain page.
+</p>
+
+<pre><code>http.ListenAndServe(":80", logInUser(checkIfAdmin(myHandler))</code></pre>
+
+<p>
+  But wait!  How do you pass the user credentials from the logInUser
+  Handler to the checkIfAdmin Handler?  The signature of the ServeHTTP
+  method cannot be changed.
+</p>
+
+<p>
+  You could define your own private interface:
+</p>
+
+<pre><code>type myHandler interface {
+	http.Handler
+	checkCredentials(userCredentials) bool
+}
+
+func logInUser(h myHandler) Handler {...}
+func checkIfAdmin(h Handler) myHandler {...}
+</code></pre>
+
+<p>
+  But what if you want to add middleware between these two functions?
+<p>
+
+<pre><code>http.ListenAndServe(":80", logInUser(
+	somepackage.CanonicalizePath(checkIfAdmin(myHandler))</code></pre>
+
+<p>
+  There's no way to make somepackage understand your custom
+  interface!  This is what it means to transit API boundaries, where
+  you have one API that goes "through" another API.
+<p>
+
+<pre>my API -> other API -> my API</pre>
+
+<p>
+  By using values attached to a context, you can pass arguments
+  through the middle API.
+</p>
+
+<p>
+  This is not a new problem or solution.  Richard Stallman discussed
+  this exact problem in
+  his <a href="https://www.gnu.org/software/emacs/emacs-paper.html#SEC17">1981
+    ACM paper</a> on Emacs, where he justifies using dynamic scoping
+  in Emacs.  In fact, context values in Go are like dynamically scoped
+  variables in a different shape (the "scope" is the context object
+  which is determined at runtime for each call).
+</p>
+
+<p>
+  Another example of transiting APIs in Go are wrapped error values.
+  Go 1.13 introduced a standard way for wrapping and unwrapping
+  errors.  This is primarily useful for making sure errors can safely
+  transit different APIs.  Consider a retry helper function:
+<p>
+
+<pre><code>myFunction := func() error {...}
+err := retry.Retry(myFunction)
+if err == myErr {...}
+</code></pre>
+
+<p>
+  If the retry package were to add context to any errors without a
+  standard wrapping convention, it would
+  irreversibly destroy any error that your myFunction API might
+  return, but with Go 1.13's error wrapping, we can allow any custom
+  error values to transit tne retry package's API:
+<p>
+
+<pre><code>myFunction := func() error {...}
+// This error value is coming from my API, going through the retry package,
+// and then back to my API.
+err := retry.Retry(myFunction)
+if errors.Is(err, myErr) {...}
+</code></pre>
