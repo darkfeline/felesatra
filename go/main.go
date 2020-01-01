@@ -19,7 +19,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
-var temp = template.Must(template.New("go").Parse(
+var pageTemplate = template.Must(template.New("go").Parse(
 	`{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
 <html lang="en">
   <head>
@@ -37,8 +37,9 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	p, ok := findPackage(r.URL.Path)
 	if !ok {
 		w.WriteHeader(404)
-		_, _ = w.Write([]byte("Package not found"))
+		w.Write([]byte("Package not found"))
 		return
 	}
-	_ = temp.Execute(w, p)
+	w.Header()["Cache-Control"] = []string{"public,max-age=604800"}
+	pageTemplate.Execute(w, p)
 }

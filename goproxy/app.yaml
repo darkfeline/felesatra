@@ -1,5 +1,6 @@
 runtime: go112
 service: goproxy
+default_expiration: "7d"
 
 handlers:
 - url: /

@@ -41,7 +41,7 @@ const (
 	Git Method = "git"
 )
 
-// findPackage finds the longest matching package for the given path.
+// findPackage finds the longest matching package prefix for the given path.
 func findPackage(pp string) (p *Package, ok bool) {
 	for ; pp != "/"; pp, _ = path.Split(pp) {
 		pp = strings.TrimRight(pp, "/")
