@@ -42,7 +42,7 @@ func (h publicHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	w = cacheWriter{
 		ResponseWriter: w,
 		// Cache for one week.
-		cacheControl: []string{"public, max-age=604800"},
+		cacheControl: []string{"public,max-age=604800"},
 	}
 	http.ServeContent(w, req, "foo.html", time.Time{}, f)
 	return
@@ -89,7 +89,7 @@ func (h privateHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	w = cacheWriter{
 		ResponseWriter: w,
 		// Cache for one day.
-		cacheControl: []string{"private, max-age=86400"},
+		cacheControl: []string{"private,max-age=86400"},
 	}
 	h.fs.ServeHTTP(w, req)
 }
