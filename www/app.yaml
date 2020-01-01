@@ -1,4 +1,5 @@
 runtime: go112
+default_expiration: "7d"
 
 handlers:
 - url: /css
