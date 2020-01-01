@@ -39,7 +39,7 @@ func (h publicHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Server Error", 500)
 		return
 	}
-	w = cacheWriter{
+	w = &cacheWriter{
 		ResponseWriter: w,
 		// Cache for one week.
 		cacheControl: []string{"public,max-age=604800"},
@@ -86,7 +86,7 @@ func (h privateHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		writeBasicAuth(w)
 		return
 	}
-	w = cacheWriter{
+	w = &cacheWriter{
 		ResponseWriter: w,
 		// Cache for one day.
 		cacheControl: []string{"private,max-age=86400"},
@@ -104,10 +104,19 @@ func writeBasicAuth(w http.ResponseWriter) {
 // Cache-Control header when writing 200 OK responses.
 type cacheWriter struct {
 	http.ResponseWriter
-	cacheControl []string
+	cacheControl  []string
+	headerWritten bool
 }
 
-func (w cacheWriter) WriteHeader(c int) {
+func (w *cacheWriter) Write(d []byte) (int, error) {
+	if !w.headerWritten {
+		w.WriteHeader(http.StatusOK)
+	}
+	return w.ResponseWriter.Write(d)
+}
+
+func (w *cacheWriter) WriteHeader(c int) {
+	w.headerWritten = true
 	if c == http.StatusOK {
 		w.ResponseWriter.Header()["Cache-Control"] = w.cacheControl
 	}
