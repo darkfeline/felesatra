@@ -109,10 +109,7 @@ type cacheWriter struct {
 
 func (w cacheWriter) WriteHeader(c int) {
 	if c == http.StatusOK {
-		h := w.ResponseWriter.Header()
-		if _, ok := h["Cache-Control"]; !ok {
-			h["Cache-Control"] = w.cacheControl
-		}
+		w.ResponseWriter.Header()["Cache-Control"] = w.cacheControl
 	}
 	w.ResponseWriter.WriteHeader(c)
 }
