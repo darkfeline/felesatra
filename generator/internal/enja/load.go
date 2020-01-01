@@ -22,24 +22,26 @@ func LoadPath(path string) (*Document, error) {
 	return d, nil
 }
 
-const minDate = "0000-00-00"
-
 func setMissingHeaders(d *Document, path string) {
 	if _, ok := d.Header["published"]; !ok {
-		d.Header["published"] = dateFromPath(path)
+		if s, ok := dateFromPath(path); ok {
+			d.Header["published"] = s
+		}
 	}
 	if _, ok := d.Header["modified"]; !ok {
-		d.Header["modified"] = d.Header["published"]
+		if s, ok := d.Header["published"]; ok {
+			d.Header["modified"] = s.(string)
+		}
 	}
 }
 
-func dateFromPath(path string) string {
+func dateFromPath(path string) (date string, ok bool) {
 	parts := strings.Split(path, "/")
 	if len(parts) < 4 {
-		return minDate
+		return "", false
 	}
 	y := parts[len(parts)-4]
 	m := parts[len(parts)-3]
 	d := parts[len(parts)-2]
-	return fmt.Sprintf("%s-%s-%s", y, m, d)
+	return fmt.Sprintf("%s-%s-%s", y, m, d), true
 }

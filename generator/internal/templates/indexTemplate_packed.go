@@ -2,4 +2,4 @@
 
 package templates
 
-const indexTemplate = "title: Feles Atra\npublished: 2010-09-06\nmodified: 2018-02-24\n---\n<p>This is my homepage.  There are many like it, but this one is mine.</p>\n\n<p>This page is <code>index.html</code>.  Therefore, the site index can be found here.</p>\n\n<ul>\n  {{- range .Pages}}\n  <li><a href=\"{{.Path}}\">{{.Title}}</a></li>\n  {{- end}}\n<ul>\n"
+const indexTemplate = "title: Feles Atra\n---\n<p>This is my homepage.  There are many like it, but this one is mine.</p>\n\n<p>This page is <code>index.html</code>.  Therefore, the site index can be found here.</p>\n\n<ul>\n  {{- range .Pages}}\n  <li><a href=\"{{.Path}}\">{{.Title}}</a></li>\n  {{- end}}\n<ul>\n"

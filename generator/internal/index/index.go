@@ -3,6 +3,7 @@ package index
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -40,7 +41,7 @@ func IndexDir(dir string) ([]Entry, error) {
 		}
 		en, err := docEntry(d)
 		if err != nil {
-			return err
+			return fmt.Errorf("index dir: load %s: %w", path, err)
 		}
 		ext := filepath.Ext(path)
 		en.Path = path[len(dir)+1 : len(path)-len(ext)]
@@ -55,21 +56,18 @@ func IndexDir(dir string) ([]Entry, error) {
 
 // docEntry creates an index entry for the document.
 func docEntry(d *enja.Document) (e Entry, err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			switch r := r.(type) {
-			case error:
-				err = r
-			default:
-				err = fmt.Errorf("panic in docEntry: %v", r)
-			}
-		}
-	}()
-	return Entry{
-		Title:     d.Header["title"].(string),
-		Published: d.Header["published"].(string),
-		Modified:  d.Header["modified"].(string),
-	}, nil
+	if v, ok := d.Header["title"].(string); ok {
+		e.Title = v
+	} else {
+		return Entry{}, errors.New("missing title")
+	}
+	if v, ok := d.Header["published"].(string); ok {
+		e.Published = v
+	}
+	if v, ok := d.Header["modified"].(string); ok {
+		e.Modified = v
+	}
+	return e, nil
 }
 
 func ReadAll(r io.Reader) ([]Entry, error) {
