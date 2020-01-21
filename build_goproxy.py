@@ -95,7 +95,7 @@ def get_versions(checkout: Path) -> List[str]:
 
 
 def get_commit_time(checkout: Path, ref: str) -> str:
-    p = subprocess.run(['git', '-C', checkout, 'show', '-s', '--format=%cI', ref],
+    p = subprocess.run(['git', '-C', checkout, 'show', '-s', '--format=format:%cI', ref],
                        capture_output=True, check=True)
     return p.stdout.decode().strip()
 
