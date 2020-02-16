@@ -24,6 +24,7 @@ MODULES = [
     Module(name='go.felesatra.moe/danbooru', repo='https://github.com/darkfeline/danbooru-go'),
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/go2/errors', repo='https://github.com/darkfeline/go2-errors'),
+    Module(name='go.felesatra.moe/keeper', repo='https://github.com/darkfeline/keeper-go'),
     Module(name='go.felesatra.moe/linelist', repo='https://github.com/darkfeline/go-linelist'),
     Module(name='go.felesatra.moe/orbis', repo='https://github.com/darkfeline/orbis-go'),
     Module(name='go.felesatra.moe/pwnck', repo='https://github.com/darkfeline/pwnck'),
