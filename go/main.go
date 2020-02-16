@@ -28,7 +28,7 @@ var pageTemplate = template.Must(template.New("go").Parse(
     <title>{{.Path}}</title>
   </head>
   <body>
-    <a href="{{.URL}}">{{$s}}{{.Path}}</a> (<a href="https://godoc.org/{{$s}}{{.Path}}">docs</a>)
+    <a href="{{.RepoURL}}">{{$s}}{{.Path}}</a> (<a href="https://pkg.go.dev/{{$s}}{{.Path}}">docs</a>)
   </body>
 </html>
 `))

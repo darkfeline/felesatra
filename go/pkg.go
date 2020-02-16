@@ -29,9 +29,10 @@ var modulePkgs = []string{
 var pkgMap = make(map[string]*Package)
 
 type Package struct {
-	Path   string
-	Method Method
-	URL    string
+	Path    string
+	Method  Method
+	URL     string
+	RepoURL string
 }
 
 type Method string
@@ -55,13 +56,15 @@ func findPackage(pp string) (p *Package, ok bool) {
 
 func init() {
 	for i, p := range pkgs {
+		pkgs[i].RepoURL = p.URL
 		pkgMap[p.Path] = &pkgs[i]
 	}
 	for _, path := range modulePkgs {
 		p := Package{
-			Path:   path,
-			Method: Mod,
-			URL:    "https://goproxy.felesatra.moe",
+			Path:    path,
+			Method:  Mod,
+			URL:     "https://goproxy.felesatra.moe",
+			RepoURL: "https://goproxy.felesatra.moe",
 		}
 		pkgMap[p.Path] = &p
 	}
