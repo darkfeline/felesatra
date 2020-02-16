@@ -5,26 +5,26 @@ import (
 	"strings"
 )
 
-var pkgs = []Package{
-	{"/anidb", Git, "https://github.com/darkfeline/anidb-go"},
-	{"/animanager", Git, "https://github.com/darkfeline/animanager-go"},
-	{"/binpack", Git, "https://github.com/darkfeline/binpack"},
-	{"/booru/dl", Git, "https://github.com/darkfeline/booru-dl-go"},
-	{"/danbooru", Git, "https://github.com/darkfeline/danbooru-go"},
-	{"/dlsite", Git, "https://github.com/darkfeline/dlsite-go"},
-	{"/go2/errors", Git, "https://github.com/darkfeline/go2-errors"},
-	{"/keeper", Git, "https://github.com/darkfeline/keeper-go"},
-	{"/linelist", Git, "https://github.com/darkfeline/go-linelist"},
-	{"/orbis", Git, "https://github.com/darkfeline/orbis-go"},
-	{"/pwnck", Git, "https://github.com/darkfeline/pwnck"},
-	{"/qualia", Git, "https://github.com/darkfeline/qualia-go"},
-	{"/saucenao", Git, "https://github.com/darkfeline/saucenao"},
-	{"/sitemap", Git, "https://github.com/darkfeline/sitemap-go"},
-	{"/subcommands", Git, "https://github.com/darkfeline/subcommands-go"},
-	{"/xdg", Git, "https://github.com/darkfeline/xdg-go"},
-}
+var pkgs = []Package{}
 
-var modulePkgs = []string{}
+var modulePkgs = []string{
+	"/anidb",
+	"/animanager",
+	"/binpack",
+	"/booru/dl",
+	"/danbooru",
+	"/dlsite",
+	"/go2/errors",
+	"/keeper",
+	"/linelist",
+	"/orbis",
+	"/pwnck",
+	"/qualia",
+	"/saucenao",
+	"/sitemap",
+	"/subcommands",
+	"/xdg",
+}
 
 var pkgMap = make(map[string]*Package)
 
