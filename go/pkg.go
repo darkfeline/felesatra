@@ -7,23 +7,22 @@ import (
 
 var pkgs = []Package{}
 
-var modulePkgs = []string{
-	"/anidb",
-	"/animanager",
-	"/binpack",
-	"/booru/dl",
-	"/danbooru",
-	"/dlsite",
-	"/go2/errors",
-	"/keeper",
-	"/linelist",
-	"/orbis",
-	"/pwnck",
-	"/qualia",
-	"/saucenao",
-	"/sitemap",
-	"/subcommands",
-	"/xdg",
+var modulePkgs = []Package{
+	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
+	{Path: "/animanager", RepoURL: "https://github.com/darkfeline/animanager-go"},
+	{Path: "/binpack", RepoURL: "https://github.com/darkfeline/binpack"},
+	{Path: "/booru/dl", RepoURL: "https://github.com/darkfeline/booru-dl-go"},
+	{Path: "/danbooru", RepoURL: "https://github.com/darkfeline/danbooru-go"},
+	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
+	{Path: "/go2/errors", RepoURL: "https://github.com/darkfeline/go2-errors"},
+	{Path: "/keeper", RepoURL: "https://github.com/darkfeline/keeper-go"},
+	{Path: "/linelist", RepoURL: "https://github.com/darkfeline/go-linelist"},
+	{Path: "/orbis", RepoURL: "https://github.com/darkfeline/orbis-go"},
+	{Path: "/pwnck", RepoURL: "https://github.com/darkfeline/pwnck"},
+	{Path: "/qualia", RepoURL: "https://github.com/darkfeline/qualia-go"},
+	{Path: "/sitemap", RepoURL: "https://github.com/darkfeline/sitemap-go"},
+	{Path: "/subcommands", RepoURL: "https://github.com/darkfeline/subcommands-go"},
+	{Path: "/xdg", RepoURL: "https://github.com/darkfeline/xdg-go"},
 }
 
 var pkgMap = make(map[string]*Package)
@@ -59,13 +58,10 @@ func init() {
 		pkgs[i].RepoURL = p.URL
 		pkgMap[p.Path] = &pkgs[i]
 	}
-	for _, path := range modulePkgs {
-		p := Package{
-			Path:    path,
-			Method:  Mod,
-			URL:     "https://goproxy.felesatra.moe",
-			RepoURL: "https://goproxy.felesatra.moe",
-		}
+	for _, p := range modulePkgs {
+		p := p
+		p.Method = Mod
+		p.URL = "https://goproxy.felesatra.moe"
 		pkgMap[p.Path] = &p
 	}
 }
