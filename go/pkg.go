@@ -1,8 +1,17 @@
 package main
 
-import (
-	"path"
-	"strings"
+type Package struct {
+	Path    string
+	Method  Method
+	URL     string
+	RepoURL string
+}
+
+type Method string
+
+const (
+	Mod Method = "mod"
+	Git Method = "git"
 )
 
 var pkgs = []Package{}
@@ -26,32 +35,6 @@ var modulePkgs = []Package{
 }
 
 var pkgMap = make(map[string]*Package)
-
-type Package struct {
-	Path    string
-	Method  Method
-	URL     string
-	RepoURL string
-}
-
-type Method string
-
-const (
-	Mod Method = "mod"
-	Git Method = "git"
-)
-
-// findPackage finds the longest matching package prefix for the given path.
-func findPackage(pp string) (p *Package, ok bool) {
-	for ; pp != "/"; pp, _ = path.Split(pp) {
-		pp = strings.TrimRight(pp, "/")
-		p, ok := pkgMap[pp]
-		if ok {
-			return p, true
-		}
-	}
-	return nil, false
-}
 
 func init() {
 	for i, p := range pkgs {

@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
+	"strings"
 )
 
 func main() {
@@ -42,4 +44,16 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header()["Cache-Control"] = []string{"public,max-age=604800"}
 	pageTemplate.Execute(w, p)
+}
+
+// findPackage finds the longest matching package prefix for the given path.
+func findPackage(pp string) (p *Package, ok bool) {
+	for ; pp != "/"; pp, _ = path.Split(pp) {
+		pp = strings.TrimRight(pp, "/")
+		p, ok := pkgMap[pp]
+		if ok {
+			return p, true
+		}
+	}
+	return nil, false
 }
