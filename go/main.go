@@ -42,7 +42,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Package not found"))
 		return
 	}
-	w.Header()["Cache-Control"] = []string{"public,max-age=604800"}
+	w.Header()["Cache-Control"] = []string{"public,max-age=604800"} // 7d
 	pageTemplate.Execute(w, p)
 }
 
