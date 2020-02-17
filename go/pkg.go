@@ -14,8 +14,6 @@ const (
 	Git Method = "git"
 )
 
-var pkgs = []Package{}
-
 var modulePkgs = []Package{
 	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
 	{Path: "/animanager", RepoURL: "https://github.com/darkfeline/animanager-go"},
@@ -37,10 +35,6 @@ var modulePkgs = []Package{
 var pkgMap = make(map[string]*Package)
 
 func init() {
-	for i, p := range pkgs {
-		pkgs[i].RepoURL = p.URL
-		pkgMap[p.Path] = &pkgs[i]
-	}
 	for _, p := range modulePkgs {
 		p := p
 		p.Method = Mod
