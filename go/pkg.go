@@ -27,6 +27,7 @@ var modulePkgs = []Package{
 	{Path: "/orbis", RepoURL: "https://github.com/darkfeline/orbis-go"},
 	{Path: "/pwnck", RepoURL: "https://github.com/darkfeline/pwnck"},
 	{Path: "/qualia", RepoURL: "https://github.com/darkfeline/qualia-go"},
+	{Path: "/saucenao", RepoURL: "https://github.com/darkfeline/saucenao"},
 	{Path: "/sitemap", RepoURL: "https://github.com/darkfeline/sitemap-go"},
 	{Path: "/subcommands", RepoURL: "https://github.com/darkfeline/subcommands-go"},
 	{Path: "/xdg", RepoURL: "https://github.com/darkfeline/xdg-go"},

@@ -29,6 +29,7 @@ MODULES = [
     Module(name='go.felesatra.moe/orbis', repo='https://github.com/darkfeline/orbis-go'),
     Module(name='go.felesatra.moe/pwnck', repo='https://github.com/darkfeline/pwnck'),
     Module(name='go.felesatra.moe/qualia', repo='https://github.com/darkfeline/qualia-go'),
+    Module(name='go.felesatra.moe/saucenao', repo='https://github.com/darkfeline/saucenao'),
     Module(name='go.felesatra.moe/sitemap', repo='https://github.com/darkfeline/sitemap-go'),
     Module(name='go.felesatra.moe/subcommands', repo='https://github.com/darkfeline/subcommands-go'),
     Module(name='go.felesatra.moe/xdg', repo='https://github.com/darkfeline/xdg-go'),
