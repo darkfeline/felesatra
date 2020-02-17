@@ -47,7 +47,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 }
 
 // findPackage finds the longest matching package prefix for the given path.
-func findPackage(pp string) (p *Package, ok bool) {
+func findPackage(pp string) (p *pkgSpec, ok bool) {
 	for ; pp != "/"; pp, _ = path.Split(pp) {
 		pp = strings.TrimRight(pp, "/")
 		p, ok := pkgMap[pp]

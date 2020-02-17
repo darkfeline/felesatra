@@ -1,6 +1,6 @@
 package main
 
-type Package struct {
+type pkgSpec struct {
 	Path    string
 	Method  Method
 	URL     string
@@ -14,7 +14,7 @@ const (
 	Git Method = "git"
 )
 
-var modulePkgs = []Package{
+var modulePkgs = []pkgSpec{
 	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
 	{Path: "/animanager", RepoURL: "https://github.com/darkfeline/animanager-go"},
 	{Path: "/binpack", RepoURL: "https://github.com/darkfeline/binpack"},
@@ -33,7 +33,7 @@ var modulePkgs = []Package{
 	{Path: "/xdg", RepoURL: "https://github.com/darkfeline/xdg-go"},
 }
 
-var pkgMap = make(map[string]*Package)
+var pkgMap = make(map[string]*pkgSpec)
 
 func init() {
 	for _, p := range modulePkgs {
