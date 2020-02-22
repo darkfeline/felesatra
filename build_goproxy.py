@@ -20,7 +20,6 @@ MODULES = [
     Module(name='go.felesatra.moe/anidb', repo='https://github.com/darkfeline/anidb-go'),
     Module(name='go.felesatra.moe/animanager', repo='https://github.com/darkfeline/animanager-go'),
     Module(name='go.felesatra.moe/binpack', repo='https://github.com/darkfeline/binpack'),
-    Module(name='go.felesatra.moe/booru/dl', repo='https://github.com/darkfeline/booru-dl-go'),
     Module(name='go.felesatra.moe/danbooru', repo='https://github.com/darkfeline/danbooru-go'),
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/go2/errors', repo='https://github.com/darkfeline/go2-errors'),
@@ -30,7 +29,6 @@ MODULES = [
     Module(name='go.felesatra.moe/qualia', repo='https://github.com/darkfeline/qualia-go'),
     Module(name='go.felesatra.moe/saucenao', repo='https://github.com/darkfeline/saucenao'),
     Module(name='go.felesatra.moe/sitemap', repo='https://github.com/darkfeline/sitemap-go'),
-    Module(name='go.felesatra.moe/subcommands', repo='https://github.com/darkfeline/subcommands-go'),
     Module(name='go.felesatra.moe/xdg', repo='https://github.com/darkfeline/xdg-go'),
 ]
 
