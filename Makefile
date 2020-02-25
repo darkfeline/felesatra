@@ -17,6 +17,7 @@ all: build_goproxy all_quick
 deploy_go:
 	cd go && gcloud app deploy --quiet
 	cd goproxy && gcloud app deploy --quiet
+	bash poke_proxy.sh
 
 .PHONY: build_goproxy
 clean += goproxy_src goproxy/static
