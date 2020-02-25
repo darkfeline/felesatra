@@ -10,6 +10,9 @@ all_quick: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xm
 .PHONY: all
 all: build_goproxy all_quick
 
+.PHONY: deploy_www
+	cd www && gcloud app deploy --quiet
+
 .PHONY: deploy_go
 deploy_go:
 	cd go && gcloud app deploy --quiet
