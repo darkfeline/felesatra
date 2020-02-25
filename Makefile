@@ -23,8 +23,6 @@ clean += goproxy_src goproxy/static
 build_goproxy:
 	python3 build_goproxy.py goproxy_src goproxy/static
 
-export GO111MODULE=on
-
 .PHONY: go_generate
 go_generate:
 	cd generator && go generate ./...
