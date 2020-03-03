@@ -1,4 +1,1 @@
-/gen
-/genpages/
-/page_index
-/goproxy_src/
+__pycache__

@@ -1,78 +1,39 @@
-dstdir = www
-pagesrcdir = pages
-pagedstdir = $(dstdir)/pages
-srcpages = $(shell find $(pagesrcdir) -type f)
-dstpages = $(patsubst $(pagesrcdir)/%,$(pagedstdir)/%,$(srcpages))
+# make all         Make everything
+# make mod         Build goproxy modules
+# make clean       Clean up
+# make extraclean  Also delete goproxy cache
 
-.PHONY: all_quick
-all_quick: go_test gen $(dstpages) $(pagedstdir)/index.html $(dstdir)/sitemap.xml $(dstdir)/atom.xml
+PYTHON := python3
+GO := go
+
+srvdir := appengine/srv
+clean_paths :=
+extraclean_paths :=
 
 .PHONY: all
-all: build_goproxy all_quick
-
-.PHONY: deploy_www
-	cd www && gcloud app deploy --quiet
-
-.PHONY: deploy_go
-deploy_go:
-	cd go && gcloud app deploy --quiet
-	cd goproxy && gcloud app deploy --quiet
-	bash poke_proxy.sh
-
-.PHONY: build_goproxy
-clean += goproxy_src goproxy/static
-build_goproxy:
-	python3 build_goproxy.py goproxy_src goproxy/static
-
-.PHONY: go_generate
-go_generate:
-	cd generator && go generate ./...
-
-.PHONY: go_test
-go_test: go_generate
-	cd generator && go vet -all ./...
-	cd generator && go test ./...
+all:
 
 .PHONY: clean
 clean:
-	rm -rf $(clean)
+	rm -rf $(clean_paths)
+	find . -name "__pycache__" -print0 | xargs -0 rm -rf
+	find . -depth -type d -exec rmdir --ignore-fail-on-non-empty {} \+
 
-
-# Build targets
-# generator tool
-clean += gen
-gen: go_generate $(shell find generator -name "*.go")
-	cd generator && go build -o ../gen .
+.PHONY: extraclean
+extraclean: clean
+	rm -rf $(extraclean_paths)
 
-# Pages
-clean += $(pagedstdir)
-$(subst .html,%,$(dstpages)): $(subst .html,%,$(srcpages)) gen
-	./gen rendermany $(pagesrcdir) $(pagedstdir)
+.PHONY: deploy
+deploy:
+	cd appengine && gcloud app deploy --quiet
+	bash poke_proxy.sh
 
-# index.html
-clean += $(pagedstdir)/index.html
-$(pagedstdir)/index.html: genpages/index-enja.html gen
-	./gen render $< $@
+.PHONY: test
 
-# sitemap.xml
-clean += $(dstdir)/sitemap.xml
-$(dstdir)/sitemap.xml: page_index gen
-	./gen sitemap $< >$@
+include kanade/include.mk
+include goproxy/include.mk
+include www/include.mk
+include appengine/include.mk
 
-# atom.xml
-clean += $(dstdir)/atom.xml
-$(dstdir)/atom.xml: page_index gen
-	./gen atom $< >$@
-
-
-# Generated artifacts
-# Generated pages
-clean += genpages
-genpages/index-enja.html: page_index gen
-	mkdir -p $(dir $@)
-	./gen indexpage $< >$@
-
-# Page index
-clean += page_index
-page_index: $(srcpages) gen
-	./gen index $@ $(pagesrcdir)
+# Detect expansion bugs
+local_dir := asdfjklasdfjkl

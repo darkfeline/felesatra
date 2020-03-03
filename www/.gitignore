@@ -1,6 +1,3 @@
-/pages/
-/atom.xml
-/sitemap.xml
-
-/auth.go
-/private/
+/index
+/index.html
+/render.mk
