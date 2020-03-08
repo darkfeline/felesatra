@@ -32,11 +32,11 @@ include gcp.mk
 
 .PHONY: build
 build:
-	cd app && gcloud builds submit --tag gcr.io/$(gcp_project)/felesatra
+	cd app && gcloud builds submit --tag us.gcr.io/$(gcp_project)/felesatra
 
 .PHONY: deploy
 deploy:
-	gcloud run deploy felesatra --image gcr.io/$(gcp_project)/felesatra --platform managed \
+	gcloud run deploy felesatra --image us.gcr.io/$(gcp_project)/felesatra --platform managed \
 		--region us-central1 --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000 --max-instances 1
 
