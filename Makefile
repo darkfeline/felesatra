@@ -6,7 +6,7 @@
 PYTHON := python3
 GO := go
 
-srvdir := appengine/srv
+srvdir := app/srv
 clean_paths :=
 extraclean_paths :=
 
@@ -23,17 +23,21 @@ clean:
 extraclean: clean
 	rm -rf $(extraclean_paths)
 
+# Set gcp_project in gcp.mk.
+include gcp.mk
+
 .PHONY: deploy
 deploy:
-	cd appengine && gcloud app deploy --quiet
-	bash poke_proxy.sh
+	cd app && gcloud builds submit --tag gcr.io/$(gcp_project)/felesatra
+	gcloud run deploy felesatra --image gcr.io/$(gcp_project)/felesatra --platform managed \
+		--region us-west1 --allow-unauthenticated
 
 .PHONY: test
 
 include kanade/include.mk
 include goproxy/include.mk
 include www/include.mk
-include appengine/include.mk
+include app/include.mk
 
 # Detect expansion bugs
 local_dir := asdfjklasdfjkl

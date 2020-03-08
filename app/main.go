@@ -27,7 +27,9 @@ func makeServer(port string) *http.Server {
 	m := http.NewServeMux()
 	m.Handle("go.felesatra.moe/", servers.NewGo())
 	m.Handle("goproxy.felesatra.moe/", servers.NewGoproxy())
-	m.Handle("www.felesatra.moe/", servers.NewWeb(checkAuth))
+	wh := servers.NewWeb(checkAuth)
+	m.Handle("www.felesatra.moe/", wh)
+	m.Handle("/", wh)
 	return &http.Server{
 		Addr:           fmt.Sprintf(":%s", port),
 		Handler:        m,
