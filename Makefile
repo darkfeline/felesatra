@@ -35,7 +35,7 @@ build:
 .PHONY: deploy
 deploy:
 	gcloud run deploy felesatra --image gcr.io/$(gcp_project)/felesatra --platform managed \
-		--region us-west1 --allow-unauthenticated \
+		--region us-central1 --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000
 
 .PHONY: test
