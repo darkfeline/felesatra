@@ -23,7 +23,6 @@ func newPublicWeb() http.Handler {
 	fs := http.FileServer(http.Dir("srv/www"))
 	m := http.NewServeMux()
 	m.Handle("/css/", fs)
-	m.Handle("/files/", fs)
 	m.Handle("/img/", fs)
 	m.Handle("/", pageServer{fs: http.Dir("srv/www")})
 	return m

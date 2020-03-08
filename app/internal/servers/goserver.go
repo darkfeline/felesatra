@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-func NewGoproxy() http.Handler {
-	return withCacheControl(http.FileServer(http.Dir("srv/goproxy")),
-		"public,max-age=604800") // 7d
-}
-
 func NewGo() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ps, ok := findPackage(r.URL.Path)
