@@ -2,6 +2,8 @@
 # make mod         Build goproxy modules
 # make build       Do remote build of container
 # make deploy      Deploy remotely built container
+# make test        Run tests
+# make bench       Run benchmarks
 # make clean       Clean up
 # make extraclean  Also delete goproxy cache
 
@@ -38,6 +40,7 @@ deploy:
 		--region us-central1 --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000
 
+.PHONY: bench
 .PHONY: test
 
 include kanade/include.mk

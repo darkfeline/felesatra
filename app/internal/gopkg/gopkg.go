@@ -17,8 +17,7 @@ const (
 	Git Method = "git"
 )
 
-var Template = template.Must(template.New("go").Parse(
-	`{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
+const pageTemplate = `{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -29,4 +28,6 @@ var Template = template.Must(template.New("go").Parse(
     <a href="{{.RepoURL}}">{{$s}}{{.Path}}</a> (<a href="https://pkg.go.dev/{{$s}}{{.Path}}">docs</a>)
   </body>
 </html>
-`))
+`
+
+var Template = template.Must(template.New("go").Parse(pageTemplate))
