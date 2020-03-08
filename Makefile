@@ -30,7 +30,8 @@ include gcp.mk
 deploy:
 	cd app && gcloud builds submit --tag gcr.io/$(gcp_project)/felesatra
 	gcloud run deploy felesatra --image gcr.io/$(gcp_project)/felesatra --platform managed \
-		--region us-west1 --allow-unauthenticated
+		--region us-west1 --allow-unauthenticated \
+		--memory 128Mi --concurrency 1000
 
 .PHONY: test
 
