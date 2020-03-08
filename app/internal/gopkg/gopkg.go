@@ -1,6 +1,9 @@
 package gopkg
 
-import "text/template"
+import (
+	"sync"
+	"text/template"
+)
 
 // A Spec describes a Go package.
 type Spec struct {
@@ -30,4 +33,12 @@ const pageTemplate = `{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
 </html>
 `
 
-var Template = template.Must(template.New("go").Parse(pageTemplate))
+var temp *template.Template
+var once sync.Once
+
+func Template() *template.Template {
+	once.Do(func() {
+		temp = template.Must(template.New("go").Parse(pageTemplate))
+	})
+	return temp
+}
