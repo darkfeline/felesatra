@@ -1,5 +1,7 @@
 # make all         Make everything
 # make mod         Build goproxy modules
+# make build       Do remote build of container
+# make deploy      Deploy remotely built container
 # make clean       Clean up
 # make extraclean  Also delete goproxy cache
 
@@ -26,9 +28,12 @@ extraclean: clean
 # Set gcp_project in gcp.mk.
 include gcp.mk
 
+.PHONY: build
+build:
+	cd app && gcloud builds submit --tag gcr.io/$(gcp_project)/felesatra
+
 .PHONY: deploy
 deploy:
-	cd app && gcloud builds submit --tag gcr.io/$(gcp_project)/felesatra
 	gcloud run deploy felesatra --image gcr.io/$(gcp_project)/felesatra --platform managed \
 		--region us-west1 --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000
