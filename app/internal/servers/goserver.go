@@ -16,7 +16,7 @@ func NewGo() http.Handler {
 			return
 		}
 		w.Header()["Cache-Control"] = []string{"public,max-age=604800"} // 7d
-		gopkg.WritePage(w, ps)
+		gopkg.Template.Execute(w, ps)
 	})
 }
 
