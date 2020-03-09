@@ -13,3 +13,4 @@
 *~
 # Various other files
 /include.mk
+/make_gsconfig.sh

@@ -1,5 +1,6 @@
 # make all         Make everything
 # make mod         Build goproxy modules
+# make upload      Upload files to Google Storage
 # make build       Do remote build of container
 # make deploy      Deploy remotely built container
 # make test        Run tests
@@ -27,17 +28,26 @@ clean:
 extraclean: clean
 	rm -rf $(extraclean_paths)
 
-# Set gcp_project in gcp.mk.
+# Set variables:
+# container_registry := gcr.io
+# container_region := us-central1
+# gcp_project := project-name
+# files_bucket := bucket-name
 include gcp.mk
 
+.PHONY: upload
+upload:
+	gsutil rsync -r files gs://$(files_bucket)
+
 .PHONY: build
-build:
-	cd app && gcloud builds submit --tag us.gcr.io/$(gcp_project)/felesatra
+build: app-deps
+	cd app && gcloud builds submit --tag $(container_registry)/$(gcp_project)/felesatra
 
 .PHONY: deploy
 deploy:
-	gcloud run deploy felesatra --image us.gcr.io/$(gcp_project)/felesatra --platform managed \
-		--region us-central1 --allow-unauthenticated \
+	gcloud run deploy felesatra --image $(container_registry)/$(gcp_project)/felesatra \
+		--platform managed \
+		--region $(container_region) --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000 --max-instances 1
 
 .PHONY: bench
