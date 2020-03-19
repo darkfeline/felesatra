@@ -1,4 +1,4 @@
-# make all         Make everything
+# make all         Make everything except goproxy modules
 # make mod         Build goproxy modules
 # make upload      Upload files to Google Storage
 # make build       Do remote build of container
