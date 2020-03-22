@@ -57,7 +57,7 @@ def build_module(workdir: Path, outdir: Path, module: Module):
         checkout.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(['git', 'clone', module.repo, checkout],
                        stdout=DEVNULL, stderr=DEVNULL, check=True)
-    versions = get_versions(checkout)
+    versions = get_versions(checkout, module)
     logging.info(f'Got versions for module {module.name}: {versions}')
     base_path(outdir, module.name).mkdir(parents=True, exist_ok=True)
     good_versions = []
@@ -90,10 +90,20 @@ def build_module_version(checkout: Path, outdir: Path, module_name: str, version
 
 
 # Basic Git operations
-def get_versions(checkout: Path) -> List[str]:
+def get_versions(checkout: Path, module: Module) -> List[str]:
     p = subprocess.run(['git', '-C', checkout, 'tag'], capture_output=True, check=True)
     tags = p.stdout.decode().splitlines()
-    return [tag for tag in tags if re.match(r'v[0-9.]+', tag)]
+    return [tag for tag in tags if is_tag_for_module_version(module, tag)]
+
+
+def is_tag_for_module_version(module: Module, tag: str) -> bool:
+    m = re.search(r'/(v[0-9]+)$', module.name)
+    if not m:
+        return bool(re.match(r'v[01]\.', tag))
+    version = m.group(1)
+    if not tag.startswith(version + '.'):
+        return False
+    return True
 
 
 def get_commit_time(checkout: Path, ref: str) -> str:
