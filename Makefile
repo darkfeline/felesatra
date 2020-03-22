@@ -1,12 +1,15 @@
-# make all         Make everything except goproxy modules
-# make mod         Build goproxy modules
-# make upload      Upload files to Google Storage
-# make build       Do remote build of container
-# make deploy      Deploy remotely built container
-# make test        Run tests
-# make bench       Run benchmarks
-# make clean       Clean up
-# make extraclean  Also delete goproxy cache
+# make all          Make everything except goproxy modules
+#
+# make mod          Build goproxy modules
+# make upload       Upload files to Google Storage
+# make build        Do remote build of container
+# make deploy       Deploy remotely built container
+# make remoteclean  Delete remote container images
+#
+# make test         Run tests
+# make bench        Run benchmarks
+# make clean        Clean up
+# make extraclean   Also delete goproxy cache
 
 PYTHON := python3
 GO := go
@@ -49,6 +52,13 @@ deploy:
 		--platform managed \
 		--region $(container_region) --allow-unauthenticated \
 		--memory 128Mi --concurrency 1000 --max-instances 1
+
+.PHONY: remoteclean
+remoteclean:
+	gcloud container images list-tags $(container_registry)/$(gcp_project)/felesatra \
+		--filter='-tags:*'  --format='get(digest)' --limit=50 \
+		| xargs -L1 -I% gcloud container images delete \
+		$(container_registry)/$(gcp_project)/felesatra@% --quiet
 
 .PHONY: bench
 .PHONY: test
