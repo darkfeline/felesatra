@@ -47,6 +47,7 @@ func (c command) name() string {
 	return strings.SplitN(c.usage, " ", 2)[0]
 }
 
+// wrapCmd wraps a command function that returns an error.
 func wrapCmd(f func(args []string) error) func() {
 	return func() {
 		if err := f(os.Args[2:]); err != nil {

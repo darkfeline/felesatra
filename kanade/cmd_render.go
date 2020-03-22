@@ -17,7 +17,7 @@ func init() {
 
 func renderCommand(args []string) error {
 	if len(args) != 1 {
-		return errors.New("must provide one arguments")
+		return errors.New("must provide one argument")
 	}
 	src := args[0]
 	t := templates.LoadPageTemplate()

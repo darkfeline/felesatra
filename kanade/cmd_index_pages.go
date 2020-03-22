@@ -16,7 +16,7 @@ func init() {
 
 func indexCommand(args []string) error {
 	if len(args) != 1 {
-		return errors.New("must provide one arguments")
+		return errors.New("must provide one argument")
 	}
 	dir := args[0]
 	e, err := index.IndexDir(dir)
