@@ -39,6 +39,8 @@ var modulePkgs = []gopkg.Spec{
 	{Path: "/booru/dl", RepoURL: "https://github.com/darkfeline/booru-dl-go"},
 	{Path: "/danbooru", RepoURL: "https://github.com/darkfeline/danbooru-go"},
 	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
+	{Path: "/dlsite/v2", RepoURL: "https://github.com/darkfeline/dlsite-go"},
+	{Path: "/dlsite-cmd", RepoURL: "https://github.com/darkfeline/dlsite-cmd-go"},
 	{Path: "/go2/errors", RepoURL: "https://github.com/darkfeline/go2-errors"},
 	{Path: "/keeper", RepoURL: "https://github.com/darkfeline/keeper-go"},
 	{Path: "/linelist", RepoURL: "https://github.com/darkfeline/go-linelist"},
