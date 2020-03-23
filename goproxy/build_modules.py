@@ -55,7 +55,7 @@ def build_module(workdir: Path, outdir: Path, module: Module):
                        stdout=DEVNULL, stderr=DEVNULL, check=True)
     else:
         checkout.parent.mkdir(parents=True, exist_ok=True)
-        subprocess.run(['git', 'clone', module.repo, checkout],
+        subprocess.run(['git', 'clone', '--bare', module.repo, checkout],
                        stdout=DEVNULL, stderr=DEVNULL, check=True)
     versions = get_versions(checkout, module)
     logging.info(f'Got versions for module {module.name}: {versions}')
