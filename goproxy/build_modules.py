@@ -53,7 +53,7 @@ def main():
 def build_module(workdir: Path, outdir: Path, module: Module):
     checkout = Path(workdir, module.name)
     if checkout.exists():
-        subprocess.run(['git', '-C', checkout, 'fetch'],
+        subprocess.run(['git', '-C', checkout, 'fetch', '-t', 'origin'],
                        stdout=DEVNULL, stderr=DEVNULL, check=True)
     else:
         checkout.parent.mkdir(parents=True, exist_ok=True)
