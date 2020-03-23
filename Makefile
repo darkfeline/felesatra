@@ -25,7 +25,7 @@ all:
 clean:
 	rm -rf $(clean_paths)
 	find . -name "__pycache__" -print0 | xargs -0 rm -rf
-	find . -depth -type d -exec rmdir --ignore-fail-on-non-empty {} \+
+	find * -depth -type d -exec rmdir --ignore-fail-on-non-empty {} \+
 
 .PHONY: extraclean
 extraclean: clean
