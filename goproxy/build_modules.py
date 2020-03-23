@@ -103,9 +103,7 @@ def is_tag_for_module_version(module: Module, tag: str) -> bool:
     if not m:
         return bool(re.match(r'v[01]\.', tag))
     version = m.group(1)
-    if not tag.startswith(version + '.'):
-        return False
-    return True
+    return tag.startswith(version + '.')
 
 
 def get_commit_time(checkout: Path, ref: str) -> str:
