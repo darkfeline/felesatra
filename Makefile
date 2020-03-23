@@ -2,7 +2,7 @@
 #
 # make mod          Build goproxy modules
 # make upload       Upload files to Google Storage
-# make build        Do remote build of container
+# make remotebuild  Do remote build of container
 # make deploy       Deploy remotely built container
 # make remoteclean  Delete remote container images
 #
@@ -42,8 +42,8 @@ include gcp.mk
 upload:
 	gsutil rsync -r files gs://$(files_bucket)
 
-.PHONY: build
-build: app-deps
+.PHONY: remotebuild
+remotebuild: app-deps
 	cd app && gcloud builds submit --tag $(container_registry)/$(gcp_project)/felesatra
 
 .PHONY: deploy
