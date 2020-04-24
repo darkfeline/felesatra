@@ -2,9 +2,10 @@ package main
 
 import (
 	"errors"
+	"html/template"
 	"os"
 
-	"kanade/internal/render"
+	"kanade/internal/enja"
 	"kanade/internal/templates"
 )
 
@@ -20,5 +21,15 @@ func renderCommand(args []string) error {
 		return errors.New("must provide one argument")
 	}
 	src := args[0]
-	return render.RenderEnjaFile(templates.BaseTemplate, os.Stdout, src)
+	ed, err := enja.LoadPath(src)
+	if err != nil {
+		return err
+	}
+	d := templates.BaseData{
+		Title:     ed.Header["title"],
+		Published: ed.Header["published"],
+		Modified:  ed.Header["modified"],
+		Body:      template.HTML(ed.Body),
+	}
+	return templates.BaseTemplate.Execute(os.Stdout, d)
 }

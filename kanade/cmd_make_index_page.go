@@ -22,17 +22,14 @@ func indexpageCommand(args []string) error {
 		return errors.New("must provide one argument")
 	}
 	p := args[0]
-	t := templates.IndexTemplate
 	e, err := readIndex(p)
 	if err != nil {
 		return err
 	}
-	d := struct {
-		Pages []index.Entry
-	}{
+	d := templates.IndexData{
 		Pages: sortIndexEntries(e),
 	}
-	return t.Execute(os.Stdout, d)
+	return templates.IndexTemplate.Execute(os.Stdout, d)
 }
 
 // readIndex reads in the index file.

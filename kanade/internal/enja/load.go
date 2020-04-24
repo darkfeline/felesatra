@@ -11,12 +11,12 @@ import (
 func LoadPath(path string) (Document, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return Document{}, err
+		return Document{}, fmt.Errorf("enja load: %s", err)
 	}
 	defer f.Close()
 	d, err := Decode(f)
 	if err != nil {
-		return Document{}, fmt.Errorf("read enja file: %w", err)
+		return Document{}, fmt.Errorf("enja load %s: %s", path, err)
 	}
 	setMissingHeaders(&d, path)
 	return d, nil

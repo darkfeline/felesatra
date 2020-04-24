@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/css/base.css">
     <link rel="stylesheet" type="text/css" href="/css/site.css">
     <link rel="icon" type="image/png" href="/img/site/favicon.png">
-    <title>{{.title}}</title>
+    <title>{{.Title}}</title>
   </head>
   <body>
     <header id="site-header">
@@ -14,19 +14,19 @@
     </header>
     <section>
       <header class="content-header">
-        <h1>{{.title}}</h1>
+        <h1>{{.Title}}</h1>
         <dl>
-          {{- if .published}}
+          {{- if .Published}}
           <dt>Published</dt>
-          <dd>{{.published}}</dd>
+          <dd>{{.Published}}</dd>
           {{- end}}
-          {{- if .modified}}
+          {{- if .Modified}}
           <dt>Last modified</dt>
-          <dd>{{.modified}}</dd>
+          <dd>{{.Modified}}</dd>
           {{- end}}
         </dl>
       </header>
-      {{.body}}
+      {{.Body}}
     </section>
 
     <footer id="site-footer">
