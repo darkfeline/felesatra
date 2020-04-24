@@ -4,13 +4,10 @@ import (
 	"text/template"
 )
 
-//go:generate binpack -name baseTemplate base.html
-//go:generate binpack -name indexTemplate index.html
+//go:generate binpack -name baseText base.html
 
-func LoadPageTemplate() *template.Template {
-	return template.Must(template.New("base.html").Parse(baseTemplate))
-}
+var BaseTemplate = template.Must(template.New("base").Parse(baseText))
 
-func LoadIndexTemplate() *template.Template {
-	return template.Must(template.New("index.html").Parse(indexTemplate))
-}
+//go:generate binpack -name indexText index.html
+
+var IndexTemplate = template.Must(template.New("index").Parse(indexText))

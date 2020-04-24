@@ -20,6 +20,5 @@ func renderCommand(args []string) error {
 		return errors.New("must provide one argument")
 	}
 	src := args[0]
-	t := templates.LoadPageTemplate()
-	return render.RenderEnjaFile(t, os.Stdout, src)
+	return render.RenderEnjaFile(templates.BaseTemplate, os.Stdout, src)
 }

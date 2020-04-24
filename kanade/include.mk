@@ -4,7 +4,7 @@ kanade_path := $(local_dir)/kanade
 
 kanade_template_dir := $(local_dir)/internal/templates
 kanade_templates := $(addprefix $(kanade_template_dir)/,base.html index.html)
-kanade_packed_templates := $(kanade_templates:.html=Template_packed.go)
+kanade_packed_templates := $(kanade_templates:.html=Text_packed.go)
 
 $(kanade_packed_templates) &: $(kanade_templates)
 	cd $(kanade_template_dir) && $(GO) generate

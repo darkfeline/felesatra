@@ -22,7 +22,7 @@ func indexpageCommand(args []string) error {
 		return errors.New("must provide one argument")
 	}
 	p := args[0]
-	t := templates.LoadIndexTemplate()
+	t := templates.IndexTemplate
 	e, err := readIndex(p)
 	if err != nil {
 		return err
