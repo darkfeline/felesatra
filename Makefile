@@ -1,5 +1,7 @@
 # make all          Make everything except goproxy modules
 #
+# make push         Make everything, build, deploy, and clean up
+#
 # make mod          Build goproxy modules
 # make upload       Upload files to Google Storage
 # make remotebuild  Do remote build of container
@@ -20,6 +22,9 @@ extraclean_paths :=
 
 .PHONY: all
 all:
+
+.PHONY: push
+push: all mod remotebuild deploy remoteclean
 
 .PHONY: clean
 clean:
