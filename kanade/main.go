@@ -1,3 +1,4 @@
+// Command kanade is a static site generator tool.
 package main
 
 import (

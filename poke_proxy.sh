@@ -1,3 +1,5 @@
+# This script pokes proxy.golang.org to fetch all of the modules in
+# our goproxy.
 set -eu
 cd app/srv/goproxy || exit 1
 readonly host=https://proxy.golang.org
