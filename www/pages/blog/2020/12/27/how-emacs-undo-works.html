@@ -1,0 +1,497 @@
+title: How Emacs Undo Works
+---
+
+<p>
+  A while ago I spent some time carefully figuring out how Emacs undo
+  works.  I decided to post this here; perhaps you might find it
+  interesting.
+</p>
+
+<p>
+  First, you should have a basic idea of how Emacs
+  <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Undo.html">undo</a>
+  works.  When you edit a file, changes are placed on a undo list.  When
+  you undo, the state of the buffer is reverted according to the undo
+  list; however the undo itself is placed on the undo list, so you redo
+  by undoing again.  The advantage of this approach is that you will
+  never lose any state your buffer was in, and all states are available
+  via a linear undo (unlike undo-tree which requires navigating a
+  non-linear tree).
+</p>
+
+<p>
+  Unforunately, after many undos and undos of undos and undos of undos of
+  undos, it's quite easy to get your undo history into an interesting
+  mess, but once you understand exactly how it works, it's not so
+  bad (keep reading).
+</p>
+
+<p>
+  First, I will describe the rules governing undo.  Next, I will walk
+  through an example of a complex undo change.  Finally, I will present
+  the state of the undo list for completeness.
+</p>
+
+<p>
+  If you read the manual, linked above, you will know that there are
+  two undo commands, <code>undo</code>
+  and <code>undo-only</code>.  <code>undo-only</code> will only undo,
+  skipping undoing undos (redoing).
+</p>
+
+<p>
+The rules:
+</p>
+
+<ul>
+  <li>All changes, including undos, get added to the front of the undo
+    chain.</li>
+  <li><code>undo</code> moves back one state along the undo chain.</li>
+  <li><code>undo-only</code> moves back one state along the temporal axis.</li>
+  <li><code>undo-only</code> always move backward along the temporal axis.</li>
+  <li><code>undo</code> moves in the opposite direction along the temporal axis as
+    the change it is undoing.</li>
+</ul>
+
+<p>
+  I encourage you to follow along with the example.  Open up <code>*scratch*</code>
+  and bind <code>undo-only</code> to an easy to press key; you don't want to use
+  <code>M-x</code> for this.
+</p>
+
+<p>
+First, insert some text
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o
+</code></pre>
+
+<p>
+Each node represents a buffer state.  Each buffer state will be
+labeled with a letter.  For convenience, type <code>a RET</code> to
+move to state A.  The <code>RET</code> is an easy way to make Emacs
+set a break in the undo chain; otherwise Emacs will group contiguous
+inserts into one "state".  Also, this state A is actually two states,
+the "inserted a" and "inserted RET" states.  In this example, each
+undo will actually be two undos, one to undo the <code>RET</code> and
+one to undo the letter.
+</p>
+
+<p>
+After following the above, your buffer should look like this:
+</p>
+
+<pre><code>a
+b
+c
+</code></pre>
+
+<p>
+Next, undo twice:
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            /
+           o
+</code></pre>
+
+<p>
+You are now back at state A.  Note how the undo chain is presented
+here.  The undos have been added to the end of the undo chain,
+however, the chain is now going backward temporally.  We type some
+more:
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            / D  E
+  Insert!  o--o--o  Undo!
+</code></pre>
+
+<p>
+Still simple.  We keep going:
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            / D  E
+  Insert!  o--o--o  Undo!
+                /
+               / F  G  H
+     Insert!  o--o--o--o  Undo!
+                      /
+                     / I  J
+           Insert!  o--o--o
+</code></pre>
+
+<p>
+  It's getting complex now; we'll start calling <code>undo-only</code> now:
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            / D  E
+  Insert!  o--o--o  Undo!
+                /
+               / F  G  H
+     Insert!  o--o--o--o  Undo!
+                      /
+                     / I  J
+           Insert!  o--o--o  undo-only
+                         /
+                 F  G   /
+                 o--o--o
+</code></pre>
+
+<p>
+  Our first <code>undo-only</code> goes back one state to state I.  So far so good.
+</p>
+
+<p>
+  Our second <code>undo-only</code> goes back one state to state G.  So far so good.
+</p>
+
+<p>
+  Our third <code>undo-only</code> goes back three states to state F.  However, we
+only went back only one state "temporally": we skipped all intervening
+undo/redo pairs.
+</p>
+
+<p>
+We keep going.
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            / D  E
+  Insert!  o--o--o  Undo!
+                /
+               / F  G  H
+     Insert!  o--o--o--o  Undo!
+                      /
+                     / I  J
+           Insert!  o--o--o  undo-only
+                         /
+              D  F  G   /
+              o--o--o--o
+             /
+           A/
+           o
+</code></pre>
+
+<p>
+Now we're all the way back to state A.  With <code>undo</code>, we would have had
+to traverse every single state (count them, there's a lot), but with
+<code>undo-only</code>, it only took five.
+</p>
+
+<p>
+Now for the final stretch.  We insert a few more fresh states:
+</p>
+
+<pre><code>           A  B  C
+Insert! o--o--o--o  Undo!
+                /
+               /
+              o
+             /
+            / D  E
+  Insert!  o--o--o  Undo!
+                /
+               / F  G  H
+     Insert!  o--o--o--o  Undo!
+                      /
+                     / I  J
+           Insert!  o--o--o  undo-only
+                         /
+              D  F  G   /
+              o--o--o--o
+             /
+           A/ K  L
+  Insert!  o--o--o
+</code></pre>
+
+<p>
+And we undo a whole bunch:
+</p>
+
+<pre><code>            A  B  C
+ Insert! o--o--o--o  Undo!
+                 /
+                /
+               o
+              /
+             / D  E
+   Insert!  o--o--o  Undo!
+                 /
+                / F  G  H
+      Insert!  o--o--o--o  Undo!
+                       /
+                      / I  J
+            Insert!  o--o--o  undo-only
+                          /
+               D  F  G   /
+               o--o--o--o
+              /
+            A/ K  L
+   Insert!  o--o--o  Undo!
+                 /
+                /
+               o
+              /
+             / D  F  G  I  J
+(continue)  o--o--o--o--o--o
+</code></pre>
+
+<p>
+Okay, what happened here?  We undid the new states we added, and those
+undo actions get added going backward temporally.  After that though,
+we started undoing undos.  These undo changes get added with the
+reverse temporality as the original changes, so these undo changes are
+going forward temporally.  If you did <code>undo-only</code> at this point, you
+would undo these changes.
+</p>
+
+<p>
+  (But wait, aren't these changes undo changes? <code>undo-only</code> doesn't undo
+undos, right?  Well, these changes are actually undos of undos, so
+they're actually redos, not undos, hence why they move forward
+temporally.)
+</p>
+
+<p>
+That's it for the example.  Keep in mind however that this "undo
+chain" is just a concept to help understand how undo works.  What
+Emacs actually stores is <code>buffer-undo-list</code>.  You can check it out
+with <code>describe-variable</code>.
+</p>
+
+<p>
+If you have been following along with the example, the state of
+<code>buffer-undo-list</code> should be like below.  I have annotated it with
+points from the undo chain diagrams.
+</p>
+
+<pre><code>'(
+  nil
+  (12 . 13)
+  nil
+  (11 . 12)                             ;Redo insert j
+  nil
+  (10 . 11)
+  nil
+  (9 . 10)                              ;Redo insert i
+  nil
+  (8 . 9)
+  nil
+  (7 . 8)                               ;Redo insert g
+  nil
+  (6 . 7)
+  nil
+  (5 . 6)                               ;Redo insert f
+  nil
+  (4 . 5)                               ;Redo insert newline
+  nil
+  (3 . 4)                               ;Redo insert d
+  nil
+  ("k" . 3)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("\n" . 4)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("l" . 5)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("\n" . 6)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  (6 . 7)
+  nil
+  (5 . 6)                               ;Insert l
+  nil
+  (4 . 5)
+  nil
+  (3 . 4)                               ;Insert k
+  nil
+  ("d" . 3)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 4)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("f" . 5)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 6)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("g" . 7)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 8)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("i" . 9)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 10)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("j" . 11)                            ;Undo-only insert j
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 12)
+  (#&lt;marker
+   (moves after insertion)
+   at 12 in tmp-undo&gt; . 1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  (12 . 13)
+  nil
+  (11 . 12)                             ;Insert j
+  nil
+  (10 . 11)
+  nil
+  (9 . 10)                              ;Insert i
+  nil
+  ("h" . 9)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  ("\n" . 10)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  nil
+  (10 . 11)
+  nil
+  (9 . 10)                              ;Insert h
+  nil
+  (8 . 9)
+  nil
+  (7 . 8)                               ;Insert g
+  nil
+  (6 . 7)
+  nil
+  (5 . 6)                               ;Insert f
+  nil
+  ("e" . 5)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("\n" . 6)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  (6 . 7)
+  nil
+  (5 . 6)                               ;Insert e
+  nil
+  (4 . 5)
+  nil
+  (3 . 4)                               ;Insert d
+  nil
+  ("b" . 3)                             ;Undo insert b
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("\n" . 4)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("c" . 5)                             ;Undo insert c
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  ("\n" . 6)
+  (#&lt;marker at 12 in tmp-undo&gt; . -1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  (#&lt;marker
+   (moves after insertion)
+   at 13 in tmp-undo&gt; . 1)
+  nil
+  (6 . 7)
+  nil
+  (5 . 6)                               ;Insert c
+  nil
+  (4 . 5)
+  nil
+  (3 . 4)                               ;Insert b
+  nil
+  (2 . 3)                               ;Insert newline
+  nil
+  (1 . 2)                             ;Insert a
+  (t . 0)                             ;Buffer before modification time
+  )
+</code></pre>
+
+<p>
+Finally finally, undo records for undos (redos) are stored in
+<code>undo-equiv-table</code>.  Again, feel free to check it out.
+</p>
