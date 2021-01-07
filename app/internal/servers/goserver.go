@@ -32,6 +32,7 @@ func findPackage(p string) (ps gopkg.Spec, ok bool) {
 	return ps, false
 }
 
+// Also update build_modules.py
 var modulePkgs = []gopkg.Spec{
 	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
 	{Path: "/animanager", RepoURL: "https://github.com/darkfeline/animanager-go"},

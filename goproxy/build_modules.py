@@ -18,6 +18,7 @@ class Module:
     repo: str
 
 
+# Also update goserver.go
 MODULES = [
     Module(name='go.felesatra.moe/anidb', repo='https://github.com/darkfeline/anidb-go'),
     Module(name='go.felesatra.moe/animanager', repo='https://github.com/darkfeline/animanager-go'),
