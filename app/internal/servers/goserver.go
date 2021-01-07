@@ -41,6 +41,7 @@ var modulePkgs = []gopkg.Spec{
 	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
 	{Path: "/dlsite/v2", RepoURL: "https://github.com/darkfeline/dlsite-go"},
 	{Path: "/dlsite-cmd", RepoURL: "https://github.com/darkfeline/dlsite-cmd-go"},
+	{Path: "/encoding/sexp", RepoURL: "https://github.com/darkfeline/go-sexp"},
 	{Path: "/go2/errors", RepoURL: "https://github.com/darkfeline/go2-errors"},
 	{Path: "/keeper", RepoURL: "https://github.com/darkfeline/keeper-go"},
 	{Path: "/linelist", RepoURL: "https://github.com/darkfeline/go-linelist"},

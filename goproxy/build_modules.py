@@ -26,6 +26,7 @@ MODULES = [
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/dlsite/v2', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/dlsite-cmd', repo='https://github.com/darkfeline/dlsite-cmd-go'),
+    Module(name='go.felesatra.moe/encoding/sexp', repo='https://github.com/darkfeline/go-sexp'),
     Module(name='go.felesatra.moe/go2/errors', repo='https://github.com/darkfeline/go2-errors'),
     Module(name='go.felesatra.moe/keeper', repo='https://github.com/darkfeline/keeper-go'),
     Module(name='go.felesatra.moe/linelist', repo='https://github.com/darkfeline/go-linelist'),
