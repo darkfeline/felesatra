@@ -62,7 +62,7 @@ deploy:
 remoteclean:
 	gcloud container images list-tags $(container_registry)/$(gcp_project)/felesatra \
 		--filter='-tags:*'  --format='get(digest)' --limit=50 \
-		| xargs -L1 -I% gcloud container images delete \
+		| xargs -I% gcloud container images delete \
 		$(container_registry)/$(gcp_project)/felesatra@% --quiet
 
 .PHONY: bench
