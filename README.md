@@ -9,7 +9,7 @@
 `goproxy` contains the script for building modules to serve via
 goproxy.
 
-`kanade` is the statis site generator.
+`kanade` is the static site generator.
 
 `www` contains the HTML source before rendering.
 
