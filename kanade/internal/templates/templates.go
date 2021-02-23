@@ -1,13 +1,15 @@
 package templates
 
 import (
+	"embed"
 	"html/template"
 	"kanade/internal/index"
 )
 
-//go:generate binpack -name baseText base.html
+//go:embed *.html
+var f embed.FS
 
-var BaseTemplate = template.Must(template.New("base").Parse(baseText))
+var BaseTemplate = template.Must(template.ParseFS(f, "base.html"))
 
 type BaseData struct {
 	Title     string
@@ -16,9 +18,7 @@ type BaseData struct {
 	Body      template.HTML
 }
 
-//go:generate binpack -name indexText index.html
-
-var IndexTemplate = template.Must(template.New("index").Parse(indexText))
+var IndexTemplate = template.Must(template.ParseFS(f, "index.html"))
 
 type IndexData struct {
 	Pages []index.Entry
