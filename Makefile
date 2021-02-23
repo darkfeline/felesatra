@@ -5,6 +5,7 @@
 # make mod          Build goproxy modules
 # make upload       Upload files to Google Storage
 # make remotebuild  Do remote build of container
+# make localbuild  Do local build of container
 # make deploy       Deploy remotely built container
 # make remoteclean  Delete remote container images
 #
@@ -15,6 +16,7 @@
 
 PYTHON := python3
 GO := go
+DOCKER := sudo docker
 
 srvdir := app/srv
 clean_paths :=
@@ -24,7 +26,7 @@ extraclean_paths :=
 all:
 
 .PHONY: push
-push: all mod remotebuild deploy remoteclean
+push: all mod localbuild deploy remoteclean
 
 .PHONY: clean
 clean:
@@ -50,6 +52,11 @@ upload:
 .PHONY: remotebuild
 remotebuild: app-deps
 	cd app && gcloud builds submit --tag $(container_registry)/$(gcp_project)/felesatra
+
+.PHONY: localbuild
+localbuild: app-deps
+	$(DOCKER) build --tag $(container_registry)/$(gcp_project)/felesatra app
+	$(DOCKER) push $(container_registry)/$(gcp_project)/felesatra
 
 .PHONY: deploy
 deploy:
