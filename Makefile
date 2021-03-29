@@ -5,7 +5,7 @@
 # make mod          Build goproxy modules
 # make upload       Upload files to Google Storage
 # make remotebuild  Do remote build of container
-# make localbuild  Do local build of container
+# make localbuild   Do local build of container
 # make deploy       Deploy remotely built container
 # make remoteclean  Delete remote container images
 #
