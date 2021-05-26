@@ -25,7 +25,7 @@ func newPublicWeb() http.Handler {
 	m.Handle("/img/", fs)
 	m.Handle("/atom.xml", fs)
 	m.Handle("/sitemap.xml", fs)
-	m.Handle("/keybase.txt", fs)
+	m.Handle("/identity.txt", fs)
 	m.Handle("/robots.txt", fs)
 	m.Handle("/", pageServer{fs: http.Dir("srv/www")})
 	return m
