@@ -69,9 +69,9 @@ title: Portable Bash Shebangs
   Anyway, we can use this to write a portable Bash script like so:
 </p>
 
-<pre><code># This will be run with the default shell, usually "/bin/sh"
+<pre><code># This will be run with the default shell, usually "/bin/sh".
 # This stanza is valid in both POSIX shell and Bash.
-# If we aren't in bash, then we exec bash from the PATH.
+# If we aren't in Bash, then we exec bash from the PATH.
 # In Bash, BASH_VERSION is set so we will skip this.
 if [ -z "${BASH_VERSION}" ]; then
     exec bash "$@"
