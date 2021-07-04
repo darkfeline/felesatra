@@ -1,0 +1,90 @@
+title: Portable Bash Shebangs
+---
+
+<p>
+  This post is going to be about a bit of POSIX trivia which is not
+  likely to be very useful in practice.  Still, it's an interesting
+  bit of trivia, so if that interests you, read on.
+</p>
+
+<p>
+  I'm going to assume that you know what shebangs are.  If you wanted
+  to make an executable script that is run with Bash, you would add a
+  line like <code>#!/bin/bash</code> to the top.
+</p>
+
+<p>
+  However, shebangs are not actually portable under POSIX.  First of
+  all, the shebang itself (<code>#!</code>) is not defined under
+  POSIX.  Second of all, the paths of POSIX utilities are not
+  specified.  <code>sh</code> could be located at <code>/bin/sh</code>
+  or <code>/usr/bin/sh</code> or
+  <code>/screw/you/this/is/still/posix/sh</code>.  The same goes
+  for <code>env</code>, so <code>#!/usr/bin/env bash</code> is also
+  not portable.
+</p>
+
+<p>
+  There is a way to make an actually portable executable Bash script
+  under POSIX (assuming <code>bash</code> is somewhere in
+  your <code>PATH</code> of course), by taking advantage of a little
+  known behavior in POSIX.  When you execute a file, and the file does
+  not match a binary executable format, then the OS will execute the
+  default shell and pass the file as the first argument.
+</p>
+
+<blockquote cite="https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html">
+  <p>
+    There are two distinct ways in which the contents of the process image
+    file may cause the execution to fail, distinguished by the setting of
+    errno to either [ENOEXEC] or [EINVAL] (see the ERRORS section). In the
+    cases where the other members of the exec family of functions would
+    fail and set errno to [ENOEXEC], the execlp() and execvp() functions
+    shall execute a command interpreter and the environment of the
+    executed command shall be as if the process invoked the sh utility
+    using execl() as follows:
+  </p>
+
+  <pre><code>execl(&lt;shell path&gt;, arg0, file, arg1, ..., (char *)0);</code></pre>
+
+  <p>
+    where &lt;shell path&gt; is an unspecified pathname for the sh utility, file
+    is the process image file, and for execvp(), where arg0, arg1, and so
+    on correspond to the values passed to execvp() in argv[0], argv[1],
+    and so on.
+  </p>
+</blockquote>
+
+<p>
+  <cite><a href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html">IEEE
+  Std 1003.1-2017 exec</a></cite>
+</p>
+
+<p>
+  Note how it specifically points out that the shell path is
+  unspecified.
+</p>
+
+<p>
+  Anyway, we can use this to write a portable Bash script like so:
+</p>
+
+<pre><code># This will be run with the default shell, usually "/bin/sh"
+# This stanza is valid in both POSIX shell and Bash.
+# If we aren't in bash, then we exec bash from the PATH.
+# In Bash, BASH_VERSION is set so we will skip this.
+if [ -z "${BASH_VERSION}" ]; then
+    exec bash "$@"
+fi
+
+# Put the Bash script contents here.
+echo "${BASH_VERSION}"
+</code></pre>
+
+<p>
+  Unfortunately, this cannot replace all uses of shebangs, only those
+  for programs that can tolerate the initial POSIX shell stanza.
+  Also, you would never need to do this in practice since all
+  Unix-like OSes in common use support the familiar shebang behavior.
+  Still, it is an interesting bit of trivia to discuss over lunch.
+</p>
