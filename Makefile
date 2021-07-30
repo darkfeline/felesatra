@@ -41,6 +41,7 @@ extraclean: clean
 # Set variables:
 # container_registry := gcr.io
 # container_region := us-central1
+# service_account := foo@bar.iam.gserviceaccount.com
 # gcp_project := project-name
 # files_bucket := bucket-name
 include gcp.mk
@@ -61,9 +62,9 @@ localbuild: app-deps
 .PHONY: deploy
 deploy:
 	gcloud run deploy felesatra --image $(container_registry)/$(gcp_project)/felesatra \
-		--platform managed \
-		--region $(container_region) --allow-unauthenticated \
-		--memory 128Mi --concurrency 1000 --max-instances 1
+		--platform managed --region $(container_region) \
+		--service-account $(service_account) \
+		--allow-unauthenticated --memory 128Mi --concurrency 1000 --max-instances 1
 
 .PHONY: remoteclean
 remoteclean:
