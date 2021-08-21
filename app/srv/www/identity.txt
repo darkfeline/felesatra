@@ -1,7 +1,7 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-I certify that:
+I certify that as of 2021-08-20:
 
 I am an admin of https://www.felesatra.moe.
 
@@ -22,10 +22,10 @@ websites which I administrate, along with a copy of my public PGP key
 pairs.
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQrAB6ND7dzPES0L1tV/xerHYc+9gUCYSCAIgAKCRBV/xerHYc+
-9jmJAP9fciQJLwRdCJUkwW4H3SvR0DXYo/VKYDIP1ASK34phlwD+NFo533X5YJC5
-+CKbcClRuPkaXgM2GAOfA33yagNsfg4=
-=YQPS
+iHUEARYKAB0WIQQrAB6ND7dzPES0L1tV/xerHYc+9gUCYSCDvgAKCRBV/xerHYc+
+9ljCAQC09Y4FqCQSn11npqM8nML/NLLX1YeWlheOGbDrfnxNqAD/Z7Jkd9yZziKy
+/gaAv8UdA433q/4hYzRrv2CoNyN4zAc=
+=lRFZ
 -----END PGP SIGNATURE-----
 
 2B001E8D0FB7733C44B42F5B55FF17AB1D873EF6
