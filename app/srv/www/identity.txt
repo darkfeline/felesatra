@@ -1,7 +1,7 @@
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
-I certify that as of 2021-08-20:
+I certify that as of 2021-08-25:
 
 I am an admin of https://www.felesatra.moe.
 
@@ -9,12 +9,13 @@ I have the following PGP keys which have not been compromised.
 Signaures from these keys are valid.  Use these keys to send me
 encrypted messages.
 
-* 2B001E8D0FB7733C44B42F5B55FF17AB1D873EF6
+* 04071A8DB2C1F22D7483AC6C710B8286F1880D24
 
 I have the following PGP keys which have not been compromised.
 Signaures from these keys are valid.  However, do not send me
 encrypted messages with these keys.
 
+* 2B001E8D0FB7733C44B42F5B55FF17AB1D873EF6
 * E9397FA17F2501B5EF7344B9871AC6C82D45F74D
 
 This certification is signed with one of my PGP keys and hosted on the
@@ -22,11 +23,31 @@ websites which I administrate, along with a copy of my public PGP key
 pairs.
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQrAB6ND7dzPES0L1tV/xerHYc+9gUCYSCDvgAKCRBV/xerHYc+
-9ljCAQC09Y4FqCQSn11npqM8nML/NLLX1YeWlheOGbDrfnxNqAD/Z7Jkd9yZziKy
-/gaAv8UdA433q/4hYzRrv2CoNyN4zAc=
-=lRFZ
+iHUEARYIAB0WIQQEBxqNssHyLXSDrGxxC4KG8YgNJAUCYScRAgAKCRBxC4KG8YgN
+JO5LAPwKjusi6GMTLBcSiXhnuzlNjmUAmF1W/pH0nTGTQva7YQD9HUBP59l5i5H8
+IP1TdD6SSikTiKYifqvLZpdKGdjTQwM=
+=3U8M
 -----END PGP SIGNATURE-----
+
+04071A8DB2C1F22D7483AC6C710B8286F1880D24
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEYScEZBYJKwYBBAHaRw8BAQdAmKWYRjVjm5eZiGEqNTdFY5tggU6X26G0fpaz
+wp/SnDu0I0FsbGVuIExpIDxkYXJrZmVsaW5lQGZlbGVzYXRyYS5tb2U+iJYEExYI
+AD4WIQQEBxqNssHyLXSDrGxxC4KG8YgNJAUCYScEZAIbAwUJAeEzgAULCQgHAgYV
+CgkICwIEFgIDAQIeAQIXgAAKCRBxC4KG8YgNJMkcAP4ju0u5mfKYdprfzCNRYZqo
+Dsh2UitWlrqxI4EdY3ECtwEAsAT0vEpjAshopNF4PmFCZqUiktyfQj7NvELqgbfD
+yA+4MwRhJwRkFgkrBgEEAdpHDwEBB0Cq3fIilRO3zWdpPjCaa/3HrpzEF9fzgVWU
+pIuxSP+Ds4h+BBgWCAAmFiEEBAcajbLB8i10g6xscQuChvGIDSQFAmEnBGQCGyAF
+CQHhM4AACgkQcQuChvGIDSRmpAEA4NZvzGm9ZiWibXZoW8432iNRlzL7IQPILCTt
+seAtQgAA/jSuB+sV7xBegPSx9Htjk+9HtBy1WPPT+Z58lSLf4WMKuDgEYScEZBIK
+KwYBBAGXVQEFAQEHQAKtGvTt7BOCzE3e7Q1XB8HcU00oi9AOAcjL4/T24XEHAwEI
+B4h+BBgWCAAmFiEEBAcajbLB8i10g6xscQuChvGIDSQFAmEnBGQCGwwFCQHhM4AA
+CgkQcQuChvGIDSSg2AD9GmeA4rZqxM7J2XFGsXYXCfqumtMzf/aiLCg0rXx/VngA
+/i403TbpXZ6u4L9/jBRJpF2SIidm/XxPlM62qzzl+bQO
+=5jl3
+-----END PGP PUBLIC KEY BLOCK-----
 
 2B001E8D0FB7733C44B42F5B55FF17AB1D873EF6
 
