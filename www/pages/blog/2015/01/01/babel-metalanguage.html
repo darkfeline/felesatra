@@ -85,10 +85,8 @@ either values or forms.
 ; (sentence x y) -> x y .
 ; e.g. (sentence (I) (eat apple)) -> I eat apple.
 (def sentence
-(form english
-  ((subject x)
-  (predicate y))
-  x y (val english ".")))
+  (form english ((subject x) (predicate y))
+    x y (val english ".")))
 </code></pre>
 
 <p>
