@@ -1,0 +1,20 @@
+I certify that:
+
+I am an admin of https://www.felesatra.moe.
+
+I have the following PGP keys which have not been compromised.
+Signaures from these keys are valid.  Use these keys to send me
+encrypted messages.
+
+* 04071A8DB2C1F22D7483AC6C710B8286F1880D24
+
+I have the following PGP keys which have not been compromised.
+Signaures from these keys are valid.  However, do not send me
+encrypted messages with these keys.
+
+* 2B001E8D0FB7733C44B42F5B55FF17AB1D873EF6
+* E9397FA17F2501B5EF7344B9871AC6C82D45F74D
+
+This certification is signed with one of my PGP keys and hosted on the
+websites which I administrate, along with a copy of my public PGP key
+pairs.
