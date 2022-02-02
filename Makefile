@@ -39,10 +39,9 @@ extraclean: clean
 	rm -rf $(extraclean_paths)
 
 # Set variables:
-# container_registry := gcr.io
+# container_image := gcr.io/foo/bar
 # container_region := us-central1
 # service_account := foo@bar.iam.gserviceaccount.com
-# gcp_project := project-name
 # files_bucket := bucket-name
 include gcp.mk
 
@@ -52,26 +51,26 @@ upload:
 
 .PHONY: remotebuild
 remotebuild: app-deps
-	cd app && gcloud builds submit --tag $(container_registry)/$(gcp_project)/felesatra
+	cd app && gcloud builds submit --tag $(container_image)
 
 .PHONY: localbuild
 localbuild: app-deps
-	$(DOCKER) build --tag $(container_registry)/$(gcp_project)/felesatra app
-	$(DOCKER) push $(container_registry)/$(gcp_project)/felesatra
+	$(DOCKER) build --tag $(container_image) app
+	$(DOCKER) push $(container_image)
 
 .PHONY: deploy
 deploy:
-	gcloud run deploy felesatra --image $(container_registry)/$(gcp_project)/felesatra \
+	gcloud run deploy felesatra --image $(container_image) \
 		--platform managed --region $(container_region) \
 		--service-account $(service_account) \
 		--allow-unauthenticated --memory 128Mi --concurrency 1000 --max-instances 1
 
 .PHONY: remoteclean
 remoteclean:
-	gcloud container images list-tags $(container_registry)/$(gcp_project)/felesatra \
+	gcloud container images list-tags $(container_image) \
 		--filter='-tags:*'  --format='get(digest)' --limit=50 \
 		| xargs -I% gcloud container images delete \
-		$(container_registry)/$(gcp_project)/felesatra@% --quiet
+		$(container_image)@% --quiet
 
 .PHONY: bench
 .PHONY: test
