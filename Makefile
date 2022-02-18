@@ -16,7 +16,7 @@
 
 PYTHON := python3
 GO := go
-DOCKER := sudo docker
+DOCKER := sudo podman
 
 srvdir := app/srv
 clean_paths :=
