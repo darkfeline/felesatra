@@ -55,7 +55,7 @@ remotebuild: app-deps
 
 .PHONY: localbuild
 localbuild: app-deps
-	$(DOCKER) build --tag $(container_image) app
+	$(DOCKER) build --tag $(container_image) --format docker app
 	$(DOCKER) push $(container_image)
 
 .PHONY: deploy
