@@ -19,3 +19,6 @@ goproxy.
         container_region := blah
         gcp_project := blah
         files_bucket := blah
+
+`identity` helps generate the signed identity text file.  This gets
+moved manually into `srv/www` and committed.
