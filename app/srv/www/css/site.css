@@ -30,12 +30,22 @@
     color: #808080;
 }
 
-#site-footer p {
+#site-footer-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#site-footer-links a {
+    padding: 5px
+}
+
+#site-copyright p {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-#site-footer img {
+#site-copyright img {
     padding: 4px;
 }
 
