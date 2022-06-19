@@ -7,7 +7,8 @@
 // links to add a .html extension.
 (function(){
   // Only run if this is on IPFS.
-  if (!window.location.href.includes("ipfs")) {
+  if (!(window.location.href.includes("ipfs")
+        || window.location.href.includes("ipns"))) {
     return;
   }
   window.addEventListener('load', function() {
