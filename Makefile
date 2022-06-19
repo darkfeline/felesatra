@@ -51,11 +51,11 @@ upload:
 	gsutil rsync -r files gs://$(files_bucket)
 
 .PHONY: remotebuild
-remotebuild: app-deps
+remotebuild: $(app_deps)
 	cd app && gcloud builds submit --tag $(container_image)
 
 .PHONY: localbuild
-localbuild: app-deps
+localbuild: $(app_deps)
 	$(DOCKER) build --tag $(container_image) --format docker app
 	$(DOCKER) push $(container_image)
 
