@@ -78,6 +78,7 @@ clean_paths += ipfs
 ipfs: all
 	cp -Tr app/srv/www ipfs
 	rm -rf ipfs/{private,.gitignore}
+	ipfs add -r ipfs
 
 .PHONY: bench
 .PHONY: test
