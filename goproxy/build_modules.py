@@ -24,6 +24,7 @@ MODULES = [
     Module(name='go.felesatra.moe/anidb', repo='https://github.com/darkfeline/anidb-go'),
     Module(name='go.felesatra.moe/animanager', repo='https://github.com/darkfeline/animanager-go'),
     Module(name='go.felesatra.moe/binpack', repo='https://github.com/darkfeline/binpack'),
+    Module(name='go.felesatra.moe/cloudflare', repo='https://github.com/darkfeline/cloudflare-go'),
     Module(name='go.felesatra.moe/danbooru', repo='https://github.com/darkfeline/danbooru-go'),
     Module(name='go.felesatra.moe/dlsite', repo='https://github.com/darkfeline/dlsite-go'),
     Module(name='go.felesatra.moe/dlsite/v2', repo='https://github.com/darkfeline/dlsite-go'),
