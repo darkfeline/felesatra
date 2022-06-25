@@ -1,0 +1,40 @@
+title: Easy FreshRSS with containers
+---
+<p>
+  We live in a glorious age where you can set up your own Web RSS
+  reader service with TLS, by running three commands.  What's more,
+  you can run it on an e2-micro instance on Google Cloud Platform
+  (GCP), which falls under the GCP free tier.  In fact, starting up
+  the instance takes more work than setting up FreshRSS on the
+  instance.
+</p>
+
+<p>
+  If you don't have experience with GCP, I recommend
+  following <a href="https://cloud.google.com/compute/docs/create-linux-vm-instance">the
+  official quickstart guide</a>.  Make sure you're using an e2-micro
+  instance with a 10 GB standard disk so you fall into the free tier,
+  and allow HTTP/HTTPS connections.  For this guide, use Container OS,
+  which is a minimal Linux image that can run containers.
+</p>
+
+<p>
+  You'll also want a domain, and you want to add a DNS A record that
+  points to the IP of the instance you created.  I'll use <code>rss.example.com</code>.
+</p>
+
+<p>
+  With all of that hard work out of the way, you can SSH into your instance and run these commands:
+</p>
+
+<pre><code>docker network create rss
+docker run -d --name freshrss --network rss --restart always -e TZ=Europe/London -v ~/data/config:/config ghcr.io/linuxserver/freshrss
+docker run -d --name caddy -p 443:443 --network rss --restart always -v ~/data/caddy_config:/config -v ~/data/caddy_data:/data caddy \
+       caddy reverse-proxy --from https://rss.example.com --to freshrss:80
+</code></pre>
+
+<p>
+  It's that easy.  The FreshRSS container has everything it needs to
+  run, and Caddy sets up and manages the TLS cert automatically,
+  assuming you have your DNS set up correctly.
+</p>
