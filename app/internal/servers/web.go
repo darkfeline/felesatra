@@ -23,6 +23,7 @@ func newPublicWeb() http.Handler {
 	m := http.NewServeMux()
 	m.Handle("/css/", fs)
 	m.Handle("/img/", fs)
+	m.Handle("/js/", fs)
 	m.Handle("/atom.xml", fs)
 	m.Handle("/sitemap.xml", fs)
 	m.Handle("/identity.txt", fs)
