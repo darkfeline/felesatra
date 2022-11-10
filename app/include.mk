@@ -2,14 +2,14 @@ local_dir := app
 
 app_deps += $(local_dir)/gsconfig.go
 $(local_dir)/gsconfig.go: $(local_dir)/make_gsconfig.sh gcp.mk
-	sh $< $(files_bucket) > $@
+	sh $< $(files_bucket) >$@
 
 # Generate default template if missing.
 app_deps += $(local_dir)/auth.go
 $(local_dir)/auth.go: local_dir := $(local_dir)
 # DO NOT ADD DEP TO THIS RULE.
 $(local_dir)/auth.go:
-	sh $(local_dir)/make_auth.sh >> $@
+	[ -f $@ ] || sh $(local_dir)/make_auth.sh >$@
 
 .PHONY: test-app
 test: test-app
