@@ -39,12 +39,12 @@ clean:
 extraclean: clean
 	rm -rf $(extraclean_paths)
 
-# Set variables:
-# container_image := gcr.io/foo/bar
-# container_region := us-central1
-# service_account := foo@bar.iam.gserviceaccount.com
-# files_bucket := bucket-name
 include gcp.mk
+
+# Generate default template if missing.
+# DO NOT ADD DEP TO THIS RULE.
+gcp.mk:
+	sh make_gcp.sh >> $@
 
 .PHONY: upload
 upload:
