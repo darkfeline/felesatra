@@ -2,13 +2,15 @@ package servers
 
 import "net/http"
 
-func withCacheControl(h http.Handler, cacheControl ...string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		h.ServeHTTP(&cacheWriter{
-			ResponseWriter: w,
-			cacheControl:   cacheControl,
-		}, req)
-	})
+func withCacheControl(cacheControl ...string) middleware {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+			h.ServeHTTP(&cacheWriter{
+				ResponseWriter: w,
+				cacheControl:   cacheControl,
+			}, req)
+		})
+	}
 }
 
 // cacheWriter implements a http.ResponseWriter that adds a

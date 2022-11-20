@@ -10,11 +10,14 @@ import (
 
 func NewWeb(f CheckFunc) http.Handler {
 	m := http.NewServeMux()
-	m.Handle("/private/", withBasicAuth(
+	m.Handle("/private/", chain(
 		http.FileServer(http.Dir("srv/www")),
-		"yggdrasil", f))
-	m.Handle("/", withCacheControl(newPublicWeb(),
-		"public,max-age=604800")) // 7d
+		withCompress,
+		withBasicAuth("yggdrasil", f)))
+	m.Handle("/", chain(
+		newPublicWeb(),
+		withCacheControl("public,max-age=604800"), // 7d
+	))
 	return m
 }
 
