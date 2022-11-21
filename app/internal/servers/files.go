@@ -7,8 +7,10 @@ import (
 
 func NewFiles(bucket string) http.Handler {
 	prefix := fmt.Sprintf("https://storage.cloud.google.com/%s", bucket)
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header()["Cache-Control"] = []string{"public,max-age=604800"} // 7d
-		http.Redirect(w, r, prefix+r.URL.Path, http.StatusTemporaryRedirect)
-	})
+	return chain(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			http.Redirect(w, r, prefix+r.URL.Path, http.StatusTemporaryRedirect)
+		}),
+		withCacheControl("public,max-age=604800"), // 7d
+	)
 }

@@ -14,7 +14,7 @@ func withCacheControl(cacheControl ...string) middleware {
 }
 
 // cacheWriter implements a http.ResponseWriter that adds a
-// Cache-Control header when writing 200 OK responses.
+// Cache-Control header when writing cache-able responses.
 type cacheWriter struct {
 	http.ResponseWriter
 	cacheControl  []string
@@ -30,7 +30,8 @@ func (w *cacheWriter) Write(d []byte) (int, error) {
 
 func (w *cacheWriter) WriteHeader(c int) {
 	w.headerWritten = true
-	if c == http.StatusOK {
+	switch c {
+	case 200, 302, 303, 307:
 		w.ResponseWriter.Header()["Cache-Control"] = w.cacheControl
 	}
 	w.ResponseWriter.WriteHeader(c)

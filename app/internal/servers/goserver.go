@@ -8,16 +8,18 @@ import (
 )
 
 func NewGo() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ps, ok := findPackage(r.URL.Path)
-		if !ok {
-			w.WriteHeader(404)
-			w.Write([]byte("Package not found"))
-			return
-		}
-		w.Header()["Cache-Control"] = []string{"public,max-age=604800"} // 7d
-		gopkg.Template().Execute(w, ps)
-	})
+	return chain(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ps, ok := findPackage(r.URL.Path)
+			if !ok {
+				w.WriteHeader(404)
+				w.Write([]byte("Package not found"))
+				return
+			}
+			gopkg.Template().Execute(w, ps)
+		}),
+		withCacheControl("public,max-age=604800"), // 7d
+	)
 }
 
 // findPackage finds the longest matching package prefix for the given path.
