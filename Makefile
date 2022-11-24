@@ -8,7 +8,6 @@
 # make localbuild   Do local build of container and upload
 # make deploy       Deploy tagged container in registry
 # make remoteclean  Delete remote container images
-# make ipfs         Make IPFS copy
 #
 # make test         Run tests
 # make bench        Run benchmarks
@@ -72,13 +71,6 @@ remoteclean:
 		--filter='-tags:*'  --format='get(digest)' --limit=50 \
 		| xargs -I% gcloud container images delete \
 		$(container_image)@% --quiet
-
-clean_paths += ipfs
-.PHONY: ipfs
-ipfs: all
-	cp -Tr app/srv/www ipfs
-	rm -rf ipfs/{private,.gitignore}
-	ipfs add -r ipfs
 
 .PHONY: bench
 .PHONY: test
