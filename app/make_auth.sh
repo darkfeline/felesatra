@@ -1,3 +1,4 @@
+# Generate default template
 cat <<'EOF'
 package main
 

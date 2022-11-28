@@ -1,3 +1,4 @@
+# Generate default template
 cat <<'EOF'
 container_image := gcr.io/foo/bar
 container_region := us-central1
