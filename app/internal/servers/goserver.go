@@ -40,7 +40,7 @@ var modulePkgs = []gopkg.Spec{
 	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
 	{Path: "/animanager", RepoURL: "https://github.com/darkfeline/animanager-go"},
 	{Path: "/binpack", RepoURL: "https://github.com/darkfeline/binpack"},
-	{Path: "/cloudflare", RepoURL: "https://github.com/darkfeline/cloudflare"},
+	{Path: "/cloudflare", RepoURL: "https://github.com/darkfeline/cloudflare-go"},
 	{Path: "/booru/dl", RepoURL: "https://github.com/darkfeline/booru-dl-go"},
 	{Path: "/danbooru", RepoURL: "https://github.com/darkfeline/danbooru-go"},
 	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
