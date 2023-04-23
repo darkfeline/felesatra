@@ -120,7 +120,7 @@ func (*FooOpts) fooOption() {}
 func NewFoo(o ...FooOption) (*Foo, error) {
 	opt := &amp;FooOpts{}
 	for _, o := range o {
-		switch o.(type) {
+		switch o := o.(type) {
 		case *FooOpts:
 			opt = o
 		}
