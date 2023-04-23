@@ -43,7 +43,9 @@ func NewFoo(o ...FooOption) (*Foo, error) {...}
 </code></pre>
 
 <p>
-  Are options structs really so bad?  Let's compare then against the
+  If we're using options structs anyway, we may as well use them
+  without dressing them up as functional options.  After all, are
+  options structs really so bad?  Let's compare then against the
   supposed advantages of functional options.
 </p>
 
@@ -88,12 +90,12 @@ func NewFoo(o ...FooOption) (*Foo, error) {...}
 </p>
 
 <p>
-  You may ask, even if option structs are not inferior to functional
+  You may say, even if option structs are not inferior to functional
   options, that is no reason to not use functional options.  Well,
   functional options also have some disadvantages.  They add overhead
   as they create closure objects for every option.  They also hinder
-  discoverability of what options are available, even if that can
-  be made easier using IDE functionality.  If you asked me whether I
+  discoverability of what options are available, even if that can be
+  made easier using IDE functionality.  If you asked me whether I
   would want to hunt down a dozen functional option constructor
   functions for their doc comments or deal with awkward default
   values, I would gladly take the latter if it meant I could see all
