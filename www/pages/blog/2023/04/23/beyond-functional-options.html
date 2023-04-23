@@ -64,13 +64,27 @@ func NewFoo(o ...FooOption) (*Foo, error) {...}
   accommodated.  If the zero value is invalid, then it can be
   translated to the default value.  If the zero value is valid, it can
   be mapped to a magic value like <code>-1</code>.  The behavior can
-  be documented in the field comment.
+  be documented in the field comment.  If all else fails, you can add
+  a boolean field to indicate the zero value:
+</p>
+
+<pre><code>type Options {
+	// Name of Foo.  Defaults to "Foo".
+	Name string
+	// If true, use empty string for Name rather than the default value.
+	UseEmptyName bool
+}
+</code></pre>
+
+<p>
+  Not the prettiest API to write, but is that really so bad for a rare
+  use case?
 </p>
 
 <p>
-  Finally, option structs cannot directly emulate real functional
-  options.  However, as described earlier however, real functional
-  options are rarely useful.
+  Finally, it's true that option structs cannot directly emulate real
+  functional options.  However, as described earlier however, real
+  functional options are rarely useful.
 </p>
 
 <p>
@@ -97,17 +111,17 @@ func NewFoo(o ...FooOption) (*Foo, error) {...}
 	fooOption()
 }
 
-type FooOpt struct {
+type FooOpts struct {
 	SomeTimeout int
 }
 
-func (*FooOpt) fooOption() {}
+func (*FooOpts) fooOption() {}
 
 func NewFoo(o ...FooOption) (*Foo, error) {
-	opt := &amp;FooOpt{}
+	opt := &amp;FooOpts{}
 	for _, o := range o {
 		switch o.(type) {
-		case *FooOpt:
+		case *FooOpts:
 			opt = o
 		}
 	}
@@ -115,7 +129,7 @@ func NewFoo(o ...FooOption) (*Foo, error) {
 }
 
 func main() {
-	f, err := NewFoo(&amp;FooOpt{
+	f, err := NewFoo(&amp;FooOpts{
 		SomeTimeout: 5,
 	})
 }
