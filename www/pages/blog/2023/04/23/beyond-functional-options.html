@@ -1,0 +1,122 @@
+title: Beyond functional options in Go
+---
+<p>
+  In 2014, Dave Cheney talked
+  about <a href="https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis">functional
+  option pattern</a>, which has since then taken off in the Go
+  ecosystem.  They have some advantages:
+</p>
+
+<ul>
+  <li>They provide a future-proof API that can be freely extended.</li>
+  <li>They make optional setting with non-zero defaults easier to handle.</li>
+  <li>They can directly manipulate the object to be initialized.</li>
+</ul>
+
+<p>
+  I have both implemented and used many functional option APIs, and my
+  opinion of them has chilled greatly over time.  In practice,
+  functional options are almost always used to set a traditional
+  options struct.  The ability for the option itself to initialize the
+  object (what I will call "real functional options") is certainly
+  clever, but cleverness is not a positive feature in engineering.
+</p>
+
+<p>
+  Functional options have a number of flaws.  Ensuring that real
+  functional options interact properly (for example, one option which
+  may unintentionally override part of another option if passed in the
+  wrong order) is a headache that would be avoided with an options
+  struct.  Also, many options cannot be initialized directly on an
+  object, but have to be considered together with other options.  This
+  is why in practice functional option implementations generally fall
+  back to an options struct.  Thus implementations generally
+  use an interface without any public methods, unlike Dave's original
+  example:
+</p>
+
+<pre><code>type FooOption interface {
+	// only private methods, so other packages cannot implement options
+}
+
+func NewFoo(o ...FooOption) (*Foo, error) {...}
+</code></pre>
+
+<p>
+  Are options structs really so bad?  Let's compare then against the
+  supposed advantages of functional options.
+</p>
+
+<p>
+  If you're following the Go backward compatibility guidelines,
+  functional options do not make an API more future-proof.  Just as
+  you can add a new functional option, you can add a new field to an
+  options struct.  You would still need to support any previously
+  added options and ensure they interact correctly with the new option
+  that may replace them.  Indeed, ensuring correct interaction with
+  deprecated options is one reason why functional option
+  implementations in practice all use options structs.
+</p>
+
+<p>
+  For the second point, it's true that non-zero default values are
+  awkward to handle with options structs, but they can usually be
+  accommodated.  If the zero value is invalid, then it can be
+  translated to the default value.  If the zero value is valid, it can
+  be mapped to a magic value like <code>-1</code>.  The behavior can
+  be documented in the field comment.
+</p>
+
+<p>
+  Finally, option structs cannot directly emulate real functional
+  options.  However, as described earlier however, real functional
+  options are rarely useful.
+</p>
+
+<p>
+  You may ask, even if option structs are not inferior to functional
+  options, that is no reason to not use functional options.  Well,
+  functional options also have some disadvantages.  They add overhead
+  as they create closure objects for every option.  They also hinder
+  discoverability of what options are available, even if that can
+  be made easier using IDE functionality.  If you asked me whether I
+  would want to hunt down a dozen functional option constructor
+  functions for their doc comments or deal with awkward default
+  values, I would gladly take the latter if it meant I could see all
+  of the options in one place!
+</p>
+
+<p>
+  If you really aren't convinced, then might I suggest a middle
+  ground: interface struct options.  The beauty of interfaces in Go is
+  that any value that implements an interface can be used as such, so
+  we don't have to stick with function values:
+</p>
+
+<pre><code>type FooOption interface {
+	fooOption()
+}
+
+type FooOpt struct {
+	SomeTimeout int
+}
+
+func (*FooOpt) fooOption() {}
+
+func NewFoo(o ...FooOption) (*Foo, error) {
+	opt := &amp;FooOpt{}
+	for _, o := range o {
+		switch o.(type) {
+		case *FooOpt:
+			opt = o
+		}
+	}
+	// ...
+}
+
+func main() {
+	f, err := NewFoo(&amp;FooOpt{
+		SomeTimeout: 5,
+	})
+}
+</code></pre>
