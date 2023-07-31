@@ -41,7 +41,7 @@ extraclean: clean
 include gcp.mk
 
 # Generate default template if missing.
-# DO NOT ADD DEP TO THIS RULE.
+# DO NOT ADD DEP TO THIS RULE, IT WILL WIPE YOUR CONFIG.
 gcp.mk:
 	[ -f $@ ] || sh make_gcp.sh >$@
 
