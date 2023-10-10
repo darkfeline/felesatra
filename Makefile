@@ -38,12 +38,7 @@ clean:
 extraclean: clean
 	rm -rf $(extraclean_paths)
 
-include gcp.mk
-
-# Generate default template if missing.
-# DO NOT ADD DEP TO THIS RULE, IT WILL WIPE YOUR CONFIG.
-gcp.mk:
-	[ -f $@ ] || sh make_gcp.sh >$@
+include private/include.mk
 
 .PHONY: upload
 upload:
