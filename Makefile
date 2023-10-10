@@ -38,7 +38,8 @@ clean:
 extraclean: clean
 	rm -rf $(extraclean_paths)
 
-include private/include.mk
+project_cfg := private/include.mk
+include $(project_cfg)
 
 .PHONY: upload
 upload:
