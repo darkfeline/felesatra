@@ -51,7 +51,7 @@ def main():
     args.workdir.mkdir(parents=True, exist_ok=True)
     args.outdir.mkdir(parents=True, exist_ok=True)
     f = partial(build_module, args.workdir, args.outdir)
-    with multiprocessing.Pool(processes=len(MODULES)) as pool:
+    with multiprocessing.Pool(processes=4) as pool:
         pool.map(f, MODULES)
 
 
