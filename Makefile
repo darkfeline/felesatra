@@ -21,6 +21,7 @@ DOCKER := podman
 srvdir := app/srv
 clean_paths :=
 extraclean_paths :=
+include private/config.mk
 
 .PHONY: all
 all:
@@ -37,9 +38,6 @@ clean:
 .PHONY: extraclean
 extraclean: clean
 	rm -rf $(extraclean_paths)
-
-project_cfg := private/include.mk
-include $(project_cfg)
 
 .PHONY: upload
 upload:
@@ -75,6 +73,7 @@ include kanade/include.mk
 include goproxy/include.mk
 include www/include.mk
 include app/include.mk
+include private/include.mk
 
 # Detect expansion bugs
 local_dir := asdfjklasdfjkl
