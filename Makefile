@@ -23,6 +23,15 @@ clean_paths :=
 extraclean_paths :=
 include private/config.mk
 
+include kanade/include.mk
+include goproxy/include.mk
+include www/include.mk
+include app/include.mk
+include private/include.mk
+
+# Detect expansion bugs
+local_dir := asdfjklasdfjkl
+
 .PHONY: all
 all:
 
@@ -68,12 +77,3 @@ remoteclean:
 
 .PHONY: bench
 .PHONY: test
-
-include kanade/include.mk
-include goproxy/include.mk
-include www/include.mk
-include app/include.mk
-include private/include.mk
-
-# Detect expansion bugs
-local_dir := asdfjklasdfjkl

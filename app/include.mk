@@ -1,5 +1,6 @@
 local_dir := app
 
+app_deps :=
 app_deps += $(local_dir)/config.go
 
 app_deps += $(local_dir)/gsconfig.go
