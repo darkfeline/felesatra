@@ -3,9 +3,9 @@
 # make push         Make everything, build, deploy, and clean up
 #
 # make mod          Build goproxy modules
-# make upload       Upload files to Google Storage
-# make remotebuild  Do remote build of container
 # make localbuild   Do local build of container and upload
+# make remotebuild  Do remote build of container
+# make upload       Upload files to Google Storage
 # make deploy       Deploy tagged container in registry
 # make remoteclean  Delete remote container images
 #
@@ -38,28 +38,18 @@ all:
 .PHONY: push
 push: all mod localbuild deploy remoteclean
 
-.PHONY: clean
-clean:
-	rm -rf $(clean_paths)
-	find . -name "__pycache__" -print0 | xargs -0 rm -rf
-	find * -depth -type d -exec rmdir --ignore-fail-on-non-empty {} \+
-
-.PHONY: extraclean
-extraclean: clean
-	rm -rf $(extraclean_paths)
-
-.PHONY: upload
-upload:
-	gsutil rsync -r files gs://$(files_bucket)
+.PHONY: localbuild
+localbuild: $(app_deps)
+	$(DOCKER) build --tag $(container_image) --format docker app
+	$(DOCKER) push $(container_image)
 
 .PHONY: remotebuild
 remotebuild: $(app_deps)
 	cd app && gcloud builds submit --tag $(container_image)
 
-.PHONY: localbuild
-localbuild: $(app_deps)
-	$(DOCKER) build --tag $(container_image) --format docker app
-	$(DOCKER) push $(container_image)
+.PHONY: upload
+upload:
+	gsutil rsync -r files gs://$(files_bucket)
 
 .PHONY: deploy
 deploy:
@@ -75,5 +65,15 @@ remoteclean:
 		| xargs -I% gcloud container images delete \
 		$(container_image)@% --quiet
 
-.PHONY: bench
 .PHONY: test
+.PHONY: bench
+
+.PHONY: clean
+clean:
+	rm -rf $(clean_paths)
+	find . -name "__pycache__" -print0 | xargs -0 rm -rf
+	find * -depth -type d -exec rmdir --ignore-fail-on-non-empty {} \+
+
+.PHONY: extraclean
+extraclean: clean
+	rm -rf $(extraclean_paths)
