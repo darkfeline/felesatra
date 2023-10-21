@@ -18,10 +18,10 @@ func init() {
 	})
 }
 
-const renderPageRule = `clean_paths += $(srv_www_dir)/{{.Path}}.html
-all: $(srv_www_dir)/{{.Path}}.html
-$(srv_www_dir)/{{.Path}}.html: $(local_dir)/pages/{{.Path}}.html $(kanade_path)
-	mkdir -p $(srv_www_dir)/{{.Dir}}
+const renderPageRule = `clean_paths += $(srvdir)/www/{{.Path}}.html
+all: $(srvdir)/www/{{.Path}}.html
+$(srvdir)/www/{{.Path}}.html: www/pages/{{.Path}}.html $(kanade_path)
+	mkdir -p $(srvdir)/www/{{.Dir}}
 	$(kanade_path) render $< > $@
 `
 
