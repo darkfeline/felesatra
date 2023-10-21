@@ -39,12 +39,12 @@ all:
 push: all mod localbuild deploy remoteclean
 
 .PHONY: localbuild
-localbuild: $(app_deps)
+localbuild: app
 	$(DOCKER) build --tag $(container_image) --format docker app
 	$(DOCKER) push $(container_image)
 
 .PHONY: remotebuild
-remotebuild: $(app_deps)
+remotebuild: app
 	cd app && gcloud builds submit --tag $(container_image)
 
 .PHONY: upload

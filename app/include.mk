@@ -1,20 +1,22 @@
-local_dir := app
+.PHONY: app
+all: app
 
-app_deps :=
-app_deps += $(local_dir)/config.go
+app: app/config.go
+clean_paths += app/config.go
+app/config.go: private/config.go
+	cp $< $@
 
-app_deps += $(local_dir)/gsconfig.go
-$(local_dir)/gsconfig.go: $(local_dir)/make_gsconfig.sh
+app: app/gsconfig.go
+clean_paths += app/gsconfig.go
+app/gsconfig.go: app/make_gsconfig.sh
 	sh $< $(files_bucket) >$@
 
 .PHONY: test-app
 test: test-app
-test-app: local_dir := $(local_dir)
-test-app: $(app_deps)
-	cd $(local_dir) && $(GO) test ./...
+test-app: app
+	cd app && $(GO) test ./...
 
 .PHONY: bench-app
 bench: bench-app
-bench-app: local_dir := $(local_dir)
-bench-app: $(app_deps)
-	cd $(local_dir) && $(GO) test -bench . ./...
+bench-app: app
+	cd app && $(GO) test -bench . ./...
