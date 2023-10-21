@@ -23,8 +23,8 @@ clean_paths :=
 extraclean_paths :=
 include private/config.mk
 
-include kanade/include.mk
 include goproxy/include.mk
+include kanade/include.mk
 include www/include.mk
 include app/include.mk
 include private/include.mk
