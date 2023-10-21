@@ -1,16 +1,12 @@
-local_dir := kanade
-
-kanade_path := $(local_dir)/kanade
+kanade_path := kanade/kanade
 
 clean_paths += $(kanade_path)
-$(kanade_path): local_dir := $(local_dir)
-$(kanade_path): $(local_dir)/go.mod \
-		$(shell find $(local_dir) -name '*.html') \
-		$(shell find $(local_dir) -name '*.go' ! -name '*_test.go')
-	cd $(local_dir) && $(GO) build -o kanade
+$(kanade_path): kanade/go.mod \
+		$(shell find kanade -name '*.html') \
+		$(shell find kanade -name '*.go' ! -name '*_test.go')
+	cd kanade && $(GO) build -o kanade
 
 .PHONY: test-kanade
 test: test-kanade
-test-kanade: local_dir := $(local_dir)
 test-kanade:
-	cd $(local_dir) && $(GO) test ./...
+	cd kanade && $(GO) test ./...
