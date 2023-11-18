@@ -1,7 +1,7 @@
 .PHONY: app
 all: app
-
 app: app/config.go
+
 clean_paths += app/config.go
 app/config.go: private/config.go
 	cp $< $@
