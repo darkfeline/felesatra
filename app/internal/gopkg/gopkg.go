@@ -1,6 +1,7 @@
 package gopkg
 
 import (
+	_ "embed"
 	"sync"
 	"text/template"
 )
@@ -20,18 +21,8 @@ const (
 	Git Method = "git"
 )
 
-const pageTemplate = `{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="go-import" content="{{$s}}{{.Path}} {{.Method}} {{.URL}}">
-    <title>{{.Path}}</title>
-  </head>
-  <body>
-    <a href="{{.RepoURL}}">{{$s}}{{.Path}}</a> (<a href="https://pkg.go.dev/{{$s}}{{.Path}}">docs</a>)
-  </body>
-</html>
-`
+//go:embed template.html
+var pageTemplate string
 
 var temp *template.Template
 var once sync.Once
