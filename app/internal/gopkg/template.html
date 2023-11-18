@@ -6,6 +6,15 @@
     <title>{{.Path}}</title>
   </head>
   <body>
-    <a href="{{.RepoURL}}">go.felesatra.moe{{.Path}}</a> (<a href="https://pkg.go.dev/go.felesatra.moe{{.Path}}">docs</a>)
+    <dl>
+      <dt>Package</dt>
+      <dd>go.felesatra.moe{{.Path}}</dd>
+      <dt>VCS+URL</dt>
+      <dd>{{.Method}} <a href="{{.URL}}">{{.URL}}</a></dd>
+      <dt>Repository</dt>
+      <dd><a href="{{.RepoURL}}">{{.RepoURL}}</a></dd>
+      <dt>Documentation</dt>
+      <dd><a href="https://pkg.go.dev/go.felesatra.moe{{.Path}}">https://pkg.go.dev/go.felesatra.moe{{.Path}}</a></dd>
+    </dl>
   </body>
 </html>
