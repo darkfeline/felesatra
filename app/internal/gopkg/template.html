@@ -1,11 +1,11 @@
-{{$s := "go.felesatra.moe"}}<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="go-import" content="{{$s}}{{.Path}} {{.Method}} {{.URL}}">
+    <meta name="go-import" content="go.felesatra.moe{{.Path}} {{.Method}} {{.URL}}">
     <title>{{.Path}}</title>
   </head>
   <body>
-    <a href="{{.RepoURL}}">{{$s}}{{.Path}}</a> (<a href="https://pkg.go.dev/{{$s}}{{.Path}}">docs</a>)
+    <a href="{{.RepoURL}}">go.felesatra.moe{{.Path}}</a> (<a href="https://pkg.go.dev/go.felesatra.moe{{.Path}}">docs</a>)
   </body>
 </html>
