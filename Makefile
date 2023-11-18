@@ -29,9 +29,6 @@ include www/include.mk
 include app/include.mk
 include private/include.mk
 
-# Detect expansion bugs
-local_dir := asdfjklasdfjkl
-
 .PHONY: all
 all:
 
