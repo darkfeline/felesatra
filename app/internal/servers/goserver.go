@@ -43,6 +43,7 @@ var modulePkgs = []gopkg.Spec{
 	{Path: "/cloudflare", RepoURL: "https://github.com/darkfeline/cloudflare-go"},
 	{Path: "/booru/dl", RepoURL: "https://github.com/darkfeline/booru-dl-go"},
 	{Path: "/danbooru", RepoURL: "https://github.com/darkfeline/danbooru-go"},
+	{Path: "/database/sql/sqlite3/migrate", RepoURL: "https://github.com/darkfeline/go-sqlite3-migrate"},
 	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
 	{Path: "/dlsite/v2", RepoURL: "https://github.com/darkfeline/dlsite-go"},
 	{Path: "/dlsite-cmd", RepoURL: "https://github.com/darkfeline/dlsite-cmd-go"},
