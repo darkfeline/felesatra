@@ -2,8 +2,8 @@ package gopkg
 
 import (
 	_ "embed"
+	"html/template"
 	"sync"
-	"text/template"
 )
 
 // A Spec describes a Go package.
@@ -24,12 +24,7 @@ const (
 //go:embed template.html
 var pageTemplate string
 
-var temp *template.Template
-var once sync.Once
-
-func Template() *template.Template {
-	once.Do(func() {
-		temp = template.Must(template.New("go").Parse(pageTemplate))
-	})
-	return temp
-}
+// Template returns the template for formatting a Go package page.
+var Template = sync.OnceValue(func() *template.Template {
+	return template.Must(template.New("go").Parse(pageTemplate))
+})
