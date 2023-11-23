@@ -30,6 +30,7 @@ include app/include.mk
 include private/include.mk
 
 .PHONY: all
+all:
 
 .PHONY: push
 push: all mod localbuild deploy remoteclean
