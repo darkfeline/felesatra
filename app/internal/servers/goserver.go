@@ -46,7 +46,6 @@ var modulePkgs = []gopkg.Spec{
 	{Path: "/database/sql/sqlite3/migrate", RepoURL: "https://github.com/darkfeline/go-sqlite3-migrate"},
 	{Path: "/dlsite", RepoURL: "https://github.com/darkfeline/dlsite-go"},
 	{Path: "/dlsite/v2", RepoURL: "https://github.com/darkfeline/dlsite-go"},
-	{Path: "/dlsite-cmd", RepoURL: "https://github.com/darkfeline/dlsite-cmd-go"},
 	{Path: "/encoding/sexp", RepoURL: "https://github.com/darkfeline/go-sexp"},
 	{Path: "/go2/errors", RepoURL: "https://github.com/darkfeline/go2-errors"},
 	{Path: "/hash/ed2k", RepoURL: "https://github.com/darkfeline/ed2k-go"},
