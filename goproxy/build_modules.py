@@ -77,6 +77,7 @@ def main():
 
 
 def build_module(workdir: Path, outdir: Path, module: Module):
+    logging.info(f'Building module {module.name}')
     checkout = Path(workdir, module.name)
     if checkout.exists():
         subprocess.run(['git', '-C', checkout, 'fetch', '-t', 'origin'],
