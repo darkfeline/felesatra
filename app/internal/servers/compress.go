@@ -3,11 +3,12 @@ package servers
 import (
 	"compress/gzip"
 	"net/http"
+	"slices"
 )
 
 func withCompress(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if contains("gzip", r.Header.Values("Accept-Encoding")) {
+		if slices.Contains(r.Header.Values("Accept-Encoding"), "gzip") {
 			w = newGzipWriter(w)
 		}
 		h.ServeHTTP(w, r)
@@ -37,13 +38,4 @@ func (w gzipWriter) Write(d []byte) (int, error) {
 	}
 	err = w.w.Flush()
 	return n, err
-}
-
-func contains[K comparable](x K, s []K) bool {
-	for _, v := range s {
-		if v == x {
-			return true
-		}
-	}
-	return false
 }
