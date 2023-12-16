@@ -10,7 +10,7 @@ your site.
 
 <p>
   Sometimes even that's too much. You need to write a few HTML pages, and all you
-  want is a simple HTML templating tool so you don't have to type <code>{{ code('<!DOCTYPE html>') }}</code> a dozen times.
+  want is a simple HTML templating tool so you don't have to type <code>&lt;!DOCTYPE html&gt;</code> a dozen times.
 </p>
 
 <p>
@@ -27,18 +27,18 @@ Make header and footer templates:
 <pre><code>m4_dnl header.m4
 m4_dnl These lines can be used as comments.
 m4_dnl "dnl" means "delete to newline".
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>TITLE</title>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;TITLE&lt;/title&gt;
 m4_dnl This placeholder TITLE will be replaced later.
-  </head>
-  <body>
+  &lt;/head&gt;
+  &lt;body&gt;
 
 m4_dnl footer.m4
-  </body>
-</html>
+  &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
 <p>
@@ -54,9 +54,9 @@ m4_dnl The "m4_dnl" after the "m4_define" removes the newline.
 m4_dnl It's only needed if you care about blank lines in the output.
 m4_include(header.m4)m4_dnl
 m4_dnl Here we include our header template.
-<h1>My home page</h1>
+&lt;h1&gt;My home page&lt;/h1&gt;
 
-<p>Hello World!</p>
+&lt;p&gt;Hello World!&lt;/p&gt;
 m4_include(footer.m4)m4_dnl
 m4_dnl Here we include our footer template.
 </code></pre>
