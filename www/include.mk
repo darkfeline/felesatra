@@ -30,6 +30,7 @@ $(srvdir)/www/sitemap.xml: www/index $(kanade_path)
 	$(kanade_path) make-sitemap $< > $@
 
 include www/render.mk
+.DELETE_ON_ERROR: www/render.mk
 clean_paths += www/render.mk
 www/render.mk: www/index $(kanade_path)
 	$(kanade_path) make-render-makefile $< > $@
