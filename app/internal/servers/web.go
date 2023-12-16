@@ -16,24 +16,10 @@ func NewWeb(f CheckFunc) http.Handler {
 		withBasicAuth("yggdrasil", f),
 	))
 	m.Handle("/", chain(
-		newPublicWeb(),
+		pageServer{fs: http.Dir("srv/www")},
 		withCompress,
 		withCacheControl("public,max-age=604800"), // 7d
 	))
-	return m
-}
-
-func newPublicWeb() http.Handler {
-	fs := http.FileServer(http.Dir("srv/www"))
-	m := http.NewServeMux()
-	m.Handle("/css/", fs)
-	m.Handle("/img/", fs)
-	m.Handle("/js/", fs)
-	m.Handle("/atom.xml", fs)
-	m.Handle("/sitemap.xml", fs)
-	m.Handle("/identity.txt", fs)
-	m.Handle("/robots.txt", fs)
-	m.Handle("/", pageServer{fs: http.Dir("srv/www")})
 	return m
 }
 
@@ -50,21 +36,34 @@ func (h pageServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, p[:len(p)-1], http.StatusPermanentRedirect)
 		return
 	}
-	h.serveFile(w, req, p+".html")
+	h.serveFile(w, req, p)
 }
 
 func (h pageServer) serveFile(w http.ResponseWriter, req *http.Request, name string) {
 	f, err := h.fs.Open(name)
-	if err != nil {
-		if os.IsNotExist(err) {
-			h.write404(w, req)
-			return
-		}
+	if err == nil {
+		http.ServeContent(w, req, name, time.Time{}, f)
+		return
+	}
+	if !os.IsNotExist(err) {
 		log.Printf("Error: pageServer serve file %s: %s", name, err)
 		http.Error(w, "Server Error", 500)
 		return
 	}
-	http.ServeContent(w, req, name, time.Time{}, f)
+
+	name = name + ".html"
+	f, err = h.fs.Open(name)
+	if err == nil {
+		http.ServeContent(w, req, name, time.Time{}, f)
+		return
+	}
+	if !os.IsNotExist(err) {
+		log.Printf("Error: pageServer serve file %s: %s", name, err)
+		http.Error(w, "Server Error", 500)
+		return
+	}
+
+	h.write404(w, req)
 }
 
 func (h pageServer) write404(w http.ResponseWriter, r *http.Request) {
