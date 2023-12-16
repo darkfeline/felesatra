@@ -17,6 +17,7 @@ func NewWeb(f CheckFunc) http.Handler {
 	))
 	m.Handle("/", chain(
 		newPublicWeb(),
+		withCompress,
 		withCacheControl("public,max-age=604800"), // 7d
 	))
 	return m
