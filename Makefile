@@ -28,12 +28,14 @@ include kanade/include.mk
 include www/include.mk
 include app/include.mk
 include private/include.mk
+include quartz/include.mk
 
 .PHONY: all
 all:
 
 .PHONY: push
-push: all mod localbuild deploy remoteclean
+.PHONY: copyquartz
+push: all copyquartz mod localbuild deploy remoteclean
 
 .PHONY: localbuild
 localbuild: app
