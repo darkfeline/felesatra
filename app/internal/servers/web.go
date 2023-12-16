@@ -13,7 +13,8 @@ func NewWeb(f CheckFunc) http.Handler {
 	m.Handle("/private/", chain(
 		http.FileServer(http.Dir("srv/www")),
 		withCompress,
-		withBasicAuth("yggdrasil", f)))
+		withBasicAuth("yggdrasil", f),
+	))
 	m.Handle("/", chain(
 		newPublicWeb(),
 		withCacheControl("public,max-age=604800"), // 7d
