@@ -3,4 +3,4 @@
 	url = git@github.com:darkfeline/felesatra-private.git
 [submodule "quartz"]
 	path = quartz
-	url = https://github.com/jackyzha0/quartz.git
+	url = git@github.com:darkfeline/quartz-saphy.git
