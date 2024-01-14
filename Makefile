@@ -34,8 +34,8 @@ include quartz/include.mk
 all:
 
 .PHONY: push
-.PHONY: copyquartz
-push: all copyquartz mod localbuild deploy remoteclean
+.PHONY: quartzcopy
+push: all quartzcopy mod localbuild deploy remoteclean
 
 .PHONY: localbuild
 localbuild: app
