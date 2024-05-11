@@ -1,6 +1,6 @@
 [submodule "private"]
 	path = private
-	url = git@github.com:darkfeline/felesatra-private.git
+	url = https://github.com/darkfeline/felesatra-private.git
 [submodule "quartz"]
 	path = quartz
-	url = git@github.com:darkfeline/quartz-saphy.git
+	url = https://github.com/darkfeline/quartz-saphy.git
