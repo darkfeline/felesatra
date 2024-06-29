@@ -34,7 +34,7 @@ func findPackage(p string) (ps gopkg.Spec, ok bool) {
 	return ps, false
 }
 
-// Also update build_modules.py
+// Also update goproxy/main.go
 var modulePkgs = []gopkg.Spec{
 	{Path: "/anaclock", RepoURL: "https://github.com/darkfeline/anaclock"},
 	{Path: "/anidb", RepoURL: "https://github.com/darkfeline/anidb-go"},
