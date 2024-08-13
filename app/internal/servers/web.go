@@ -31,6 +31,14 @@ func NewSaphy(f CheckFunc) http.Handler {
 	)
 }
 
+func NewWKD() http.Handler {
+	return chain(
+		pageServer{fs: http.Dir("srv/openpgpkey")},
+		withCompress,
+		withCacheControl("public,max-age=604800"), // 7d
+	)
+}
+
 type pageServer struct {
 	fs http.FileSystem
 }

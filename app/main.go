@@ -26,6 +26,7 @@ func main() {
 func makeServer(port string) *http.Server {
 	m := http.NewServeMux()
 	m.Handle("files.felesatra.moe/", servers.NewFiles(filesBucket))
+	m.Handle("openpgpkey.felesatra.moe/", servers.NewWKD())
 	m.Handle("go.felesatra.moe/", servers.NewGo())
 	m.Handle("goproxy.felesatra.moe/", servers.NewGoproxy())
 	m.Handle("saphy.felesatra.moe/", servers.NewSaphy(checkAuth))
