@@ -23,6 +23,14 @@ func NewWeb(f CheckFunc) http.Handler {
 	return m
 }
 
+func NewSaphy(f CheckFunc) http.Handler {
+	return chain(
+		pageServer{fs: http.Dir("srv/saphy")},
+		withCompress,
+		withBasicAuth("yggdrasil", f),
+	)
+}
+
 type pageServer struct {
 	fs http.FileSystem
 }
