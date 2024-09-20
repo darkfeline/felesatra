@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/subtle"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,7 +10,7 @@ import (
 
 	"app/internal/servers"
 
-	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/argon2"
 )
 
 func main() {
@@ -42,14 +43,10 @@ func makeServer(port string) *http.Server {
 	}
 }
 
-// username and passwordHash defined in auth.go.
 func checkAuth(u, pw string) (ok bool) {
-	ok = true
-	if u != username {
-		ok = false
-	}
-	if err := bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(pw)); err != nil {
-		ok = false
-	}
-	return ok
+	res := 1
+	res &= subtle.ConstantTimeCompare([]byte(u), []byte(username))
+	hash := argon2.IDKey([]byte(pw), []byte(argonSalt), 1, 32*1024, 4, 32)
+	res &= subtle.ConstantTimeCompare(hash, []byte(passwordHash))
+	return res == 1
 }
