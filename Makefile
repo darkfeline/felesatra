@@ -52,7 +52,8 @@ upload:
 
 .PHONY: deploy
 deploy:
-	gcloud run deploy felesatra --image $(container_image) \
+	gcloud run deploy felesatra --project $(gcp_project) \
+                --image $(container_image) \
 		--platform managed --region $(container_region) \
 		--service-account $(service_account) \
 		--allow-unauthenticated --memory 128Mi --concurrency 1000 --max-instances 1
