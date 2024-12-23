@@ -1,0 +1,214 @@
+title: Jujutsu is great for the wrong reason
+---
+<p>
+  I have seen <a href="https://github.com/jj-vcs/jj">Jujutsu/jj</a>
+  mentioned a few times over the months as an easier way to use Git.
+  As a proficient Git user, I was not particularly interested.  Once
+  you actually <em>get</em> Git, you can do just about anything.
+  Sure, the Git CLI is rather... unergonomic, but there are
+  alternative frontends like <a href="https://magit.vc/">Magit</a>.
+  So I was not particularly interested in jj, as I didn't think it
+  offered any value to me.
+</p>
+
+<p>
+  Recently, I learned that jj was created by a Googler, potentially to
+  be integrated with Google's own source control system.  Google is
+  not flawless, but their engineers do tend to be relatively smart,
+  and coincidentally I found myself with some free time, so I went and
+  read all of jj's documentation, just to see if there was anything
+  interesting about it.
+</p>
+
+<p>
+  Oh boy, have I got something to tell you.  jj is very, very
+  interesting, but not for the reasons I had heard.
+</p>
+
+<section>
+  <h1>jj's features</h1>
+  <p>
+    jj is built on top of, and is functionally compatible with Git.
+    This is both very cool and a very smart decision.  It means that you
+    have very little reason <em>not</em> to try jj, because you can
+    always switch back to Git, and you can collaborate with other people
+    using Git transparently.  One could argue that this is the only way
+    to design a VCS that has a hope of dethroning Git.  However, this is
+    not the most interesting aspect of jj.
+  </p>
+
+  <p>
+    The most common selling point for jj is that it's easier to learn
+    and use than Git.  It's hard for me to judge, as neither a novice
+    Git user nor a Git CLI user, but it does seem to me that jj's CLI is
+    likely better than Git's, and it is likely easier for novice users
+    to pick up than Git.  To be fair, that is a fairly low bar, and it
+    is the least interesting aspect of jj.
+  </p>
+
+  <p>
+    Another rather abrasive "feature" of jj is that it gets rid of the
+    staging area and automatically commits everything into a working
+    commit.  People seem to have strong opinions about this, but quite
+    frankly, it is a rather superficial distinction, it can be turned
+    off, and it's really just not that important.
+  </p>
+
+  <p>
+    The next two features I have heard mentioned are a bit more
+    interesting, but not, by themselves, revolutionary.
+  </p>
+
+  <p>
+    The first is that jj treats conflict as a first class concept, and
+    lets you resolve them when you want, rather than forcing you to
+    resolve them immediately when they happen.  This is rather nice, but
+    I wouldn't consider it revolutionary, and while Git with rerere is
+    inferior, by itself would not make me use jj over plain Git.
+  </p>
+
+  <p>
+    The second is that jj lets you undo anything.  It is kind of like
+    reflogs in Git, except it applies to all aspects of the repository.
+    This is really useful for novices, but less so for proficient Git
+    users, since you don't really get into situations where you would
+    need this feature.  However, this leads us into what is the most
+    interesting aspect of jj.
+  </p>
+
+  <p>
+    Actually, let me mention a few other features first.  jj also
+    natively supports worktrees (called workspaces in jj) and sparse
+    checkouts.  I mention these not just to build some more suspense,
+    but because all of the features mentioned so far, are basically
+    happy little accidents.
+  </p>
+</section>
+
+<section>
+  <h1>jj's design</h1>
+  
+  <p>
+    You see, jj was designed around a single feature requirement.  That
+    requirement led to a very simple design addition to Git's DVCS
+    model, that naturally enabled all of the features:
+  </p>
+
+  <p>
+    jj was designed to support concurrency.
+  </p>
+
+  <p>
+    Around when Git was first released, what made it and other DVCSes so
+    powerful is that multiple developers could create their own
+    repository checkouts and work independently of one another.  They
+    could work concurrently.
+  </p>
+
+  <p>
+    But a single Git repository cannot be modified concurrently.  If you used
+    Git a lot, you know that Git repositories have a lock file to serialize
+    modifications.
+  </p>
+
+  <p>
+    But what if?  What if you could put a Git repository into Dropbox or
+    Google Drive, shared to a dozen developers, and have them all
+    operate on it concurrently?  What if you didn't have to serialize
+    requests to a Git server?
+  </p>
+
+  <p>
+    What if, if version control is so good, we just put the repository
+    state under version control?
+  </p>
+
+  <p>
+    That's what Martin von Zweigbergk, the veritable mad lad behind jj,
+    did.
+  </p>
+
+  <p>
+    You take everything that comprises the repository state, all of the
+    branches, refs, etc., and you shove that into a commit.  When you
+    make any change, whether that be creating a new commit,
+    adding/moving/deleting a ref, that creates a new commit.
+  </p>
+
+  <p>
+    Boom, you get jj.
+  </p>
+
+  <p>
+    If you want concurrency, you can't have weird intermediate states,
+    like resolving conflicts during a rebase.  That's why jj has first
+    class conflicts.
+  </p>
+
+  <p>
+    What if two commands try to modify the repository concurrently?
+    Well, since the repository state is version controlled, you just
+    create two branching commits.  What if those changes conflict?  Well
+    guess what?  You've got first class conflicts, so you can just resolve
+    the conflict later.
+  </p>
+
+  <p>
+    Undo?  Since the repository state is version controlled, you can
+    revert repository changes like regular commits.
+  </p>
+
+  <p>
+    Staging area?  It's inconvenient if we want concurrency, so it's
+    simpler if we commit everything into a "working commit".
+  </p>
+
+  <p>
+    Workspaces and sparse checkouts?  Since all you need to modify (or
+    read) the repository is to reference one commit of the repository
+    state (which doesn't have to be the latest state) and you don't need
+    any locking, these become trivial.  You don't have the restriction
+    that Git has, of only being able to check out a branch in one
+    worktree.
+  </p>
+
+  <p>
+    All of this is built on top of the foundations of Git.  jj stores
+    your source code using Merkle trees and objects in a CAS store
+    just like Git (<em>using</em> Git in most cases, although jj
+    supports alternate backends), and it stores the repository state
+    using the same Merkle trees and CAS store.
+  </p>
+
+  <p>
+    Simply by designing for concurrency, jj has enabled many features
+    with only a "small" design addition to Git and some extra processing
+    logic sprinkled on top.  This is the kind of design achievement I
+    can only hope to claim one day for myself.
+  </p>
+</section>
+
+<section>
+  <h1>Possibilities</h1>
+
+  <p>
+    Personally, what I'm excited for are the new workflows that jj
+    could enable for me.  I have to deal with a lot of Git
+    repositories, often multiple copies of the same repositories and
+    different forks of related repositories (for example, I have
+    private and public forks of my dotfiles).  What if I could just
+    have a single jj repository?  Since jj supports concurrency and
+    workspaces, I could just add all of my Git repositories to a
+    single jj repository, create dozens of workspaces, and check out
+    different commits in each one.  This lets me deduplicate identical
+    checkouts without having to worry about the details of object
+    sharing as with <code>git clone --shared</code> and easily
+    cherrypick changes across "repositories".
+  </p>
+
+  <p>
+    I'm also a sucker for the fact that you can branch and rebase the
+    repository state history.  I don't know if there are any practical
+    applications yet, but it makes the mischievous child in me cackle.
+  </p>
+</section>
