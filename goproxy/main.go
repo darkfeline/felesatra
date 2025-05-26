@@ -334,11 +334,11 @@ var (
 )
 
 func isVersionTagFor(tag string, m module) bool {
-	v := verPat.FindString(m.name)
-	if v == "" {
+	v := verPat.FindStringSubmatch(m.name)
+	if v == nil {
 		return v1Pat.MatchString(tag)
 	}
-	return strings.HasPrefix(tag, v+".")
+	return strings.HasPrefix(tag, v[1]+".")
 }
 
 type moduleTree struct {
