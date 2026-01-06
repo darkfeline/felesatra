@@ -318,7 +318,7 @@ type modInfo struct {
 }
 
 func (r repo) commitTime(v version) (string, error) {
-	c := exec.Command("git", "-C", r.checkout, "show", "-s", "--format=%cI",
+	c := exec.Command("git", "-C", r.checkout, "log", "-1", "--format=%cI",
 		string(v))
 	out, err := c.Output()
 	if err != nil {
