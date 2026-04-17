@@ -1,0 +1,305 @@
+title: Agent primer
+---
+<p>
+  This article provides a quick primer for developers who are late to
+  the whole AI agent thing.
+</p>
+
+<p>Disclaimer: since this is a primer, we'll gloss over many technical details.</p>
+
+<h2>Large Language Models (LLMs)</h2>
+
+<p>
+  For most devs it is sufficient to think of an LLM as a black box
+  that takes some input, runs a simulation on a ridiculous number of
+  values, and produces some output that feels like you're talking with a
+  very smart albeit sometimes silly person.
+</p>
+
+<h2>Chat models vs agents</h2>
+
+<p>
+  The basic way of interacting with models is by providing input and getting
+  output.
+</p>
+
+<p>
+  Let's use coding as an example. Say you want to add a feature to a function. You
+  would send the entire text of the function along with instructions to the model,
+  then the model will reply with the new function that contains the feature. You
+  would then copy the function and paste it back into your file.
+</p>
+
+<p>
+  This was the state of AI tooling circa 2022. There were some early efforts to
+  streamline the copying and pasting, but the true breakthrough was agents.
+</p>
+
+<p>
+  What are agents? I'll go deeper into the terminology below, but
+  basically, agents are LLMs that have access to <em>tools</em>
+  to <em>do things</em>, like read and write files or run shell
+  commands. It turns out that rather than hand feeding a model,
+  letting the model do things directly makes it a lot more powerful
+  (and dangerous!).
+</p>
+
+<h2>The LLM API</h2>
+
+<p>
+  First, let's set a baseline by looking at
+  the <a href="https://ai.google.dev/api/generate-content#request-body">Gemini
+  API</a> (Gemini is simply used as an example).
+</p>
+
+
+<p>
+  The important bits are that you pass in some text and a collection
+  of tools, and you get back either some text or a tool call. Tools
+  are specified like functions, with a name, documentation string, and
+  arguments.
+</p>
+
+<p>
+  This is the foundational API for interacting with "agentic" LLMs. If
+  an LLM doesn't support tool use ("not agentic") then it won't have
+  the tool bits of this API.
+</p>
+
+<p>
+  Now that we have that baseline, everything else is just "wrapper
+  logic" that makes using the LLM easier.
+</p>
+
+<h2>The harness</h2>
+
+<p>
+  Next, let's move on to the harness. The harness is sort of an
+  abstract concept; it's the thing that manages the tools and the UI
+  for you, so you aren't manually assembling LLM API requests,
+  dispatching tool calls, etc.
+</p>
+
+<p>
+  A basic harness might look like this:
+</p>
+
+<ul>
+  <li>
+    has auth credentials and configs to talk to the LLM service (e.g.,
+    Gemini, ChatGPT, etc.)
+  </li>
+  <li>has a CLI chat interface for users to type prompts</li>
+  <li>
+    when sending requests, includes a set of builtin tools like:
+
+    <pre><code>name: read_file
+description: Read a file from the file system
+parameters:
+- name: file_path
+  type: string
+  description: The path of the file to read
+- name: start_line
+  type: integer
+  description: The line to start reading from, defaults to the first line
+- name: end_line
+  type: integer
+  description: The line to read up to, defaults to the last line
+    </code></pre>
+  </li>
+  <li>
+    handles responses from the model
+    <ul>
+      <li>
+        If it's a text response, then show it in the CLI
+      </li>
+      <li>
+        If it's a tool call, then do the dispatch. For example, if the
+        LLM response is a function call to "read_file foo 10 20", then
+        the harness will (optionally) prompt the user for
+        confirmation, open up the file, seek to line 10, read the
+        lines, and then send a request to the LLM with the lines.
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Tools, skills, MCP</h2>
+
+<p>
+  To recap, <b>tools</b> are the basic mechanism for letting LLMs do
+  stuff. These can either be implemented natively in the harness, or
+  the harness could allow configuring (additional) tools.
+</p>
+
+<p>
+  Now let's move on to all of the other agent-related terminology.
+  There are many IDEs, editors, LLM providers, and harnesses out
+  there, and the plethora of standards are to reduce the effort of
+  integrating tools into harness.
+</p>
+
+<p>
+  <b>Model Context Protocol (MCP)</b> was originally a standard for
+  self-documenting APIs for agents to access data sources (e.g. a
+  domain specific database). It has been pretty quickly generalized to
+  provide arbitrary tools to harnesses.
+</p>
+
+<p>
+  For a basic integration, a harness can be pointed at an MCP server,
+  and the harness can query the server for the tools it exposes, their
+  descriptions and arguments, and then the harness can pass those
+  tools to the LLM. Then, if the LLM requests a tool call, the harness
+  can perform the RPC call with the MCP server.
+</p>
+
+<p>
+  Thus, MCP is a way to provide tools in a way that can be reused with
+  any harness, without having to do custom integration work between
+  each harness and each set of tools.
+</p>
+
+<p>
+  <b>Context files</b> like <code>AGENTS.md</code> are a standard way to
+  provide project specific instructions.  For example, you would want
+  to add instructions about how to run the tests and build, and
+  certain things you might want the LLM to do like always include the
+  fact that AI is being used in commit messages.
+</p>
+
+<p>
+  The harness is responsible for loading the context files and feeding
+  them into the model.
+</p>
+
+<p>
+  <b>Skills</b> are like context files, but they're more task and/or
+  domain specific rather than project specific.  Skills are
+  standardized so they're shareable between different harnesses.
+  They're also loaded on demand.
+</p>
+
+<h2>Agent terminology</h2>
+
+<p>
+  Before I move on, let's talk about the term "agent". Above, I said
+  that agents are LLMs that have access to tools to do things.
+  However, in practice people use "agent" to refer to multiple
+  different things.  Commonly, "agent" refers to harnesses, and in
+  particular harnesses provided by the incumbent AI providers, like
+  Gemini CLI and Claude Code.
+</p>
+
+<p>
+  "Agent" can also refer to specific configurations within a harness.
+  Harnesses like Gemini CLI are locked down, but there are also
+  harnesses
+  like <a href="https://github.com/aaif-goose/goose">goose</a> that
+  can be freely configured to use different models from different
+  providers, extended with custom tools, and more.  In these cases,
+  one harness can have multiple different "agent" configurations.
+</p>
+
+<h2>ACP, A2A</h2>
+
+<p>
+  The reason for that quick segue is because we now have to talk about
+  agent APIs, starting with ACP.
+</p>
+
+<p>
+  <b>Agent Client Protocol (ACP)</b> is a protocol for talking to
+  agents.  This can be used by IDEs or other tools to integrate into
+  an existing harness, rather than having to implement support
+  themselves.  If you are familiar with Language Server Protocol
+  (LSP), this is kind of like that.
+</p>
+
+<p>
+  An IDE could implement a harness itself.  However, ACP makes it
+  possible to "embed" the harness, thus resulting in less work on the
+  IDE side as well as making it easier to swap to different
+  harnesses/agents.  The tradeoff is that a native IDE harness can
+  have deeper integration with the IDE, such as allowing the LLM to
+  open files in different window splits, if you want the agent to show
+  you something.
+</p>
+
+<p>
+  ACP can also be used by agents to delegate to other agents.  For
+  example, you could have Claude Code delegate a task to Gemini CLI,
+  or Gemini CLI delegating to another instance of Gemini CLI, or one
+  agent configuration in Goose delegating to another agent
+  configuration in Goose.
+</p>
+
+<p>
+  Unfortunately, the AI ecosystem is moving fastly and furiously (as
+  of today), and ACP is already superseded by <b>A2A, the Agent to
+  Agent Protocol</b>.  As the name implies, there's a stronger focus
+  on the agent delegation use case over the embedding use case.
+</p>
+
+<h2>How to start</h2>
+
+<p>
+  If you have no experience with agents, I would recommend starting
+  with Gemini CLI because it will have the smallest startup cost for
+  most people.  You <em>probably</em> have a Google account, and as of
+  now Gemini CLI has a reasonable amount of free quota.
+</p>
+
+<p>
+  Install it and get it set up, and try running it to do some small tasks:
+</p>
+
+<ul>
+  <li>writing tests for a small function</li>
+  <li>implementing a small function</li>
+  <li>asking questions about the code base</li>
+</ul>
+
+<p>
+  These are all fairly low risk tasks, that LLMs as of now can perform
+  fairly reliably.  You want to start using an agent and getting a
+  feel for it.
+</p>
+
+<p>
+  If you don't like Google or Gemini, you can also use Claude or goose
+  or whatever.  The actual agent/harness doesn't matter too much when
+  you're starting off, and the example tasks provided should all work,
+  as all of the "out of the box" harnesses will have some basic
+  built-in tools (read/write file, run shell command) that are
+  sufficient (though note that local models require a lot of RAM, will
+  run slowly unless you have amazing compute, and will generally
+  perform worse than the big corpo cloud models).
+</p>
+
+<p>
+  Once you get a feel for using agents, you can start playing with
+  plugging in different tools and tweaking the prompts and context to
+  do things beyond coding tasks, like summarizing your email, if
+  that's your thing.
+</p>
+
+<h2>Disclaimer (a.k.a. OpenClaw)</h2>
+
+<p>
+  It's important to emphasize that giving an LLM <em>tools</em>
+  to <em>do things</em> also opens the door for them to do a lot of
+  damage, if you're not careful.  Most harnesses will stop and ask for
+  user confirmation before running potentially dangerous tools, like
+  running shell commands.
+</p>
+
+<p>
+  "Most harnesses" does not include OpenClaw.  At the risk of
+  oversimplifying a little bit, OpenClaw is basically an agent that
+  provides an aggressively full amount of access to everything on your
+  system with an aggressively zero amount of user confirmation or
+  protection.  That allows it to do great things, including great
+  destruction.  But at the end of the day, it is <em>just</em> an
+  agent.
+</p>
