@@ -14,6 +14,9 @@
 # make clean        Clean up
 # make extraclean   Also delete goproxy cache
 
+.PHONY: all
+all:
+
 PYTHON := python3
 GO := go
 DOCKER := podman
@@ -29,9 +32,6 @@ include www/include.mk
 include app/include.mk
 include private/include.mk
 include quartz/include.mk
-
-.PHONY: all
-all:
 
 .PHONY: push
 .PHONY: quartz-copy
